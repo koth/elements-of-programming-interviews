@@ -1,0 +1,52 @@
+#include <iostream>
+#include <limits>
+#include <ctime>
+#include <cstdlib>
+#include <vector>
+#include <cassert>
+
+using namespace std;
+
+// @include
+template <typename HeightType>
+HeightType find_battery_capacity(const vector<HeightType>& h) {
+  HeightType min_height = numeric_limits<HeightType>::max(), capacity = 0;
+  for (const HeightType &height : h) {
+    capacity = max(capacity, height - min_height);
+    min_height = min(min_height, height);
+  }
+  return capacity;
+}
+// @exclude
+
+// O(n^2) checking answer
+template <typename HeightType>
+HeightType check_ans(const vector<HeightType>& h) {
+  HeightType cap = 0;
+
+  for (int i = 1; i < h.size(); ++i) {
+    for (int j = 0; j < i; ++j) {
+      cap = max(cap, h[i] - h[j]);
+    }
+  }
+  return cap;
+}
+
+int main(int argc, char *argv[]) {
+  srand(time(nullptr));
+  for (int times = 0; times < 1000; ++times) {
+    int n;
+    if (argc == 2) {
+      n = atoi(argv[1]);
+    } else {
+      n = 1 + rand() % 10000;
+    }
+    vector<int> A;
+    for (int i = 0; i < n; ++i) {
+      A.emplace_back(rand());
+    }
+    cout << find_battery_capacity(A) << endl;
+    assert(check_ans(A) == find_battery_capacity(A));
+  }
+  return 0;
+}
