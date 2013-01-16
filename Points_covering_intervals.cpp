@@ -18,8 +18,8 @@ class Interval {
 template <typename TimeType>
 class LeftComp {
   public:
-    bool operator()(
-      const Interval<TimeType> &a, const Interval<TimeType> &b) const {
+    bool operator()(const Interval<TimeType> &a,
+                    const Interval<TimeType> &b) const {
       return a.left != b.left ? a.left < b.left : a.right < b.right;
     }
 };
@@ -27,8 +27,8 @@ class LeftComp {
 template <typename TimeType>
 class RightComp {
   public:
-    bool operator()(
-      const Interval<TimeType> &a, const Interval<TimeType> &b) const {
+    bool operator()(const Interval<TimeType> &a,
+                    const Interval<TimeType> &b) const {
       return a.right != b.right ? a.right < b.right : a.left < b.left;
     }
 };
@@ -43,10 +43,10 @@ vector<TimeType> find_minimum_visits(const vector<Interval<TimeType> > &I) {
 
   vector<TimeType> S;
   while (L.size() && R.size()) {
-    S.emplace_back(R.begin()->right);
+    S.emplace_back(R.cbegin()->right);
 
-    // Remove the intervals which intersect with R.begin()
-    auto l_end = L.upper_bound(*R.begin()), it = L.begin();
+    // Remove the intervals which intersect with R.cbegin()
+    auto l_end = L.upper_bound(*R.cbegin()), it = L.cbegin();
     while (it != l_end) {
       R.erase(*it);
       L.erase(it++);

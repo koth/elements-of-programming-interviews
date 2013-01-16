@@ -24,9 +24,10 @@ string rand_string(int len) {
 
 // @include
 // Use BFS to find the least steps of transformation
-int transform_string(unordered_set<string> D, const string &s, const string &t) {
+int transform_string(unordered_set<string> D, const string &s,
+                     const string &t) {
   queue<pair<string, int> > q;
-  D.erase(s); // mark s as visited by erasing it in D
+  D.erase(s);  // mark s as visited by erasing it in D
   q.emplace(s, 0);
 
   while (!q.empty()) {
@@ -39,20 +40,20 @@ int transform_string(unordered_set<string> D, const string &s, const string &t) 
     // Try all possible transformations of f.first
     string str = f.first;
     for (int i = 0; i < str.size(); ++i) {
-      for (int j = 0; j < 26; ++j) { // iterates through 'a' ~ 'z'
-        str[i] = 'a' + j; // change the (i + 1)-th char of str
-        unordered_set<string>::iterator it(D.find(str));
+      for (int j = 0; j < 26; ++j) {  // iterates through 'a' ~ 'z'
+        str[i] = 'a' + j;  // change the (i + 1)-th char of str
+        auto it(D.find(str));
         if (it != D.end()) {
           D.erase(it);  // mark str as visited by erasing it
           q.emplace(str, f.second + 1);
         }
       }
-      str[i] = f.first[i]; // revert the change of str
+      str[i] = f.first[i];  // revert the change of str
     }
     q.pop();
   }
 
-  return -1; // cannot find a possible transformations
+  return -1;  // cannot find a possible transformations
 }
 // @exclude
 

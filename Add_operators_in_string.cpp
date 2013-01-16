@@ -12,7 +12,7 @@ using namespace std;
 // @include
 int evaluate(list<int> operand_list, const list<char> &oper_list) {
   // Evaluate '*' first
-  list<int>::iterator operand_it = operand_list.begin();
+  auto operand_it = operand_list.begin();
   for (const char &oper : oper_list) {
     if (oper == '*') {
       int product = *operand_it;
@@ -25,18 +25,17 @@ int evaluate(list<int> operand_list, const list<char> &oper_list) {
   }
 
   // Evaluate '+' second
-  return accumulate(operand_list.begin(), operand_list.end(), 0);
+  return accumulate(operand_list.cbegin(), operand_list.cend(), 0);
 }
 
-bool exp_synthesis_helper(
-    const vector<int> &A, const int &k,
-    list<int> &operand_list, list<char> &oper_list,
-    int cur, const int &level) {
+bool exp_synthesis_helper(const vector<int> &A, const int &k,
+                          list<int> &operand_list, list<char> &oper_list,
+                          int cur, const int &level) {
   cur = cur * 10 + A[level] - '0';
   if (level == A.size() - 1) {
     operand_list.emplace_back(cur);
     if (evaluate(operand_list, oper_list) == k) {
-      list<int>::iterator operand_it = operand_list.begin();
+      auto operand_it = operand_list.cbegin();
       cout << *operand_it++;
       for (const char &oper : oper_list) {
         cout << ' ' << oper << ' ' << *operand_it++;
@@ -54,14 +53,14 @@ bool exp_synthesis_helper(
     // Add operator '+'
     operand_list.emplace_back(cur);
     if (k - evaluate(operand_list, oper_list) <=
-      stoi(string(A.begin() + level + 1, A.end()))) { // pruning
+        stoi(string(A.cbegin() + level + 1, A.cend()))) {  // pruning
       oper_list.emplace_back('+');
       if (exp_synthesis_helper(A, k, operand_list, oper_list, 0, level + 1)) {
         return true;
       }
       oper_list.pop_back();  // revert
     }
-    operand_list.pop_back(); // revert
+    operand_list.pop_back();  // revert
 
     // Add operator '*'
     operand_list.emplace_back(cur), oper_list.emplace_back('*');

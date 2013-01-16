@@ -17,7 +17,7 @@ public class EquivClasses {
    * i is equivalent to.
    */
 
-  public static int [] ComputeEquivalenceClasses( int N, int A[], int B[] ) {
+  public static int [] ComputeEquivalenceClasses(int N, int A[], int B[]) {
     int[] F = new int[N];
     int numEquivalentPairs = A.length;
     for (int i = 0 ; i < F.length; ++i) {

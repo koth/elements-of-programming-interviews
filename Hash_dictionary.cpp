@@ -19,7 +19,7 @@ int string_hash(const string &str, const int &modulus) {
   const int MULT = 997;
   // @exclude
   /*
-  return accumulate(str.begin(), str.end(), 0,
+  return accumulate(str.cbegin(), str.cend(), 0,
     [MULT, modulus](const int &val, const char &c) -> int {
       return (val * MULT + c) % modulus;
     });

@@ -9,28 +9,31 @@ using namespace std;
 
 // @include
 template <typename T>
+void pop_unqualified(const vector<T> &A, const T &A_i, const int &i,
+                    deque<T> &Q) {
+  // Delete elements from tail of Q whose values are not greater than A[i]
+  while (!Q.empty() && A[i] >= A[Q.back()]) {
+    Q.pop_back();
+  }
+  Q.emplace_back(i);
+}
+
+template <typename T>
 vector<T> max_sliding_window(const vector<T> &A, const int &w) {
   deque<T> Q;
   for (int i = 0; i < w; ++i) {
-    while (!Q.empty() && A[i] >= A[Q.back()]) {
-      Q.pop_back();
-    }
-    Q.emplace_back(i);
+    pop_unqualified(A, A[i], i, Q);
   }
 
   // Find the maximum for A[i - w : i - 1]
   vector<T> ret;
   for (int i = w; i < A.size(); ++i) {
     ret.emplace_back(A[Q.front()]);
-    // Expire the elements whose index <= i - w
-    while (!Q.empty() && Q.front() <= i - w) {
+    // Expire the element at the head if its index <= i - w
+    if (!Q.empty() && Q.front() <= i - w) {
       Q.pop_front();
     }
-    // Add new elements
-    while (!Q.empty() && A[i] >= A[Q.back()]) {
-      Q.pop_back();
-    }
-    Q.emplace_back(i);
+    pop_unqualified(A, A[i], i, Q);
   }
   ret.emplace_back(A[Q.front()]);
   return ret;

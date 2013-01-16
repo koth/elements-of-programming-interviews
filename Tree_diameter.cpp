@@ -15,11 +15,12 @@ class TreeNode {
 };
 
 // Return (height, diameter) pair
-pair<double, double> compute_height_and_diamemter(const shared_ptr<TreeNode> &r) {
+pair<double, double> compute_height_and_diameter(
+    const shared_ptr<TreeNode> &r) {
   double diameter = numeric_limits<double>::min();
   array<double, 2> height = {0.0, 0.0};  // store the max 2 heights
   for (const pair<shared_ptr<TreeNode>, double> &e : r->edges) {
-    pair<double, double> h_d = compute_height_and_diamemter(e.first);
+    pair<double, double> h_d = compute_height_and_diameter(e.first);
     if (h_d.first + e.second > height[0]) {
       height[1] = height[0];
       height[0] = h_d.first + e.second;
@@ -32,7 +33,7 @@ pair<double, double> compute_height_and_diamemter(const shared_ptr<TreeNode> &r)
 }
 
 double compute_diameter(const shared_ptr<TreeNode> &T) {
-  return T ? compute_height_and_diamemter(T).second : 0.0;
+  return T ? compute_height_and_diameter(T).second : 0.0;
 }
 // @exclude
 

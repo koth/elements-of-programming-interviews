@@ -11,7 +11,7 @@ using namespace std;
 // Build a BST based on preorder[s : e - 1], return its root
 template <typename T>
 shared_ptr<BinarySearchTree<T> > rebuild_BST_from_preorder_helper(
-  const vector<T> &preorder, const int &s, const int &e) {
+    const vector<T> &preorder, const int &s, const int &e) {
   if (s < e) {
     int x = s + 1;
     while (x < e && preorder[x] < preorder[s]) {
@@ -28,7 +28,7 @@ shared_ptr<BinarySearchTree<T> > rebuild_BST_from_preorder_helper(
 // Given a preorder traversal of a BST, return its root
 template <typename T>
 shared_ptr<BinarySearchTree<T> > rebuild_BST_from_preorder(
-  const vector<T> &preorder) {
+    const vector<T> &preorder) {
   return rebuild_BST_from_preorder_helper(preorder, 0, preorder.size());
 }
 // @exclude

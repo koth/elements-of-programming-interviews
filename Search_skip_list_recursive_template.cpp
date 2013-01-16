@@ -13,7 +13,8 @@ class node_t {
 
 // @include
 template <typename T>
-void search_postings_list_helper(const shared_ptr<node_t<T> > &L, int &order) {
+void search_postings_list_helper(const shared_ptr<node_t<T> > &L,
+                                 int &order) {
   if (L && L->order == -1) {
     L->order = order++;
     search_postings_list_helper<T>(L->jump, order);
@@ -31,7 +32,7 @@ void search_postings_list(const shared_ptr<node_t<T> > &L) {
 int main(int argc, char *argv[]) {
   shared_ptr<node_t<int> > L = nullptr, curr;
   curr = L;
-  // build a linkedd list L->1->2->3->4->5->nullptr
+  // build a linked list L->1->2->3->4->5->nullptr
   for (size_t i = 0; i < 5; ++i) {
     shared_ptr<node_t<int> > temp = shared_ptr<node_t<int> >(new node_t<int>{-1, nullptr, nullptr});
     if (curr) {
@@ -41,10 +42,10 @@ int main(int argc, char *argv[]) {
       curr = L = temp;
     }
   }
-  L->jump = nullptr; // no jump from 1
+  L->jump = nullptr;  // no jump from 1
   L->next->jump = L->next->next->next;  // 2's jump points to 4
   L->next->next->jump = L;  // 3's jump points to 1
-  L->next->next->next->jump = nullptr; // no jump from 4
+  L->next->next->next->jump = nullptr;  // no jump from 4
   L->next->next->next->next->jump = L->next->next->next->next;  // 5's jump points to 5
   shared_ptr<node_t<int> > temp = L;
   search_postings_list(L);

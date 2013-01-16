@@ -11,8 +11,8 @@ using namespace std;
 
 // @include
 vector<pair<int, int> > find_stable_assignment(
-  const vector<vector<int> > &professor_preference,
-  const vector<vector<int> > &student_preference) {
+    const vector<vector<int> > &professor_preference,
+    const vector<vector<int> > &student_preference) {
   queue<int> free_student;  // stores currently free students
   for (int i = 0; i < student_preference.size(); ++i) {
     free_student.emplace(i);
@@ -30,13 +30,13 @@ vector<pair<int, int> > find_stable_assignment(
       professor_choice[j] = i;
       free_student.pop();
     } else {  // this professor has student now
-      int original_pref = find(
-        professor_preference[j].begin(),
-        professor_preference[j].end(),
-        professor_choice[j]) - professor_preference[j].begin();
-      int new_pref = find(
-        professor_preference[j].begin(), professor_preference[j].end(), i) -
-        professor_preference[j].begin();
+      int original_pref = find(professor_preference[j].cbegin(),
+                               professor_preference[j].cend(),
+                               professor_choice[j]) -
+                          professor_preference[j].cbegin();
+      int new_pref = find(professor_preference[j].cbegin(),
+                          professor_preference[j].cend(), i) -
+                     professor_preference[j].cbegin();
       if (new_pref < original_pref) {   // this professor prefers the new one
         free_student.emplace(professor_choice[j]);
         professor_choice[j] = i;
@@ -73,10 +73,10 @@ void check_ans(const vector<vector<int> > &professor_preference, const vector<ve
     for (int j = i + 1; j < match_result.size(); ++j) {
       int s0 = match_result[i].first, a0 = match_result[i].second;
       int s1 = match_result[j].first, a1 = match_result[j].second;
-      int a0_in_s0_order = find(student_preference[s0].begin(), student_preference[s0].end(), a0) - student_preference[s0].begin();
-      int a1_in_s0_order = find(student_preference[s0].begin(), student_preference[s0].end(), a1) - student_preference[s0].begin();
-      int s0_in_a1_order = find(professor_preference[a1].begin(), professor_preference[a1].end(), s0) - professor_preference[a1].begin();
-      int s1_in_a1_order = find(professor_preference[a1].begin(), professor_preference[a1].end(), s1) - professor_preference[a1].begin();
+      int a0_in_s0_order = find(student_preference[s0].cbegin(), student_preference[s0].cend(), a0) - student_preference[s0].cbegin();
+      int a1_in_s0_order = find(student_preference[s0].cbegin(), student_preference[s0].cend(), a1) - student_preference[s0].cbegin();
+      int s0_in_a1_order = find(professor_preference[a1].cbegin(), professor_preference[a1].cend(), s0) - professor_preference[a1].cbegin();
+      int s1_in_a1_order = find(professor_preference[a1].cbegin(), professor_preference[a1].cend(), s1) - professor_preference[a1].cbegin();
       assert(a0_in_s0_order < a1_in_s0_order || s1_in_a1_order < s0_in_a1_order);
     }
   }

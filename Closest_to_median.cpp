@@ -9,12 +9,12 @@
 using namespace std;
 
 // @include
-// Promotes to double to prevent precision error
+// Promote to double to prevent precision error
 template <typename T>
 double find_median(vector<T> &A) {
   int half = A.size() >> 1;
   nth_element(A.begin(), A.begin() + half, A.end());
-  if (A.size() & 1) {   // A has odd number elements
+  if (A.size() & 1) {  // A has odd number elements
     return A[half];
   } else {  // A has even number elements
     T x = A[half];

@@ -22,22 +22,22 @@ class Num {
     int a, b;
     double val;
 
-    Num(const int &a, const int &b): a(a), b(b), val(a + b * sqrt(2)) {}
+    Num(const int &a, const int &b) : a(a), b(b), val(a + b * sqrt(2)) {}
 
-    bool operator<(const Num &n) const {
+    const bool operator<(const Num &n) const {
       return val > n.val;
     }
 
     // Equal function for hash
-    bool operator==(const Num &n) const {
-      return (a == n.a && b == n.b);
+    const bool operator==(const Num &n) const {
+      return a == n.a && b == n.b;
     }
 };
 
 // Hash function for Num
 class HashNum {
   public:
-    size_t operator()(const Num &n) const {
+    const size_t operator()(const Num &n) const {
       return hash<int>()(n.a) ^ hash<int>()(n.b);
     }
 };

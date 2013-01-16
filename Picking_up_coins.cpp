@@ -7,21 +7,17 @@ using namespace std;
 
 // @include
 template <typename CoinType>
-CoinType pick_up_coins_helper(
-    const vector<CoinType> &C,
-    const int &a, const int &b,
-    vector<vector<CoinType> > &T) {
-  // Base condition
+CoinType pick_up_coins_helper(const vector<CoinType> &C, const int &a,
+                              const int &b, vector<vector<CoinType> > &T) {
   if (a > b) {
-    return 0;
+    return 0;  // base condition
   }
 
   if (T[a][b] == -1) {
-    T[a][b] = max(
-        C[a] + min(pick_up_coins_helper(C, a + 2, b, T),
-          pick_up_coins_helper(C, a + 1, b - 1, T)),
-        C[b] + min(pick_up_coins_helper(C, a + 1, b - 1, T),
-          pick_up_coins_helper(C, a, b - 2, T)));
+    T[a][b] = max(C[a] + min(pick_up_coins_helper(C, a + 2, b, T),
+                             pick_up_coins_helper(C, a + 1, b - 1, T)),
+                  C[b] + min(pick_up_coins_helper(C, a + 1, b - 1, T),
+                             pick_up_coins_helper(C, a, b - 2, T)));
   }
   return T[a][b];
 }

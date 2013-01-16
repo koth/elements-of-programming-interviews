@@ -9,8 +9,8 @@ using namespace std;
 
 // @include
 template <typename T>
-T find_optimum_subarray_using_comp(
-  const vector<T> &A, const T&(*comp)(const T&, const T&)) {
+T find_optimum_subarray_using_comp(const vector<T> &A, 
+                                   const T&(*comp)(const T&, const T&)) {
   T till = 0, overall = 0;
   for (const T &a : A) {
     till = comp(a, a + till);
@@ -22,9 +22,9 @@ T find_optimum_subarray_using_comp(
 template <typename T>
 T max_subarray_sum_in_circular(const vector<T> &A) {
   // Find the max in non-circular case and circular case
-  return max(find_optimum_subarray_using_comp(A, max), // non-circular case
-    accumulate(A.begin(), A.end(), 0) -
-      find_optimum_subarray_using_comp(A, min)); // circular case
+  return max(find_optimum_subarray_using_comp(A, max),  // non-circular case
+             accumulate(A.cbegin(), A.cend(), 0) -
+             find_optimum_subarray_using_comp(A, min));  // circular case
 }
 // @exclude
 

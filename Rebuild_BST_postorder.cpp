@@ -11,15 +11,15 @@ using namespace std;
 // Build a BST based on postorder[s : e - 1], return its root
 template <typename T>
 shared_ptr<BinarySearchTree<T> > rebuild_BST_postorder_helper(
-  const vector<T> &postorder, const int &s, const int &e) {
+    const vector<T> &postorder, const int &s, const int &e) {
   if (s < e) {
     int x = s;
     while (x < e && postorder[x] < postorder[s]) {
       ++x;
     }
-    return
-      shared_ptr<BinarySearchTree<T> >(new BinarySearchTree<T>{postorder[e - 1],
-        rebuild_BST_postorder_helper(postorder, s, x),
+    return shared_ptr<BinarySearchTree<T> >(
+      new BinarySearchTree<T>{
+        postorder[e - 1], rebuild_BST_postorder_helper(postorder, s, x),
         rebuild_BST_postorder_helper(postorder, x, e - 1)});
   }
   return nullptr;
@@ -28,7 +28,7 @@ shared_ptr<BinarySearchTree<T> > rebuild_BST_postorder_helper(
 // Given a postorder traversal of a BST, return its root
 template <typename T>
 shared_ptr<BinarySearchTree<T> > rebuild_BST_from_postorder(
-  const vector<T> &postorder) {
+    const vector<T> &postorder) {
   return rebuild_BST_postorder_helper(postorder, 0, postorder.size());
 }
 // @exclude

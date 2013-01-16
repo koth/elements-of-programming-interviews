@@ -5,44 +5,32 @@
 using namespace std;
 
 // @include
-bool is_match_helper(const string &s, int a, const string &m, const int &b) {
-  if (b == m.size()) {
-    return (a == s.size());
-  } else if (b == m.size() - 1) {
-    if (a == s.size() - 1) {
-      return (s[a] == m[b] || m[b] == '.');
-    } else {
-      return false;
-    }
-  } else {
-    if (m[b + 1] == '*') {
-      if (is_match_helper(s, a, m, b + 2)) {
+bool is_match(const string &s, const string &m) {
+  if (m.empty()) {
+    return s.empty();
+  }
+
+  if (m.size() == 1) {
+    return s.size() == 1 && (s.front() == m.front() || m.front() == '.');
+  }
+
+  if (m[1] == '*') {
+    for (int i = 0; i < s.size() && (s[i] == m.front() || m.front() == '.'); ++i) {
+      if (is_match(s.substr(i + 1), m.substr(2))) {
         return true;
       }
-      while (a < s.size() && (s[a] == m[b] || m[b] == '.')) {
-        if (is_match_helper(s, a + 1, m, b + 2)) {
-          return true;
-        }
-        ++a;
-      }
-      return false;
-    } else {
-      return
-        a < s.size() &&
-        (s[a] == m[b] || m[b] == '.') &&
-        is_match_helper(s, a + 1, m, b + 1);
     }
+    return is_match(s, m.substr(2));
   }
-}
 
-bool is_match(const string &s, const string &m) {
-  return is_match_helper(s, 0, m, 0);
+  return !s.empty() && (s.front() == m.front() || m.front() == '.') &&
+    is_match(s.substr(1), m.substr(1));
 }
 // @exclude
 
 int main(int argc, char *argv[]) {
   if (argc == 3) {
-    // Remember to put '\' before any special metacharater you input
+    // Remember to put '\' before any special metacharacter you input
     cout << boolalpha << is_match(argv[1], argv[2]) << endl;
   }
   assert(true == is_match("c", "."));
@@ -55,6 +43,7 @@ int main(int argc, char *argv[]) {
   assert(true == is_match("ac", ".*a.*c"));
   assert(true == is_match("acac", ".*a.*c"));
   assert(true == is_match("", ".*"));
+  assert(true == is_match("a", ".*"));
   assert(true == is_match("cagt", ".*c.*a.*g.*t"));
   assert(true == is_match("cagt", "c*ca*ag*gt*"));
   assert(true == is_match("cagtt", "c*ca*ag*gt*tt"));

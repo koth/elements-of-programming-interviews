@@ -20,12 +20,12 @@ int Levenshtein_distance(string A, string B) {
   iota(D.begin(), D.end(), 0);
 
   for (int i = 1; i <= A.size(); ++i) {
-    int pre_i_1_j_1 = D[0]; // stores the value of D[i - 1][j - 1]
+    int pre_i_1_j_1 = D[0];  // stores the value of D[i - 1][j - 1]
     D[0] = i;
     for (int j = 1; j <= B.size(); ++j) {
-      int pre_i_1_j = D[j]; // stores the value of D[i -1][j]
+      int pre_i_1_j = D[j];  // stores the value of D[i -1][j]
       D[j] = A[i - 1] == B[j - 1] ?
-        pre_i_1_j_1 : 1 + min(pre_i_1_j_1, min(D[j - 1], D[j]));
+             pre_i_1_j_1 : 1 + min(pre_i_1_j_1, min(D[j - 1], D[j]));
       // Previous D[i - 1][j] will become the next D[i - 1][j - 1]
       pre_i_1_j_1 = pre_i_1_j;
     }

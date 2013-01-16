@@ -63,7 +63,7 @@ class Queue {
     const T &max(void) const {
       if (A.empty() == false) {
         return B.empty() ? A.max() : std::max(A.max(), B.max());
-      } else { // A.empty() == true
+      } else {  // A.empty() == true
         if (B.empty() == false) {
           return B.max();
         }

@@ -12,9 +12,9 @@ int celebrity_finding(const vector<vector<bool> > &F) {
   int i = 0, j = 1;
   while (j < F.size()) {
     if (F[i][j] == true) {
-      i = j++; // all candidates j' < j are not celebrity candidates
+      i = j++;  // all candidates j' < j are not celebrity candidates
     } else {  // F[i][j] == false
-      ++j; // i is still a celebrity candidate but j is not
+      ++j;  // i is still a celebrity candidate but j is not
     }
   }
   return i;

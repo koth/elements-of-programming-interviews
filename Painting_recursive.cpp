@@ -17,10 +17,8 @@ void print_matrix(vector<vector<bool> > &A) {
 }
 
 // @include
-void flip_color_helper(
-    vector<vector<bool> > &A,
-    const pair<int, int> &curr,
-    vector<vector<bool> > &processed) {
+void flip_color_helper(vector<vector<bool> > &A, const pair<int, int> &curr,
+                       vector<vector<bool> > &processed) {
   const array<array<int, 2>, 4> dir = {-1, 0, 1, 0, 0, -1, 0, 1};
 
   for (auto &d : dir) {
@@ -33,7 +31,7 @@ void flip_color_helper(
       flip_color_helper(A, next, processed);
     }
   }
-  A[curr.first][curr.second] = !A[curr.first][curr.second]; // filp the color
+  A[curr.first][curr.second] = !A[curr.first][curr.second];  // flip the color
 }
 
 void flip_color(vector<vector<bool> > &A, const int &x, const int &y) {

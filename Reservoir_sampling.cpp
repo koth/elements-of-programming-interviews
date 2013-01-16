@@ -21,8 +21,7 @@ vector<T> reservoir_sampling(istringstream &sin, const int &k) {
   // After the first k elements
   int element_num = k + 1;
   while (sin >> x) {
-    random_device rd; // seed of random number generator
-    default_random_engine gen(rd()); // random number generator
+    default_random_engine gen((random_device())());  // random num generator
     // Generate random int in [0, element_num]
     uniform_int_distribution<int> dis(0, element_num++);
     int tar = dis(gen);

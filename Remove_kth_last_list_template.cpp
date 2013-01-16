@@ -28,7 +28,7 @@ void remove_kth_last(shared_ptr<node_t<T> > &L, const int &k) {
   if (pre) {
     pre->next = curr->next;
   } else {
-    L = curr->next; // special case: delete L
+    L = curr->next;  // special case: delete L
   }
 }
 // @exclude

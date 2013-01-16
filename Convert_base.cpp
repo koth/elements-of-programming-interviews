@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cassert>
 #include <ctime>
 #include <cstdlib>
 #include <algorithm>
@@ -22,7 +23,7 @@ string convert_base(const string &s, const int &b1, const int &b2) {
     x /= b2;
   }
 
-  if (ans.size() == 0) {
+  if (ans.empty()) {
     ans.push_back('0');
   }
   if (neg) {
@@ -51,10 +52,14 @@ int main(int argc, char *argv[]) {
   if (argc == 4) {
     string input(argv[1]);
     cout << convert_base(input, atoi(argv[2]), atoi(argv[3])) << endl;
+    assert(input == convert_base(convert_base(input, atoi(argv[2]), atoi(argv[3])), atoi(argv[3]), atoi(argv[2])));
   } else {
-    string input = rand_int_string(1 + rand() % 10);
-    int base = 2 + rand() % 15;
-    cout << "input is " << input << ", base1 = 10, base2 = " << base << ", ans = " << convert_base(input, 10, base) << endl;
+    for (int times = 0; times < 100000; ++times) {
+      string input = rand_int_string(1 + rand() % 9);
+      int base = 2 + rand() % 15;
+      cout << "input is " << input << ", base1 = 10, base2 = " << base << ", ans = " << convert_base(input, 10, base) << endl;
+      assert(input == convert_base(convert_base(input, 10, base), base, 10));
+    }
   }
   return 0;
 }

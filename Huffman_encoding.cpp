@@ -28,7 +28,8 @@ class BinaryTree {
 
 class Compare {
   public:
-    bool operator()(const BinaryTree* lhs, const BinaryTree* rhs) const {
+    const bool operator()(const BinaryTree* lhs,
+                          const BinaryTree* rhs) const {
       return lhs->prob > rhs->prob;
     }
 };
@@ -39,7 +40,7 @@ void assign_huffman_code(const BinaryTree* r, const string &s) {
     // This node (i.e.,leaf) contains symbol
     if (r->s) {
       r->s->code = s;
-    } else { // non-leaf node
+    } else {  // non-leaf node
       assign_huffman_code(r->left, s + '0');
       assign_huffman_code(r->right, s + '1');
     }
@@ -50,8 +51,8 @@ void Huffman_encoding(vector<Symbol> &symbols) {
   // Initially assign each symbol into min->heap
   priority_queue<BinaryTree*, vector<BinaryTree*>, Compare> min_heap;
   for (Symbol &s : symbols) {
-    min_heap.emplace(
-      new BinaryTree{s.prob, shared_ptr<Symbol>(&s), nullptr, nullptr});
+    min_heap.emplace(new BinaryTree{s.prob, shared_ptr<Symbol>(&s),
+                                    nullptr, nullptr});
   }
 
   // Keep combining two nodes until there is one node left

@@ -16,10 +16,9 @@ class Skyline {
 };
 
 template <typename CoordType, typename HeightType>
-void merge_intersect_skylines(
-    vector<Skyline<CoordType, HeightType> > &merged,
-    Skyline<CoordType, HeightType> &a, int &a_idx,
-    Skyline<CoordType, HeightType> &b, int &b_idx) {
+void merge_intersect_skylines(vector<Skyline<CoordType, HeightType> > &merged,
+                              Skyline<CoordType, HeightType> &a, int &a_idx,
+                              Skyline<CoordType, HeightType> &b, int &b_idx) {
   if (a.right <= b.right) {
     if (a.height > b.height) {
       if (b.right != a.right) {
@@ -30,14 +29,14 @@ void merge_intersect_skylines(
       }
     } else if (a.height == b.height) {
       b.left = a.left, ++a_idx;
-    } else { // a.height < b.height
+    } else {  // a.height < b.height
       if (a.left != b.left) {
         merged.emplace_back(
           Skyline<CoordType, HeightType>{a.left, b.left, a.height});
       }
       ++a_idx;
     }
-  } else { // a.right > b.right
+  } else {  // a.right > b.right
     if (a.height >= b.height) {
       ++b_idx;
     } else {
@@ -53,8 +52,8 @@ void merge_intersect_skylines(
 
 template <typename CoordType, typename HeightType>
 vector<Skyline<CoordType, HeightType> > merge_skylines(
-  vector<Skyline<CoordType, HeightType> > &L,
-  vector<Skyline<CoordType, HeightType> > &R) {
+    vector<Skyline<CoordType, HeightType> > &L,
+    vector<Skyline<CoordType, HeightType> > &R) {
   int i = 0, j = 0;
   vector<Skyline<CoordType, HeightType> > merged;
 
@@ -70,18 +69,18 @@ vector<Skyline<CoordType, HeightType> > merge_skylines(
     }
   }
 
-  copy(L.begin() + i, L.end(), back_inserter(merged));
-  copy(R.begin() + j, R.end(), back_inserter(merged));
+  copy(L.cbegin() + i, L.cend(), back_inserter(merged));
+  copy(R.cbegin() + j, R.cend(), back_inserter(merged));
   return merged;
 }
 
 template <typename CoordType, typename HeightType>
 vector<Skyline<CoordType, HeightType> > drawing_skylines_helper(
-  vector<Skyline<CoordType, HeightType> > &skylines,
-  const int &start, const int &end) {
+    vector<Skyline<CoordType, HeightType> > &skylines,
+    const int &start, const int &end) {
   if (end - start <= 1) {
     // 0 or 1 skyline, just copy it
-    return {skylines.begin() + start, skylines.begin() + end};
+    return {skylines.cbegin() + start, skylines.cbegin() + end};
   }
   int mid = start + ((end - start) >> 1);
   auto L = drawing_skylines_helper(skylines, start, mid);
@@ -91,7 +90,7 @@ vector<Skyline<CoordType, HeightType> > drawing_skylines_helper(
 
 template <typename CoordType, typename HeightType>
 vector<Skyline<CoordType, HeightType> > drawing_skylines(
-  vector<Skyline<CoordType, HeightType> > skylines) {
+    vector<Skyline<CoordType, HeightType> > skylines) {
   return drawing_skylines_helper(skylines, 0, skylines.size());
 }
 // @exclude

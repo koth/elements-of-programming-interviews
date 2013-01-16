@@ -38,7 +38,7 @@ int count_inversions_helper(vector<T> &A, const int &start, const int &end) {
 
   int mid = start + ((end - start) >> 1);
   return count_inversions_helper(A, start, mid) +
-    count_inversions_helper(A, mid, end) + merge(A, start, mid, end);
+         count_inversions_helper(A, mid, end) + merge(A, start, mid, end);
 }
 
 template <typename T>

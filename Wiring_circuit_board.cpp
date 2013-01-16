@@ -22,7 +22,7 @@ bool BFS(GraphVertex* s) {
 
   while (q.empty() == false) {
     for (GraphVertex* &t : q.front()->edges) {
-      if (t->d == -1) { // unvisited vertex
+      if (t->d == -1) {  // unvisited vertex
         t->d = q.front()->d + 1;
         q.emplace(t);
       } else if (t->d == q.front()->d) {

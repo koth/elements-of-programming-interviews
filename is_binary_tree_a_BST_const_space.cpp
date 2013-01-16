@@ -21,7 +21,7 @@ bool is_BST(shared_ptr<BinaryTree<T> > n) {
       }
 
       // Build the successor link
-      if (pre->right) {   // pre->right == n
+      if (pre->right) {  // pre->right == n
         // Revert the successor link if predecessor's successor is n
         pre->right = nullptr;
         if (last > n->data) {

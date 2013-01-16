@@ -14,7 +14,7 @@ vector<int> next_permutation(vector<int> p) {
     --k;
   }
   if (k == -1) {
-    return {}; // p is the last permutation
+    return {};  // p is the last permutation
   }
 
   int l;
@@ -65,7 +65,7 @@ int main(int argc, char *argv[]){
     }
     cout << endl;
     //*/
-    assert(equal(ans.begin(), ans.end(), p.begin()));
+    assert(equal(ans.cbegin(), ans.cend(), p.cbegin()));
   }
   return 0;
 }

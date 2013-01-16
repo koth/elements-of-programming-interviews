@@ -19,12 +19,11 @@ vector<int> online_sampling(const int &n, const int &k) {
   unordered_map<int, int> table;
   vector<int> res;
   for (int i = 0; i < k; ++i) {
-    random_device rd; // seed of random number generator
-    default_random_engine gen(rd()); // random number generator
+    default_random_engine gen((random_device())());  // random num generator
     // Generate random int in [i, n - 1]
     uniform_int_distribution<int> dis(i, n - 1);
     int r = dis(gen);
-    unordered_map<int, int>::iterator it = table.find(r);
+    auto it = table.find(r);
     if (it == table.end()) {  // r is not in table
       res.emplace_back(r);
       table.emplace(r, i);

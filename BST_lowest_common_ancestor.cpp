@@ -5,22 +5,20 @@
 // @include
 template <typename T>
 shared_ptr<BinarySearchTree<T> > find_LCA(
-  shared_ptr<BinarySearchTree<T> > x,
-  const shared_ptr<BinarySearchTree<T> > &s,
-  const shared_ptr<BinarySearchTree<T> > &b) {
+    shared_ptr<BinarySearchTree<T> > x,
+    const shared_ptr<BinarySearchTree<T> > &s,
+    const shared_ptr<BinarySearchTree<T> > &b) {
   while (x->data < s->data || x->data > b->data) {
     if (x->data < s->data) {
-      // LCA must in x's right child
-      x = x->right;
+      x = x->right;  // LCA must be in x's right child
     }
     if (x->data > b->data) {
-      // LCA must in x's left child
-      x = x->left;
+      x = x->left;  // LCA must be in x's left child
     }
   }
 
   // x->data >= s->data && x->data <= b->data
-  return x; // x is LCA
+  return x;  // x is LCA
 }
 // @exclude
 

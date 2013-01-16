@@ -16,13 +16,13 @@ using namespace std::tr1;
 
 // @include
 int minimize_difference(const vector<int> &A) {
-  int sum = accumulate(A.begin(), A.end(), 0);
+  int sum = accumulate(A.cbegin(), A.cend(), 0);
 
   unordered_set<int> is_Ok;
   is_Ok.emplace(0);
   for (const int &item : A) {
     for (int v = sum >> 1; v >= item; --v) {
-      if (is_Ok.find(v - item) != is_Ok.end()) {
+      if (is_Ok.find(v - item) != is_Ok.cend()) {
         is_Ok.emplace(v);
       }
     }
@@ -30,7 +30,7 @@ int minimize_difference(const vector<int> &A) {
 
   // Find the first i from middle where is_Ok[i] == true
   for (int i = sum >> 1; i > 0; --i) {
-    if (is_Ok.find(i) != is_Ok.end()) {
+    if (is_Ok.find(i) != is_Ok.cend()) {
       return (sum - i) - i;
     }
   }
@@ -57,7 +57,7 @@ int main(int argc, char *argv[]) {
     cout << A[i] << ' ';
   }
   cout << endl;
-  int sum = accumulate(A.begin(), A.end(), 0);
+  int sum = accumulate(A.cbegin(), A.cend(), 0);
   cout << sum << endl;
   cout << "minimum difference = " << minimize_difference(A) << endl;
   return 0;

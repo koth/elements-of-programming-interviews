@@ -14,8 +14,8 @@ class TournamentTree {
     class TreeNode {
       public:
         CapacityType cap;  // leaf: remaining capacity in the box
-                             // non-leaf: max remaining capacity in the subtree
-        vector<ItemType> items;   // stores the items in the leaf node
+                           // non-leaf: max remaining capacity in the subtree
+        vector<ItemType> items;  // stores the items in the leaf node
     };
 
     // Store the complete binary tree. For tree[i],
@@ -23,14 +23,14 @@ class TournamentTree {
     vector<TreeNode> tree;
 
     // Recursively inserts item in tournament tree
-    void insertHelper(
-      const int &idx, const ItemType &item, const CapacityType &cap) {
+    void insertHelper(const int &idx, const ItemType &item,
+                      const CapacityType &cap) {
       int left = (idx << 1) + 1, right = (idx << 1) + 2;
       if (left < tree.size()) {  // internal node
         insertHelper(tree[left].cap >= cap ? left : right, item, cap);
-        tree[idx].cap = max(tree[left].cap,
-          right < tree.size() ?
-          tree[right].cap : numeric_limits<CapacityType>::min());
+        tree[idx].cap = max(tree[left].cap, 
+                            right < tree.size() ? tree[right].cap : 
+                            numeric_limits<CapacityType>::min());
       } else {  // leaf node
         tree[idx].cap -= cap, tree[idx].items.emplace_back(item);
       }

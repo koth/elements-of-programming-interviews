@@ -60,8 +60,8 @@ pair<int, int> find_smallest_subarray_covering_subset(
 
 // @include
 pair<int, int> find_smallest_subarray_covering_subset(
-  const vector<string> &A, const vector<string> &Q) {
-  unordered_set<string> dict(Q.begin(), Q.end());
+    const vector<string> &A, const vector<string> &Q) {
+  unordered_set<string> dict(Q.cbegin(), Q.cend());
   unordered_map<string, int> count_Q;
   int l = 0, r = 0;
   pair<int, int> res(-1, -1);
@@ -75,8 +75,8 @@ pair<int, int> find_smallest_subarray_covering_subset(
     }
 
     if (count_Q.size() == Q.size() &&
-      ((res.first == -1 && res.second == -1) ||
-       r - 1 - l < res.second - res.first)) {
+        ((res.first == -1 && res.second == -1) ||
+         r - 1 - l < res.second - res.first)) {
       res = {l, r - 1};
     }
 
@@ -87,7 +87,7 @@ pair<int, int> find_smallest_subarray_covering_subset(
         if (--(it->second) == 0) {
           count_Q.erase(it);
           if ((res.first == -1 && res.second == -1) ||
-             r - 1 - l < res.second - res.first) {
+              r - 1 - l < res.second - res.first) {
             res = {l, r - 1};
           }
         }
@@ -153,7 +153,7 @@ int main(int argc, char *argv[]) {
     }
     int m = 1 + rand() % dict.size();
     vector<string> Q;
-    for (unordered_set<string>::iterator it = dict.begin(); it != dict.end(); ++it) {
+    for (auto it = dict.cbegin(); it != dict.cend(); ++it) {
       Q.emplace_back(*it);
       if (--m == 0) {
         break;

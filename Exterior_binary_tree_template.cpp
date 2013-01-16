@@ -5,8 +5,8 @@ using namespace std;
 
 // @include
 template <typename T>
-void left_boundary_b_tree(
-  const shared_ptr<BinaryTree<T> > &n, const bool &is_boundary) {
+void left_boundary_b_tree(const shared_ptr<BinaryTree<T> > &n, 
+                          const bool &is_boundary) {
   if (n) {
     if (is_boundary || (!n->left && !n->right)) {
       cout << n->data << ' ';
@@ -17,8 +17,8 @@ void left_boundary_b_tree(
 }
 
 template <typename T>
-void right_boundary_b_tree(
-  const shared_ptr<BinaryTree<T> > &n, const bool &is_boundary) {
+void right_boundary_b_tree(const shared_ptr<BinaryTree<T> > &n, 
+                           const bool &is_boundary) {
   if (n) {
     right_boundary_b_tree(n->left, is_boundary && !n->right);
     right_boundary_b_tree(n->right, is_boundary);

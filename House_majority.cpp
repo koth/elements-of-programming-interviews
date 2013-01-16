@@ -9,21 +9,17 @@
 using namespace std;
 
 // @include
-double house_majority_helper(
-    const vector<double> &prob,
-    const int &a, const int &b,
-    vector<vector<double> > &P) {
+double house_majority_helper(const vector<double> &prob, const int &a, 
+                             const int &b, vector<vector<double> > &P) {
   if (a < b) {
-    return 0.0; // base case: not enough Republicans
-  }
-  if (a == 0 && b == 0) {
-    return 1.0; // base case
+    return 0.0;  // base case: not enough Republicans
+  } else if (a == 0 && b == 0) {
+    return 1.0;  // base case
   }
 
   if (P[a][b] == -1.0) {
-    P[a][b] =
-      house_majority_helper(prob, a - 1, b - 1, P) * prob[a] +
-      house_majority_helper(prob, a - 1, b, P) * (1.0 - prob[a]);
+    P[a][b] = house_majority_helper(prob, a - 1, b - 1, P) * prob[a] +
+              house_majority_helper(prob, a - 1, b, P) * (1.0 - prob[a]);
   }
   return P[a][b];
 }

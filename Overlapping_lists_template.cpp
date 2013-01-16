@@ -62,13 +62,13 @@ shared_ptr<node_t<T> > overlapping_no_cycle_lists(
   while (L1 && L2 && L1 != L2) {
     L1 = L1->next, L2 = L2->next;
   }
-  return L1; // nullptr means no overlap between L1 and L2
+  return L1;  // nullptr means no overlap between L1 and L2
 }
 
 // @include
 template <typename T>
-shared_ptr<node_t<T> > overlapping_lists(
-  shared_ptr<node_t<T> > L1, shared_ptr<node_t<T> > L2) {
+shared_ptr<node_t<T> > overlapping_lists(shared_ptr<node_t<T> > L1,
+                                         shared_ptr<node_t<T> > L2) {
   // Store the start of cycle if any
   shared_ptr<node_t<T> > s1 = has_cycle<T>(L1), s2 = has_cycle<T>(L2);
 
@@ -81,7 +81,7 @@ shared_ptr<node_t<T> > overlapping_lists(
     } while (temp != s1 && temp != s2);
     return temp == s1 ? s1 : nullptr;
   }
-  return nullptr; // one list has cycle, one list has no cycle
+  return nullptr;  // one list has cycle, one list has no cycle
 }
 // @exclude
 

@@ -11,7 +11,7 @@ using namespace std;
 // Build BST based on subarray A[start : end - 1]
 template <typename T>
 shared_ptr<BinarySearchTree<T> > build_BST_from_sorted_array_helper(
-  const vector<T> &A, const int &start, const int &end) {
+    const vector<T> &A, const int &start, const int &end) {
   if (start < end) {
     int mid = start + ((end - start) >> 1);
     return shared_ptr<BinarySearchTree<T> >(new BinarySearchTree<T>{
@@ -24,7 +24,8 @@ shared_ptr<BinarySearchTree<T> > build_BST_from_sorted_array_helper(
 }
 
 template <typename T>
-shared_ptr<BinarySearchTree<T> > build_BST_from_sorted_array(const vector<T> &A) {
+shared_ptr<BinarySearchTree<T> >
+  build_BST_from_sorted_array(const vector<T> &A) {
   return build_BST_from_sorted_array_helper(A, 0, A.size());
 }
 // @exclude

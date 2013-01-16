@@ -38,8 +38,8 @@ string intToString(int x) {
     s.push_back('0' + x % 10);
     x /= 10;
   }
-  if (s.size() == 0) {
-    return string("0");   // x is 0
+  if (s.empty()) {
+    return {"0"};  // x is 0
   }
 
   if (is_negative) {
@@ -50,23 +50,16 @@ string intToString(int x) {
 }
 
 int stringToInt(const string &s) {
-  bool is_negative;
-  int idx;
-  if (s[0] == '-') {
-    is_negative = true, idx = 1;
-  } else {
-    is_negative = false, idx = 0;
-  }
-
+  bool is_negative = s[0] == '-';
   int x = 0;
-  while (idx < s.size()) {
-    if (isdigit(s[idx])) {
-      x = x * 10 + s[idx++] - '0';
+
+  for (int i = is_negative; i < s.size(); ++i) {
+    if (isdigit(s[i])) {
+      x = x * 10 + s[i] - '0';
     } else {
       throw invalid_argument("illegal input");
     }
   }
-
   return is_negative ? -x : x;
 }
 // @exclude

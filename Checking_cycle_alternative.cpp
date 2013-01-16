@@ -21,10 +21,10 @@ shared_ptr<node_t<T> > has_cycle(const shared_ptr<node_t<T> > &head) {
       while (slow != fast) {
         slow = slow->next, fast = fast->next;
       }
-      return slow;  // the start of cycle
+      return slow;  // slow is the start of cycle
     }
   }
-  return nullptr;  // no cycle
+  return nullptr;  // means no cycle
 }
 // @exclude
 

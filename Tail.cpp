@@ -7,8 +7,8 @@
 using namespace std;
 
 // @include
-string tail(const char* file_name, const int &tail_count) {
-  fstream file_ptr(file_name);
+string tail(const string &file_name, const int &tail_count) {
+  fstream file_ptr(file_name.c_str());
 
   file_ptr.seekg(0, ios::end);
   int file_size = file_ptr.tellg(), newline_count = 0;
@@ -26,10 +26,10 @@ string tail(const char* file_name, const int &tail_count) {
     }
     output.push_back(c);
   }
-  // Reverse the output string using the reverse function 
-  // from the <algorithm> library in STL. The arguments 
+  // Reverse the output string using the reverse function
+  // from the <algorithm> library in STL. The arguments
   // are iterators to the start and end of String object.
-  reverse(output.begin(), output.end()); 
+  reverse(output.begin(), output.end());
   return output;
 }
 // @exclude

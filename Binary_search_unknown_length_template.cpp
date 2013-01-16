@@ -71,7 +71,7 @@ int main(int argc, char *argv[]) {
     cout << n << ' ' << k << endl;
     int idx = binary_search_unknown_len(A, k);
     cout << idx << endl;
-    assert((idx == -1 && binary_search(A.begin(), A.end(), k) == false) || A[idx] == k);
+    assert((idx == -1 && binary_search(A.cbegin(), A.cend(), k) == false) || A[idx] == k);
   }
   return 0;
 }

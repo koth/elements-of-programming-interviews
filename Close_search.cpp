@@ -12,7 +12,7 @@ int close_search(const vector<int> &A, const int &k) {
   while (idx < A.size() && A[idx] != k) {
     idx += abs(A[idx] - k);
   }
-  return idx < A.size() ? idx : -1; // -1 means no result
+  return idx < A.size() ? idx : -1;  // -1 means no result
 }
 // @exclude
 

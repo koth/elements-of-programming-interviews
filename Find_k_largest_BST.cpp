@@ -9,9 +9,8 @@ using namespace std;
 
 // @include
 template <typename T>
-void find_k_largest_in_BST_helper(
-  const shared_ptr<BinarySearchTree<T> > &r,
-  const int &k,
+void find_k_largest_in_BST_helper(const shared_ptr<BinarySearchTree<T> > &r,
+                                  const int &k,
   vector<T> &k_elements) {
   // Perform reverse inorder traversal
   if (r && k_elements.size() < k) {
@@ -24,8 +23,8 @@ void find_k_largest_in_BST_helper(
 }
 
 template <typename T>
-vector<T> find_k_largest_in_BST(
-  const shared_ptr<BinarySearchTree<T> > &root, const int &k) {
+vector<T> find_k_largest_in_BST(const shared_ptr<BinarySearchTree<T> > &root,
+                                const int &k) {
   vector<T> k_elements;
   find_k_largest_in_BST_helper(root, k, k_elements);
   return k_elements;

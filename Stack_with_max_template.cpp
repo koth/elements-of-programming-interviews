@@ -13,7 +13,7 @@ class Stack {
     stack<pair<T, T> > s;
 
   public:
-    bool empty(void) const {
+    const bool empty(void) const {
       return s.empty();
     }
 

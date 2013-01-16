@@ -8,11 +8,9 @@
 using namespace std;
 
 // @include
-bool greedy_assignment(
-  const vector<int> &user_file_size,
-  const int &server_num,
-  const int &limit,
-  vector<int> &assign_res) {
+bool greedy_assignment(const vector<int> &user_file_size,
+                       const int &server_num, const int &limit,
+                       vector<int> &assign_res) {
   int server_idx = 0;
   for (const int &file : user_file_size) {
     while (server_idx < server_num && file + assign_res[server_idx] > limit) {
@@ -28,9 +26,10 @@ bool greedy_assignment(
   return true;
 }
 
-vector<int> decide_load_balancing(
-  vector<int> user_file_size, const int &server_num) {
-  int file_sum = accumulate(user_file_size.begin(), user_file_size.end(), 0);
+vector<int> decide_load_balancing(vector<int> user_file_size,
+                                  const int &server_num) {
+  int file_sum = accumulate(user_file_size.cbegin(), user_file_size.cend(),
+                            0);
 
   // Uses binary search to find the assignment with minimized maximum load
   int l = 0, r = file_sum;
@@ -38,8 +37,8 @@ vector<int> decide_load_balancing(
   while (l <= r) {
     int m = l + ((r - l) >> 1);
     vector<int> assign_res(server_num, 0);
-    bool is_feasible =
-      greedy_assignment(user_file_size, server_num, m, assign_res);
+    bool is_feasible = greedy_assignment(user_file_size, server_num, m,
+                                         assign_res);
     if (is_feasible) {
       feasible_assignment = assign_res;
       r = m - 1;

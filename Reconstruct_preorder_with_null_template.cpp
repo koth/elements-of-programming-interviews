@@ -14,15 +14,15 @@ template <typename T>
 shared_ptr<BinaryTree<T> > reconstruct_preorder(
   const vector<shared_ptr<T> > &preorder) {
   stack<shared_ptr<BinaryTree<T> > > s;
-  for (int i = preorder.size() - 1; i >= 0; --i) {
-    if (!preorder[i]) {
+  for (auto it = preorder.crbegin(); it != preorder.crend(); ++it) {
+    if (!(*it)) {
       s.emplace(nullptr);
     } else {  // non-nullptr
       shared_ptr<BinaryTree<T> > l = s.top();
       s.pop();
       shared_ptr<BinaryTree<T> > r = s.top();
       s.pop();
-      s.emplace(new BinaryTree<T>{*(preorder[i]), l, r});
+      s.emplace(new BinaryTree<T>{*(*it), l, r});
     }
   }
   return s.top();

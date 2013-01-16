@@ -6,7 +6,8 @@ using namespace std;
 
 // @include
 template <typename T>
-shared_ptr<node_t<T> > reverse_linked_list(const shared_ptr<node_t<T> > &head) {
+shared_ptr<node_t<T> > reverse_linked_list(
+    const shared_ptr<node_t<T> > &head) {
   if (!head || !head->next) {
     return head;
   }

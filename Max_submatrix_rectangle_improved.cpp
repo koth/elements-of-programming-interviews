@@ -77,7 +77,7 @@ T calculate_largest_rectangle(const vector<T> &A) {
 
 // @include
 int max_rectangle_submatrix(const vector<vector<bool> > &A) {
-  vector<vector<int> > table(A.size(), vector<int>(A[0].size()));
+  vector<vector<int> > table(A.size(), vector<int>(A.front().size()));
 
   for (int i = A.size() - 1; i >= 0; --i) {
     for (int j = A[i].size() - 1; j >= 0; --j) {
@@ -85,7 +85,7 @@ int max_rectangle_submatrix(const vector<vector<bool> > &A) {
     }
   }
 
-  // Find the max among all instances of the largest rectangle under the skyline
+  // Find the max among all instances of the largest rectangle
   int max_rect_area = 0;
   for (const vector<int> &t : table) {
     max_rect_area = max(max_rect_area, calculate_largest_rectangle(t));

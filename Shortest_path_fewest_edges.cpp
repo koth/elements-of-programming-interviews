@@ -11,11 +11,11 @@ using namespace std;
 template <typename DistanceType>
 class GraphVertex {
   public:
-    pair<DistanceType, int> distance; // stores (dis, #edges) pair
-    vector<pair<GraphVertex<DistanceType>*, DistanceType> >
-      edges; // stores (vertex, dis) pair
-    int id; // stores the id of this vertex
-    GraphVertex* pred; // stores the predecessor in the shortest path
+    pair<DistanceType, int> distance;  // stores (dis, #edges) pair
+    // stores (vertex, dis) pair
+    vector<pair<GraphVertex<DistanceType>*, DistanceType> > edges;
+    int id;  // stores the id of this vertex
+    GraphVertex* pred;  // stores the predecessor in the shortest path
     bool visited;
 
     GraphVertex(void) :
@@ -27,12 +27,11 @@ class GraphVertex {
 template <typename DistanceType>
 class Compare {
   public:
-    bool operator()(
-      const GraphVertex<DistanceType>* lhs,
-      const GraphVertex<DistanceType>* rhs) const {
+    const bool operator()(const GraphVertex<DistanceType>* lhs,
+                          const GraphVertex<DistanceType>* rhs) const { 
       return lhs->distance.first > rhs->distance.first ||
-        (lhs->distance.first == rhs->distance.first &&
-         lhs->distance.second > rhs->distance.second);
+             (lhs->distance.first == rhs->distance.first &&
+              lhs->distance.second > rhs->distance.second);
     }
 };
 
@@ -45,9 +44,9 @@ void output_shortest_path(GraphVertex<DistanceType>* &v) {
 }
 
 template <typename DistanceType>
-void Dijkstra_shortest_path(
-  vector<GraphVertex<DistanceType> > &G,
-  GraphVertex<DistanceType>* s, GraphVertex<DistanceType>* t) {
+void Dijkstra_shortest_path(vector<GraphVertex<DistanceType> > &G,
+                            GraphVertex<DistanceType>* s, 
+                            GraphVertex<DistanceType>* t) {
   // Initialization
   s->distance = {0, 0};
   priority_queue<
@@ -67,20 +66,20 @@ void Dijkstra_shortest_path(
       }
     }
 
-    if (u) { // u is a valid vertex
+    if (u) {  // u is a valid vertex
       u->visited = true;
       // Relax neighboring vertices of u
-      for (const pair<GraphVertex<DistanceType>*, DistanceType> &v : u->edges) {
+      for (const auto &v : u->edges) {
         pair<DistanceType, int> v_distance =
           {u->distance.first + v.second, u->distance.second + 1};
         if (v.first->distance.first > v_distance.first ||
-          (v.first->distance.first == v_distance.first &&
-           v.first->distance.second > v_distance.second)) {
+            (v.first->distance.first == v_distance.first &&
+             v.first->distance.second > v_distance.second)) {
           v.first->pred = u, v.first->distance = v_distance;
           min_heap.emplace(v.first);
         }
       }
-    } else { // u is not a valid vertex
+    } else {  // u is not a valid vertex
       break;
     }
   } while (t->visited == false);

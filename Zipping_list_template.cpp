@@ -20,9 +20,18 @@ shared_ptr<node_t<T> > reverse_linked_list(const shared_ptr<node_t<T> > &head) {
 
 // @include
 template <typename T>
+void connect_a_next_to_b_advance_a(shared_ptr<node_t<T> > &a, 
+                                   const shared_ptr<node_t<T> > &b) {
+  shared_ptr<node_t<T> > temp = a->next;
+  a->next = b;
+  a = temp;
+}
+
+template <typename T>
 shared_ptr<node_t<T> > zipping_linked_list(const shared_ptr<node_t<T> > &L) {
   shared_ptr<node_t<T> > slow = L, fast = L, pre_slow = nullptr;
 
+  // Find the middle point of L
   while (fast) {
     fast = fast->next;
     if (fast) {
@@ -32,20 +41,18 @@ shared_ptr<node_t<T> > zipping_linked_list(const shared_ptr<node_t<T> > &L) {
   }
 
   if (!pre_slow) {
-    return L; // only contains one node in the list
+    return L;  // only contains one node in the list
   }
   pre_slow->next = nullptr;  // split the list into two lists
   shared_ptr<node_t<T> > reverse = reverse_linked_list<T>(slow), curr = L;
 
   // Zipping the list
   while (curr && reverse) {
-    shared_ptr<node_t<T> > temp = curr->next;
-    curr->next = reverse;
-    curr = temp;
+    // connect curr->next to reverse, and advance curr
+    connect_a_next_to_b_advance_a(curr, reverse);
     if (curr) {
-      temp = reverse->next;
-      reverse->next = curr;
-      reverse = temp;
+      // connect reverse->next to curr, and advance reverse
+      connect_a_next_to_b_advance_a(reverse, curr);
     }
   }
   return L;
@@ -75,8 +82,7 @@ int main(int argc, char *argv[]) {
     }
   }
   shared_ptr<node_t<int> > curr = zipping_linked_list<int>(head);
-  int idx = 0;
-  int pre;
+  int idx = 0, pre;
   while (curr) {
     if (argc <= 2) {
       if (idx & 1) {

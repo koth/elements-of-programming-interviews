@@ -122,7 +122,7 @@ int main(int argc, char *argv[]) {
       k = 1 + rand() % num;
     }
     vector<Star> stars;
-    // randomly generae num of stars
+    // randomly generate num of stars
     for (int i = 0; i < num; ++i) {
       stars.emplace_back(Star{i, rand() + static_cast<double>(rand()) / static_cast<double>(RAND_MAX), rand() + static_cast<double>(rand()) / static_cast<double>(RAND_MAX), rand() + static_cast<double>(rand()) / static_cast<double>(RAND_MAX)});
     }

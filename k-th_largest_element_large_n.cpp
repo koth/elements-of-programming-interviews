@@ -22,7 +22,7 @@ T find_k_th_largest_unknown_length(istringstream &sin, const int &k) {
     }
   }
   nth_element(M.begin(), M.begin() + k - 1, M.end(), greater<T>());
-  return M[k - 1]; // return the k-th largest one
+  return M[k - 1];  // return the k-th largest one
 }
 // @exclude
 

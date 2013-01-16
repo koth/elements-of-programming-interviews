@@ -20,8 +20,8 @@ void Floyd_Warshall(vector<vector<DistanceType> > &G) {
     for (int i = 0; i < G.size(); ++i) {
       for (int j = 0; j < G.size(); ++j) {
         if (G[i][k] != numeric_limits<DistanceType>::max() &&
-          G[k][j] != numeric_limits<DistanceType>::max() &&
-          G[i][j] < G[i][k] + G[k][j]) {
+            G[k][j] != numeric_limits<DistanceType>::max() &&
+            G[i][j] < G[i][k] + G[k][j]) {
           G[i][j] = G[i][k] + G[k][j];
         }
       }
@@ -50,7 +50,7 @@ HighwaySection<DistanceType> find_best_proposals(
   HighwaySection<DistanceType> best_proposal;
   for (const HighwaySection<DistanceType> &p : P) {
     if (G[a][p.x] != numeric_limits<DistanceType>::max() &&
-      G[p.y][b] != numeric_limits<DistanceType>::max()) {
+        G[p.y][b] != numeric_limits<DistanceType>::max()) {
       if (min_dis_a_b < G[a][p.x] + p.distance + G[p.y][b]) {
         min_dis_a_b = G[a][p.x] + p.distance + G[p.y][b];
         best_proposal = p;
@@ -82,7 +82,7 @@ int main(int argc, char *argv[]) {
     k = 1 + rand() % (n * (n - 1) / 2 - m);
   }
   vector<vector<bool> > have_edges(n, vector<bool>(n, false));
-  vector<HighwaySection<double> > H; // existing highway sections
+  vector<HighwaySection<double> > H;  // existing highway sections
   for (int i = 0; i < m; ++i) {
     int a, b;
     do {
@@ -91,7 +91,7 @@ int main(int argc, char *argv[]) {
     have_edges[a][b] = have_edges[b][a] = true;
     H.emplace_back(HighwaySection<double>{a, b, static_cast<double>(rand())});
   }
-  vector<HighwaySection<double> > P; // proposals
+  vector<HighwaySection<double> > P;  // proposals
   for (int i = 0; i < k; ++i) {
     int a, b;
     do {

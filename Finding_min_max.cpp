@@ -22,10 +22,10 @@ pair<T, T> find_min_max(const vector<T> &A) {
     if (i + 1 < A.size()) {
       pair<T, T> local_pair = minmax(A[i], A[i + 1]);
       min_max_pair = {min(min_max_pair.first, local_pair.first),
-        max(min_max_pair.second, local_pair.second)};
+                      max(min_max_pair.second, local_pair.second)};
     } else {
       min_max_pair = {min(min_max_pair.first, A[i]),
-        max(min_max_pair.second, A[i])};
+                      max(min_max_pair.second, A[i])};
     }
   }
   return min_max_pair;
@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
       A.emplace_back(rand());
     }
     pair<int, int> res = find_min_max(A);
-    assert(res.first == *min_element(A.begin(), A.end()) && res.second == *max_element(A.begin(), A.end()));
+    assert(res.first == *min_element(A.cbegin(), A.cend()) && res.second == *max_element(A.cbegin(), A.cend()));
   }
   return 0;
 }

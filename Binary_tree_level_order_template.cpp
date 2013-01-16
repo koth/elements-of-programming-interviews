@@ -6,7 +6,7 @@ using namespace std;
 
 // @include
 template <typename T>
-void print_binary_tree_in_level_order(const shared_ptr<BinaryTree<T> > &n) {
+void print_binary_tree_level_order(const shared_ptr<BinaryTree<T> > &n) {
   // Prevent empty tree
   if (!n) {
     return;
@@ -46,6 +46,6 @@ int main(int argc, char *argv[]) {
   // should output 3
   //               2 5
   //               1 4 6
-  print_binary_tree_in_level_order<int>(root);
+  print_binary_tree_level_order<int>(root);
   return 0;
 }

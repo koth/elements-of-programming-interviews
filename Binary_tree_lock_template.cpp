@@ -13,11 +13,11 @@ class BinaryTree {
   public:
     shared_ptr<BinaryTree<T> > left, right, parent;
 
-    const bool &isLock() const {
+    const bool &isLock(void) const {
       return locked;
     }
 
-    void lock() {
+    void lock(void) {
       if (numChildrenLocks == 0 && locked == false) {
         // Make sure all parents do not lock
         shared_ptr<BinaryTree<T> > n = parent;
@@ -38,7 +38,7 @@ class BinaryTree {
       }
     }
 
-    void unLock() {
+    void unLock(void) {
       if (locked) {
         // Unlock itself and update its parents
         locked = false;

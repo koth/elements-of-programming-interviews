@@ -22,7 +22,7 @@ bool DFS(GraphVertex* cur, const GraphVertex* pre) {
     return true;
   }
 
-  cur->color = GraphVertex::gray; // marks current vertex as a gray one
+  cur->color = GraphVertex::gray;  // marks current vertex as a gray one
   // Traverse the neighbor vertices
   for (GraphVertex* &next : cur->edges) {
     if (next != pre && next->color != GraphVertex::black) {

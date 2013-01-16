@@ -53,7 +53,7 @@ int max_square_submatrix(const vector<vector<bool> > &A) {
         // Find the largest h such that (i, j) to (i + h, j) are feasible
         // Find the largest w such that (i, j) to (i, j + w) are feasible
         MaxHW{i + 1 < A.size() ? table[i + 1][j].h + 1 : 1,
-          j + 1 < A[i].size() ? table[i][j + 1].w + 1 : 1} :
+              j + 1 < A[i].size() ? table[i][j + 1].w + 1 : 1} :
         MaxHW{0, 0};
     }
   }
@@ -65,7 +65,7 @@ int max_square_submatrix(const vector<vector<bool> > &A) {
     for (int j = A[i].size() - 1; j >= 0; --j) {
       int side = min(table[i][j].h, table[i][j].w);
       if (A[i][j]) {
-        // Calculate the length of largest square with bottom-left corner (i, j)
+        // Get the length of largest square with bottom-left corner (i, j)
         if (i + 1 < A.size() && j + 1 < A[i + 1].size()) {
           side = min(s[i + 1][j + 1] + 1, side);
         }

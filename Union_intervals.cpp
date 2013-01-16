@@ -20,9 +20,9 @@ class Interval {
   public:
     Endpoint left, right;
 
-    bool operator<(const Interval &i) const {
+    const bool operator<(const Interval &i) const {
       return left.val != i.left.val ?
-        left.val < i.left.val : (left.isClose && !i.left.isClose);
+             left.val < i.left.val : (left.isClose && !i.left.isClose);
     }
 };
 
@@ -39,10 +39,10 @@ vector<Interval<TimeType> > Union_intervals(vector<Interval<TimeType> > I) {
   vector<Interval<TimeType> > uni;
   for (int i = 1; i < I.size(); ++i) {
     if (I[i].left.val < curr.right.val ||
-      (I[i].left.val == curr.right.val &&
-       (I[i].left.isClose || curr.right.isClose))) {
+        (I[i].left.val == curr.right.val &&
+         (I[i].left.isClose || curr.right.isClose))) {
       if (I[i].right.val > curr.right.val ||
-        (I[i].right.val == curr.right.val && I[i].right.isClose)) {
+          (I[i].right.val == curr.right.val && I[i].right.isClose)) {
         curr.right = I[i].right;
       }
     } else {

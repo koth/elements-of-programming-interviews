@@ -36,7 +36,7 @@ void flip_color(vector<vector<bool> > &A, const int &x, const int &y) {
         q.emplace(next);
       }
     }
-    A[curr.first][curr.second] = !A[curr.first][curr.second]; // filp the color
+    A[curr.first][curr.second] = !A[curr.first][curr.second];  // flip color
     q.pop();
   }
 }

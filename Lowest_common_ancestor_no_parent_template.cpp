@@ -6,12 +6,10 @@ using namespace std;
 
 // @include
 template <typename T>
-shared_ptr<BinaryTree<T> > LCA(
-  const shared_ptr<BinaryTree<T> > &n,
-  const shared_ptr<BinaryTree<T> > &a,
-  const shared_ptr<BinaryTree<T> > &b) {
-  // Empty subtree
-  if (!n) {
+shared_ptr<BinaryTree<T> > LCA(const shared_ptr<BinaryTree<T> > &n,
+                               const shared_ptr<BinaryTree<T> > &a,
+                               const shared_ptr<BinaryTree<T> > &b) {
+  if (!n) {  // empty subtree
     return nullptr;
   } else if (n == a || n == b) {
     return n;
@@ -19,7 +17,7 @@ shared_ptr<BinaryTree<T> > LCA(
 
   auto l_res = LCA(n->left, a, b), r_res = LCA(n->right, a, b);
   if (l_res && r_res) {
-    return n; // found a and b in the subtrees
+    return n;  // found a and b in different subtrees
   } else {
     return l_res ? l_res : r_res;
   }

@@ -33,8 +33,8 @@ public class AsyncThread {
   }
 
   // @include
-  public static void Dispatch(
-      final Requestor r, final String request, final long delay) {
+  public static void Dispatch(final Requestor r, final String request,
+                              final long delay) {
     Runnable task = new Runnable() {
       public void run() {
         Runnable actualTask = new Runnable() {

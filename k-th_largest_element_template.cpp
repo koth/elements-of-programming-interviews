@@ -31,9 +31,8 @@ T find_k_th_largest(vector<T> A, const int &k) {
   int l = 0, r = A.size() - 1;
 
   while (l <= r) {
-    random_device rd; // seed of random number generator
-    default_random_engine gen(rd()); // random number generator
-    uniform_int_distribution<int> dis(l, r); // generates random int in [l, r]
+    default_random_engine gen((random_device())());
+    uniform_int_distribution<int> dis(l, r);  // generate random int in [l, r]
     int p = partition(A, l, r, dis(gen));
     if (p == k - 1) {
       return A[p];

@@ -35,10 +35,10 @@ vector<string> Search_frequent_items(istringstream &sin, const int &k) {
   while (sin >> buf) {
     ++hash[buf], ++n;
     if (hash.size() == k + 1) {
-      unordered_map<string, int>::iterator it = hash.begin();
+      auto it = hash.begin();
       while (it != hash.end()) {
         if (--(it->second) == 0) {
-          hash.erase(it++); // remove the empty entry
+          hash.erase(it++);  // remove the empty entry
         } else {
           ++it;
         }
@@ -56,7 +56,10 @@ vector<string> Search_frequent_items(istringstream &sin, const int &k) {
   sin.seekg(0, ios::beg);
   // Count the occurrence of each candidate word
   while (sin >> buf) {
-    ++hash[buf];
+    auto it = hash.find(buf);
+    if (it != hash.end()) {
+      ++it->second;
+    }
   }
 
   vector<string> ret;

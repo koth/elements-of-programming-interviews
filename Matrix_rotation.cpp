@@ -27,21 +27,20 @@ void check_answer(const vector<vector<T> > &A) {
 
 // @include
 template <typename T>
-void copy_matrix(
-  vector<vector<T> > &A,
-  const int &A_x_s, const int &A_x_e, const int &A_y_s, const int &A_y_e,
-  const vector<vector<T> > &S, const int &S_x, const int &S_y) {
+void copy_matrix(vector<vector<T> > &A, const int &A_x_s, const int &A_x_e,
+                 const int &A_y_s, const int &A_y_e,
+                 const vector<vector<T> > &S,
+                 const int &S_x, const int &S_y) {
   for (int i = 0; i < A_x_e - A_x_s; ++i) {
-    copy(S[S_x + i].begin() + S_y,
-      S[S_x + i].begin() + S_y + A_y_e - A_y_s,
-      A[A_x_s + i].begin() + A_y_s);
+    copy(S[S_x + i].cbegin() + S_y,
+         S[S_x + i].cbegin() + S_y + A_y_e - A_y_s,
+         A[A_x_s + i].begin() + A_y_s);
   }
 }
 
 template <typename T>
-void rotate_matrix_helper(
-  vector<vector<T> > &A,
-  const int &x_s, const int &x_e, const int &y_s, const int &y_e) {
+void rotate_matrix_helper(vector<vector<T> > &A, const int &x_s,
+                          const int &x_e, const int &y_s, const int &y_e) {
   if (x_e > x_s + 1) {
     int mid_x = x_s + ((x_e - x_s) >> 1), mid_y = y_s + ((y_e - y_s) >> 1);
     // Move submatrices

@@ -19,12 +19,12 @@ public class SudokuSolver {
    public static void main(String[] args) {
      int[][] matrix = readInput(args);
      print("Initial configuration", matrix);
-     if ( !isValid( matrix ) ) {
+     if ( !isValid(matrix) ) {
        System.out.println("Initial configuration violates constraints");
        return;
      }
      if (isSolvable(0,0,matrix)) {
-       if ( !isValid( matrix ) ) {
+       if ( !isValid(matrix) ) {
          System.out.println("Buggy algorithm, returns true and a matrix that"
 	 	+ "doesn't satisfy constraints");
          print("Buggy output", matrix);
@@ -37,11 +37,13 @@ public class SudokuSolver {
    }
 
   // @include
+  // fill in entries in order of increasing i and j,
+  // backtracking when a conflict is detected
   public static boolean isSolvable(int i, int j, int[][] matrix) {
     if (i == N) {
-      i = 0;
+      i = 0; // start new row
       if (++j == N) {
-        return true;
+        return true; // entire matrix has been filled without conflict
       }
     }
 

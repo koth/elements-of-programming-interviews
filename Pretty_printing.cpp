@@ -26,9 +26,8 @@ int find_pretty_printing(const vector<string> &W, const int &L) {
       b_len -= (W[j].size() + 1);
       if (b_len < 0) {
         break;
-      } else {
-        M[i] = min((j - 1 < 0 ? 0 : M[j - 1]) + (1 << b_len), M[i]);
       }
+      M[i] = min((j - 1 < 0 ? 0 : M[j - 1]) + (1 << b_len), M[i]);
     }
   }
 
@@ -39,9 +38,8 @@ int find_pretty_printing(const vector<string> &W, const int &L) {
     b_len -= (W[i].size() + 1);
     if (b_len < 0) {
       return min_mess;
-    } else {
-      min_mess = min(min_mess, (i - 1 < 0 ? 0 : M[i - 1]));
     }
+    min_mess = min(min_mess, (i - 1 < 0 ? 0 : M[i - 1]));
   }
   return min_mess;
 }

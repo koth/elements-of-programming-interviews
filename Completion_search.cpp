@@ -13,7 +13,7 @@ double completion_search(vector<double> &A, const double &budget) {
   sort(A.begin(), A.end());
   // Calculate the prefix sum for A
   vector<double> prefix_sum;
-  partial_sum(A.begin(), A.end(), back_inserter(prefix_sum));
+  partial_sum(A.cbegin(), A.cend(), back_inserter(prefix_sum));
 
   // Find the new upper-bound salary
   for (int i = 0; i < A.size() && budget >= prefix_sum[i]; ++i) {

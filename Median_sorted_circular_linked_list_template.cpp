@@ -40,7 +40,7 @@ double find_median_sorted_circular_linked_list(
   for (int i = 0; i < (count - 1) >> 1; ++i) {
     head = head->next;
   }
-  return (count & 1) ? head->data : 0.5 * (head->data + head->next->data);
+  return count & 1 ? head->data : 0.5 * (head->data + head->next->data);
 }
 // @exclude
 

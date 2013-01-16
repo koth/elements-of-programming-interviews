@@ -28,16 +28,16 @@ bool test_Collatz_conjecture(const int &n) {
         return false;
       }
 
-      if (test_i & 1) {   // odd number
+      if (test_i & 1) {  // odd number
         if (table.emplace(test_i).second == false) {
           break;  // this number have already be proven to converge to 1
         }
-        test_i = 3 * test_i + 1; // 3n + 1
+        test_i = 3 * test_i + 1;  // 3n + 1
       } else {  // even number
-        test_i >>= 1;   // n / 2
+        test_i >>= 1;  // n / 2
       }
     }
-    table.erase(i);   // removes i from table
+    table.erase(i);  // removes i from table
   }
   return true;
 }

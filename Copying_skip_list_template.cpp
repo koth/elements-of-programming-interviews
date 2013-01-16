@@ -17,7 +17,8 @@ shared_ptr<node_t<T> > copy_postings_list(const shared_ptr<node_t<T> > &L) {
   // 1st stage: copy the nodes from L
   shared_ptr<node_t<T> > p = L;
   while (p) {
-    auto temp = shared_ptr<node_t<T> >(new node_t<T>{p->data, p->next, nullptr});
+    auto temp =
+      shared_ptr<node_t<T> >(new node_t<T>{p->data, p->next, nullptr});
     p->next = temp;
     p = temp->next;
   }

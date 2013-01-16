@@ -9,7 +9,7 @@ using namespace std;
 // return the head of the list
 template <typename T>
 shared_ptr<BinarySearchTree<T> > BST_to_doubly_list(
-  const shared_ptr<BinarySearchTree<T> > &n) {
+    const shared_ptr<BinarySearchTree<T> > &n) {
   // Empty subtree
   if (!n) {
     return nullptr;
@@ -45,52 +45,39 @@ shared_ptr<BinarySearchTree<T> > BST_to_doubly_list(
 
 // @include
 template <typename T>
-void add_node_last(
-  shared_ptr<BinarySearchTree<T> > &head,
-  shared_ptr<BinarySearchTree<T> > &tail,
-  const shared_ptr<BinarySearchTree<T> > &n) {
-  if (!head) {
-    head = n;
-  } else {
-    tail->right = n;
-  }
-  tail = n;
+void append_node_and_advance(shared_ptr<BinarySearchTree<T> > &head,
+                             shared_ptr<BinarySearchTree<T> > &tail,
+                             shared_ptr<BinarySearchTree<T> > &n) {
+  head ? tail->right = n : head = n;
+  tail = n;  // tail to the last node
+  n->left = nullptr;  // make n as singly list node
+  n = n->right;  // advance n
 }
 
 // Merge two sorted linked lists, return the head of list
 template <typename T>
 shared_ptr<BinarySearchTree<T> > merge_sorted_linked_lists(
-  shared_ptr<BinarySearchTree<T> > A, shared_ptr<BinarySearchTree<T> > B) {
+    shared_ptr<BinarySearchTree<T> > A, shared_ptr<BinarySearchTree<T> > B) {
   shared_ptr<BinarySearchTree<T> > sorted_list = nullptr, tail = nullptr;
 
   while (A && B) {
-    if (A->data < B->data) {
-      add_node_last(sorted_list, tail, A);
-      A->left = nullptr;
-      A = A->right;
-    } else {
-      add_node_last(sorted_list, tail, B);
-      B->left = nullptr;
-      B = B->right;
-    }
+    append_node_and_advance(sorted_list, tail, A->data < B->data ? A : B);
   }
 
+  // Append the remaining of A
   while (A) {
-    add_node_last(sorted_list, tail, A);
-    A->left = nullptr;
-    A = A->right;
+    append_node_and_advance(sorted_list, tail, A);
   }
+  // Append the remaining of B
   while (B) {
-    add_node_last(sorted_list, tail, B);
-    B->left = nullptr;
-    B = B->right;
+    append_node_and_advance(sorted_list, tail, B);
   }
   return sorted_list;
 }
 
 template <typename T>
 shared_ptr<BinarySearchTree<T> > merge_BSTs(
-  shared_ptr<BinarySearchTree<T> > A, shared_ptr<BinarySearchTree<T> > B) {
+    shared_ptr<BinarySearchTree<T> > A, shared_ptr<BinarySearchTree<T> > B) {
   // Transform BSTs A and B into sorted doubly lists
   A = BST_to_doubly_list(A), B = BST_to_doubly_list(B);
   A->left->right = B->left->right = nullptr;

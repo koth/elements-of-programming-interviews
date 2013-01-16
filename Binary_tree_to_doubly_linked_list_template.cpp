@@ -8,13 +8,13 @@ using namespace std;
 // @include
 template <typename T>
 shared_ptr<BinaryTree<T> > convert_tree_to_doubly_list(
-  const shared_ptr<BinaryTree<T> > &n) {
+    const shared_ptr<BinaryTree<T> > &n) {
   if (!n) {
     return nullptr;
   }
 
   shared_ptr<BinaryTree<T> > L = convert_tree_to_doubly_list(n->left);
-  // Join L and n as a doubly linekd list
+  // Join L and n as a doubly linked list
   shared_ptr<BinaryTree<T> > L_tail = nullptr;
   if (L) {
     L_tail = L->left;
@@ -25,7 +25,7 @@ shared_ptr<BinaryTree<T> > convert_tree_to_doubly_list(
   }
 
   shared_ptr<BinaryTree<T> > R = convert_tree_to_doubly_list(n->right);
-  // Join L and R as a doubly linekd list
+  // Join L and R as a doubly linked list
   shared_ptr<BinaryTree<T> > R_tail = nullptr;
   if (R) {
     R_tail = R->left;

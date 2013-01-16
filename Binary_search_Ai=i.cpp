@@ -61,7 +61,7 @@ int main(int argc, char *argv[]) {
       do {
         x = ((rand() & 1) ? -1 : 1) * rand() % 1000;
         iter = table.find(x);
-      } while (iter != table.end());
+      } while (iter != table.cend());
       table.emplace_hint(iter, x);
       A.emplace_back(x);
     }

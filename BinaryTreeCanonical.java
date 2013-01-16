@@ -13,13 +13,11 @@ public class BinaryTreeCanonical {
   // @include
   static class BinaryTreeNode {
     int key;
-    String name;
     BinaryTreeNode left, right;
     Integer cachedHash;
 
-    public BinaryTreeNode(int k, String s, BinaryTreeNode l, BinaryTreeNode r) {
+    public BinaryTreeNode(int k, BinaryTreeNode l, BinaryTreeNode r) {
       this.key = k;
-      this.name = s;
       this.left = l;
       this.right = r;
       this.cachedHash = null;
@@ -27,81 +25,48 @@ public class BinaryTreeCanonical {
 
     @Override
     public int hashCode() {
+      // @exclude
       System.out.println("Calling overridden hashCode");
-      Integer result;
-      result = this.cachedHash;
-      if (result != null) {
+      // @include
+      if (this.cachedHash != null) {
         // @exclude
-        p("result from cache:" + result );
+        p("result from cache:" + this.cachedHash);
         // @include
-        return result;
+        return this.cachedHash;
       }
 
-      int x = 3 * key, y = 5;
-      if (this.left != null) {
-        y *= this.left.hashCode();
-      }
-      int z = 7;
-      if (this.right != null) {
-        z *= this.right.hashCode();
-      }
-      result = x + y + z;
-      this.cachedHash = result;
-      // @exclude
-      p(name + " hashed to " + result );
-      // @include
-      return result;
+      int x = 3 * key;
+      int y = this.left == null ? 5 : 5 * this.left.hashCode();
+      int z = this.right == null ? 7 : 7 * this.right.hashCode();
+      this.cachedHash = x + y + z;
+      return this.cachedHash;
     }
 
     @Override
     public boolean equals(Object o) {
       if (o == this) {
-       return true;
+        return true;
       }
       if (!(o instanceof BinaryTreeNode)) {
         return false;
       }
       BinaryTreeNode n = (BinaryTreeNode)o;
 
-      // @exclude
-      p("This is " + this.toString() );
-      p("n is " + n.toString() );
-      // @include
-      boolean result = false;
-      if (n == null) {
-        result = false;
-      } else if (key != n.key) {
-        result = false;
-      } else {
-        // Assuming that equals is called on nodes
-        // where children are already in canonical form
-        result = (left == n.left && right == n.right);
+      if (n == null || key != n.key) {
+        return false;
       }
       // @exclude
-      p("result is "  + result);
+      p("result is "  + (left == n.left && right == n.right));
       // @include
-      return result;
-    }
-
-    // @exclude
-    void print() {
-      print("");
-    }
-
-    void print(String s) {
-      System.out.println( s + "\t" + this.toString() );
-    }
-
-    @Override
-    public String toString() {
-      return "Name:" + name + "---" + new Integer( key ).toString() + "\n\t"
-      	+ ( (left != null ) ? left.toString() : "l:null" ) + "\n\t"
-        + ( (right != null) ? right.toString() : "r:null" ) ;
+      // Assuming that equals is called on nodes
+      // where children are already in canonical form
+      return (left == n.left && right == n.right);
     }
   }
 
-  static Map<Object, Integer> nodeToHashCache =
-      new HashMap<Object, Integer>();
+  // @exclude
+
+  static Map<Object, Integer> nodeToHashCache = new HashMap<Object, Integer>();
 
   // @include
   static Map<BinaryTreeNode, BinaryTreeNode> nodeToCanonicalNode =
@@ -110,38 +75,29 @@ public class BinaryTreeCanonical {
   static BinaryTreeNode getCanonical(BinaryTreeNode n) {
     BinaryTreeNode lc = (n.left == null) ? null : getCanonical(n.left);
     BinaryTreeNode rc = (n.right == null) ? null : getCanonical(n.right);
-    BinaryTreeNode nc = new BinaryTreeNode(n.key, n.name, lc, rc);
-    BinaryTreeNode result = null;
+    BinaryTreeNode nc = new BinaryTreeNode(n.key, lc, rc);
 
     if (nodeToCanonicalNode.containsKey(nc)) {
-      result = nodeToCanonicalNode.get(nc);
-      // @exclude
-      p("check to see if " + nc.name + " was present---YES");
-      // @include
-    } else {
-      // @exclude
-      // nodeToHashCache.put( (Object) nc, new Integer( nc.hashCode() ) );
-      // @include
-      nodeToCanonicalNode.put(nc, nc);
-      // @exclude
-      p("check to see if " + nc.name + " was present---NO");
-      // @include
-      result = nc;
+      return nodeToCanonicalNode.get(nc);
     }
-    return result;
+    // @exclude
+    // nodeToHashCache.put( (Object) nc, new Integer( nc.hashCode() ) );
+    // @include
+    nodeToCanonicalNode.put(nc, nc);
+    return nc;
   }
   // @exclude
 
   static public void main( String [] args ) {
 
-    BinaryTreeNode a = new BinaryTreeNode( 1, "a", null, null );
-    BinaryTreeNode b = new BinaryTreeNode( 2, "b", null, null );
-    BinaryTreeNode c = new BinaryTreeNode( 3, "c", null, null );
-    BinaryTreeNode d = new BinaryTreeNode( 2, "d", null, null );
-    BinaryTreeNode e = new BinaryTreeNode( 3, "e", null, null );
-    BinaryTreeNode f = new BinaryTreeNode( 1, "f", null, null );
+    BinaryTreeNode a = new BinaryTreeNode( 1, null, null );
+    BinaryTreeNode b = new BinaryTreeNode( 2, null, null );
+    BinaryTreeNode c = new BinaryTreeNode( 3, null, null );
+    BinaryTreeNode d = new BinaryTreeNode( 2, null, null );
+    BinaryTreeNode e = new BinaryTreeNode( 3, null, null );
+    BinaryTreeNode f = new BinaryTreeNode( 1, null, null );
 
-    BinaryTreeNode bDup = new BinaryTreeNode( 2, "bdup", null, null );
+    BinaryTreeNode bDup = new BinaryTreeNode( 2, null, null );
     Set<BinaryTreeNode> aSet = new HashSet<BinaryTreeNode>();
     aSet.add( b );
     if ( !aSet.contains( bDup ) ) {
@@ -158,8 +114,6 @@ public class BinaryTreeCanonical {
     System.out.println("a == f ? " + a.equals( f ) );
     BinaryTreeNode t1 = getCanonical(a);
     BinaryTreeNode t2 = getCanonical(d);
-    t1.print( "t1" );
-    t2.print( "t2" );
     p("-----");
 
     List<BinaryTreeNode> Alist = new LinkedList<BinaryTreeNode>();
@@ -173,7 +127,6 @@ public class BinaryTreeCanonical {
     List<BinaryTreeNode> Blist = new LinkedList<BinaryTreeNode>();
     for ( BinaryTreeNode n : Alist ) {
       BinaryTreeNode cn = getCanonical( n );
-      cn.print();
       Blist.add( cn );
     }
     p("nodeToCanonicalNode hash size:" + nodeToCanonicalNode.size() );

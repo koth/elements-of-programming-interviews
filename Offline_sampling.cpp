@@ -11,8 +11,7 @@ using namespace std;
 template <typename T>
 vector<T> offline_sampling(vector<T> A, const int &k) {
   for (int i = 0; i < k; ++i) {
-    random_device rd; // seed of random number generator
-    default_random_engine gen(rd()); // random number generator
+    default_random_engine gen((random_device())());  // random num generator
     // Generate random int in [i, A.size() - 1]
     uniform_int_distribution<int> dis(i, A.size() - 1);
     swap(A[i], A[dis(gen)]);

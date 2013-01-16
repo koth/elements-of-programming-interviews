@@ -6,10 +6,9 @@ using namespace std;
 
 // @include
 template <typename T>
-void compare_k_th_largest_heap_helper(
-    const vector<T> &max_heap,
-    const int &k, const T &x,
-    const int &idx, int &larger, int &equal) {
+void compare_k_th_largest_heap_helper(const vector<T> &max_heap, const int &k,
+                                      const T &x, const int &idx, int &larger,
+                                      int &equal) {
   if (idx < max_heap.size()) {
     if (max_heap[idx] < x) {
       return;
@@ -20,18 +19,18 @@ void compare_k_th_largest_heap_helper(
     }
 
     if (equal < k && larger < k) {
-      compare_k_th_largest_heap_helper(
-        max_heap, k, x, (idx << 1) + 1, larger, equal);
-      compare_k_th_largest_heap_helper(
-        max_heap, k, x, (idx << 1) + 2, larger, equal);
+      compare_k_th_largest_heap_helper(max_heap, k, x, (idx << 1) + 1, larger,
+                                       equal);
+      compare_k_th_largest_heap_helper(max_heap, k, x, (idx << 1) + 2, larger,
+                                       equal);
     }
   }
 }
 
 // -1 means smaller, 0 means equal, and 1 means larger
 template <typename T>
-int compare_k_th_largest_heap(
-  const vector<T> &max_heap, const int &k, const T &x) {
+int compare_k_th_largest_heap(const vector<T> &max_heap, const int &k,
+                              const T &x) {
   int larger = 0, equal = 0;
   compare_k_th_largest_heap_helper(max_heap, k, x, 0, larger, equal);
   return larger >= k ? 1 : (larger + equal >= k ? 0 : -1);

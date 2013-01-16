@@ -65,7 +65,7 @@ public class SubseqCover {
 
         D.put(A[i], update);
       }
-      L.put(A[i], i); // update the most recent occurence
+      L.put(A[i], i); // update the most recent occurrence
       if (K.get(A[i]) == Q.length - 1) {
         optimum = Math.min(optimum, D.get(A[i]));
       }

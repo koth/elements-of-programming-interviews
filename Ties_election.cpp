@@ -9,7 +9,7 @@ using namespace std;
 // @include
 // V contains the number of votes for each state
 long ties_election(const vector<int> &V) {
-  int total_votes = accumulate(V.begin(), V.end(), 0);
+  int total_votes = accumulate(V.cbegin(), V.cend(), 0);
 
   // No way to tie if the total number of votes is odd
   if (total_votes & 1) {

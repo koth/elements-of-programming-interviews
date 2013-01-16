@@ -34,7 +34,7 @@ int find_missing_element(ifstream &ifs) {
       ifs.seekg(0, ios::beg);
       while (ifs >> x) {
         if (i == (x >> 16)) {
-          bit_vec.set(((1 << 16) - 1) & x); // gets the lower 16 bits of x
+          bit_vec.set(((1 << 16) - 1) & x);  // gets the lower 16 bits of x
         }
       }
       ifs.close();
@@ -70,7 +70,7 @@ int main(int argc, char *argv[]) {
   ofs.close();
   ifstream ifs("missing.txt");
   int missing = find_missing_element(ifs);
-  assert(hash.find(missing) == hash.end());
+  assert(hash.find(missing) == hash.cend());
   // Remove file after the execution
   remove("missing.txt");
   cout << missing << endl;

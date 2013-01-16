@@ -64,10 +64,11 @@ char A[N];
 char *B = (A - 1500000000);
 int L = -1499000000;
 int U = 1499000000;
-// On a 32-bit machine (u-l) = -1296967296 because the actual value, 2998000000
-// is larger than 2^31-1. Consequently, the binsearch function called below
-// sets m to -2147483648 instead of 0, which leads to an out-of-bounds access,
-// since the most negative index that can be applied to B is -1500000000.
+// On a 32-bit machine (u-l) = -1296967296 because the actual value,
+// 2998000000 is larger than 2^31-1. Consequently, the binsearch function
+// called below sets m to -2147483648 instead of 0, which leads to an
+// out-of-bounds access, since the most negative index that can be applied
+// to B is -1500000000.
 int result = binsearch(B + 1500000000, key, L, U);
   //@exclude
   // int index = binsearch( c, (unsigned char) 123);

@@ -11,7 +11,7 @@ using namespace std;
 // @include
 class BigInt {
   private:
-    int sign; // -1 or 1;
+    int sign;  // -1 or 1;
     vector<char> digits;
 
   public:
@@ -34,10 +34,11 @@ class BigInt {
         if (n.digits[i]) {
           int carry = 0;
           for (j = 0; j < digits.size() || carry; ++j) {
-            int new_digit = result.digits[i + j] +
-              (j < digits.size() ? n.digits[i] * digits[j] : 0) + carry;
-            result.digits[i + j] = new_digit % 10;
-            carry = new_digit / 10;
+            int n_digit = result.digits[i + j] + 
+                          (j < digits.size() ? n.digits[i] * digits[j] : 0) +
+                          carry;
+            result.digits[i + j] = n_digit % 10;
+            carry = n_digit / 10;
           }
         }
       }

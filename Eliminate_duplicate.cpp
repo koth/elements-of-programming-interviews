@@ -11,9 +11,9 @@ using namespace std;
 // @include
 template <typename T>
 int eliminate_duplicate(vector<T> &A) {
-  sort(A.begin(), A.end()); // makes identical elements become neighbors
-  auto it = unique(A.begin(), A.end()); // removes neighboring duplicates
-  A.resize(it - A.begin()); // truncates the unnecessary trailing part
+  sort(A.begin(), A.end());  // makes identical elements become neighbors
+  auto it = unique(A.begin(), A.end());  // removes neighboring duplicates
+  A.resize(it - A.begin());  // truncates the unnecessary trailing part
   return it - A.begin();
 }
 // @exclude

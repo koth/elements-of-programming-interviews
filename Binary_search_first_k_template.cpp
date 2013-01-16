@@ -46,8 +46,8 @@ int main(int argc, char *argv[]) {
     if (ans != -1) {
       cout << "A[k] = " << A[ans] << endl;
     }
-    vector<int>::iterator it = find(A.begin(), A.end(), k);
-    assert((it == A.end() && ans == -1) || (it - A.begin() == ans));
+    auto it = find(A.cbegin(), A.cend(), k);
+    assert((it == A.cend() && ans == -1) || (it - A.cbegin() == ans));
   }
   return 0;
 }

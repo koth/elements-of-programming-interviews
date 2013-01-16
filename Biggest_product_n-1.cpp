@@ -13,13 +13,14 @@ template <typename T>
 T find_biggest_n_1_product(const vector<T> &A) {
   // Build forward product L, and backward product R
   vector<T> L, R(A.size());
-  partial_sum(A.begin(), A.end(), back_inserter(L), multiplies<T>());
-  partial_sum(A.rbegin(), A.rend(), R.rbegin(), multiplies<T>());
+  partial_sum(A.cbegin(), A.cend(), back_inserter(L), multiplies<T>());
+  partial_sum(A.crbegin(), A.crend(), R.rbegin(), multiplies<T>());
 
   // Find the biggest product of (n - 1) numbers
   T max_product = numeric_limits<T>::min();
   for (int i = 0; i < A.size(); ++i) {
-    T forward = i > 0 ? L[i - 1] : 1, backward = i + 1 < A.size() ? R[i + 1] : 1;
+    T forward = i > 0 ? L[i - 1] : 1;
+    T backward = i + 1 < A.size() ? R[i + 1] : 1;
     max_product = max(max_product, forward * backward);
   }
   return max_product;

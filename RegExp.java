@@ -52,7 +52,7 @@ public class RegExp {
     assert( match( "^a.9", "aW9") );
     assert( !match( "^a.9", "baW19") );
     assert( match( ".*", "a"));
-    assert( match( ".*", ""));
+    assert( match( ".*", "")); // this one will fail, use System.out.println to show it
     assert( match( ".*",  "asdsdsa"));
     assert( match( "9$" , "xxxxW19" ) );
 

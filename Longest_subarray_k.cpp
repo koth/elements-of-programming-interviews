@@ -28,23 +28,23 @@ int search_last_smaller_equal(const vector<T> &A, const T &k) {
 
 // @include
 template <typename T>
-pair<int, int> find_longest_subarray_less_equal_k(
-  const vector<T> &A, const T &k) {
+pair<int, int> find_longest_subarray_less_equal_k(const vector<T> &A,
+                                                  const T &k) {
   // Build the prefix sum according to A
   vector<T> prefix_sum;
-  partial_sum(A.begin(), A.end(), back_inserter(prefix_sum));
+  partial_sum(A.cbegin(), A.cend(), back_inserter(prefix_sum));
 
   vector<T> min_prefix_sum(prefix_sum);
   for (int i = min_prefix_sum.size() - 2; i >= 0; --i) {
     min_prefix_sum[i] = min(min_prefix_sum[i], min_prefix_sum[i + 1]);
   }
 
-  pair<int, int> arr_idx(0,
-    upper_bound(min_prefix_sum.begin(), min_prefix_sum.end(), k) -
-    min_prefix_sum.begin() - 1);
+  pair<int, int> arr_idx(0, upper_bound(min_prefix_sum.cbegin(), 
+                                        min_prefix_sum.cend(), k) -
+                                        min_prefix_sum.cbegin() - 1);
   for (int i = 0; i < prefix_sum.size(); ++i) {
-    int idx = upper_bound(min_prefix_sum.begin(),
-        min_prefix_sum.end(), k + prefix_sum[i]) - min_prefix_sum.begin() - 1;
+    int idx = upper_bound(min_prefix_sum.cbegin(), min_prefix_sum.cend(),
+                          k + prefix_sum[i]) - min_prefix_sum.cbegin() - 1;
     if (idx - i - 1 > arr_idx.second - arr_idx.first) {
       arr_idx = {i + 1, idx};
     }

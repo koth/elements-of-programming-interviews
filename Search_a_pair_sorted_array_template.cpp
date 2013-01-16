@@ -77,7 +77,8 @@ pair<int, int> find_negative_pair(const vector<T> &A, const T &k) {
 
 // @include
 template <typename T, typename Comp>
-pair<int, int> find_pair_using_comp(const vector<T> &A, const T &k, Comp comp) {
+pair<int, int> find_pair_using_comp(const vector<T> &A, const T &k,
+                                    Comp comp) {
   pair<int, int> ret(0, A.size() - 1);
   while (ret.first < ret.second && comp(A[ret.first], 0)) {
     ++ret.first;
@@ -129,16 +130,15 @@ pair<int, int> find_pos_neg_pair(const vector<T> &A, const T &k) {
       } while (ret.second >= 0 && A[ret.second] >= 0);
     }
   }
-  return {-1, -1}; // no answer
+  return {-1, -1};  // no answer
 }
 
 template <typename T>
 pair<int, int> find_pair_sum_k(const vector<T> &A, const T &k) {
   pair<int, int> ret = find_pos_neg_pair(A, k);
   if (ret.first == -1 && ret.second == -1) {
-    return k >= 0 ?
-      find_pair_using_comp(A, k, less<T>()) :
-      find_pair_using_comp(A, k, greater_equal<T>());
+    return k >= 0 ? find_pair_using_comp(A, k, less<T>()) :
+           find_pair_using_comp(A, k, greater_equal<T>());
   }
   return ret;
 }

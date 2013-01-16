@@ -7,8 +7,8 @@
 using namespace std;
 
 // @include
-const array<string, 10> M =
-  {"0", "1", "ABC", "DEF", "GHI", "JKL", "MNO", "PQRS", "TUV", "WXYZ"};
+const array<string, 10> M = {"0", "1", "ABC", "DEF", "GHI", "JKL", "MNO", 
+                             "PQRS", "TUV", "WXYZ"};
 
 void phone_mnemonic_helper(const string &num, const int &d, string &ans) {
   if (d == num.size()) {

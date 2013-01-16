@@ -5,9 +5,9 @@
 // @include
 template <typename T>
 bool is_r_s_descendant_ancestor_of_m(
-  const shared_ptr<BinarySearchTree<T> > &r,
-  const shared_ptr<BinarySearchTree<T> > &s,
-  const shared_ptr<BinarySearchTree<T> > &m) {
+    const shared_ptr<BinarySearchTree<T> > &r,
+    const shared_ptr<BinarySearchTree<T> > &s,
+    const shared_ptr<BinarySearchTree<T> > &m) {
   shared_ptr<BinarySearchTree<T> > curr_r = r, curr_s = s;
 
   // Interleaving searches from r and s

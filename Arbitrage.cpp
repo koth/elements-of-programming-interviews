@@ -14,13 +14,20 @@ bool Bellman_Ford(const vector<vector<double> > &G, const int &source) {
   dis_to_source[source] = 0;
 
   for (int times = 1; times < G.size(); ++times) {
+    bool have_update = false;
     for (int i = 0; i < G.size(); ++i) {
       for (int j = 0; j < G.size(); ++j) {
         if (dis_to_source[i] != numeric_limits<double>::max() &&
-          dis_to_source[j] > dis_to_source[i] + G[i][j]) {
+            dis_to_source[j] > dis_to_source[i] + G[i][j]) {
+          have_update = true;
           dis_to_source[j] = dis_to_source[i] + G[i][j];
         }
       }
+    }
+
+    // No update in this iteration means no negative cycle
+    if (have_update == false) {
+      return false;
     }
   }
 
@@ -28,7 +35,7 @@ bool Bellman_Ford(const vector<vector<double> > &G, const int &source) {
   for (int i = 0; i < G.size(); ++i) {
     for (int j = 0; j < G.size(); ++j) {
       if (dis_to_source[i] != numeric_limits<double>::max() &&
-        dis_to_source[j] > dis_to_source[i] + G[i][j]) {
+          dis_to_source[j] > dis_to_source[i] + G[i][j]) {
         return true;
       }
     }

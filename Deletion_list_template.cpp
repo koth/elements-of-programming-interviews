@@ -7,9 +7,8 @@ using namespace std;
 // @include
 template <typename T>
 void deletion_from_list(const shared_ptr<node_t<T> > &v) {
-  shared_ptr<node_t<T> > next_ptr = v->next;
-  v->data = next_ptr->data;
-  v->next = next_ptr->next;
+  v->data = v->next->data;
+  v->next = v->next->next;
 }
 // @exclude
 

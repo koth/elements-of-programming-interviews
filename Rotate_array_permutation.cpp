@@ -25,8 +25,8 @@ int GCD(int a, int b) {
 template <typename T>
 void rotate_array(vector<T> &A, int i) {
   i %= A.size();
-  int cycles = GCD(A.size(), i); // number of cycles in this rotation
-  int hops = A.size() / cycles; // number of elements in a cycle
+  int cycles = GCD(A.size(), i);  // number of cycles in this rotation
+  int hops = A.size() / cycles;  // number of elements in a cycle
 
   for (int c = 0; c < cycles; ++c) {
     T temp = A[c];

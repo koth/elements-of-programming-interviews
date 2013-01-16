@@ -9,40 +9,31 @@ using namespace std;
 
 // @include
 template <typename T>
-void add_node_last(
-  shared_ptr<node_t<T> > &head,
-  shared_ptr<node_t<T> > &tail,
-  const shared_ptr<node_t<T> > &n) {
-  if (head) {
-    tail->next = n;
-  } else {
-    head = n;
-  }
-  tail = n;
+void append_node_and_advance(shared_ptr<node_t<T> > &head,
+                             shared_ptr<node_t<T> > &tail,
+                             shared_ptr<node_t<T> > &n) {
+  head ? tail->next = n : head = n;
+  tail = n;  // reset tail to the last node
+  n = n->next;  // advance n
 }
 
 template <typename T>
-shared_ptr<node_t<T> > merge_sorted_linked_lists(
-  shared_ptr<node_t<T> > F, shared_ptr<node_t<T> > L) {
+shared_ptr<node_t<T> > merge_sorted_linked_lists(shared_ptr<node_t<T> > F,
+                                                 shared_ptr<node_t<T> > L) {
   shared_ptr<node_t<T> > sorted_head = nullptr, sorted_tail = nullptr;
 
   while (F && L) {
-    if (F->data < L->data) {
-      add_node_last<T>(sorted_head, sorted_tail, F);
-      F = F->next;
-    } else {
-      add_node_last<T>(sorted_head, sorted_tail, L);
-      L = L->next;
-    }
+    append_node_and_advance(sorted_head, sorted_tail,
+                            F->data < L->data ? F : L);
   }
 
+  // Append the remaining of F
   while (F) {
-    add_node_last<T>(sorted_head, sorted_tail, F);
-    F = F->next;
+    append_node_and_advance(sorted_head, sorted_tail, F);
   }
+  // Append the remaining of L
   while (L) {
-    add_node_last<T>(sorted_head, sorted_tail, L);
-    L = L->next;
+    append_node_and_advance(sorted_head, sorted_tail, L);
   }
   return sorted_head;
 }

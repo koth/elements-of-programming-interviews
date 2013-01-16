@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 #include <cassert>
 #ifdef __clang__
 #include <unordered_map>
@@ -29,7 +30,7 @@ class Point {
     int x, y;
 
     //Equal function for hash
-    bool operator==(const Point &that) const {
+    const bool operator==(const Point &that) const {
       return x == that.x && y == that.y;
     }
 };
@@ -37,7 +38,7 @@ class Point {
 // Hash function for Point
 class HashPoint {
   public:
-    size_t operator()(const Point &p) const {
+    const size_t operator()(const Point &p) const {
       return hash<int>()(p.x) ^ hash<int>()(p.y);
     }
 };
@@ -56,20 +57,19 @@ class Line {
     // Store the numerator and denominator pair of slope unless the line is
     // parallel to y-axis that we store 1/0
     pair<int, int> slope;
-    // Store the numberator and denominator pair of the y-intercept unless
+    // Store the numerator and denominator pair of the y-intercept unless
     // the line is parallel to y-axis that we store the x-intercept
     pair<int, int> intercept;
 
     Line(const Point &a, const Point &b) :
-      slope(a.x != b.x ?
-        get_canonical_fractional(b.y - a.y, b.x - a.x) :
-        make_pair(1, 0)),
-      intercept(a.x != b.x ?
-        get_canonical_fractional(b.x * a.y - a.x * b.y, b.x - a.x) :
-        make_pair(a.x, 1)) {}
+      slope(a.x != b.x ? get_canonical_fractional(b.y - a.y, b.x - a.x) :
+            make_pair(1, 0)),
+      intercept(a.x != b.x ? 
+                get_canonical_fractional(b.x * a.y - a.x * b.y, b.x - a.x) :
+                make_pair(a.x, 1)) {}
 
     // Equal function for hash
-    bool operator==(const Line &that) const {
+    const bool operator==(const Line &that) const {
       return slope == that.slope && intercept == that.intercept;
     }
 };
@@ -77,9 +77,9 @@ class Line {
 // Hash function for Line
 class HashLine {
   public:
-    size_t operator()(const Line &l) const {
+    const size_t operator()(const Line &l) const {
       return hash<int>()(l.slope.first) ^ hash<int>()(l.slope.second) ^
-        hash<int>()(l.intercept.first) ^ hash<int>()(l.intercept.second);
+             hash<int>()(l.intercept.first) ^ hash<int>()(l.intercept.second);
     }
 };
 // @exclude
@@ -114,19 +114,22 @@ Line find_line_with_most_points(const vector<Point> &P) {
     }
   }
 
-  // Find the line with most points passed
-  pair<Line, unordered_set<Point, HashPoint> > line_max_points = *table.begin();
-  for (const pair<Line, unordered_set<Point, HashPoint> > &l : table) {
-    if (l.second.size() > line_max_points.second.size()) {
-      line_max_points = l;
-    }
-  }
   // @exclude
+  auto line_max_points = max_element(table.cbegin(), table.cend(),
+    [](const pair<Line, unordered_set<Point, HashPoint> > &a,
+       const pair<Line, unordered_set<Point, HashPoint> > &b) {
+      return a.second.size() < b.second.size();
+    });
   int res = check(P);
   //cout << res << " " << line_max_points.second.size() << endl;
-  assert(res == line_max_points.second.size());
+  assert(res == line_max_points->second.size());
   // @include
-  return line_max_points.first;
+  // Return the line with most points have passed
+  return max_element(table.cbegin(), table.cend(),
+    [](const pair<Line, unordered_set<Point, HashPoint> > &a,
+       const pair<Line, unordered_set<Point, HashPoint> > &b) {
+      return a.second.size() < b.second.size();
+    })->first;
 }
 // @exclude
 
@@ -144,7 +147,7 @@ int main(int argc, char *argv[]) {
     unordered_set<Point, HashPoint> t;
     do {
       Point p{rand() % 1000, rand() % 1000};
-      if (t.find(p) == t.end()) {
+      if (t.find(p) == t.cend()) {
         points.push_back(p);
         t.emplace(p);
       }

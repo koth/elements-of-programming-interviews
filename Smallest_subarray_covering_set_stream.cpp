@@ -29,8 +29,8 @@ string rand_string(int len) {
 
 // @include
 pair<int, int> find_smallest_subarray_covering_subset(
-  istringstream &sin, const vector<string> &Q) {
-  list<int> loc; // tracks the last occurrence (index) of each string in Q
+    istringstream &sin, const vector<string> &Q) {
+  list<int> loc;  // tracks the last occurrence (index) of each string in Q
   unordered_map<string, list<int>::iterator> dict;
   for (const string &s : Q) {
     dict.emplace(s, loc.end());
@@ -41,7 +41,7 @@ pair<int, int> find_smallest_subarray_covering_subset(
   string s;
   while (sin >> s) {
     auto it = dict.find(s);
-    if (it != dict.end()) { // s is in Q
+    if (it != dict.end()) {  // s is in Q
       if (it->second != loc.end()) {
         loc.erase(it->second);
       }
@@ -49,9 +49,9 @@ pair<int, int> find_smallest_subarray_covering_subset(
       it->second = --loc.end();
     }
 
-    if (loc.size() == Q.size() && // found |Q| keywords
-      ((res.first == -1 && res.second == -1) ||
-       idx - loc.front() < res.second - res.first)) {
+    if (loc.size() == Q.size() &&  // found |Q| keywords
+        ((res.first == -1 && res.second == -1) ||
+         idx - loc.front() < res.second - res.first)) {
       res = {loc.front(), idx};
     }
     ++idx;
@@ -62,7 +62,7 @@ pair<int, int> find_smallest_subarray_covering_subset(
 
 pair<int, int> find_smallest_subarray_covering_subset(
   const vector<string> &A, const vector<string> &Q) {
-  unordered_set<string> dict(Q.begin(), Q.end());
+  unordered_set<string> dict(Q.cbegin(), Q.cend());
   unordered_map<string, int> count_Q;
   int l = 0, r = 0;
   pair<int, int> res(-1, -1);
@@ -154,7 +154,7 @@ int main(int argc, char *argv[]) {
     int m = 1 + rand() % dict.size();
     cout << n << " " << m << endl;
     vector<string> Q;
-    for (unordered_set<string>::iterator it = dict.begin(); it != dict.end(); ++it) {
+    for (auto it = dict.cbegin(); it != dict.cend(); ++it) {
       Q.emplace_back(*it);
       if (--m == 0) {
         break;

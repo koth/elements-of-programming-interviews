@@ -7,16 +7,16 @@ using namespace std;
 
 // @include
 template <typename T>
-int height(const shared_ptr<BinaryTree<T> > &n) {
+int get_height(const shared_ptr<BinaryTree<T> > &n) {
   if (!n) {
-    return 0; // base case
+    return 0;  // base case
   }
 
-  int l_height = height(n->left);
+  int l_height = get_height(n->left);
   if (l_height == -1) {
     return -1;  // left subtree is not balanced
   }
-  int r_height = height(n->right);
+  int r_height = get_height(n->right);
   if (r_height == -1) {
     return -1;  // right subtree is not balanced
   }
@@ -24,12 +24,12 @@ int height(const shared_ptr<BinaryTree<T> > &n) {
   if (abs(l_height - r_height) > 1) {
     return -1;  // current node n is not balanced
   }
-  return max(l_height, r_height) + 1; // return the height
+  return max(l_height, r_height) + 1;  // return the height
 }
 
 template <typename T>
 bool is_balanced_binary_tree(const shared_ptr<BinaryTree<T> > &n) {
-  return (height(n) != -1);
+  return get_height(n) != -1;
 }
 // @exclude
 

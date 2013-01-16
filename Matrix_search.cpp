@@ -23,7 +23,7 @@ bool matrix_search(const vector<vector<T> > &A, const T &x) {
 }
 // @exclude
 
-// O(n^2) solution for verifiying answer
+// O(n^2) solution for verifying answer
 template <typename T>
 bool brute_force_search(const vector<vector<T> > &A, const T &x) {
   for (int i = 0; i < A.size(); ++i) {

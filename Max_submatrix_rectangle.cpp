@@ -55,16 +55,17 @@ int max_rectangle_submatrix(const vector<vector<bool> > &A) {
       table[i][j] = A[i][j] ?
         // Find the largest h such that (i, j) to (i + h, j) are feasible
         // Find the largest w such that (i, j) to (i, j + w) are feasible
-        MaxHW{i + 1 < A.size() ? table[i + 1][j].h + 1 : 1,
-          j + 1 < A[i].size() ? table[i][j + 1].w + 1 : 1} :
-        MaxHW{0, 0};
+                    MaxHW{i + 1 < A.size() ? table[i + 1][j].h + 1 : 1, 
+                          j + 1 < A[i].size() ? table[i][j + 1].w + 1 : 1} :
+                    MaxHW{0, 0};
     }
   }
 
   int max_rect_area = 0;
   for (int i = 0; i < A.size(); ++i) {
     for (int j = 0; j < A[i].size(); ++j) {
-      // Process (i, j) if it is feasible and is possible to update max_rect_area
+      // Process (i, j) if it is feasible and is possible to update
+      // max_rect_area
       if (A[i][j] && table[i][j].w * table[i][j].h > max_rect_area) {
         int min_width = numeric_limits<int>::max();
         for (int a = 0; a < table[i][j].h; ++a) {

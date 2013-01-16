@@ -25,18 +25,19 @@ string rand_string(int len) {
 }
 
 // @include
-vector<string> word_breaking(const string &s, const unordered_set<string> &dict) {
-  // T[i] stores the length of the last string which composed of s(0, i) if any
+vector<string> word_breaking(const string &s,
+                             const unordered_set<string> &dict) {
+  // T[i] stores the length of the last string which composed of s(0, i)
   vector<int> T(s.size(), 0);
   for (int i = 0; i < s.size(); ++i) {
     // Set T[i] if s(0, i) is a valid word
-    if (dict.find(s.substr(0, i + 1)) != dict.end()) {
+    if (dict.find(s.substr(0, i + 1)) != dict.cend()) {
       T[i] = i + 1;
     }
 
     // Set T[i] if T[j] != 0 and s(j + 1, i) is a valid word
     for (int j = 0; j < i && T[i] == 0; ++j) {
-      if (T[j] != 0 && dict.find(s.substr(j + 1, i - j)) != dict.end()) {
+      if (T[j] != 0 && dict.find(s.substr(j + 1, i - j)) != dict.cend()) {
         T[i] = i - j;
       }
     }

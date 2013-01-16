@@ -15,7 +15,8 @@ void print_matrix_spiral(vector<vector<int> > A) {
     cout << A[x][y] << ' ';
     A[x][y] = 0;
     int nx = x + shift[dir][0], ny = y + shift[dir][1];
-    if (nx < 0 || nx >= A.size() || ny < 0 || ny >= A.size() || A[nx][ny] == 0) {
+    if (nx < 0 || nx >= A.size() || ny < 0 || ny >= A.size() ||
+        A[nx][ny] == 0) {
       dir = (dir + 1) & 3;
       nx = x + shift[dir][0], ny = y + shift[dir][1];
     }

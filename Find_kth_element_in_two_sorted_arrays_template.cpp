@@ -31,9 +31,9 @@ T find_kth_in_two_sorted_arrays(
     T B_j = (l_B + j == B.size() ? numeric_limits<int>::max() : B[l_B + j]);
 
     if (B_j_1 <= A_i && A_i <= B_j) {
-      return A_i; // A_i is the k-th element
+      return A_i;  // A_i is the k-th element
     } else if (A_i_1 <= B_j && B_j <= A_i) {
-      return B_j; // B_j is the k-th element
+      return B_j;  // B_j is the k-th element
     }
 
     if (A_i < B_j) {
@@ -48,8 +48,8 @@ T find_kth_in_two_sorted_arrays(
 */
 // @include
 template <typename T>
-T find_kth_in_two_sorted_arrays(
-  const vector<T> &A, const vector<T> &B, const int &k) {
+T find_kth_in_two_sorted_arrays(const vector<T> &A, const vector<T> &B, 
+                                const int &k) {
   // Lower bound of elements we will choose in A
   int l = max(0, static_cast<int>(k - B.size()));
   // Upper bound of elements we will choose in A

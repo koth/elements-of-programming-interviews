@@ -7,7 +7,7 @@ using namespace std;
 
 // @include
 template <typename T>
-int depth(shared_ptr<BinaryTree<T> > n) {
+int get_depth(shared_ptr<BinaryTree<T> > n) {
   int d = 0;
   while (n) {
     ++d, n = n->parent;
@@ -16,16 +16,16 @@ int depth(shared_ptr<BinaryTree<T> > n) {
 }
 
 template <typename T>
-shared_ptr<BinaryTree<T> > LCA(
-  shared_ptr<BinaryTree<T> > a, shared_ptr<BinaryTree<T> > b) {
-  int depth_a = depth(a), depth_b = depth(b);
+shared_ptr<BinaryTree<T> > LCA(shared_ptr<BinaryTree<T> > a, 
+                               shared_ptr<BinaryTree<T> > b) {
+  int depth_a = get_depth(a), depth_b = get_depth(b);
   if (depth_b > depth_a) {
     swap(a, b);
   }
 
   // Advance deeper node first
-  int diff = depth_a - depth_b;
-  while (diff--) {
+  int depth_diff = depth_a - depth_b;
+  while (depth_diff--) {
     a = a->parent;
   }
 

@@ -33,7 +33,7 @@ bool check_ans(const string &s) {
 // @include
 bool can_string_be_a_palindrome(string s) {
   sort(s.begin(), s.end());
-  int odd_count  = 0, num_curr_char = 1;
+  int odd_count = 0, num_curr_char = 1;
 
   for (int i = 1; i < s.size() && odd_count <= 1; ++i) {
     if (s[i] != s[i - 1]) {
@@ -49,7 +49,8 @@ bool can_string_be_a_palindrome(string s) {
     ++odd_count;
   }
 
-  // A string can be permuted as palindrome if the number of odd time chars <= 1
+  // A string can be permuted as a palindrome if the number of odd time 
+  // chars <= 1
   return odd_count <= 1;
 }
 // @exclude

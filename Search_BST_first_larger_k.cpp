@@ -7,8 +7,8 @@ using namespace std;
 
 // @include
 template <typename T>
-shared_ptr<BinarySearchTree<T> > find_first_larger(
-  shared_ptr<BinarySearchTree<T> > r, const T &k) {
+shared_ptr<BinarySearchTree<T> > find_first_larger_k_with_k_exist(
+    shared_ptr<BinarySearchTree<T> > r, const T &k) {
   bool found_k = false;
   shared_ptr<BinarySearchTree<T> > first = nullptr;
 
@@ -37,9 +37,9 @@ int main(int argc, char *argv[]) {
   root->right = shared_ptr<BinarySearchTree<int> >(new BinarySearchTree<int>{5});
   root->right->left = shared_ptr<BinarySearchTree<int> >(new BinarySearchTree<int>{4});
   root->right->right = shared_ptr<BinarySearchTree<int> >(new BinarySearchTree<int>{7});
-  assert(find_first_larger(root, 1) == root->left);
-  assert(find_first_larger(root, 5) == root->right->right);
-  assert(!find_first_larger(root, 6));
-  assert(!find_first_larger(root, 7));
+  assert(find_first_larger_k_with_k_exist(root, 1) == root->left);
+  assert(find_first_larger_k_with_k_exist(root, 5) == root->right->right);
+  assert(!find_first_larger_k_with_k_exist(root, 6));
+  assert(!find_first_larger_k_with_k_exist(root, 7));
   return 0;
 }

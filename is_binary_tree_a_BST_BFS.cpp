@@ -26,10 +26,10 @@ bool is_BST(const shared_ptr<BinaryTree<T> > &n) {
         return false;
       }
 
-      q.emplace(
-        QNode<T>{q.front().node->left, q.front().lower, q.front().node->data});
-      q.emplace(
-        QNode<T>{q.front().node->right, q.front().node->data, q.front().upper});
+      q.emplace(QNode<T>{q.front().node->left, q.front().lower,
+                         q.front().node->data});
+      q.emplace(QNode<T>{q.front().node->right, q.front().node->data,
+                         q.front().upper});
     }
     q.pop();
   }

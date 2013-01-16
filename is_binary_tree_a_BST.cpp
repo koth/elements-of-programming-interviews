@@ -7,17 +7,16 @@ using namespace std;
 
 // @include
 template <typename T>
-bool is_BST_helper(
-  const shared_ptr<BinaryTree<T> > &r, const T &lower, const T &upper) {
+bool is_BST_helper(const shared_ptr<BinaryTree<T> > &r, const T &lower, 
+                   const T &upper) {
   if (!r) {
     return true;
-  }
-  if (r->data < lower || r->data > upper) {
+  } else if (r->data < lower || r->data > upper) {
     return false;
   }
 
   return is_BST_helper(r->left, lower, r->data) &&
-    is_BST_helper(r->right, r->data, upper);
+         is_BST_helper(r->right, r->data, upper);
 }
 
 template <typename T>

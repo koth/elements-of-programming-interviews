@@ -17,7 +17,8 @@ shared_ptr<BinarySearchTree<T> > BST_to_doubly_list(
   }
 
   // Recursively build the list from left and right subtrees
-  auto l_head(BST_to_doubly_list(n->left)), r_head(BST_to_doubly_list(n->right));
+  auto l_head(BST_to_doubly_list(n->left));
+  auto r_head(BST_to_doubly_list(n->right));
 
   // Append n to the list from left subtree
   shared_ptr<BinarySearchTree<T> > l_tail = nullptr;

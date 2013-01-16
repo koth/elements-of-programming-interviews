@@ -16,7 +16,7 @@ int uniform_random_a_b(const int &a, const int &b) {
   do {
     res = 0;
     for (int i = 0; (1 << i) < l; ++i) {
-      // Assuming zero_one_random is the system-provided random number generator
+      // zero_one_random is the system-provided random number generator
       res = (res << 1) | zero_one_random();
     }
   } while (res >= l);

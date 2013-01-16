@@ -13,24 +13,24 @@ using namespace std;
 // @include
 template <typename T>
 shared_ptr<BinaryTree<T> > reconstruct_pre_in_orders_helper(
-  const vector<T> &pre, const int &pre_s, const int &pre_e,
-  const vector<T> &in, const int &in_s, const int &in_e) {
+    const vector<T> &pre, const int &pre_s, const int &pre_e,
+    const vector<T> &in, const int &in_s, const int &in_e) {
   shared_ptr<BinaryTree<T> > n = nullptr;
 
   if (pre_e > pre_s && in_e > in_s) {
-    auto it = find(in.begin() + in_s, in.begin() + in_e, pre[pre_s]);
-    int left_tree_size = it - (in.begin() + in_s);
+    auto it = find(in.cbegin() + in_s, in.cbegin() + in_e, pre[pre_s]);
+    int left_tree_size = it - (in.cbegin() + in_s);
 
     return shared_ptr<BinaryTree<T> >(new BinaryTree<T>{
       pre[pre_s],
       // Recursively build the left subtree
       reconstruct_pre_in_orders_helper<T>(
         pre, pre_s + 1, pre_s + 1 + left_tree_size,
-        in, in_s, it - in.begin()),
+        in, in_s, it - in.cbegin()),
       // Recursively build the right subtree
       reconstruct_pre_in_orders_helper<T>(
         pre, pre_s + 1 + left_tree_size, pre_e,
-        in, it - in.begin() + 1, in_e)
+        in, it - in.cbegin() + 1, in_e)
       });
   }
   return n;
@@ -39,7 +39,8 @@ shared_ptr<BinaryTree<T> > reconstruct_pre_in_orders_helper(
 template <typename T>
 shared_ptr<BinaryTree<T> > reconstruct_pre_in_orders(
   const vector<T> &pre, const vector<T> &in) {
-  return reconstruct_pre_in_orders_helper(pre, 0, pre.size(), in, 0, in.size());
+  return reconstruct_pre_in_orders_helper(pre, 0, pre.size(),
+                                          in, 0, in.size());
 }
 // @exclude
 

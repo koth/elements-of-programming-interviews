@@ -13,7 +13,7 @@ class BinarySearchTree {
         shared_ptr<TreeNode> left, right;
     };
 
-    void clear(shared_ptr<TreeNode> n) {
+    void clear(shared_ptr<TreeNode> &n) {
       if (n) {
         clear(n->left), clear(n->right);
         n = nullptr;
@@ -21,10 +21,9 @@ class BinarySearchTree {
     }
 
     // Replace the link between par and child by new_link
-    void replaceParentChildLink(
-      shared_ptr<TreeNode> par,
-      shared_ptr<TreeNode> child,
-      shared_ptr<TreeNode> new_link) {
+    void replaceParentChildLink(shared_ptr<TreeNode> par,
+                                shared_ptr<TreeNode> child,
+                                shared_ptr<TreeNode> new_link) {
       if (!par) {
         return;
       }
@@ -45,15 +44,15 @@ class BinarySearchTree {
       clear();
     }
 
-    bool empty() const {
-      return (!root);
+    const bool empty() const {
+      return !root;
     }
 
     void clear() {
       clear(root);
     }
 
-    bool insert(const T &key) {
+    const bool insert(const T &key) {
       shared_ptr<TreeNode>
         t = shared_ptr<TreeNode>(new TreeNode{key, nullptr, nullptr}),
         par = nullptr;
@@ -67,7 +66,7 @@ class BinarySearchTree {
           par = curr;
           if (t->data == curr->data) {
             t = nullptr;
-            return false; // no insertion for duplicate key
+            return false;  // no insertion for duplicate key
           } else if (t->data < curr->data) {
             curr = curr->left;
           } else {  // t->data > curr->data
@@ -85,7 +84,7 @@ class BinarySearchTree {
       return true;
     }
 
-    bool erase(const T &key) {
+    const bool erase(const T &key) {
       // Find the node with key
       shared_ptr<TreeNode> curr = root, par = nullptr;
       while (curr && curr->data != key) {

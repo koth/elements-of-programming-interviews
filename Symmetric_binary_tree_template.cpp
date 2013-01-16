@@ -6,15 +6,15 @@ using namespace std;
 
 // @include
 template <typename T>
-bool is_symmetric_helper(
-  const shared_ptr<BinaryTree<T> > &l, const shared_ptr<BinaryTree<T> > &r) {
+bool is_symmetric_helper(const shared_ptr<BinaryTree<T> > &l, 
+                         const shared_ptr<BinaryTree<T> > &r) {
   if (!l && !r) {
     return true;
   } else if (l && r) {
-    return (l->data == r->data) &&
+    return l->data == r->data &&
            is_symmetric_helper<T>(l->left, r->right) &&
            is_symmetric_helper<T>(l->right, r->left);
-  } else { // (l && !r) || (!l && r)
+  } else {  // (l && !r) || (!l && r)
     return false;
   }
 }

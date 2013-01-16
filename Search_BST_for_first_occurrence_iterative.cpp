@@ -7,8 +7,8 @@ using namespace std;
 
 // @include
 template <typename T>
-shared_ptr<BinarySearchTree<T> > search_first_occurence(
-  shared_ptr<BinarySearchTree<T> > r, const T &k) {
+shared_ptr<BinarySearchTree<T> > find_first_equal_k(
+    shared_ptr<BinarySearchTree<T> > r, const T &k) {
   while (r) {
     if (r->data < k) {
       r = r->right;
@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
   root->right = shared_ptr<BinarySearchTree<int> >(new BinarySearchTree<int>{5});
   root->right->left = shared_ptr<BinarySearchTree<int> >(new BinarySearchTree<int>{4});
   root->right->right = shared_ptr<BinarySearchTree<int> >(new BinarySearchTree<int>{6});
-  assert(!search_first_occurence(root, 7));
-  assert(search_first_occurence(root, 6)->data == 6);
+  assert(!find_first_equal_k(root, 7));
+  assert(find_first_equal_k(root, 6)->data == 6);
   return 0;
 }

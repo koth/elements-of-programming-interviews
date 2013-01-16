@@ -32,7 +32,8 @@ void find_anagrams(const vector<string> &dictionary) {
     // Multiple strings with the same hash code => anagrams
     if (p.second.size() >= 2) {
       // Output all strings
-      copy(p.second.begin(), p.second.end(), ostream_iterator<string>(cout, " "));
+      copy(p.second.begin(), p.second.end(),
+           ostream_iterator<string>(cout, " "));
       cout << endl;
     }
   }

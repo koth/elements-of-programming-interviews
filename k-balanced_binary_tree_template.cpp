@@ -34,7 +34,7 @@ pair<shared_ptr<BinaryTree<T> >, int> find_non_k_balanced_node_helper(
 
 template <typename T>
 shared_ptr<BinaryTree<T> > find_non_k_balanced_node(
-  const shared_ptr<BinaryTree<T> > &n, const int &k) {
+    const shared_ptr<BinaryTree<T> > &n, const int &k) {
   return find_non_k_balanced_node_helper<T>(n, k).first;
 }
 // @exclude

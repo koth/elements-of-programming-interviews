@@ -16,7 +16,7 @@ vector<pair<int, T> > examine_buildings_with_sunset(istringstream &sin) {
   vector<pair<int, T> > buildings_with_sunset;
   while (sin >> height) {
     while (buildings_with_sunset.empty() == false &&
-      height >= buildings_with_sunset.back().second) {
+           height >= buildings_with_sunset.back().second) {
       buildings_with_sunset.pop_back();
     }
     buildings_with_sunset.emplace_back(idx++, height);

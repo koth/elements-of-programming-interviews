@@ -14,7 +14,7 @@ class Player {
   public:
     HeightType height;
 
-    bool operator<(const Player &that) const {
+    const bool operator<(const Player &that) const {
       return height < that.height;
     }
 };
@@ -31,7 +31,7 @@ class Team {
     }
 
   public:
-    bool operator<(const Team &that) const {
+    const bool operator<(const Team &that) const {
       vector<Player<HeightType> > this_sorted(sortHeightMembers());
       vector<Player<HeightType> > that_sorted(that.sortHeightMembers());
       for (int i = 0; i < this_sorted.size() && i < that_sorted.size(); ++i) {

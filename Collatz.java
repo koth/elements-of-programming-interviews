@@ -84,11 +84,12 @@ import java.util.concurrent.Executors;
 
     //@include
     public static ExecutorService execute() {
-    // Uses the Executor framework for task assignment and load balancing
+      // Uses the Executor framework for task assignment and load balancing
       List<Thread> threads = new ArrayList<Thread>();
       ExecutorService executor = Executors.newFixedThreadPool(NTHREADS);
       for (int i = 0 ; i < (N / RANGESIZE); ++i) {
-        Runnable worker = new MyRunnable(i * RANGESIZE + 1, (i + 1) * RANGESIZE);
+        Runnable worker = new MyRunnable(i * RANGESIZE + 1,
+                                         (i + 1) * RANGESIZE);
         executor.execute(worker);
       }
       executor.shutdown();

@@ -15,7 +15,7 @@ class Compare {
 };
 
 template <typename T>
-class Stack : // inherits empty(), pop(), and size() methods
+class Stack :  // inherits empty(), pop(), and size() methods
   public priority_queue<pair<int, T>, vector<pair<int, T> >, Compare<T> > {
   private:
     int order;
@@ -29,13 +29,13 @@ class Stack : // inherits empty(), pop(), and size() methods
     }
 
     void push(const T &x) {
-      priority_queue<
-        pair<int, T>, vector<pair<int, T> >, Compare<T> >::emplace(order++, x);
+      priority_queue<pair<int, T>, vector<pair<int, T> >, Compare<T> >::
+        emplace(order++, x);
     }
 };
 
 template <typename T>
-class Queue : // inherits empty(), pop(), and size() methods
+class Queue :  // inherits empty(), pop(), and size() methods
   public priority_queue<pair<int, T>, vector<pair<int, T> >, Compare<T> > {
   private:
     int order;
@@ -49,8 +49,8 @@ class Queue : // inherits empty(), pop(), and size() methods
     }
 
     void push(const T &x) {
-      priority_queue<
-        pair<int, T>, vector<pair<int, T> >, Compare<T> >::emplace(order--, x);
+      priority_queue<pair<int, T>, vector<pair<int, T> >, Compare<T> >::
+        emplace(order--, x);
     }
 };
 // @exclude

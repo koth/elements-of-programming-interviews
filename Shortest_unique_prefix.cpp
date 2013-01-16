@@ -56,7 +56,7 @@ class Trie {
     bool insert(const string &s) {
       shared_ptr<TrieNode> p = root;
       for (const char &c : s) {
-        if (p->l.find(c) == p->l.end()) {
+        if (p->l.find(c) == p->l.cend()) {
           p->l[c] = shared_ptr<TrieNode>(new TrieNode{false});
         }
         p = p->l[c];
@@ -66,17 +66,17 @@ class Trie {
       if (p->isString == true) {
         return false;
       } else {  // p->isString == false
-        p->isString = true; // inserts s into this trie
+        p->isString = true;  // inserts s into this trie
         return true;
       }
     }
 
-    string find_shortest_unique_prefix(const string &s) {
+    string getShortestUniquePrefix(const string &s) {
       shared_ptr<TrieNode> p = root;
       string prefix;
       for (const char &c : s) {
         prefix += c;
-        if (p->l.find(c) == p->l.end()) {
+        if (p->l.find(c) == p->l.cend()) {
           return prefix;
         }
         p = p->l[c];
@@ -90,19 +90,19 @@ class Trie {
     // @include
 };
 
-string shortest_prefix(const string &s, const unordered_set<string> &D) {
+string find_shortest_prefix(const string &s, const unordered_set<string> &D) {
   // Build a trie according to given dictionary D
   Trie T;
   for (const string &word : D) {
     T.insert(word);
   }
-  return T.find_shortest_unique_prefix(s);
+  return T.getShortestUniquePrefix(s);
 }
 // @exclude
 
 string check_ans(const string &s, unordered_set<string> &D) {
   int len = 0;
-  for (unordered_set<string>::iterator iter = D.begin(); iter != D.end(); ++iter) {
+  for (auto iter = D.cbegin(); iter != D.cend(); ++iter) {
     int i;
     for (i = 0; i < s.size() && i < (*iter).size(); ++i) {
       if (s[i] != (*iter)[i]) {
@@ -140,8 +140,8 @@ int main(int argc, char *argv[]) {
     }
     cout << endl;
     //*/
-    cout << s << ' '  << "shortest prefix = " << shortest_prefix(s, D) << endl;
-    assert(shortest_prefix(s, D) == check_ans(s, D));
+    cout << s << ' '  << "shortest prefix = " << find_shortest_prefix(s, D) << endl;
+    assert(find_shortest_prefix(s, D) == check_ans(s, D));
   }
   return 0;
 }

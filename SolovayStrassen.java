@@ -28,8 +28,8 @@ public class SolovayStrassen {
       m = m.divide(TWO);
     }
     int J2n =
-      (n.mod(EIGHT).equals(BigInteger.ONE) ||
-       n.mod(EIGHT).equals(SEVEN)) ? 1 : -1;
+      (n.mod(EIGHT).equals(BigInteger.ONE) || n.mod(EIGHT).equals(SEVEN)) 
+          ? 1 : -1;
     int rule8multiplier = (twoCount % 2 == 0) ? 1 : J2n;
 
     int tmp = Jacobi(n, m);

@@ -9,8 +9,8 @@ using namespace std;
 
 // @include
 template <typename T>
-void connect_leaves_helper(
-  const shared_ptr<BinaryTree<T> > &n, list<shared_ptr<BinaryTree<T> > > &L) {
+void connect_leaves_helper(const shared_ptr<BinaryTree<T> > &n, 
+                           list<shared_ptr<BinaryTree<T> > > &L) {
   if (n) {
     if (!n->left && !n->right) {
       L.push_back(n);
@@ -23,7 +23,7 @@ void connect_leaves_helper(
 
 template <typename T>
 list<shared_ptr<BinaryTree<T> > > connect_leaves(
-  const shared_ptr<BinaryTree<T> > &n) {
+    const shared_ptr<BinaryTree<T> > &n) {
   list<shared_ptr<BinaryTree<T> > > L;
   connect_leaves_helper(n, L);
   return L;

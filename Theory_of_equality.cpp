@@ -49,7 +49,7 @@ bool are_constraints_satisfied(
   int group_count = 0;
   for (pair<int, GraphVertex> vertex : G) {
     if (vertex.second.group == -1) {  // is a unvisited vertex
-      vertex.second.group = group_count++;  // assigns a groupd index
+      vertex.second.group = group_count++;  // assigns a group index
       DFS(vertex.second);
     }
   }

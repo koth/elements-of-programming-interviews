@@ -7,21 +7,17 @@ using namespace std;
 
 // @include
 template <typename T>
-shared_ptr<BinarySearchTree<T> > search_first_occurence(
-  const shared_ptr<BinarySearchTree<T> > &r, const T &k) {
+shared_ptr<BinarySearchTree<T> > find_first_equal_k(
+    const shared_ptr<BinarySearchTree<T> > &r, const T &k) {
   if (!r) {
-    return nullptr; // no match
-  }
-
-  if (r->data < k) {
-    return search_first_occurence(r->right, k);
-  } else if (r->data > k) {
-    return search_first_occurence(r->left, k);
-  } else {  // r->data == k
-    // Recursively search the left subtree
-    shared_ptr<BinarySearchTree<T> > n = search_first_occurence(r->left, k);
+    return nullptr;  // no match
+  } else if (r->data == k) {
+    // Recursively search the left subtree for first one == k
+    shared_ptr<BinarySearchTree<T> > n = find_first_equal_k(r->left, k);
     return n ? n : r;
   }
+  // Search left or right tree according to r->data and k
+  return find_first_equal_k(r->data < k ? r->right : r->left, k);
 }
 // @exclude
 
@@ -35,7 +31,7 @@ int main(int argc, char *argv[]) {
   root->right = shared_ptr<BinarySearchTree<int> >(new BinarySearchTree<int>{6});
   root->right->left = shared_ptr<BinarySearchTree<int> >(new BinarySearchTree<int>{4});
   root->right->right = shared_ptr<BinarySearchTree<int> >(new BinarySearchTree<int>{6});
-  assert(!search_first_occurence<int>(root, 7));
-  assert(search_first_occurence<int>(root, 6)->data == 6 && search_first_occurence<int>(root, 6)->right->data == 6);
+  assert(!find_first_equal_k<int>(root, 7));
+  assert(find_first_equal_k<int>(root, 6)->data == 6 && find_first_equal_k<int>(root, 6)->right->data == 6);
   return 0;
 }

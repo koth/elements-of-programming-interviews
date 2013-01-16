@@ -14,7 +14,7 @@ unsigned diff(const unsigned &a, const unsigned &b) {
 unsigned find_closest_palindrome(const unsigned &x) {
   string str(to_string(x));
   // Make str a palindrome by mirroring the left half to the right half
-  copy(str.begin(), str.begin() + (str.size() >> 1), str.rbegin());
+  copy(str.cbegin(), str.cbegin() + (str.size() >> 1), str.rbegin());
 
   unsigned mirror_left = stoul(str);
   int idx = (str.size() - 1) >> 1;
@@ -28,11 +28,11 @@ unsigned find_closest_palindrome(const unsigned &x) {
         break;
       }
     }
-    if (str[0] == '0') { // special case, make the whole string as "99...9"
-      str = to_string(stoul(str)); // removes the leading 0
+    if (str[0] == '0') {  // special case, make the whole string as "99...9"
+      str = to_string(stoul(str));  // removes the leading 0
       fill(str.begin(), str.end(), '9');
     }
-  } else { // mirror_left < x
+  } else {  // mirror_left < x
     // Add one to the left half
     while (idx >= 0) {
       if (str[idx] == '9') {
@@ -45,8 +45,9 @@ unsigned find_closest_palindrome(const unsigned &x) {
   }
 
   // Make str a palindrome again by mirroring the left half to the right half
-  copy(str.begin(), str.begin() + (str.size() >> 1), str.rbegin());
-  return diff(x, mirror_left) < diff(x, stoul(str)) ? mirror_left : stoul(str);
+  copy(str.cbegin(), str.cbegin() + (str.size() >> 1), str.rbegin());
+  return diff(x, mirror_left) < diff(x, stoul(str)) ?
+         mirror_left : stoul(str);
 }
 // @exclude
 

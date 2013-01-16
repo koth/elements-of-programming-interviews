@@ -12,7 +12,7 @@ class Coordinate {
   public:
     int i, j;
 
-    bool operator==(const Coordinate& that) const {
+    const bool operator==(const Coordinate& that) const {
       return (i == that.i && j == that.j);
     }
 };
@@ -20,16 +20,13 @@ class Coordinate {
 // Check cur is within maze and is a white pixel
 bool is_feasible(const Coordinate &cur, const vector<vector<int> > &maze) {
   return (cur.i >= 0 && cur.i < maze.size() &&
-      cur.j >= 0 && cur.j < maze[cur.i].size() &&
-      maze[cur.i][cur.j] == 0);
+          cur.j >= 0 && cur.j < maze[cur.i].size() &&
+          maze[cur.i][cur.j] == 0);
 }
 
 // Perform DFS to find a feasible path
-bool search_maze_helper(
-    vector<vector<int> > &maze,
-    const Coordinate &cur,
-    const Coordinate &e,
-    vector<Coordinate> &path) {
+bool search_maze_helper(vector<vector<int> > &maze, const Coordinate &cur,
+                        const Coordinate &e, vector<Coordinate> &path) {
   if (cur == e) {
     return true;
   }
@@ -49,8 +46,8 @@ bool search_maze_helper(
   return false;
 }
 
-vector<Coordinate> search_maze(
-  vector<vector<int> > maze, const Coordinate &s, const Coordinate &e) {
+vector<Coordinate> search_maze(vector<vector<int> > maze, const Coordinate &s,
+                               const Coordinate &e) {
   vector<Coordinate> path;
   maze[s.i][s.j] = 1;
   path.emplace_back(s);

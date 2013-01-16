@@ -6,18 +6,15 @@ using namespace std;
 
 // @include
 template <typename T>
-bool search_min_first_BST(
-  const shared_ptr<BinarySearchTree<T> > &r, const T &k) {
+bool search_min_first_BST(const shared_ptr<BinarySearchTree<T> > &r,
+                          const T &k) {
   if (!r || r->data > k) {
     return false;
-  }
-  if (r->data == k) {
+  } else if (r->data == k) {
+    return true;
+  } else if (search_min_first_BST(r->left, k)) {
     return true;
   }
-  if (search_min_first_BST(r->left, k)) {
-    return true;
-  }
-
   return (!r->left || r->left->data < k) && search_min_first_BST(r->right, k);
 }
 // @exclude

@@ -10,7 +10,7 @@ using namespace std;
 // @include
 class GraphVertex {
   public:
-    int d, l; // discovery and leaving time
+    int d, l;  // discovery and leaving time
     vector<GraphVertex*> edges;
     // @exclude
     GraphVertex(void) : d(0), l(numeric_limits<int>::max()) {}
@@ -21,7 +21,7 @@ bool DFS(GraphVertex* cur, GraphVertex* pre, int time) {
   cur->d = ++time, cur->l = numeric_limits<int>::max();
   for (GraphVertex* &next : cur->edges) {
     if (next != pre) {
-      if (next->d != 0) { // back edge
+      if (next->d != 0) {  // back edge
         cur->l = min(cur->l, next->d);
       } else {  // forward edge
         if (DFS(next, cur, time) == false) {
