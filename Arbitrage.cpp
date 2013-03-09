@@ -9,14 +9,14 @@
 using namespace std;
 
 // @include
-bool Bellman_Ford(const vector<vector<double> > &G, const int &source) {
+bool Bellman_Ford(const vector<vector<double>> &G, const int &source) {
   vector<double> dis_to_source(G.size(), numeric_limits<double>::max());
   dis_to_source[source] = 0;
 
   for (int times = 1; times < G.size(); ++times) {
     bool have_update = false;
     for (int i = 0; i < G.size(); ++i) {
-      for (int j = 0; j < G.size(); ++j) {
+      for (int j = 0; j < G[i].size(); ++j) {
         if (dis_to_source[i] != numeric_limits<double>::max() &&
             dis_to_source[j] > dis_to_source[i] + G[i][j]) {
           have_update = true;
@@ -33,7 +33,7 @@ bool Bellman_Ford(const vector<vector<double> > &G, const int &source) {
 
   // Detect cycle if there is any further update
   for (int i = 0; i < G.size(); ++i) {
-    for (int j = 0; j < G.size(); ++j) {
+    for (int j = 0; j < G[i].size(); ++j) {
       if (dis_to_source[i] != numeric_limits<double>::max() &&
           dis_to_source[j] > dis_to_source[i] + G[i][j]) {
         return true;
@@ -43,7 +43,7 @@ bool Bellman_Ford(const vector<vector<double> > &G, const int &source) {
   return false;
 }
 
-bool is_Arbitrage_exist(vector<vector<double> > G) {
+bool is_Arbitrage_exist(vector<vector<double>> G) {
   // Transform each edge in G
   for (vector<double> &edge_list : G) {
     for (double &edge : edge_list) {
@@ -69,7 +69,7 @@ int main(int argc, char *argv[]) {
     n = 1 + rand() % 100;
     m = 1 + rand() % (n * (n - 1) / 2);
   }
-  vector<vector<double> > G(n, vector<double>(n));
+  vector<vector<double>> G(n, vector<double>(n));
   // Assume the input is a complete graph
   for (int i = 0; i < G.size(); ++i) {
     G[i][i] = 1;
@@ -80,7 +80,7 @@ int main(int argc, char *argv[]) {
   }
   bool res = is_Arbitrage_exist(G);
   cout << boolalpha << res << endl;
-  vector<vector<double> > g(3, vector<double>(3));
+  vector<vector<double>> g(3, vector<double>(3));
   for (int i = 0; i < 3; ++i) {
     g[i][i] = 1;
   }
@@ -89,7 +89,7 @@ int main(int argc, char *argv[]) {
   assert(res == true);
   cout << boolalpha << is_Arbitrage_exist(g) << endl;
   /*
-  vector<vector<bool> > have_edges(n, vector<bool>(n, false));
+  vector<vector<bool>> have_edges(n, vector<bool>(n, false));
   for (int i = 0; i < m; ++i) {
     int a, b;
     do {

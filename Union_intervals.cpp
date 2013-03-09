@@ -27,7 +27,7 @@ class Interval {
 };
 
 template <typename TimeType>
-vector<Interval<TimeType> > Union_intervals(vector<Interval<TimeType> > I) {
+vector<Interval<TimeType>> Union_intervals(vector<Interval<TimeType>> I) {
   // Empty input
   if (I.empty()) {
     return {};
@@ -36,7 +36,7 @@ vector<Interval<TimeType> > Union_intervals(vector<Interval<TimeType> > I) {
   // Sort intervals according to their left endpoints
   sort(I.begin(), I.end());
   Interval<TimeType> curr(I.front());
-  vector<Interval<TimeType> > uni;
+  vector<Interval<TimeType>> uni;
   for (int i = 1; i < I.size(); ++i) {
     if (I[i].left.val < curr.right.val ||
         (I[i].left.val == curr.right.val &&
@@ -56,7 +56,7 @@ vector<Interval<TimeType> > Union_intervals(vector<Interval<TimeType> > I) {
 // @exclude
 
 template <typename TimeType>
-void check_intervals(const vector<Interval<TimeType> > &A) {
+void check_intervals(const vector<Interval<TimeType>> &A) {
   cout << A.size() << endl;
   // only check the intervals do not overlap with each other
   //cout << "0 " << ((A[0].left.isClose) ? '[' : '(') << A[0].left.val << "," << A[0].right.val << ((A[0].right.isClose) ? ']' : ')') << endl;
@@ -75,14 +75,14 @@ int main(int argc, char *argv[]) {
     } else {
       n = 1 + rand() % 1000;
     }
-    vector<Interval<int> > A;
+    vector<Interval<int>> A;
     for (int i = 0; i < n; ++i) {
       Interval<int> temp;
       temp.left.isClose = rand() & 1, temp.left.val = rand() % 10000;
       temp.right.isClose = rand() & 1, temp.right.val = 1 + temp.left.val + rand() % 100;
       A.emplace_back(temp);
     }
-    vector<Interval<int> > ret = Union_intervals(A);
+    vector<Interval<int>> ret = Union_intervals(A);
     if (ret.empty() == false) {
       check_intervals(ret);
     }

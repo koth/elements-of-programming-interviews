@@ -9,13 +9,13 @@ using namespace std;
 // @include
 template <typename T>
 double find_median_sorted_circular_linked_list(
-  const shared_ptr<node_t<T> > &r_node) {
+  const shared_ptr<node_t<T>> &r_node) {
   if (!r_node) {
     return 0.0;  // no node in this linked list
   }
 
-  // Check all nodes are identical or not,
-  shared_ptr<node_t<T> > curr = r_node;
+  // Check all nodes are identical or not and identify the start of list
+  shared_ptr<node_t<T>> curr = r_node, start = r_node;
   int count = 0;
   bool is_identical = true;
   do {
@@ -23,24 +23,25 @@ double find_median_sorted_circular_linked_list(
       is_identical = false;
     }
     ++count, curr = curr->next;
+
+    // start will point to the largest element in the list
+    if (start->data <= start->next->data) {
+      start = start->next;
+    }
   } while (curr != r_node);
   // If all values are identical, median = curr->data
   if (is_identical == true) {
     return curr->data;
   }
 
-  // Try to identify the start of this linked list
-  shared_ptr<node_t<T> > head = r_node;
-  while (head->data <= head->next->data) {
-    head = head->next;
-  }
-  head = head->next;
+  // Since start point to the largest element, its next is the start of list
+  start = start->next;
 
   // Traverse to the middle of the list and return the median
   for (int i = 0; i < (count - 1) >> 1; ++i) {
-    head = head->next;
+    start = start->next;
   }
-  return count & 1 ? head->data : 0.5 * (head->data + head->next->data);
+  return count & 1 ? start->data : 0.5 * (start->data + start->next->data);
 }
 // @exclude
 
@@ -53,15 +54,15 @@ int main(int argc, char *argv[]) {
     } else {
       n = 1 + rand() % 1000;
     }
-    shared_ptr<node_t<int> > head;
+    shared_ptr<node_t<int>> head;
     for (int i = n; i >= 0; --i) {
-      shared_ptr<node_t<int> > curr = shared_ptr<node_t<int> >(new node_t<int>{i, nullptr});
+      shared_ptr<node_t<int>> curr = shared_ptr<node_t<int>>(new node_t<int>{i, nullptr});
       curr->next = head;
       head = curr;
     }
-    shared_ptr<node_t<int> > curr = head;
-    if (curr != shared_ptr<node_t<int> >(nullptr)) {
-      while (curr->next != shared_ptr<node_t<int> >(nullptr)) {
+    shared_ptr<node_t<int>> curr = head;
+    if (curr != shared_ptr<node_t<int>>(nullptr)) {
+      while (curr->next != shared_ptr<node_t<int>>(nullptr)) {
         curr = curr->next;
       }
       curr->next = head;  // make the list become circular

@@ -8,7 +8,7 @@ using namespace std;
 // @include
 template <typename CoinType>
 CoinType pick_up_coins_helper(const vector<CoinType> &C, const int &a,
-                              const int &b, vector<vector<CoinType> > &T) {
+                              const int &b, vector<vector<CoinType>> &T) {
   if (a > b) {
     return 0;  // base condition
   }
@@ -24,7 +24,7 @@ CoinType pick_up_coins_helper(const vector<CoinType> &C, const int &a,
 
 template <typename CoinType>
 CoinType pick_up_coins(vector<CoinType> &C) {
-  vector<vector<CoinType> > T(C.size(), vector<int>(C.size(), -1));
+  vector<vector<CoinType>> T(C.size(), vector<int>(C.size(), -1));
   return pick_up_coins_helper(C, 0, C.size() - 1, T);
 }
 // @exclude

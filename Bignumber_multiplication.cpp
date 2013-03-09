@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cassert>
 #include <algorithm>
 #include <cstring>
 #include <vector>
@@ -17,8 +18,8 @@ class BigInt {
   public:
     BigInt(const int &capacity) : sign(1), digits(capacity) {}
 
-    BigInt(const string &s)
-      : sign(s[0] == '-' ? -1 : 1), digits(s.size() - (s[0] == '-')) {
+    BigInt(const string &s) : sign(s[0] == '-' ? -1 : 1),
+                              digits(s.size() - (s[0] == '-')) {
         for (int i = s.size() - 1, j = 0; i >= (s[0] == '-'); --i, ++j) {
           if (isdigit(s[i])) {
             digits[j] = s[i] - '0';
@@ -34,7 +35,7 @@ class BigInt {
         if (n.digits[i]) {
           int carry = 0;
           for (j = 0; j < digits.size() || carry; ++j) {
-            int n_digit = result.digits[i + j] + 
+            int n_digit = result.digits[i + j] +
                           (j < digits.size() ? n.digits[i] * digits[j] : 0) +
                           carry;
             result.digits[i + j] = n_digit % 10;
@@ -44,14 +45,15 @@ class BigInt {
       }
 
       // If one number is 0, the result size should be 0
-      if ((digits.size() == 1 && digits[0] == 0) ||
-        (n.digits.size() == 1 && n.digits[0] == 0)) {
+      if ((digits.size() == 1 && digits.front() == 0) ||
+          (n.digits.size() == 1 && n.digits.front() == 0)) {
         result.digits.resize(1);
       } else {
         result.digits.resize(i + j - 1);
       }
       return result;
     }
+    // @exclude
 
     string toString() const {
       string s = (sign > 0 ? "" : "-");
@@ -63,18 +65,9 @@ class BigInt {
       }
       return s;
     }
-    // @exclude
-    const BigInt &operator=(const BigInt &n);
     // @include
 };
 // @exclude
-
-const BigInt &BigInt::operator=(const BigInt &n) {
-  if (&n != this) {
-    *this = n;
-  }
-  return *this;
-}
 
 string rand_string(int len) {
   string ret;
@@ -94,6 +87,8 @@ string rand_string(int len) {
 }
 
 int main(int argc, char *argv[]) {
+  assert((BigInt("0") * BigInt("1000")).toString() == "0");
+  assert((BigInt("131412") * BigInt("-1313332")).toString() == "-172587584784");
   string s1, s2;
   if (argc == 3) {
     s1 = argv[1], s2 = argv[2];

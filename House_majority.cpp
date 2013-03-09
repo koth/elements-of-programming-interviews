@@ -10,7 +10,7 @@ using namespace std;
 
 // @include
 double house_majority_helper(const vector<double> &prob, const int &a, 
-                             const int &b, vector<vector<double> > &P) {
+                             const int &b, vector<vector<double>> &P) {
   if (a < b) {
     return 0.0;  // base case: not enough Republicans
   } else if (a == 0 && b == 0) {
@@ -26,7 +26,7 @@ double house_majority_helper(const vector<double> &prob, const int &a,
 
 double house_majority(const vector<double> &prob, const int &n) {
   // Initialize DP table
-  vector<vector<double> > P(n + 1, vector<double>(n + 1, -1.0));
+  vector<vector<double>> P(n + 1, vector<double>(n + 1, -1.0));
 
   // Accumulate the probabilities of majority cases
   double prob_sum = 0.0;

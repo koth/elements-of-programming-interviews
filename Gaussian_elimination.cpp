@@ -7,7 +7,7 @@
 using namespace std;
 
 // @include
-void Eliminate_rows(vector<vector<bool> > &B, const int &i, const int &j) {
+void Eliminate_rows(vector<vector<bool>> &B, const int &i, const int &j) {
   // Use B[i] to eliminate other rows' entry j
   for (int a = 0; a < B.size(); ++a) {
     if (i != a && B[a][j]) {
@@ -18,9 +18,9 @@ void Eliminate_rows(vector<vector<bool> > &B, const int &i, const int &j) {
   }
 }
 
-vector<bool> Gaussian_elimination(const vector<vector<bool> > &A,
+vector<bool> Gaussian_elimination(const vector<vector<bool>> &A,
                                   const vector<bool> &y) {
-  vector<vector<bool> > B(A);
+  vector<vector<bool>> B(A);
   for (int i = 0; i < B.size(); ++i) {
     B[i].push_back(y[i]);
   }
@@ -69,7 +69,7 @@ vector<bool> Gaussian_elimination(const vector<vector<bool> > &A,
 }
 // @exclude
 
-bool check_answer_with_solution(const vector<vector<bool> > &A, const vector<bool> &b, const vector<bool> & x) {
+bool check_answer_with_solution(const vector<vector<bool>> &A, const vector<bool> &b, const vector<bool> & x) {
   for (int i = 0; i < A.size(); ++i) {
     bool res = A[i][0] && x[0];
     for (int j = 1; j < A[i].size(); ++j) {
@@ -83,7 +83,7 @@ bool check_answer_with_solution(const vector<vector<bool> > &A, const vector<boo
   return true;
 }
 
-bool check_answer_no_solution(const vector<vector<bool> > &A, const vector<bool> &b) {
+bool check_answer_no_solution(const vector<vector<bool>> &A, const vector<bool> &b) {
   // Generate all possible combinations of x to test there is no solution actually
   for (int val = 0; val < (1 << b.size()); ++val) {
     vector<bool> x;
@@ -101,7 +101,7 @@ bool check_answer_no_solution(const vector<vector<bool> > &A, const vector<bool>
   return true;
 }
 
-void rand_matrix(vector<vector<bool> > &A) {
+void rand_matrix(vector<vector<bool>> &A) {
   for (int i = 0; i < A.size(); ++i) {
     for (int j = 0; j < A[i].size(); ++j) {
       A[i][j] = rand() & 1;
@@ -117,7 +117,7 @@ void rand_vec(vector<bool> &b) {
 
 int main(int argc, char *argv[]) {
   // Predefined tests
-  vector<vector<bool> > A(4);
+  vector<vector<bool>> A(4);
   A[0] = {false, false, false, true};
   A[1] = {false, false, false, true};
   A[2] = {false, true, true, true};
@@ -133,7 +133,7 @@ int main(int argc, char *argv[]) {
   }
 
   // Perform random tests below
-  for (int times = 0; times < 1000000; ++times) {
+  for (int times = 0; times < 10000; ++times) {
     int n;
     if (argc == 2) {
       n = atoi(argv[1]);
@@ -141,7 +141,7 @@ int main(int argc, char *argv[]) {
     } else {
       n = 1 + rand() % 16;
     }
-    vector<vector<bool> > A(n, vector<bool>(n));
+    vector<vector<bool>> A(n, vector<bool>(n));
     rand_matrix(A);
     vector<bool> b(n);
     rand_vec(b);

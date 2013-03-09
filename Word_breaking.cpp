@@ -45,7 +45,7 @@ vector<string> word_breaking(const string &s,
 
   vector<string> ret;
   // s can be assembled by valid words
-  if (T[s.size() - 1]) {
+  if (T.back()) {
     int idx = s.size() - 1;
     while (idx >= 0) {
       ret.emplace_back(s.substr(idx - T[idx] + 1, T[idx]));

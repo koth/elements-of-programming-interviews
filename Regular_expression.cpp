@@ -18,8 +18,7 @@ bool is_match_here(const string &r, const string &s) {
 
   // Case (4.)
   if (r.size() >= 2 && r[1] == '*') {
-    for (int i = 0;
-         i < s.size() && (r.front() == '.' || r.front() == s[i]);
+    for (int i = 0; i < s.size() && (r.front() == '.' || r.front() == s[i]);
          ++i) {
       if (is_match_here(r.substr(2), s.substr(i + 1))) {
         return true;
@@ -35,7 +34,7 @@ bool is_match_here(const string &r, const string &s) {
 
 bool is_match(const string &r, const string &s) {
   // Case (2.) : starts with '^'
-  if (r[0] == '^') {
+  if (r.front() == '^') {
     return is_match_here(r.substr(1), s);
   }
 

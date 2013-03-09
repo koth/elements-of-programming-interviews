@@ -89,7 +89,7 @@ int main(int argc, char *argv[]) {
     vector<GraphVertex> G(n);
     int m = 1 + rand() % (n * (n - 1) / 2);
     cout << times << ' ' << n << ' ' << m << endl;
-    vector<vector<bool> > is_edge_exist(n, vector<bool>(n, false));
+    vector<vector<bool>> is_edge_exist(n, vector<bool>(n, false));
     while (m-- > 0) {
       int a, b;
       do {

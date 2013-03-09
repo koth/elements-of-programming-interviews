@@ -10,7 +10,7 @@ using namespace std;
 template <typename T>
 class Stack {
   private:
-    stack<pair<T, T> > s;
+    stack<pair<T, T>> s;
 
   public:
     const bool empty(void) const {

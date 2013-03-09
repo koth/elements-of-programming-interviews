@@ -7,7 +7,7 @@ using namespace std;
 
 // @include
 template <typename T>
-bool is_BST(shared_ptr<BinaryTree<T> > n) {
+bool is_BST(shared_ptr<BinaryTree<T>> n) {
   // Store the value of previous visited node
   int last = numeric_limits<T>::min();
   bool res = true;
@@ -15,7 +15,7 @@ bool is_BST(shared_ptr<BinaryTree<T> > n) {
   while (n) {
     if (n->left) {
       // Find the predecessor of n
-      shared_ptr<BinaryTree<T> > pre = n->left;
+      shared_ptr<BinaryTree<T>> pre = n->left;
       while (pre->right && pre->right != n) {
         pre = pre->right;
       }
@@ -49,12 +49,12 @@ int main(int argc, char *argv[]) {
   //      3
   //    2   5
   //  1    4 6
-  shared_ptr<BinaryTree<int> > root = shared_ptr<BinaryTree<int> >(new BinaryTree<int>{3});
-  root->left = shared_ptr<BinaryTree<int> >(new BinaryTree<int>{2});
-  root->left->left = shared_ptr<BinaryTree<int> >(new BinaryTree<int>{1});
-  root->right = shared_ptr<BinaryTree<int> >(new BinaryTree<int>{5});
-  root->right->left = shared_ptr<BinaryTree<int> >(new BinaryTree<int>{4});
-  root->right->right = shared_ptr<BinaryTree<int> >(new BinaryTree<int>{6});
+  shared_ptr<BinaryTree<int>> root = shared_ptr<BinaryTree<int>>(new BinaryTree<int>{3});
+  root->left = shared_ptr<BinaryTree<int>>(new BinaryTree<int>{2});
+  root->left->left = shared_ptr<BinaryTree<int>>(new BinaryTree<int>{1});
+  root->right = shared_ptr<BinaryTree<int>>(new BinaryTree<int>{5});
+  root->right->left = shared_ptr<BinaryTree<int>>(new BinaryTree<int>{4});
+  root->right->right = shared_ptr<BinaryTree<int>>(new BinaryTree<int>{6});
   assert(is_BST(root) == true);
   cout << boolalpha << is_BST(root) << endl;
   //      10

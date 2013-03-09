@@ -81,7 +81,7 @@ int main(int argc, char *argv[]) {
     k = 1 + rand() % ((n * (n - 1) / 2) - m);
   }
   cout << "n = " << n << ", m = " << m << ", k = " << k << endl;
-  vector<vector<bool> > have_edges(n, vector<bool>(n, false));
+  vector<vector<bool>> have_edges(n, vector<bool>(n, false));
   vector<Constraint> E;
   for (int i = 0; i < m; ++i) {
     int a, b;
@@ -106,7 +106,7 @@ int main(int argc, char *argv[]) {
     cout << e.a << " " << e.b << endl;
   }
   cout << endl;
-  cout << "inequal constraint" << endl;
+  cout << "not equal constraint" << endl;
   for (const Constraint i : I) {
     cout << i.a << " " << i.b << endl;
   }

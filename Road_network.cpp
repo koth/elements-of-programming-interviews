@@ -15,7 +15,7 @@ class HighwaySection {
 };
 
 template <typename DistanceType>
-void Floyd_Warshall(vector<vector<DistanceType> > &G) {
+void Floyd_Warshall(vector<vector<DistanceType>> &G) {
   for (int k = 0; k < G.size(); ++k) {
     for (int i = 0; i < G.size(); ++i) {
       for (int j = 0; j < G.size(); ++j) {
@@ -31,11 +31,11 @@ void Floyd_Warshall(vector<vector<DistanceType> > &G) {
 
 template <typename DistanceType>
 HighwaySection<DistanceType> find_best_proposals(
-  const vector<HighwaySection<DistanceType> > &H,
-  const vector<HighwaySection<DistanceType> > &P,
-  const int &a, const int &b, const int &n) {
+    const vector<HighwaySection<DistanceType>> &H,
+    const vector<HighwaySection<DistanceType>> &P,
+    const int &a, const int &b, const int &n) {
   // G stores the shortest path distance between all pairs
-  vector<vector<DistanceType> >
+  vector<vector<DistanceType>>
     G(n, vector<DistanceType>(n, numeric_limits<DistanceType>::max()));
 
   // Build graph G based on existing highway sections H
@@ -81,8 +81,8 @@ int main(int argc, char *argv[]) {
     m = 1 + rand() % (n * (n - 1) / 2);
     k = 1 + rand() % (n * (n - 1) / 2 - m);
   }
-  vector<vector<bool> > have_edges(n, vector<bool>(n, false));
-  vector<HighwaySection<double> > H;  // existing highway sections
+  vector<vector<bool>> have_edges(n, vector<bool>(n, false));
+  vector<HighwaySection<double>> H;  // existing highway sections
   for (int i = 0; i < m; ++i) {
     int a, b;
     do {
@@ -91,7 +91,7 @@ int main(int argc, char *argv[]) {
     have_edges[a][b] = have_edges[b][a] = true;
     H.emplace_back(HighwaySection<double>{a, b, static_cast<double>(rand())});
   }
-  vector<HighwaySection<double> > P;  // proposals
+  vector<HighwaySection<double>> P;  // proposals
   for (int i = 0; i < k; ++i) {
     int a, b;
     do {

@@ -15,12 +15,7 @@ pair<int, int> find_duplicate_missing(const vector<int> &A) {
     miss_XOR_dup ^= i ^ A[i];
   }
 
-  int differ_bit = 1;
-  while ((differ_bit & miss_XOR_dup) == 0) {
-    differ_bit <<= 1;
-  }
-
-  int miss_or_dup = 0;
+  int differ_bit = miss_XOR_dup & (~(miss_XOR_dup - 1)), miss_or_dup = 0;
   for (int i = 0; i < A.size(); ++i) {
     if (i & differ_bit) {
       miss_or_dup ^= i;

@@ -26,7 +26,7 @@ string rand_string(int len) {
 // Use BFS to find the least steps of transformation
 int transform_string(unordered_set<string> D, const string &s,
                      const string &t) {
-  queue<pair<string, int> > q;
+  queue<pair<string, int>> q;
   D.erase(s);  // mark s as visited by erasing it in D
   q.emplace(s, 0);
 

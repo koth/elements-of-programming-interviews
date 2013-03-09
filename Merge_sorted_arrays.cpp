@@ -12,14 +12,15 @@ using namespace std;
 template <typename T>
 class Compare {
   public:
-    bool operator()(const pair<T, int> &lhs, const pair<T, int> &rhs) const {
+    const bool operator()(const pair<T, int> &lhs,
+                          const pair<T, int> &rhs) const {
       return lhs.first > rhs.first;
     }
 };
 
 template <typename T>
-vector<T> merge_arrays(const vector<vector<T> > &S) {
-  priority_queue<pair<T, int>, vector<pair<T, int> >, Compare<T> > min_heap;
+vector<T> merge_arrays(const vector<vector<T>> &S) {
+  priority_queue<pair<T, int>, vector<pair<T, int>>, Compare<T>> min_heap;
   vector<int> S_idx(S.size(), 0);
 
   // Every array in S puts its smallest element in heap
@@ -53,7 +54,7 @@ int main(int argc, char *argv[]) {
     } else {
       n = 1 + rand() % 10000;
     }
-    vector<vector<int> > S(n, vector<int>());
+    vector<vector<int>> S(n, vector<int>());
     cout << "n = " << n << endl;
     for (size_t i = 0; i < n; ++i) {
       S[i].resize(1 + rand() % 500);

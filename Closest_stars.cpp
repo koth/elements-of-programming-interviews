@@ -18,18 +18,18 @@ class Star {
     double x, y, z;
 
     // The distance between this star to the Earth
-    double distance() const {
+    const double distance() const {
       return sqrt(x * x + y * y + z * z);
     }
 
-    bool operator<(const Star &s) const {
+    const bool operator<(const Star &s) const {
       return distance() < s.distance();
     }
 };
 
 vector<Star> find_closest_k_stars(istringstream &sin, const int &k) {
   // Use max_heap to find the closest k stars
-  priority_queue<Star, vector<Star> > max_heap;
+  priority_queue<Star, vector<Star>> max_heap;
   string line;
 
   // Record the first k stars

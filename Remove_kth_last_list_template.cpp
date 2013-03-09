@@ -7,9 +7,9 @@ using namespace std;
 
 // @include
 template <typename T>
-void remove_kth_last(shared_ptr<node_t<T> > &L, const int &k) {
+void remove_kth_last(shared_ptr<node_t<T>> &L, const int &k) {
   // Advance k steps first
-  shared_ptr<node_t<T> > ahead = L;
+  shared_ptr<node_t<T>> ahead = L;
   int num = k;
   while (ahead && num--) {
     ahead = ahead->next;
@@ -19,7 +19,7 @@ void remove_kth_last(shared_ptr<node_t<T> > &L, const int &k) {
     throw length_error("not enough nodes in the list");
   }
 
-  shared_ptr<node_t<T> > pre = nullptr, curr = L;
+  shared_ptr<node_t<T>> pre = nullptr, curr = L;
   // Find the k-th last node
   while (ahead) {
     pre = curr;
@@ -34,8 +34,8 @@ void remove_kth_last(shared_ptr<node_t<T> > &L, const int &k) {
 // @exclude
 
 int main(int argc, char *argv[]) {
-  shared_ptr<node_t<int> > L;
-  L = shared_ptr<node_t<int> >(new node_t<int>{1, shared_ptr<node_t<int> >(new node_t<int>{2, shared_ptr<node_t<int> >(new node_t<int>{3, nullptr})})});
+  shared_ptr<node_t<int>> L;
+  L = shared_ptr<node_t<int>>(new node_t<int>{1, shared_ptr<node_t<int>>(new node_t<int>{2, shared_ptr<node_t<int>>(new node_t<int>{3, nullptr})})});
   try {
     remove_kth_last(L, 4);
   } catch (exception &e) {

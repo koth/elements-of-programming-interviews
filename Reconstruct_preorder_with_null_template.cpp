@@ -11,16 +11,16 @@ using namespace std;
 
 // @include
 template <typename T>
-shared_ptr<BinaryTree<T> > reconstruct_preorder(
-  const vector<shared_ptr<T> > &preorder) {
-  stack<shared_ptr<BinaryTree<T> > > s;
+shared_ptr<BinaryTree<T>> reconstruct_preorder(
+  const vector<shared_ptr<T>> &preorder) {
+  stack<shared_ptr<BinaryTree<T>>> s;
   for (auto it = preorder.crbegin(); it != preorder.crend(); ++it) {
     if (!(*it)) {
       s.emplace(nullptr);
     } else {  // non-nullptr
-      shared_ptr<BinaryTree<T> > l = s.top();
+      shared_ptr<BinaryTree<T>> l = s.top();
       s.pop();
-      shared_ptr<BinaryTree<T> > r = s.top();
+      shared_ptr<BinaryTree<T>> r = s.top();
       s.pop();
       s.emplace(new BinaryTree<T>{*(*it), l, r});
     }
@@ -30,7 +30,7 @@ shared_ptr<BinaryTree<T> > reconstruct_preorder(
 // @exclude
 
 template <typename T>
-void gen_preorder_with_null(shared_ptr<BinaryTree<T> > n, vector<shared_ptr<T> > &p) {
+void gen_preorder_with_null(shared_ptr<BinaryTree<T>> n, vector<shared_ptr<T>> &p) {
   if (!n) {
     p.emplace_back(nullptr);
     return;
@@ -52,10 +52,10 @@ int main(int argc, char *argv[]) {
     } else {
       n = 1 + rand() % 10000;
     }
-    shared_ptr<BinaryTree<int> > root = generate_rand_binary_tree<int>(n);
-    vector<shared_ptr<int> > p;
+    shared_ptr<BinaryTree<int>> root = generate_rand_binary_tree<int>(n);
+    vector<shared_ptr<int>> p;
     gen_preorder_with_null(root, p);
-    shared_ptr<BinaryTree<int> > x = reconstruct_preorder<int>(p);
+    shared_ptr<BinaryTree<int>> x = reconstruct_preorder<int>(p);
     assert(is_two_binary_trees_equal(root, x));
     delete_binary_tree(root);
     delete_binary_tree(x);

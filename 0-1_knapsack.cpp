@@ -15,7 +15,7 @@ vector<int> rand_vector(int len) {
 
 // @include
 template <typename ValueType>
-ValueType knapsack(const int &w, const vector<pair<int, ValueType> > &items) {
+ValueType knapsack(const int &w, const vector<pair<int, ValueType>> &items) {
   vector<ValueType> V(w + 1, 0);
   for (int i = 0; i < items.size(); ++i) {
     for (int j = w; j >= items[i].first; --j) {
@@ -57,7 +57,7 @@ int main(int argc, char *argv[]) {
     cout << value[i] << ' ';
   }
   cout << endl;
-  vector<pair<int, int> > items;
+  vector<pair<int, int>> items;
   for (int i = 0; i < weight.size(); ++i) {
     items.emplace_back(weight[i], value[i]);
   }

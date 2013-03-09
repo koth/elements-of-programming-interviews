@@ -41,7 +41,7 @@ pair<int, int> find_longest_subarray_less_equal_k(const vector<T> &A,
 
   pair<int, int> arr_idx(0, upper_bound(min_prefix_sum.cbegin(), 
                                         min_prefix_sum.cend(), k) -
-                                        min_prefix_sum.cbegin() - 1);
+                            min_prefix_sum.cbegin() - 1);
   for (int i = 0; i < prefix_sum.size(); ++i) {
     int idx = upper_bound(min_prefix_sum.cbegin(), min_prefix_sum.cend(),
                           k + prefix_sum[i]) - min_prefix_sum.cbegin() - 1;

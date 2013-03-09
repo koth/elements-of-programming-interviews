@@ -6,11 +6,10 @@ using namespace std;
 
 // @include
 template <typename T>
-shared_ptr<node_t<T> > reverse_linked_list(
-    const shared_ptr<node_t<T> > &head) {
-  shared_ptr<node_t<T> > prev = nullptr, curr = head;
+shared_ptr<node_t<T>> reverse_linked_list(const shared_ptr<node_t<T>> &head) {
+  shared_ptr<node_t<T>> prev = nullptr, curr = head;
   while (curr) {
-    shared_ptr<node_t<T> > temp = curr->next;
+    shared_ptr<node_t<T>> temp = curr->next;
     curr->next = prev;
     prev = curr;
     curr = temp;
@@ -20,7 +19,7 @@ shared_ptr<node_t<T> > reverse_linked_list(
 // @exclude
 
 template <typename T>
-void print(shared_ptr<node_t<T> > head) {
+void print(shared_ptr<node_t<T>> head) {
   if (head) {
     cout << "(" << head->data << ")" << endl;
     print(head->next);
@@ -28,15 +27,15 @@ void print(shared_ptr<node_t<T> > head) {
 }
 
 int main(int argc, char *argv[]) {
-  shared_ptr<node_t<int> > L1 = shared_ptr<node_t<int> >(new node_t<int>{1, nullptr});
-  shared_ptr<node_t<int> > L2 = shared_ptr<node_t<int> >(new node_t<int>{2, nullptr});
+  shared_ptr<node_t<int>> L1 = shared_ptr<node_t<int>>(new node_t<int>{1, nullptr});
+  shared_ptr<node_t<int>> L2 = shared_ptr<node_t<int>>(new node_t<int>{2, nullptr});
   L1->next = L2;
-  shared_ptr<node_t<int> > L3 = shared_ptr<node_t<int> >(new node_t<int>{3, nullptr});
+  shared_ptr<node_t<int>> L3 = shared_ptr<node_t<int>>(new node_t<int>{3, nullptr});
   L2->next = L3;
 
   cout << "before reverse" << endl;
   print(L1);
-  shared_ptr<node_t<int> > newhead = reverse_linked_list<int>(L1);
+  shared_ptr<node_t<int>> newhead = reverse_linked_list<int>(L1);
   cout << endl << "after reverse" << endl;
   print(newhead);
   newhead = reverse_linked_list<int>(newhead);

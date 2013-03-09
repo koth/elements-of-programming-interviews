@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 #include <array>
 #include <cstdlib>
 #include <ctime>
@@ -7,8 +8,11 @@
 using namespace std;
 
 // @include
-void print_matrix_clockwise(const vector<vector<int> > &A,
-                            const int &offset) {
+void print_matrix_clockwise(const vector<vector<int>> &A, const int &offset) {
+  if (offset == A.size() - offset - 1) {  // for matrix with odd size
+    cout << A[offset][offset];
+  }
+  
   for (int j = offset; j < A.size() - offset - 1; ++j) {
     cout << A[offset][j] << ' ';
   }
@@ -23,8 +27,8 @@ void print_matrix_clockwise(const vector<vector<int> > &A,
   }
 }
 
-void print_matrix_in_spiral_order(const vector<vector<int> > &A) {
-  for (int offset = 0; offset < (A.size() >> 1); ++offset) {
+void print_matrix_in_spiral_order(const vector<vector<int>> &A) {
+  for (int offset = 0; offset < ceil(0.5 * A.size()); ++offset) {
     print_matrix_clockwise(A, offset);
   }
 }
@@ -38,7 +42,7 @@ int main(int argc, char *argv[]) {
   } else {
     N = 1 + rand() % 50;
   }
-  vector<vector<int> > A(N, vector<int>(N));
+  vector<vector<int>> A(N, vector<int>(N));
   int x = 1;
   for (size_t i = 0; i < N; ++i) {
     for (size_t j = 0; j < N; ++j) {

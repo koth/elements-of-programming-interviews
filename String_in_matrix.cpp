@@ -15,7 +15,7 @@ using namespace std;
 using namespace std::tr1;
 #endif
 
-void rand_matrix(vector<vector<int> > &matrix) {
+void rand_matrix(vector<vector<int>> &matrix) {
   for (int i = 0; i < matrix.size(); ++i) {
     for (int j = 0; j < matrix[i].size(); ++j) {
       matrix[i][j] = rand() % matrix.size();
@@ -32,7 +32,7 @@ class HashTuple {
     }
 };
 
-bool match_helper(const vector<vector<int> > &A, const vector<int> &S,
+bool match_helper(const vector<vector<int>> &A, const vector<int> &S,
                   unordered_set<tuple<int, int, int>, HashTuple> cache,
                   int i, int j, int len) {
   if (S.size() == len) {
@@ -40,7 +40,7 @@ bool match_helper(const vector<vector<int> > &A, const vector<int> &S,
   }
 
   if (i < 0 || i >= A.size() || j < 0 || j >= A[i].size() ||
-      cache.find(make_tuple(i, j, len)) != cache.cend()) {
+      cache.find({i, j, len}) != cache.cend()) {
     return false;
   }
 
@@ -51,13 +51,13 @@ bool match_helper(const vector<vector<int> > &A, const vector<int> &S,
        match_helper(A, S, cache, i, j + 1, len + 1))) {
     return true;
   }
-  cache.insert(make_tuple(i, j, len));
+  cache.insert({i, j, len});
   return false;
 }
 
-bool match(const vector<vector<int> > &A, const vector<int> &S) {
+bool match(const vector<vector<int>> &A, const vector<int> &S) {
   unordered_set<tuple<int, int, int>, HashTuple> cache;
-  for (int i = 0; i < A.size(); ++i) { 
+  for (int i = 0; i < A.size(); ++i) {
     for (int j = 0; j < A[i].size(); ++j) {
       if (match_helper(A, S, cache, i, j, 0)) {
         return true;
@@ -74,11 +74,11 @@ int main(int argc, char *argv[]) {
   if (argc == 2) {
     n = atoi(argv[1]);
   } else {
-    n = 1 + rand() % 10;
+    n = 2 + rand() % 9;
   }
-  vector<vector<int> > A(n, vector<int>(n));
+  vector<vector<int>> A(n, vector<int>(n));
   rand_matrix(A);
-  for (int i = 0; i < A.size(); ++i) { 
+  for (int i = 0; i < A.size(); ++i) {
     for (int j = 0; j < A[i].size(); ++j) {
       cout << A[i][j] << ' ';
     }

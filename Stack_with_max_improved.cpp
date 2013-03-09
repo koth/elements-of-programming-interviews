@@ -11,9 +11,9 @@ template <typename T>
 class Stack {
   private:
     stack<T> s;
-    stack<pair<T, int> > aux;
+    stack<pair<T, int>> aux;
 
-  const public:
+  public:
     const bool empty(void) const {
       return s.empty();
     }

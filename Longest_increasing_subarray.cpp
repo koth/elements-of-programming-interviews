@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 #include <cassert>
 #include <cstdlib>
 #include <ctime>
@@ -25,6 +26,7 @@ pair<int, int> find_longest_increasing_subarray(const vector<T> &A) {
 
     // Check forwardly if it is not skippable
     if (is_skippable == false) {
+      i += max_len - 1;
       while (i + 1 < A.size() && A[i] < A[i + 1]) {
         ++i, ++max_len;
       }
@@ -51,15 +53,13 @@ int main(int argc, char *argv[]) {
         n = 1 + rand() % 1000000;
       }
       for (int i = 0; i < n; ++i) {
-        A.emplace_back((rand() & 1 ? -1 : 1) * rand());
+        A.emplace_back((rand() & 1 ? -1 : 1) * rand() % n);
       }
     }
     /*
-       for (int i = 0; i < A.size(); ++i) {
-       cout << A[i] << ' ';
-       }
-       cout << endl;
-     */
+    copy(A.cbegin(), A.cend(), ostream_iterator<int>(cout, " "));
+    cout << endl;
+    */
     pair<int, int> result = find_longest_increasing_subarray(A);
     cout << result.first << ' ' << result.second << endl;
     int len = 1;

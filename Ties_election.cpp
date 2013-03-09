@@ -16,7 +16,7 @@ long ties_election(const vector<int> &V) {
     return 0;
   }
 
-  vector<vector<long> > table(V.size() + 1, vector<long>(total_votes + 1, 0));
+  vector<vector<long>> table(V.size() + 1, vector<long>(total_votes + 1, 0));
   table[0][0] = 1;  // base condition: 1 way to reach 0
   for (int i = 0; i < V.size(); ++i) {
     for (int j = 0; j <= total_votes; ++j) {

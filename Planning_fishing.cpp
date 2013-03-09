@@ -7,10 +7,10 @@ using namespace std;
 
 // @include
 template <typename T>
-T maximize_fishing(vector<vector<T> > A) {
+T maximize_fishing(vector<vector<T>> A) {
   for (int i = 0; i < A.size(); ++i) {
     for (int j = 0; j < A[i].size(); ++j) {
-      A[i][j] += max(i - 1 < 0 ? 0: A[i - 1][j], j - 1 < 0 ? 0 : A[i][j - 1]);
+      A[i][j] += max(i < 1 ? 0 : A[i - 1][j], j < 1 ? 0 : A[i][j - 1]);
     }
   }
   return A.back().back();
@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
   } else {
     n = 1 + rand() % 100, m = 1 + rand() % 100;
   }
-  vector<vector<int> > A(n, vector<int>(m));
+  vector<vector<int>> A(n, vector<int>(m));
   for (size_t i = 0; i < n; ++i) {
     for (size_t j = 0; j < m; ++j) {
       A[i][j] = rand() % 1000;

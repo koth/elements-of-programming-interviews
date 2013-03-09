@@ -9,7 +9,7 @@ using namespace std;
 
 // @include
 template <typename T>
-bool is_2_sum(const vector<T> &A, const T &t) {
+bool has_2_sum(const vector<T> &A, const T &t) {
   int j = 0, k = A.size() - 1;
 
   while (j <= k) {
@@ -25,12 +25,12 @@ bool is_2_sum(const vector<T> &A, const T &t) {
 }
 
 template <typename T>
-bool is_3_sum(vector<T> A, const T &t) {
+bool has_3_sum(vector<T> A, const T &t) {
   sort(A.begin(), A.end());
 
   for (const T &a : A) {
     // Find if the sum of two numbers in A equals to t - a
-    if (is_2_sum(A, t - a)) {
+    if (has_2_sum(A, t - a)) {
       return true;
     }
   }
@@ -68,8 +68,8 @@ int main(int argc, char *argv[]) {
     for (size_t i = 0; i < n; ++i) {
       A.emplace_back(((rand() & 1) ? -1 : 1) * rand() % 100000);
     }
-    cout << boolalpha << is_3_sum(A, T) << endl;
-    assert(check_ans(A, T) == is_3_sum(A, T));
+    cout << boolalpha << has_3_sum(A, T) << endl;
+    assert(check_ans(A, T) == has_3_sum(A, T));
   }
   return 0;
 }

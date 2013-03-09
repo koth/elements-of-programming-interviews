@@ -30,13 +30,13 @@ class Trie {
     class TrieNode {
       public:
         bool isString;
-        unordered_map<char, shared_ptr<TrieNode> > l;
+        unordered_map<char, shared_ptr<TrieNode>> l;
     };
 
     shared_ptr<TrieNode> root;
     // @exclude
     void clear(shared_ptr<TrieNode> p) {
-      for (const pair<char, shared_ptr<TrieNode> > &e : p->l) {
+      for (const pair<char, shared_ptr<TrieNode>> &e : p->l) {
         if (e.second) {
           clear(e.second);
         }

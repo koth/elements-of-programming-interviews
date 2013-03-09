@@ -52,7 +52,7 @@ int main(int argc, char *argv[]) {
   cout << G.size() << endl;
   int m = 1 + rand() % (n * (n - 1) / 2);
   //cout << n << " " << m << endl;
-  vector<vector<bool> > is_edge_exist(n, vector<bool>(n, false));
+  vector<vector<bool>> is_edge_exist(n, vector<bool>(n, false));
   /*
   // Make the graph become connected
   for (int i = 1; i < n; ++i) {

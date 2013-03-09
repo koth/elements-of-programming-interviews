@@ -9,7 +9,7 @@ using namespace std;
 
 // @include
 string convert_base(const string &s, const int &b1, const int &b2) {
-  bool neg = (s[0] == '-');
+  bool neg = s.front() == '-';
   int x = 0;
   for (int i = (neg == true ? 1 : 0); i < s.size(); ++i) {
     x *= b1;

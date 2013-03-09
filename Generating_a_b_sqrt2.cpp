@@ -19,18 +19,18 @@ using namespace std::tr1;
 // @include
 class Num {
   public:
-    int a, b;
-    double val;
+    int a_, b_;
+    double val_;
 
-    Num(const int &a, const int &b) : a(a), b(b), val(a + b * sqrt(2)) {}
+    Num(const int &a, const int &b) : a_(a), b_(b), val_(a + b * sqrt(2)) {}
 
     const bool operator<(const Num &n) const {
-      return val > n.val;
+      return val_ > n.val_;
     }
 
     // Equal function for hash
     const bool operator==(const Num &n) const {
-      return a == n.a && b == n.b;
+      return a_ == n.a_ && b_ == n.b_;
     }
 };
 
@@ -38,18 +38,18 @@ class Num {
 class HashNum {
   public:
     const size_t operator()(const Num &n) const {
-      return hash<int>()(n.a) ^ hash<int>()(n.b);
+      return hash<int>()(n.a_) ^ hash<int>()(n.b_);
     }
 };
 
 vector<Num> generate_first_k(const int &k) {
-  priority_queue<Num, vector<Num> > min_heap;
+  priority_queue<Num, vector<Num>> min_heap;
   vector<Num> smallest;
   unordered_set<Num, HashNum> hash;
 
   // Initial for 0 + 0 * sqrt(2)
-  min_heap.emplace(Num(0, 0));
-  hash.emplace(Num(0, 0));
+  min_heap.emplace(0, 0);
+  hash.emplace(0, 0);
 
   while (smallest.size() < k) {
     Num s(min_heap.top());
@@ -58,7 +58,7 @@ vector<Num> generate_first_k(const int &k) {
     min_heap.pop();
 
     // Add the next two numbers derived from s
-    Num c1(s.a + 1, s.b), c2(s.a, s.b + 1);
+    Num c1(s.a_ + 1, s.b_), c2(s.a_, s.b_ + 1);
     if (hash.emplace(c1).second) {
       min_heap.emplace(c1);
     }
@@ -81,9 +81,9 @@ int main(int argc, char *argv[]) {
     }
     vector<Num> ans(generate_first_k(k));
     for (int i = 0; i < ans.size(); ++i) {
-      cout << ans[i].a << ' ' << ans[i].b << ' ' << ans[i].val << endl;
+      cout << ans[i].a_ << ' ' << ans[i].b_ << ' ' << ans[i].val_ << endl;
       if (i > 0) {
-        assert(ans[i].val >= ans[i - 1].val);
+        assert(ans[i].val_ >= ans[i - 1].val_);
       }
     }
     return 0;

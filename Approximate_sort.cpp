@@ -11,7 +11,7 @@ using namespace std;
 // @include
 template <typename T>
 void approximate_sort(istringstream &sin, const int &k) {
-  priority_queue<T, vector<T>, greater<T> > min_heap;
+  priority_queue<T, vector<T>, greater<T>> min_heap;
   // Firstly push k elements into min_heap
   T x;
   for (int i = 0; i < k && sin >> x; ++i) {

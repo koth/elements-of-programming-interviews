@@ -40,7 +40,7 @@ class TournamentTree {
     // n items, and each box has unit_cap
     TournamentTree(int n, const CapacityType &unit_cap) :
       // Complete tree with n leafs has 2n - 1 nodes
-      tree(vector<TreeNode>((n << 1) - 1, TreeNode{unit_cap})) {}
+      tree(vector<TreeNode>((n << 1) - 1, {unit_cap})) {}
 
     void insert(const ItemType &item, const CapacityType &item_cap) {
       insertHelper(0, item, item_cap);

@@ -41,8 +41,7 @@ pair<int, int> find_smallest_sequentially_covering_subset(
       if (it->second == 0) {  // first one, no predecessor
         D[0] = 1;  // base condition
       } else if (D[it->second - 1] != numeric_limits<int>::max()) {
-        D[it->second] =
-          min(D[it->second], i - L[it->second - 1] + D[it->second - 1]);
+        D[it->second] = i - L[it->second - 1] + D[it->second - 1];
       }
       L[it->second] = i;
 
@@ -57,8 +56,8 @@ pair<int, int> find_smallest_sequentially_covering_subset(
 // @exclude
 
 int main(int argc, char *argv[]) {
-  //srand(time(nullptr));
-  srand(1);
+  srand(time(nullptr));
+  //srand(1);
   vector<string> A3 = {"0","1","2","3","4","5","6","7","8","9","2","4","6","10","10","10","3","2","1","0"};
   vector<string> subseq4 = {"0","2","9","4","6"};
   pair<int, int> rr = find_smallest_sequentially_covering_subset(A3, subseq4);
@@ -71,7 +70,7 @@ int main(int argc, char *argv[]) {
     } else {
       n = 1 + rand()% 10000;
     }
-    generate_n(back_inserter(A), n, [&]{ return rand_string(1 + rand() % 4); });
+    generate_n(back_inserter(A), n, [&]{ return rand_string(1 + rand() % 5); });
     unordered_set<string> dict;
     copy(A.begin(), A.end(), inserter(dict, dict.end()));
     //*
@@ -79,7 +78,7 @@ int main(int argc, char *argv[]) {
     copy(A.begin(), A.end(), ostream_iterator<string>(cout, ","));
     cout << endl;
     //*/
-    int m = 1 + rand() % min(static_cast<int>(dict.size()), 3);
+    int m = 1 + rand() % min(static_cast<int>(dict.size()), 10);
     vector<string> Q;
     auto it = dict.begin();
     generate_n(back_inserter(Q), m, [&]{ return *it++; });

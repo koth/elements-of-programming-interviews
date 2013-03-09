@@ -7,7 +7,7 @@
 
 using namespace std;
 
-void print_matrix(vector<vector<bool> > &A) {
+void print_matrix(vector<vector<bool>> &A) {
   for (int i = 0; i < A.size(); ++i) {
     for (int j = 0; j < A.size(); ++j) {
       cout << A[i][j] << ' ';
@@ -17,26 +17,18 @@ void print_matrix(vector<vector<bool> > &A) {
 }
 
 // @include
-void flip_color_helper(vector<vector<bool> > &A, const pair<int, int> &curr,
-                       vector<vector<bool> > &processed) {
+void flip_color(vector<vector<bool>> &A, const int &x, const int &y) {
   const array<array<int, 2>, 4> dir = {-1, 0, 1, 0, 0, -1, 0, 1};
+  const bool color = A[x][y];
+  A[x][y] = !A[x][y];  // flip the color
 
   for (auto &d : dir) {
-    pair<int, int> next(curr.first + d[0], curr.second + d[1]);
-    if (next.first >= 0 && next.first < A.size() &&
-        next.second >= 0 && next.second < A[next.first].size() &&
-        !processed[next.first][next.second] &&
-        A[next.first][next.second] == A[curr.first][curr.second]) {
-      processed[curr.first][curr.second] = true;
-      flip_color_helper(A, next, processed);
+    const int nx = x + d[0], ny = y + d[1];
+    if (nx >= 0 && nx < A.size() && ny >= 0 && ny < A[nx].size() &&
+        A[nx][ny] == color) {
+      flip_color(A, nx, ny);
     }
   }
-  A[curr.first][curr.second] = !A[curr.first][curr.second];  // flip the color
-}
-
-void flip_color(vector<vector<bool> > &A, const int &x, const int &y) {
-  vector<vector<bool> > processed(A.size(), vector<bool>(A.size(), false));
-  flip_color_helper(A, {x, y}, processed);
 }
 // @exclude
 
@@ -48,14 +40,14 @@ int main(int argc, char *argv[]) {
   } else {
     n = 1 + rand() % 100;
   }
-  vector<vector<bool> > A(n, vector<bool>(n));
+  vector<vector<bool>> A(n, vector<bool>(n));
   for (int i = 0; i < n; ++i) {
     for (int j = 0; j < n; ++j) {
       A[i][j] = rand() & 1;
     }
   }
   int i = rand() % n, j = rand() % n;
-  cout << i << ' ' << j << ' ' << A[i][j] << endl;
+  cout << "color = " << i << ' ' << j << ' ' << A[i][j] << endl;
   print_matrix(A);
   flip_color(A, i, j);
   cout << endl;

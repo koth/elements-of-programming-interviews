@@ -1,4 +1,5 @@
 #include <iostream>
+#include <tuple>
 #include <utility>
 #include <queue>
 #include <limits>
@@ -13,7 +14,7 @@ class GraphVertex {
   public:
     pair<DistanceType, int> distance;  // stores (dis, #edges) pair
     // stores (vertex, dis) pair
-    vector<pair<GraphVertex<DistanceType>*, DistanceType> > edges;
+    vector<pair<GraphVertex<DistanceType>*, DistanceType>> edges;
     int id;  // stores the id of this vertex
     GraphVertex* pred;  // stores the predecessor in the shortest path
     bool visited;
@@ -24,14 +25,12 @@ class GraphVertex {
       visited(false) {}
 };
 
-template <typename DistanceType>
-class Compare {
+template <typename DistanceType, typename QData>
+class Comp {
   public:
-    const bool operator()(const GraphVertex<DistanceType>* lhs,
-                          const GraphVertex<DistanceType>* rhs) const { 
-      return lhs->distance.first > rhs->distance.first ||
-             (lhs->distance.first == rhs->distance.first &&
-              lhs->distance.second > rhs->distance.second);
+    const bool operator()(const QData &lhs, const QData &rhs) const {
+      return get<1>(lhs) > get<1>(rhs) ||
+             (get<1>(lhs) == get<1>(rhs) && get<2>(lhs) > get<2>(rhs));
     }
 };
 
@@ -44,39 +43,38 @@ void output_shortest_path(GraphVertex<DistanceType>* &v) {
 }
 
 template <typename DistanceType>
-void Dijkstra_shortest_path(vector<GraphVertex<DistanceType> > &G,
-                            GraphVertex<DistanceType>* s, 
+void Dijkstra_shortest_path(vector<GraphVertex<DistanceType>> &G,
+                            GraphVertex<DistanceType>* s,
                             GraphVertex<DistanceType>* t) {
   // Initialization
-  s->distance = {0, 0};
-  priority_queue<
-    GraphVertex<DistanceType>*,
-    vector<GraphVertex<DistanceType>* >,
-    Compare<DistanceType> > min_heap;
+  s->distance = {0, 0};  // stores (dis, #edges) pair
+  typedef tuple<GraphVertex<DistanceType>*, DistanceType, int> QData;
+  priority_queue<QData, vector<QData>, Comp<DistanceType, QData>> min_heap;
   min_heap.emplace(s);
 
   do {
     // Extract the minimum distance vertex from heap
-    GraphVertex<DistanceType>* u = nullptr;
+    QData u = {nullptr, 0, 0};
     while (min_heap.empty() == false) {
       u = min_heap.top();
       min_heap.pop();
-      if (u->visited == false) {
+      if (get<0>(u)->visited == false) {
         break;
       }
     }
 
-    if (u) {  // u is a valid vertex
-      u->visited = true;
+    if (get<0>(u)) {  // u is a valid vertex
+      get<0>(u)->visited = true;
       // Relax neighboring vertices of u
-      for (const auto &v : u->edges) {
-        pair<DistanceType, int> v_distance =
-          {u->distance.first + v.second, u->distance.second + 1};
-        if (v.first->distance.first > v_distance.first ||
-            (v.first->distance.first == v_distance.first &&
-             v.first->distance.second > v_distance.second)) {
-          v.first->pred = u, v.first->distance = v_distance;
-          min_heap.emplace(v.first);
+      for (const auto &v : get<0>(u)->edges) {
+        DistanceType v_distance = get<1>(u) + v.second;
+        int v_num_edges = get<2>(u) + 1;
+        if (v.first->distance.first > v_distance ||
+            (v.first->distance.first == v_distance &&
+             v.first->distance.second > v_num_edges)) {
+          v.first->pred = get<0>(u);
+          v.first->distance = {v_distance, v_num_edges};
+          min_heap.emplace(v.first, v_distance, v_num_edges);
         }
       }
     } else {  // u is not a valid vertex
@@ -89,6 +87,62 @@ void Dijkstra_shortest_path(vector<GraphVertex<DistanceType> > &G,
 }
 // @exclude
 
+// DBH test
+void test() {
+  vector<GraphVertex<int>> G;
+  for (int i = 0; i < 9; ++i) {
+    G.emplace_back(GraphVertex<int>());
+    G[i].id = i;
+  }
+
+  // G[0] is the source node that connects to 8 other nodes
+  G[0].edges.push_back(pair<GraphVertex<int>*, int>(&G[1], 13)); // 0-1
+  G[1].edges.push_back(pair<GraphVertex<int>*, int>(&G[0], 13)); // 1-0
+
+  G[0].edges.push_back(pair<GraphVertex<int>*, int>(&G[2], 24)); // 0-2
+  G[2].edges.push_back(pair<GraphVertex<int>*, int>(&G[0], 24)); // 2-0
+
+  G[0].edges.push_back(pair<GraphVertex<int>*, int>(&G[3], 28)); // 0-3
+  G[3].edges.push_back(pair<GraphVertex<int>*, int>(&G[0], 28)); // 3-0
+
+  G[0].edges.push_back(pair<GraphVertex<int>*, int>(&G[4], 25)); // 0-4
+  G[4].edges.push_back(pair<GraphVertex<int>*, int>(&G[0], 25)); // 4-0
+
+  G[0].edges.push_back(pair<GraphVertex<int>*, int>(&G[5], 30)); // 0-5
+  G[5].edges.push_back(pair<GraphVertex<int>*, int>(&G[0], 30)); // 5-0
+
+  G[0].edges.push_back(pair<GraphVertex<int>*, int>(&G[6], 31)); // 0-6
+  G[6].edges.push_back(pair<GraphVertex<int>*, int>(&G[0], 31)); // 6-0
+
+  G[0].edges.push_back(pair<GraphVertex<int>*, int>(&G[7], 10)); // 0-7
+  G[7].edges.push_back(pair<GraphVertex<int>*, int>(&G[0], 10)); // 7-0
+
+  G[0].edges.push_back(pair<GraphVertex<int>*, int>(&G[8], 29)); // 0-8
+  G[8].edges.push_back(pair<GraphVertex<int>*, int>(&G[0], 29)); // 8-0
+
+  G[1].edges.push_back(pair<GraphVertex<int>*, int>(&G[8], 7));  // 1-8
+  G[8].edges.push_back(pair<GraphVertex<int>*, int>(&G[1], 7));  // 8-1
+
+  G[2].edges.push_back(pair<GraphVertex<int>*, int>(&G[8], 1));  // 2-8
+  G[8].edges.push_back(pair<GraphVertex<int>*, int>(&G[2], 1));  // 8-2
+
+  G[7].edges.push_back(pair<GraphVertex<int>*, int>(&G[8], 16)); // 7-8
+  G[8].edges.push_back(pair<GraphVertex<int>*, int>(&G[7], 16)); // 8-7
+
+  int s = 0; // Source is G[0]
+  int t = 2; // Destination is G[2]
+
+  // Minimum distance path should be:
+  // G[0] => G[1] => G[8] => G[2],
+  // distance is: 13 + 7 + 1 = 21.
+
+  Dijkstra_shortest_path(G, &G[s], &G[t]);
+  cout << endl << "Min distance: " << G[t].distance.first << endl;
+  assert(G[t].distance.first == 21);
+  cout << "Number of edges: " << G[t].distance.second << endl;
+  assert(G[t].distance.second == 3);
+}
+
 int main(int argc, char *argv[]) {
   srand(time(nullptr));
   int n;
@@ -97,12 +151,12 @@ int main(int argc, char *argv[]) {
   } else {
     n = 2 + rand() % 1000;
   }
-  vector<GraphVertex<int> > G;
+  vector<GraphVertex<int>> G;
   for (int i = 0; i < n; ++i) {
     G.emplace_back(GraphVertex<int>());
   }
   int m = 1 + rand() % (n * (n - 1) / 2);
-  vector<vector<bool> > is_edge_exist(n, vector<bool>(n, false));
+  vector<vector<bool>> is_edge_exist(n, vector<bool>(n, false));
   // Make the graph become connected
   for (int i = 1; i < n; ++i) {
     int len = 1 + rand() % 100;
@@ -134,5 +188,6 @@ int main(int argc, char *argv[]) {
   cout << "source = " << s << ", terminal = " << t << endl;
   Dijkstra_shortest_path(G, &G[s], &G[t]);
   cout << endl << G[t].distance.first << " " << G[t].distance.second << endl;
+  test();
   return 0;
 }

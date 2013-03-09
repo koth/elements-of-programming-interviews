@@ -10,9 +10,9 @@
 using namespace std;
 
 // @include
-vector<pair<int, int> > find_stable_assignment(
-    const vector<vector<int> > &professor_preference,
-    const vector<vector<int> > &student_preference) {
+vector<pair<int, int>> find_stable_assignment(
+    const vector<vector<int>> &professor_preference,
+    const vector<vector<int>> &student_preference) {
   queue<int> free_student;  // stores currently free students
   for (int i = 0; i < student_preference.size(); ++i) {
     free_student.emplace(i);
@@ -46,7 +46,7 @@ vector<pair<int, int> > find_stable_assignment(
     ++student_pref_idx[i];
   }
 
-  vector<pair<int, int> > match_result;
+  vector<pair<int, int>> match_result;
   for (int j = 0; j < professor_choice.size(); ++j) {
     match_result.emplace_back(professor_choice[j], j);
   }
@@ -54,7 +54,7 @@ vector<pair<int, int> > find_stable_assignment(
 }
 // @exclude
 
-void check_ans(const vector<vector<int> > &professor_preference, const vector<vector<int> > &student_preference, const vector<pair<int, int> > &match_result) {
+void check_ans(const vector<vector<int>> &professor_preference, const vector<vector<int>> &student_preference, const vector<pair<int, int>> &match_result) {
   assert(match_result.size() == professor_preference.size());
   vector<bool> professor(professor_preference.size(), false), student(student_preference.size(), false);
   for (const pair<int, int> &p: match_result) {
@@ -91,7 +91,7 @@ int main(int argc, char *argv[]) {
     } else {
       n = 1 + rand() % 300;
     }
-    vector<vector<int> > professor_preference(n), student_preference(n);
+    vector<vector<int>> professor_preference(n), student_preference(n);
     for (int i = 0; i < n; ++i) {
       for (int j = 0; j < n; ++j) {
         professor_preference[i].emplace_back(j);
@@ -118,7 +118,7 @@ int main(int argc, char *argv[]) {
     }
     */
 
-    vector<pair<int, int> > res = find_stable_assignment(professor_preference, student_preference);
+    vector<pair<int, int>> res = find_stable_assignment(professor_preference, student_preference);
     check_ans(professor_preference, student_preference, res);
   }
   return 0;

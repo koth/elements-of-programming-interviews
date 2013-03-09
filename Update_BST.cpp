@@ -38,17 +38,17 @@ class BinarySearchTree {
     shared_ptr<TreeNode> root;
 
   public:
-    BinarySearchTree() : root(nullptr) {}
+    BinarySearchTree(void) : root(nullptr) {}
 
-    ~BinarySearchTree() {
+    ~BinarySearchTree(void) {
       clear();
     }
 
-    const bool empty() const {
+    const bool empty(void) const {
       return !root;
     }
 
-    void clear() {
+    void clear(void) {
       clear(root);
     }
 

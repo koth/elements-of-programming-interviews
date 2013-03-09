@@ -36,7 +36,7 @@ bool DFS(GraphVertex* cur, GraphVertex* pre, int time) {
 
 bool is_graph_2_for_all(vector<GraphVertex> &G) {
   if (G.empty() == false) {
-    return DFS(&G[0], nullptr, 0);
+    return DFS(&G.front(), nullptr, 0);
   }
   return true;
 }
@@ -90,7 +90,7 @@ int main(int argc, char *argv[]) {
       G.emplace_back(GraphVertex());
     }
     int m = 1 + rand() % (n * (n - 1) / 2);
-    vector<vector<bool> > is_edge_exist(n, vector<bool>(n, false));
+    vector<vector<bool>> is_edge_exist(n, vector<bool>(n, false));
     // Make the graph become connected
     for (int i = 1; i < n; ++i) {
       G[i - 1].edges.emplace_back(&G[i]);

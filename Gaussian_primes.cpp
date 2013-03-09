@@ -30,9 +30,9 @@ class ComplexCompare {
     }
 };
 
-vector<complex<int> > generate_Gaussian_primes(const int &n) {
+vector<complex<int>> generate_Gaussian_primes(const int &n) {
   set<complex<double>, ComplexCompare> candidates;
-  vector<complex<int> > primes;
+  vector<complex<int>> primes;
 
   // Generate all possible Gaussian prime candidates
   for (int i = -n; i <= n; ++i) {
@@ -71,8 +71,8 @@ int main(int argc, char *argv[]) {
     n = 1 + rand() % 100;
   }
 
-  vector<complex<int> > g_primes = generate_Gaussian_primes(n);
-  copy(g_primes.begin(), g_primes.end(), ostream_iterator<complex<int> >(cout, " "));
+  vector<complex<int>> g_primes = generate_Gaussian_primes(n);
+  copy(g_primes.begin(), g_primes.end(), ostream_iterator<complex<int>>(cout, " "));
   cout << endl;
   return 0;
 }

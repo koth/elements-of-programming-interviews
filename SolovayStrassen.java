@@ -27,15 +27,13 @@ public class SolovayStrassen {
       twoCount++;
       m = m.divide(TWO);
     }
-    int J2n =
-      (n.mod(EIGHT).equals(BigInteger.ONE) || n.mod(EIGHT).equals(SEVEN)) 
-          ? 1 : -1;
+    int J2n = n.mod(EIGHT).equals(BigInteger.ONE) ||
+              n.mod(EIGHT).equals(SEVEN) ? 1 : -1;
     int rule8multiplier = (twoCount % 2 == 0) ? 1 : J2n;
 
     int tmp = Jacobi(n, m);
-    int rule6multiplier =
-      (n.mod(FOUR).equals(BigInteger.ONE) ||
-       m.mod(FOUR).equals(BigInteger.ONE)) ? 1 : -1;
+    int rule6multiplier = n.mod(FOUR).equals(BigInteger.ONE) ||
+                          m.mod(FOUR).equals(BigInteger.ONE) ? 1 : -1;
 
     return tmp * rule6multiplier * rule8multiplier;
   }

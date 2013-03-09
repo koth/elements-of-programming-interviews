@@ -16,41 +16,39 @@ class Compare {
 
 template <typename T>
 class Stack :  // inherits empty(), pop(), and size() methods
-  public priority_queue<pair<int, T>, vector<pair<int, T> >, Compare<T> > {
+  public priority_queue<pair<int, T>, vector<pair<int, T>>, Compare<T>> {
   private:
     int order;
+    typedef priority_queue<pair<int, T>, vector<pair<int, T>>, Compare<T>> PQ;
 
   public:
     Stack() : order(0) {}
 
     const T &top() const {
-      return priority_queue<
-        pair<int, T>, vector<pair<int, T> >, Compare<T> >::top().second;
+      return PQ::top().second;
     }
 
     void push(const T &x) {
-      priority_queue<pair<int, T>, vector<pair<int, T> >, Compare<T> >::
-        emplace(order++, x);
+      PQ::emplace(order++, x);
     }
 };
 
 template <typename T>
 class Queue :  // inherits empty(), pop(), and size() methods
-  public priority_queue<pair<int, T>, vector<pair<int, T> >, Compare<T> > {
+  public priority_queue<pair<int, T>, vector<pair<int, T>>, Compare<T>> {
   private:
     int order;
+    typedef priority_queue<pair<int, T>, vector<pair<int, T>>, Compare<T>> PQ;
 
   public:
     Queue() : order(0) {}
 
     const T &front() const {
-      return priority_queue<
-        pair<int, T>, vector<pair<int, T> >, Compare<T> >::top().second;
+      return PQ::top().second;
     }
 
     void push(const T &x) {
-      priority_queue<pair<int, T>, vector<pair<int, T> >, Compare<T> >::
-        emplace(order--, x);
+      PQ::emplace(order--, x);
     }
 };
 // @exclude

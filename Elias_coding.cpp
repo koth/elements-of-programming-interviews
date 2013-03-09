@@ -62,7 +62,7 @@ int main(int argc, char *argv[]) {
   if (argc == 1) {
     generate_n(back_inserter(A), uniform_int_distribution<int>(1, 10000)(eng), [&]{ return uniform_int_distribution<int>()(eng); });
   } else {
-    generate_n(back_inserter(A), atoi(argv[1]), [&]{ return uniform_int_distribution<int>()(eng); });
+    generate_n(back_inserter(A), atoi(argv[1]), [&]{ return uniform_int_distribution<int>(4, 4)(eng); });
   }
   string ret = encode(A);
   cout << ret << endl;

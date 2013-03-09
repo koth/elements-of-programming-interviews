@@ -5,7 +5,7 @@
 using namespace std;
 
 // @include
-int getHeightHelper(vector<vector<int> > &cache, const int &c, const int &d) {
+int getHeightHelper(vector<vector<int>> &cache, const int &c, const int &d) {
   if (d == 0) {
     return 0;
   } else if (c == 1) {
@@ -20,7 +20,7 @@ int getHeightHelper(vector<vector<int> > &cache, const int &c, const int &d) {
 }
 
 int getHeight(const int &c, const int &d) {
-  vector<vector<int> > cache(c + 1, vector<int>(d + 1, -1));
+  vector<vector<int>> cache(c + 1, vector<int>(d + 1, -1));
   return getHeightHelper(cache, c, d);
 }
 // @exclude

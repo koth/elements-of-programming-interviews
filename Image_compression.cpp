@@ -46,10 +46,10 @@ class TreeNode {
     Point lowerLeft, upperRight;
 
     // Store the SW, NW, NE, and SE rectangles if color is mixed
-    vector<shared_ptr<TreeNode> > children;
+    vector<shared_ptr<TreeNode>> children;
 };
 
-bool is_monochromatic(const vector<vector<int> > &image_sum,
+bool is_monochromatic(const vector<vector<int>> &image_sum,
                       const Point &lower_left, const Point &upper_right) {
   int pixel_sum = image_sum[upper_right.i][upper_right.j];
   if (lower_left.i >= 1) {
@@ -67,7 +67,7 @@ bool is_monochromatic(const vector<vector<int> > &image_sum,
 }
 
 shared_ptr<TreeNode> calculate_optimal_2D_tree_helper(
-    const vector<vector<int> > &image, const vector<vector<int> > &image_sum,
+    const vector<vector<int>> &image, const vector<vector<int>> &image_sum,
     const Point &lower_left, const Point &upper_right,
     unordered_map<Point,
                   unordered_map<Point, shared_ptr<TreeNode>, HashPoint>,
@@ -88,7 +88,7 @@ shared_ptr<TreeNode> calculate_optimal_2D_tree_helper(
         for (int t = lower_left.j; t <= upper_right.j + 1; ++t) {
           if ((s != lower_left.i && s != upper_right.i + 1) ||
               (t != lower_left.j && t != upper_right.j + 1)) {
-            vector<shared_ptr<TreeNode> > children = {
+            vector<shared_ptr<TreeNode>> children = {
               // SW rectangle
               calculate_optimal_2D_tree_helper(image, image_sum, lower_left,
                                                Point{s - 1, t - 1}, table),
@@ -127,8 +127,8 @@ shared_ptr<TreeNode> calculate_optimal_2D_tree_helper(
 }
 
 shared_ptr<TreeNode> calculate_optimal_2D_tree(
-    const vector<vector<int> > &image) {
-  vector<vector<int> > image_sum(image);
+    const vector<vector<int>> &image) {
+  vector<vector<int>> image_sum(image);
   for (int i = 0; i < image.size(); ++i) {
     partial_sum(image_sum[i].cbegin(), image_sum[i].cend(),
                 image_sum[i].begin());
@@ -168,7 +168,7 @@ int main(int argc, char *argv[]) {
     m = 1 + rand() % 20;
     n = 1 + rand() % 20;
   }
-  vector<vector<int> > image(m, vector<int>(n));
+  vector<vector<int>> image(m, vector<int>(n));
   for (int i = 0; i < m; ++i) {
     for (int j = 0; j < n; ++j) {
       image[i][j] = (rand() & 1);

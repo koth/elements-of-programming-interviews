@@ -16,7 +16,7 @@ class Skyline {
 };
 
 template <typename CoordType, typename HeightType>
-void merge_intersect_skylines(vector<Skyline<CoordType, HeightType> > &merged,
+void merge_intersect_skylines(vector<Skyline<CoordType, HeightType>> &merged,
                               Skyline<CoordType, HeightType> &a, int &a_idx,
                               Skyline<CoordType, HeightType> &b, int &b_idx) {
   if (a.right <= b.right) {
@@ -51,11 +51,11 @@ void merge_intersect_skylines(vector<Skyline<CoordType, HeightType> > &merged,
 }
 
 template <typename CoordType, typename HeightType>
-vector<Skyline<CoordType, HeightType> > merge_skylines(
-    vector<Skyline<CoordType, HeightType> > &L,
-    vector<Skyline<CoordType, HeightType> > &R) {
+vector<Skyline<CoordType, HeightType>> merge_skylines(
+    vector<Skyline<CoordType, HeightType>> &L,
+    vector<Skyline<CoordType, HeightType>> &R) {
   int i = 0, j = 0;
-  vector<Skyline<CoordType, HeightType> > merged;
+  vector<Skyline<CoordType, HeightType>> merged;
 
   while (i < L.size() && j < R.size()) {
     if (L[i].right < R[j].left) {
@@ -75,11 +75,10 @@ vector<Skyline<CoordType, HeightType> > merge_skylines(
 }
 
 template <typename CoordType, typename HeightType>
-vector<Skyline<CoordType, HeightType> > drawing_skylines_helper(
-    vector<Skyline<CoordType, HeightType> > &skylines,
+vector<Skyline<CoordType, HeightType>> drawing_skylines_helper(
+    vector<Skyline<CoordType, HeightType>> &skylines,
     const int &start, const int &end) {
-  if (end - start <= 1) {
-    // 0 or 1 skyline, just copy it
+  if (end - start <= 1) {  // 0 or 1 skyline, just copy it
     return {skylines.cbegin() + start, skylines.cbegin() + end};
   }
   int mid = start + ((end - start) >> 1);
@@ -89,8 +88,8 @@ vector<Skyline<CoordType, HeightType> > drawing_skylines_helper(
 }
 
 template <typename CoordType, typename HeightType>
-vector<Skyline<CoordType, HeightType> > drawing_skylines(
-    vector<Skyline<CoordType, HeightType> > skylines) {
+vector<Skyline<CoordType, HeightType>> drawing_skylines(
+    vector<Skyline<CoordType, HeightType>> skylines) {
   return drawing_skylines_helper(skylines, 0, skylines.size());
 }
 // @exclude
@@ -105,7 +104,7 @@ int main(int argc, char *argv[]) {
     } else {
       n = 1 + rand() % 5000;
     }
-    vector<Skyline<int, int> > A;
+    vector<Skyline<int, int>> A;
     for (int i = 0; i < n; ++i) {
       int left = rand() % 1000;
       int right = left + 1 + rand() % 200;
@@ -118,7 +117,7 @@ int main(int argc, char *argv[]) {
     }
     cout << endl;
     //*/
-    vector<Skyline<int, int> > ans = drawing_skylines(A);
+    vector<Skyline<int, int>> ans = drawing_skylines(A);
     /*
     for (int i = 0; i < ans.size(); ++i) {
       cout << ans[i].left << ' '  << ans[i].right << ' ' << ans[i].height << endl;

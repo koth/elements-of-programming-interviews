@@ -26,31 +26,21 @@ double find_median(vector<T> &A) {
 template <typename T>
 class Comp {
   private:
-    double m;
+    double m_;
 
   public:
-    Comp(const double &m) : m(m) {};
+    Comp(const double &m) : m_(m) {};
 
-    bool operator()(const T &a, const T &b) const {
-      return (fabs(a - m) < fabs(b - m));
+    const bool operator()(const T &a, const T &b) const {
+      return fabs(a - m_) < fabs(b - m_);
     }
 };
 
 template <typename T>
 vector<T> find_k_closest_to_median(vector<T> A, const int &k) {
-  double median = find_median(A);
-
   // Find the element i where |A[i] - median| is k-th smallest
-  nth_element(A.begin(), A.begin() + (k - 1), A.end(), Comp<T>(median));
-
-  vector<T> res;
-  for (const T &a : A) {
-    if (fabs(a - median) < fabs(A[k - 1] - median)) {
-      res.emplace_back(a);
-    }
-  }
-  res.resize(k, A[k - 1]);
-  return res;
+  nth_element(A.begin(), A.begin() + k - 1, A.end(), Comp<T>{find_median(A)});
+  return {A.cbegin(), A.cbegin() + k};
 }
 // @exclude
 

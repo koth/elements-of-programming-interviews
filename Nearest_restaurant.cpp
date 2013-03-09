@@ -8,8 +8,8 @@
 using namespace std;
 
 template <typename T>
-shared_ptr<BinarySearchTree<T> > find_successor_BST(
-    shared_ptr<BinarySearchTree<T> > n) {
+shared_ptr<BinarySearchTree<T>> find_successor_BST(
+    shared_ptr<BinarySearchTree<T>> n) {
   if (n->right) {
     // Find the smallest element in n's right subtree
     n = n->right;
@@ -29,8 +29,8 @@ shared_ptr<BinarySearchTree<T> > find_successor_BST(
 
 // @include
 template <typename T>
-shared_ptr<BinarySearchTree<T> > find_first_larger_equal_k(
-    const shared_ptr<BinarySearchTree<T> > &r, const T &k) {
+shared_ptr<BinarySearchTree<T>> find_first_larger_equal_k(
+    const shared_ptr<BinarySearchTree<T>> &r, const T &k) {
   if (!r) {
     return nullptr;
   } else if (r->data >= k) {
@@ -43,9 +43,9 @@ shared_ptr<BinarySearchTree<T> > find_first_larger_equal_k(
 }
 
 template <typename T>
-list<shared_ptr<BinarySearchTree<T> > > range_query_on_BST(
-    shared_ptr<BinarySearchTree<T> > n, const T &L, const T &U) {
-  list<shared_ptr<BinarySearchTree<T> > > res;
+list<shared_ptr<BinarySearchTree<T>>> range_query_on_BST(
+    shared_ptr<BinarySearchTree<T>> n, const T &L, const T &U) {
+  list<shared_ptr<BinarySearchTree<T>>> res;
   for (auto it = find_first_larger_equal_k(n, L);
        it && it->data <= U;
        it = find_successor_BST(it)) {
@@ -59,21 +59,21 @@ int main(int argc, char *argv[]) {
   //      3
   //    2   5
   //  1    4  6
-  shared_ptr<BinarySearchTree<int> > root = shared_ptr<BinarySearchTree<int> >(new BinarySearchTree<int>{3});
+  shared_ptr<BinarySearchTree<int>> root = shared_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{3});
   root->parent = nullptr;
-  root->left = shared_ptr<BinarySearchTree<int> >(new BinarySearchTree<int>{2});
+  root->left = shared_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{2});
   root->left->parent = root;
-  root->left->left = shared_ptr<BinarySearchTree<int> >(new BinarySearchTree<int>{1});
+  root->left->left = shared_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{1});
   root->left->left->parent = root->left;
-  root->right = shared_ptr<BinarySearchTree<int> >(new BinarySearchTree<int>{5});
+  root->right = shared_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{5});
   root->right->parent = root;
-  root->right->left = shared_ptr<BinarySearchTree<int> >(new BinarySearchTree<int>{4});
+  root->right->left = shared_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{4});
   root->right->left->parent = root->right;
-  root->right->right = shared_ptr<BinarySearchTree<int> >(new BinarySearchTree<int>{6});
+  root->right->right = shared_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{6});
   root->right->right->parent = root->right;
-  list<shared_ptr<BinarySearchTree<int> > > res = range_query_on_BST<int>(root, 2, 5);
+  list<shared_ptr<BinarySearchTree<int>>> res = range_query_on_BST<int>(root, 2, 5);
   assert(res.size() == 4);
-  for (shared_ptr<BinarySearchTree<int> > &l : res) {
+  for (shared_ptr<BinarySearchTree<int>> &l : res) {
     assert(l->data >= 2 && l->data <= 5);
   }
   res = range_query_on_BST(root, -1, 0);
@@ -82,7 +82,7 @@ int main(int argc, char *argv[]) {
   assert(res.empty());
   res = range_query_on_BST(root, -10, 30);
   assert(res.size() == 6);
-  for (shared_ptr<BinarySearchTree<int> > &l : res) {
+  for (shared_ptr<BinarySearchTree<int>> &l : res) {
     assert(l->data >= 1 && l->data <= 6);
   }
   return 0;

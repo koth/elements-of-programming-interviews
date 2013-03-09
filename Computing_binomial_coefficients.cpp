@@ -8,7 +8,7 @@ using namespace std;
 
 // @include
 int compute_binomial_coefficients(const int &n, const int &k) {
-  vector<vector<int> > table(n + 1, vector<int>(k + 1));
+  vector<vector<int>> table(n + 1, vector<int>(k + 1));
   // Basic case: C(i, 0) = 1
   for (int i = 0; i <= n; ++i) {
     table[i][0] = 1;

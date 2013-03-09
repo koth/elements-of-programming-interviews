@@ -7,7 +7,7 @@
 using namespace std;
 
 // @include
-void print_matrix_spiral(vector<vector<int> > A) {
+void print_matrix_spiral(vector<vector<int>> A) {
   const array<array<int, 2>, 4> shift = {0, 1, 1, 0, 0, -1, -1, 0};
   int dir = 0, x = 0, y = 0;
 
@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
   } else {
     N = 1 + rand() % 50;
   }
-  vector<vector<int> > A(N, vector<int>(N));
+  vector<vector<int>> A(N, vector<int>(N));
   int x = 1;
   for (size_t i = 0; i < N; ++i) {
     for (size_t j = 0; j < N; ++j) {

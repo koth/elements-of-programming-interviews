@@ -14,27 +14,34 @@ double completion_search(vector<double> &A, const double &budget) {
   // Calculate the prefix sum for A
   vector<double> prefix_sum;
   partial_sum(A.cbegin(), A.cend(), back_inserter(prefix_sum));
-
-  // Find the new upper-bound salary
-  for (int i = 0; i < A.size() && budget >= prefix_sum[i]; ++i) {
-    double tar = (budget - (i < 1 ? 0 : prefix_sum[i - 1])) / (A.size() - i);
-    if ((i - 1 < 0 || A[i - 1] <= tar) && tar <= A[i]) {
-      return tar;
-    }
+  // costs[i] represents the total payroll if the cap is A[i]
+  vector<double> costs;
+  for (int i = 0; i < prefix_sum.size(); ++i) {
+    costs.emplace_back(prefix_sum[i] + (A.size() - i - 1) * A[i]);
   }
-  return -1.0;  // no solution
+
+  auto lower = lower_bound(costs.cbegin(), costs.cend(), budget);
+  if (lower == costs.cend()) {
+    return -1.0;  // no solution since budget is too large
+  }
+
+  if (lower == costs.cbegin()) {
+    return budget / A.size();
+  }
+  int idx = lower - costs.cbegin() - 1;
+  return A[idx] + (budget - costs[idx]) / (A.size() - idx - 1);
 }
 // @exclude
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  //srand(time(nullptr));
   for (int times = 0; times < 10000; ++times) {
     int n;
     vector<double> A;
     double tar;
     if (argc == 2) {
       n = atoi(argv[1]);
-      tar = rand();
+      tar = rand() % 100000;
     } else if (argc == 3) {
       n = atoi(argv[1]), tar = atoi(argv[2]);
     } else {
@@ -44,11 +51,13 @@ int main(int argc, char *argv[]) {
     for (int i = 0; i < n; ++i) {
       A.emplace_back(rand() % 10000);
     }
-    copy(A.begin(), A.end(), ostream_iterator<int>(cout, " "));
+    cout << "A = ";
+    copy(A.begin(), A.end(), ostream_iterator<double>(cout, " "));
     cout << endl;
+    cout << "tar = " << tar << endl;
     double ret = completion_search(A, tar);
     if (ret != -1) {
-      cout << ret << endl;
+      cout << "ret = " << ret << endl;
       double sum = 0.0;
       for (int i = 0; i < n; ++i) {
         if (A[i] > ret) {
@@ -58,7 +67,7 @@ int main(int argc, char *argv[]) {
         }
       }
       tar -= sum;
-      cout << sum << endl;
+      cout << "sum = " << sum << endl;
       assert(tar < 1.0e-8);
     }
   }

@@ -8,13 +8,12 @@
 using namespace std;
 
 // @include
-const double eps = 1.0e-12;
-
 // 0 means equal, -1 means smaller, 1 means larger
 int compare(const double &a, const double &b) {
   // Use normalization for precision problem
   double diff = (a - b) / b;
-  return diff > eps ? 1 : diff < -eps ? -1 : 0;
+  return diff < -numeric_limits<double>::epsilon() ?
+         -1 : diff > numeric_limits<double>::epsilon();
 }
 
 double square_root(const double &x) {

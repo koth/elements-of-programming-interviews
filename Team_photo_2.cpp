@@ -21,18 +21,18 @@ class Player {
 template <typename HeightType>
 class Team {
   private:
-    vector<Player<HeightType> > members;
+    vector<Player<HeightType>> members;
 
-    vector<Player<HeightType> > sortHeightMembers(void) const {
-      vector<Player<HeightType> > sorted_members(members);
+    vector<Player<HeightType>> sortHeightMembers(void) const {
+      vector<Player<HeightType>> sorted_members(members);
       sort(sorted_members.begin(), sorted_members.end());
       return sorted_members;
     }
 
   public:
     const bool operator<(const Team &that) const {
-      vector<Player<HeightType> > this_sorted(sortHeightMembers());
-      vector<Player<HeightType> > that_sorted(that.sortHeightMembers());
+      vector<Player<HeightType>> this_sorted(sortHeightMembers());
+      vector<Player<HeightType>> that_sorted(that.sortHeightMembers());
       for (int i = 0; i < this_sorted.size() && i < that_sorted.size(); ++i) {
         if (this_sorted[i] < that_sorted[i] == false) {
           return false;

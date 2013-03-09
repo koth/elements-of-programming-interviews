@@ -8,7 +8,7 @@ using namespace std;
 
 // @include
 template <typename T>
-bool matrix_search(const vector<vector<T> > &A, const T &x) {
+bool matrix_search(const vector<vector<T>> &A, const T &x) {
   int r = 0, c = A[0].size() - 1;
   while (r < A.size() && c >= 0) {
     if (A[r][c] == x) {
@@ -25,7 +25,7 @@ bool matrix_search(const vector<vector<T> > &A, const T &x) {
 
 // O(n^2) solution for verifying answer
 template <typename T>
-bool brute_force_search(const vector<vector<T> > &A, const T &x) {
+bool brute_force_search(const vector<vector<T>> &A, const T &x) {
   for (int i = 0; i < A.size(); ++i) {
     for (int j = 0; j < A[i].size(); ++j) {
       if (A[i][j] == x) {
@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
     } else {
       n = 1 + rand() % 100, m = 1 + rand() % 100;
     }
-    vector<vector<int> > A(n, vector<int>(m));
+    vector<vector<int>> A(n, vector<int>(m));
     A[0][0] = rand() % 100;
     for (int i = 0; i < n; ++i) {
       for (int j = 0; j < m; ++j) {

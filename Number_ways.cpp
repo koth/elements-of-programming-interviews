@@ -8,12 +8,11 @@ using namespace std;
 
 // @include
 int number_of_ways(const int &n, const int &m) {
-  vector<vector<int> > A(n, vector<int>(m, 0));
+  vector<vector<int>> A(n, vector<int>(m, 0));
   A[0][0] = 1;  // 1 way to start from (0, 0)
   for (int i = 0; i < n; ++i) {
     for (int j = 0; j < m; ++j) {
-      A[i][j] += (i - 1 < 0 ? 0 : A[i - 1][j]) +
-                 (j - 1 < 0 ? 0 : A[i][j - 1]);
+      A[i][j] += (i < 1 ? 0 : A[i - 1][j]) + (j < 1 ? 0 : A[i][j - 1]);
     }
   }
   return A.back().back();
@@ -21,7 +20,7 @@ int number_of_ways(const int &n, const int &m) {
 // @exclude
 
 int check_ans(int n, int k) {
-  vector<vector<int> > table(n + 1, vector<int>(k + 1));
+  vector<vector<int>> table(n + 1, vector<int>(k + 1));
   // Basic case: C(i, 0) = 1
   for (int i = 0; i <= n; ++i) {
     table[i][0] = 1;

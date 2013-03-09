@@ -11,7 +11,7 @@ using namespace std;
 // @include
 class TreeNode {
   public:
-    vector<pair<shared_ptr<TreeNode>, double> > edges;
+    vector<pair<shared_ptr<TreeNode>, double>> edges;
 };
 
 // Return (height, diameter) pair
@@ -43,11 +43,11 @@ int main(int argc, char *argv[]) {
   assert(0.0 == compute_diameter(r));
   r = shared_ptr<TreeNode>(new TreeNode());
   r->edges.emplace_back(shared_ptr<TreeNode>(new TreeNode()), 10);
-  r->edges[0].first->edges.emplace_back(make_pair(shared_ptr<TreeNode>(new TreeNode()), 50));
-  r->edges.emplace_back(make_pair(shared_ptr<TreeNode>(new TreeNode()), 20));
+  r->edges[0].first->edges.emplace_back(shared_ptr<TreeNode>(new TreeNode()), 50);
+  r->edges.emplace_back(shared_ptr<TreeNode>(new TreeNode()), 20);
   assert(80 == compute_diameter(r));
   cout << compute_diameter(r) << endl;
-  r->edges[0].first->edges.emplace_back(make_pair(shared_ptr<TreeNode>(new TreeNode()), 100));
+  r->edges[0].first->edges.emplace_back(shared_ptr<TreeNode>(new TreeNode()), 100);
   assert(150 == compute_diameter(r));
   cout << compute_diameter(r) << endl;
   return 0;

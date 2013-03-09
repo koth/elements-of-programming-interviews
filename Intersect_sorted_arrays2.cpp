@@ -29,7 +29,7 @@ vector<T> intersect_arrs2(const vector<T> &A, const vector<T> &B) {
   vector<T> intersect;
   for (int i = 0; i < A.size(); ++i) {
     if ((i == 0 || A[i] != A[i - 1]) &&
-        binary_search(B.begin(), B.end(), A[i])) {
+        binary_search(B.cbegin(), B.cend(), A[i])) {
       intersect.emplace_back(A[i]);
     }
   }

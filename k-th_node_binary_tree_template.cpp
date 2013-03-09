@@ -9,14 +9,14 @@ template <typename T>
 class BinaryTree {
   public:
     T data;
-    shared_ptr<BinaryTree<T> > left, right;
+    shared_ptr<BinaryTree<T>> left, right;
     int size;
 };
 
 // @include
 template <typename T>
-shared_ptr<BinaryTree<T> > find_kth_node_binary_tree(
-    shared_ptr<BinaryTree<T> > r, int k) {
+shared_ptr<BinaryTree<T>> find_kth_node_binary_tree(
+    shared_ptr<BinaryTree<T>> r, int k) {
   while (k && r) {
     int left_size = r->left ? r->left->size : 0;
     if (left_size < k - 1) {
@@ -42,22 +42,22 @@ int main(int argc, char *argv[]) {
   //      3
   //    2   5
   //  1    4 6
-  shared_ptr<BinaryTree<int> > root = shared_ptr<BinaryTree<int> >(new BinaryTree<int>());
+  shared_ptr<BinaryTree<int>> root = shared_ptr<BinaryTree<int>>(new BinaryTree<int>());
   root->size = 6;
   root->data = 3;
-  root->left = shared_ptr<BinaryTree<int> >(new BinaryTree<int>());
+  root->left = shared_ptr<BinaryTree<int>>(new BinaryTree<int>());
   root->left->size = 2;
   root->left->data = 2;
-  root->left->left = shared_ptr<BinaryTree<int> >(new BinaryTree<int>());
+  root->left->left = shared_ptr<BinaryTree<int>>(new BinaryTree<int>());
   root->left->left->size = 1;
   root->left->left->data = 1;
-  root->right = shared_ptr<BinaryTree<int> >(new BinaryTree<int>());
+  root->right = shared_ptr<BinaryTree<int>>(new BinaryTree<int>());
   root->right->size = 3;
   root->right->data = 5;
-  root->right->left = shared_ptr<BinaryTree<int> >(new BinaryTree<int>());
+  root->right->left = shared_ptr<BinaryTree<int>>(new BinaryTree<int>());
   root->right->left->size = 1;
   root->right->left->data = 4;
-  root->right->right = shared_ptr<BinaryTree<int> >(new BinaryTree<int>());
+  root->right->right = shared_ptr<BinaryTree<int>>(new BinaryTree<int>());
   root->right->right->size = 1;
   root->right->right->data = 6;
   // should throw

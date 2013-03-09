@@ -20,15 +20,15 @@ class Endpoint {
     TimeType time;
     bool isStart;
 
-    bool operator<(const Endpoint &e) const {
+    const bool operator<(const Endpoint &e) const {
       return time != e.time ? time < e.time : (isStart && !e.isStart);
     }
 };
 
 template <typename TimeType>
-int find_max_concurrent_events(const vector<Interval<TimeType> > &A) {
+int find_max_concurrent_events(const vector<Interval<TimeType>> &A) {
   // Build the endpoint array
-  vector<Endpoint<TimeType> > E;
+  vector<Endpoint<TimeType>> E;
   for (const Interval<TimeType> &i : A) {
     E.emplace_back(Endpoint<TimeType>{i.start, true});
     E.emplace_back(Endpoint<TimeType>{i.finish, false});
@@ -57,7 +57,7 @@ int main(int argc, char *argv[]) {
   }else {
     n = 1 + rand() % 100000;
   }
-  vector<Interval<int> > A;
+  vector<Interval<int>> A;
   for (int i = 0; i < n; ++i) {
     Interval<int> temp;
     temp.start = rand() % 100000;

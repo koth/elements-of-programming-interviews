@@ -46,8 +46,8 @@ class Endpoint {
 
 template <typename XaxisType, typename ColorType, typename HeightType>
 void calculate_view_from_above(
-  const vector<LineSegment<XaxisType, ColorType, HeightType> > &A) {
-  vector<Endpoint<XaxisType, ColorType, HeightType> > E;
+    const vector<LineSegment<XaxisType, ColorType, HeightType>> &A) {
+  vector<Endpoint<XaxisType, ColorType, HeightType>> E;
   for (int i = 0; i < A.size(); ++i) {
     E.emplace_back(Endpoint<XaxisType, ColorType, HeightType>{true, &A[i]});
     E.emplace_back(Endpoint<XaxisType, ColorType, HeightType>{false, &A[i]});
@@ -55,14 +55,14 @@ void calculate_view_from_above(
   sort(E.begin(), E.end());
 
   XaxisType prev_xaxis = E.front().val();  // the first left end point
-  shared_ptr<LineSegment<XaxisType, ColorType, HeightType> > prev = nullptr;
+  shared_ptr<LineSegment<XaxisType, ColorType, HeightType>> prev = nullptr;
   map<HeightType, const LineSegment<XaxisType, ColorType, HeightType>*> T;
   for (const Endpoint<XaxisType, ColorType, HeightType> &e: E) {
     if (T.empty() == false && prev_xaxis != e.val()) {
       if (prev == nullptr) {  // found first segment
-        prev = shared_ptr<LineSegment<XaxisType, ColorType, HeightType> >(
+        prev = shared_ptr<LineSegment<XaxisType, ColorType, HeightType>>(
           new LineSegment<XaxisType, ColorType, HeightType>{
-            prev_xaxis, e.val(), T.crbegin()->second->color, 
+            prev_xaxis, e.val(), T.crbegin()->second->color,
             T.crbegin()->second->height});
       } else {
         if (prev->height == T.crbegin()->second->height &&
@@ -80,7 +80,7 @@ void calculate_view_from_above(
     prev_xaxis = e.val();
 
     if (e.isLeft == true) {  // left end point
-      T.emplace(make_pair(e.l->height, e.l));
+      T.emplace(e.l->height, e.l);
     } else {  // right end point
       T.erase(e.l->height);
     }
@@ -96,7 +96,7 @@ void calculate_view_from_above(
 // @exclude
 
 int main(int argc, char *argv[]) {
-  vector<LineSegment<int, int, int> > A;
+  vector<LineSegment<int, int, int>> A;
   A.emplace_back(LineSegment<int, int, int>{0, 4, 0, 0});
   A.emplace_back(LineSegment<int, int, int>{1, 3, 1, 2});
   A.emplace_back(LineSegment<int, int, int>{2, 7, 2, 1});

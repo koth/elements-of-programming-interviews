@@ -10,7 +10,7 @@ using namespace std;
 // @include
 template <typename T>
 void find_k_th_largest_stream(istringstream &sin, const int &k) {
-  priority_queue<T, vector<T>, greater<T> > min_heap;
+  priority_queue<T, vector<T>, greater<T>> min_heap;
   // The first k elements, output the minimum element
   T x;
   for (int i = 0; i < k && sin >> x; ++i) {

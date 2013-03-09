@@ -7,7 +7,7 @@ using namespace std;
 
 // @include
 template <typename T>
-int get_depth(shared_ptr<BinaryTree<T> > n) {
+int get_depth(shared_ptr<BinaryTree<T>> n) {
   int d = 0;
   while (n) {
     ++d, n = n->parent;
@@ -16,8 +16,8 @@ int get_depth(shared_ptr<BinaryTree<T> > n) {
 }
 
 template <typename T>
-shared_ptr<BinaryTree<T> > LCA(shared_ptr<BinaryTree<T> > a, 
-                               shared_ptr<BinaryTree<T> > b) {
+shared_ptr<BinaryTree<T>> LCA(shared_ptr<BinaryTree<T>> a, 
+                              shared_ptr<BinaryTree<T>> b) {
   int depth_a = get_depth(a), depth_b = get_depth(b);
   if (depth_b > depth_a) {
     swap(a, b);
@@ -41,17 +41,17 @@ int main(int argc, char *argv[]) {
   //      3
   //    2   5
   //  1    4 6
-  shared_ptr<BinaryTree<int> > root = shared_ptr<BinaryTree<int> >(new BinaryTree<int>{3, nullptr, nullptr});
+  shared_ptr<BinaryTree<int>> root = shared_ptr<BinaryTree<int>>(new BinaryTree<int>{3, nullptr, nullptr});
   root->parent = nullptr;
-  root->left = shared_ptr<BinaryTree<int> >(new BinaryTree<int>{2, nullptr, nullptr});
+  root->left = shared_ptr<BinaryTree<int>>(new BinaryTree<int>{2, nullptr, nullptr});
   root->left->parent = root;
-  root->left->left = shared_ptr<BinaryTree<int> >(new BinaryTree<int>{1, nullptr, nullptr});
+  root->left->left = shared_ptr<BinaryTree<int>>(new BinaryTree<int>{1, nullptr, nullptr});
   root->left->left->parent = root->left;
-  root->right = shared_ptr<BinaryTree<int> >(new BinaryTree<int>{5, nullptr, nullptr});
+  root->right = shared_ptr<BinaryTree<int>>(new BinaryTree<int>{5, nullptr, nullptr});
   root->right->parent = root;
-  root->right->left = shared_ptr<BinaryTree<int> >(new BinaryTree<int>{4, nullptr, nullptr});
+  root->right->left = shared_ptr<BinaryTree<int>>(new BinaryTree<int>{4, nullptr, nullptr});
   root->right->left->parent = root->right;
-  root->right->right = shared_ptr<BinaryTree<int> >(new BinaryTree<int>{6, nullptr, nullptr});
+  root->right->right = shared_ptr<BinaryTree<int>>(new BinaryTree<int>{6, nullptr, nullptr});
   root->right->right->parent = root->right;
 
   // should output 3

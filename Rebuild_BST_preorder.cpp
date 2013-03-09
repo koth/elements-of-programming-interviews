@@ -10,14 +10,14 @@ using namespace std;
 // @include
 // Build a BST based on preorder[s : e - 1], return its root
 template <typename T>
-shared_ptr<BinarySearchTree<T> > rebuild_BST_from_preorder_helper(
+shared_ptr<BinarySearchTree<T>> rebuild_BST_from_preorder_helper(
     const vector<T> &preorder, const int &s, const int &e) {
   if (s < e) {
     int x = s + 1;
     while (x < e && preorder[x] < preorder[s]) {
       ++x;
     }
-    return shared_ptr<BinarySearchTree<T> >(new BinarySearchTree<T>{
+    return shared_ptr<BinarySearchTree<T>>(new BinarySearchTree<T>{
         preorder[s],
         rebuild_BST_from_preorder_helper(preorder, s + 1, x),
         rebuild_BST_from_preorder_helper(preorder, x, e)});
@@ -27,14 +27,14 @@ shared_ptr<BinarySearchTree<T> > rebuild_BST_from_preorder_helper(
 
 // Given a preorder traversal of a BST, return its root
 template <typename T>
-shared_ptr<BinarySearchTree<T> > rebuild_BST_from_preorder(
+shared_ptr<BinarySearchTree<T>> rebuild_BST_from_preorder(
     const vector<T> &preorder) {
   return rebuild_BST_from_preorder_helper(preorder, 0, preorder.size());
 }
 // @exclude
 
 template <typename T>
-void check_ans(const shared_ptr<BinarySearchTree<T> > &n, const T &pre) {
+void check_ans(const shared_ptr<BinarySearchTree<T>> &n, const T &pre) {
   if (n) {
     check_ans(n->left, pre);
     assert(pre <= n->data);
@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
   preorder.emplace_back(5);
   preorder.emplace_back(4);
   preorder.emplace_back(6);
-  shared_ptr<BinarySearchTree<int> > root(rebuild_BST_from_preorder(preorder));
+  shared_ptr<BinarySearchTree<int>> root(rebuild_BST_from_preorder(preorder));
   check_ans<int>(root, numeric_limits<int>::min());
   return 0;
 }

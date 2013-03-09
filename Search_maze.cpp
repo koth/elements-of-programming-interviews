@@ -10,22 +10,21 @@ using namespace std;
 // @include
 class Coordinate {
   public:
-    int i, j;
+    int x, y;
 
     const bool operator==(const Coordinate& that) const {
-      return (i == that.i && j == that.j);
+      return (x == that.x && y == that.y);
     }
 };
 
 // Check cur is within maze and is a white pixel
-bool is_feasible(const Coordinate &cur, const vector<vector<int> > &maze) {
-  return (cur.i >= 0 && cur.i < maze.size() &&
-          cur.j >= 0 && cur.j < maze[cur.i].size() &&
-          maze[cur.i][cur.j] == 0);
+bool is_feasible(const Coordinate &cur, const vector<vector<int>> &maze) {
+  return cur.x >= 0 && cur.x < maze.size() &&
+         cur.y >= 0 && cur.y < maze[cur.x].size() && maze[cur.x][cur.y] == 0;
 }
 
 // Perform DFS to find a feasible path
-bool search_maze_helper(vector<vector<int> > &maze, const Coordinate &cur,
+bool search_maze_helper(vector<vector<int>> &maze, const Coordinate &cur,
                         const Coordinate &e, vector<Coordinate> &path) {
   if (cur == e) {
     return true;
@@ -33,9 +32,9 @@ bool search_maze_helper(vector<vector<int> > &maze, const Coordinate &cur,
 
   const array<array<int, 2>, 4> shift = {0, 1, 0, -1, 1, 0, -1, 0};
   for (const array<int, 2> &s : shift) {
-    Coordinate next{cur.i + s[0], cur.j + s[1]};
+    Coordinate next{cur.x + s[0], cur.y + s[1]};
     if (is_feasible(next, maze)) {
-      maze[next.i][next.j] = 1;
+      maze[next.x][next.y] = 1;
       path.emplace_back(next);
       if (search_maze_helper(maze, next, e, path)) {
         return true;
@@ -46,10 +45,10 @@ bool search_maze_helper(vector<vector<int> > &maze, const Coordinate &cur,
   return false;
 }
 
-vector<Coordinate> search_maze(vector<vector<int> > maze, const Coordinate &s,
+vector<Coordinate> search_maze(vector<vector<int>> maze, const Coordinate &s,
                                const Coordinate &e) {
   vector<Coordinate> path;
-  maze[s.i][s.j] = 1;
+  maze[s.x][s.y] = 1;
   path.emplace_back(s);
   if (search_maze_helper(maze, s, e, path) == false) {
     path.pop_back();
@@ -69,7 +68,7 @@ int main(int argc, char *argv[]) {
       n = 1 + rand() % 30;
       m = 1 + rand() % 30;
     }
-    vector<vector<int> > maze(n, vector<int>(m));
+    vector<vector<int>> maze(n, vector<int>(m));
     for (int i = 0; i < n; ++i) {
       for (int j = 0; j < m; ++j) {
         maze[i][j] = rand() & 1;
@@ -89,17 +88,17 @@ int main(int argc, char *argv[]) {
     if (white.size()) {
       int start = rand() % white.size();
       int end = rand() % white.size();
-      cout << white[start].i << ' ' << white[start].j << endl;
-      cout << white[end].i << ' ' << white[end].j << endl;
+      cout << white[start].x << ' ' << white[start].y << endl;
+      cout << white[end].x << ' ' << white[end].y << endl;
       vector<Coordinate> path = search_maze(maze, white[start], white[end]);
       if (!path.empty()) {
         assert(white[start] == path.front() && white[end] == path.back());
       }
       for (int i = 0; i < path.size(); ++i) {
         if (i > 0) {
-          assert(abs(path[i - 1].i - path[i].i) + abs(path[i - 1].j - path[i].j) == 1);
+          assert(abs(path[i - 1].x - path[i].x) + abs(path[i - 1].y - path[i].y) == 1);
         }
-        cout << '(' << path[i].i << ',' << path[i].j << ')' << endl;
+        cout << '(' << path[i].x << ',' << path[i].y << ')' << endl;
       }
     }
   }

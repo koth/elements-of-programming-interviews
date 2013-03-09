@@ -8,7 +8,7 @@
 using namespace std;
 
 // O(m^3 n^3) time solution
-int check_ans(const vector<vector<bool> > &A) {
+int check_ans(const vector<vector<bool>> &A) {
   int max = 0;
   for (int a = 0; a < A.size(); ++a) {
     for (int b = 0; b < A[a].size(); ++b) {
@@ -46,9 +46,9 @@ class MaxHW {
     int h, w;
 };
 
-int max_rectangle_submatrix(const vector<vector<bool> > &A) {
+int max_rectangle_submatrix(const vector<vector<bool>> &A) {
   // DP table stores (h, w) for each (i, j)
-  vector<vector<MaxHW> > table(A.size(), vector<MaxHW>(A[0].size()));
+  vector<vector<MaxHW>> table(A.size(), vector<MaxHW>(A[0].size()));
 
   for (int i = A.size() - 1; i >= 0; --i) {
     for (int j = A[i].size() - 1; j >= 0; --j) {
@@ -88,7 +88,7 @@ int main(int argc, char *argv[]) {
     } else {
       n = 1 + rand() % 50, m = 1 + rand() % 50;
     }
-    vector<vector<bool> > A(n, vector<bool>(m));
+    vector<vector<bool>> A(n, vector<bool>(m));
     for (int i = 0; i < n; ++i) {
       for (int j = 0; j < m; ++j) {
         A[i][j] = (rand() & 1 ? true : false);

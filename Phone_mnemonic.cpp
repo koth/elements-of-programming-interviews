@@ -22,8 +22,7 @@ void phone_mnemonic_helper(const string &num, const int &d, string &ans) {
 }
 
 void phone_mnemonic(const string &num) {
-  string ans;
-  ans.resize(num.size());
+  string ans(num.size(), 0);
   phone_mnemonic_helper(num, 0, ans);
 }
 // @exclude
@@ -45,6 +44,6 @@ int main(int argc, char *argv[]) {
     num = rand_string(10);
   }
   phone_mnemonic(num);
-  cout << num << endl;
+  cout << "number = " << num << endl;
   return 0;
 }

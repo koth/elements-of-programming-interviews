@@ -7,7 +7,7 @@
 
 using namespace std;
 
-bool valid_to_add(const vector<vector<int> > &A, const int &i, const int &j,
+bool valid_to_add(const vector<vector<int>> &A, const int &i, const int &j,
                   const int &val) {
   // Check row constraints
   for (int k = 0; k < A.size(); ++k) {
@@ -36,7 +36,7 @@ bool valid_to_add(const vector<vector<int> > &A, const int &i, const int &j,
   return true;
 }
 
-bool solve_Sudoku_helper(vector<vector<int> > &A, int i, int j) {
+bool solve_Sudoku_helper(vector<vector<int>> &A, int i, int j) {
   if (i == A.size()) {
     i = 0;  // start a new row
     if (++j == A[i].size()) {
@@ -69,7 +69,7 @@ bool solve_Sudoku_helper(vector<vector<int> > &A, int i, int j) {
 
 // @include
 // Check if a partially filled matrix has any conflicts
-bool is_valid_Sudoku(const vector<vector<int> > &A) {
+bool is_valid_Sudoku(const vector<vector<int>> &A) {
   // Check row constraints
   for (int i = 0; i < A.size(); ++i) {
     vector<bool> is_present(A.size() + 1, false);
@@ -115,7 +115,7 @@ bool is_valid_Sudoku(const vector<vector<int> > &A) {
 }
 // @exclude
 
-bool solve_Sudoku(vector<vector<int> > &A) {
+bool solve_Sudoku(vector<vector<int>> &A) {
   if (is_valid_Sudoku(A) == false) {
     cout << "Initial configuration violates constraints." << endl;
     return false;
@@ -134,7 +134,7 @@ bool solve_Sudoku(vector<vector<int> > &A) {
 }
 
 int main(int argc, char *argv[]) {
-  vector<vector<int> > A(9, vector<int>(9, 0));
+  vector<vector<int>> A(9, vector<int>(9, 0));
   A[0] = {0, 2, 6, 0, 0, 0, 8, 1, 0};
   A[1] = {3, 0, 0, 7, 0, 8, 0, 0, 6};
   A[2] = {4, 0, 0, 0, 5, 0, 0, 0, 7};

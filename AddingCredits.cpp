@@ -18,13 +18,13 @@ class ClientsCreditsInfo {
   private:
     int offset;
     map<string, int> credits;
-    map<int, unordered_set<string> > inverse_credits;
+    map<int, unordered_set<string>> inverse_credits;
 
   public:
     ClientsCreditsInfo(void) : offset(0) {}
 
     void insert(const string &s, const int &c) {
-      credits.emplace(make_pair(s, c - offset));
+      credits.emplace(s, c - offset);
       inverse_credits[c - offset].emplace(s);
     }
 
@@ -46,8 +46,9 @@ class ClientsCreditsInfo {
     }
 
     string max(void) const {
-      auto hash_it = inverse_credits.crbegin()->second;
-      return hash_it.empty() ? "" : *hash_it.begin();
+      auto it = inverse_credits.crbegin();
+      return it == inverse_credits.crend() ||
+             it->second.empty() ? "" : *it->second.cbegin();
     }
 };
 // @exclude
@@ -67,10 +68,10 @@ int main(int argc, char *argv[]) {
   assert(4 == a.lookup("dothis"));
   a.remove("foo");
   assert(-1 == a.lookup("foo"));
-  assert(a.max() == "bar");
-  a.insert( "xyz", 12);
-  assert(a.max() == "bar");
-  a.insert( "dd", 13);
-  assert(a.max() == "dd");
+  assert(a.max().compare("bar") == 0);
+  a.insert("xyz", 13);
+  assert(a.max().compare("xyz") == 0);
+  a.insert("dd", 15);
+  assert(a.max().compare("dd") == 0);
   return 0;
 }

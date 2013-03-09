@@ -12,7 +12,7 @@ list<int> get_minimum_expression(const int &n) {
   list<int> init_list;
   init_list.emplace_back(1);
 
-  list<list<int> > exp_lists;
+  list<list<int>> exp_lists;
   exp_lists.emplace_back(init_list);
   list<int> min_exp;
   int shortest_size = numeric_limits<int>::max();

@@ -12,7 +12,7 @@ void generate_power_set(const vector<T> &S) {
   for (int i = 0; i < (1 << S.size()); ++i) {
     int x = i;
     while (x) {
-      int tar = log2(x ^ (x & (x - 1)));
+      int tar = log2(x & ~(x - 1));
       cout << S[tar];
       if (x &= x - 1) {
         cout << ',';

@@ -32,8 +32,8 @@ bool anonymous_letter(const string &L, const string &M) {
 
   // Check chars in M that could cover chars in a hash table
   for (const char &c : M) {
-    unordered_map<char, int>::iterator it;
-    if ((it = hash.find(c)) != hash.cend()) {
+    auto it = hash.find(c);
+    if (it != hash.cend()) {
       if (--it->second == 0) {
         hash.erase(it);
         if (hash.empty() == true) {
