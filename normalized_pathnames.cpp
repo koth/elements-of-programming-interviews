@@ -21,7 +21,7 @@ string normalized_path_names(const string &path) {
   string token;
   while (getline(ss, token, '/')) {
     if (token == "..") {
-      if (s.empty()) {
+      if (s.empty() || s.back() == "..") {
         s.emplace_back(token);
       } else {
         if (s.back() == "/") {
@@ -59,6 +59,8 @@ int main(int argc, char *argv[]) {
   assert(normalized_path_names("/123/456") == string("/123/456"));
   assert(normalized_path_names("usr/lib/../bin/gcc") == string("usr/bin/gcc"));
   assert(normalized_path_names("./../") == string(".."));
+  assert(normalized_path_names("../../local") == string("../../local"));
+  assert(normalized_path_names("./.././../local") == string("../../local"));
   try {
     normalized_path_names("/..");
   } catch (exception &e) {
@@ -70,5 +72,8 @@ int main(int argc, char *argv[]) {
     cout << e.what() << endl;
   }
   assert(normalized_path_names("scripts//./../scripts/awkscripts/././") == string("scripts/awkscripts"));
+  if (argc == 2) {
+    cout << normalized_path_names(argv[1]) << endl;
+  }
   return 0;
 }
