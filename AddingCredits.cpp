@@ -1,8 +1,10 @@
 #include <iostream>
 #ifdef __clang__
 #include <unordered_set>
+#include <unordered_map>
 #else
 #include <tr1/unordered_set>
+#include <tr1/unordered_map>
 #endif
 #include <vector>
 #include <cassert>
@@ -17,7 +19,7 @@ using namespace std::tr1;
 class ClientsCreditsInfo {
   private:
     int offset;
-    map<string, int> credits;
+    unordered_map<string, int> credits;
     map<int, unordered_set<string>> inverse_credits;
 
   public:
@@ -47,8 +49,8 @@ class ClientsCreditsInfo {
 
     string max(void) const {
       auto it = inverse_credits.crbegin();
-      return it == inverse_credits.crend() ||
-             it->second.empty() ? "" : *it->second.cbegin();
+      return it == inverse_credits.crend() || it->second.empty() ? 
+             "" : *it->second.cbegin();
     }
 };
 // @exclude

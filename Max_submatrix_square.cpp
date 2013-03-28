@@ -49,12 +49,12 @@ int max_square_submatrix(const vector<vector<bool>> &A) {
 
   for (int i = A.size() - 1; i >= 0; --i) {
     for (int j = A[i].size() - 1; j >= 0; --j) {
+      // Find the largest h such that (i, j) to (i + h, j) are feasible
+      // Find the largest w such that (i, j) to (i, j + w) are feasible
       table[i][j] = A[i][j] ?
-        // Find the largest h such that (i, j) to (i + h, j) are feasible
-        // Find the largest w such that (i, j) to (i, j + w) are feasible
-        MaxHW{i + 1 < A.size() ? table[i + 1][j].h + 1 : 1,
-              j + 1 < A[i].size() ? table[i][j + 1].w + 1 : 1} :
-        MaxHW{0, 0};
+                    MaxHW{i + 1 < A.size() ? table[i + 1][j].h + 1 : 1,
+                          j + 1 < A[i].size() ? table[i][j + 1].w + 1 : 1} :
+                    MaxHW{0, 0};
     }
   }
 

@@ -9,6 +9,7 @@ using namespace std;
 template <typename T>
 shared_ptr<BinarySearchTree<T>> find_first_equal_k(
     shared_ptr<BinarySearchTree<T>> r, const T &k) {
+  shared_ptr<BinarySearchTree<T>> first = nullptr;
   while (r) {
     if (r->data < k) {
       r = r->right;
@@ -16,19 +17,11 @@ shared_ptr<BinarySearchTree<T>> find_first_equal_k(
       r = r->left;
     } else {  // r->data == k
       // Search for the leftmost in the left subtree
-      shared_ptr<BinarySearchTree<T>> l = r->left;
-      while (l) {
-        if (l->data != k) {
-          break;
-        } else {
-          r = l;
-          l = l->left;
-        }
-      }
-      return r;
+      first = r;
+      r = r->left;
     }
   }
-  return nullptr;  // no match
+  return first;
 }
 // @exclude
 

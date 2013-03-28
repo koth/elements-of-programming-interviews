@@ -5,6 +5,28 @@
 
 using namespace std;
 
+// Build a BST from the (s + 1)-th to the e-th node in L
+template <typename T>
+shared_ptr<BinarySearchTree<T>> build_BST_from_sorted_doubly_list_helper(
+    shared_ptr<BinarySearchTree<T>> &L, const int &s, const int &e) {
+  shared_ptr<BinarySearchTree<T>> curr = nullptr;
+  if (s < e) {
+    int m = s + ((e - s) >> 1);
+    auto temp = build_BST_from_sorted_doubly_list_helper(L, s, m);
+    curr = L;
+    curr->left = temp;
+    L = L->right;
+    curr->right = build_BST_from_sorted_doubly_list_helper(L, m + 1, e);
+  }
+  return curr;
+}
+
+template <typename T>
+shared_ptr<BinarySearchTree<T>> build_BST_from_sorted_doubly_list(
+    shared_ptr<BinarySearchTree<T>> L, const int &n) {
+  return build_BST_from_sorted_doubly_list_helper(L, 0, n);
+}
+
 // Transform a BST into a circular sorted doubly linked list in-place,
 // return the head of the list
 template <typename T>
@@ -43,14 +65,34 @@ shared_ptr<BinarySearchTree<T>> BST_to_doubly_list(
   return l_head;
 }
 
+// Count the list length till end
+template <typename T>
+int count_len(shared_ptr<BinarySearchTree<T>> L) {
+  int len = 0;
+  while (L) {
+    ++len, L = L->right;
+  }
+  return len;
+}
+
 // @include
+template <typename T>
+void append_node(shared_ptr<BinarySearchTree<T>> &head,
+                 shared_ptr<BinarySearchTree<T>> &tail,
+                 shared_ptr<BinarySearchTree<T>> &n) {
+  if (head) {
+    tail->right = n, n->left = tail;
+  } else {
+    head = n;
+  }
+  tail = n;
+}
+
 template <typename T>
 void append_node_and_advance(shared_ptr<BinarySearchTree<T>> &head,
                              shared_ptr<BinarySearchTree<T>> &tail,
                              shared_ptr<BinarySearchTree<T>> &n) {
-  head ? tail->right = n : head = n;
-  tail = n;  // tail to the last node
-  n->left = nullptr;  // make n as singly list node
+  append_node(head, tail, n);
   n = n->right;  // advance n
 }
 
@@ -65,12 +107,12 @@ shared_ptr<BinarySearchTree<T>> merge_sorted_linked_lists(
   }
 
   // Append the remaining of A
-  while (A) {
-    append_node_and_advance(sorted_list, tail, A);
+  if (A) {
+    append_node(sorted_list, tail, A);
   }
   // Append the remaining of B
-  while (B) {
-    append_node_and_advance(sorted_list, tail, B);
+  if (B) {
+    append_node(sorted_list, tail, B);
   }
   return sorted_list;
 }
@@ -81,7 +123,10 @@ shared_ptr<BinarySearchTree<T>> merge_BSTs(
   // Transform BSTs A and B into sorted doubly lists
   A = BST_to_doubly_list(A), B = BST_to_doubly_list(B);
   A->left->right = B->left->right = nullptr;
-  return merge_sorted_linked_lists(A, B);
+  A->left = B->left = nullptr;
+  int len_A = count_len(A), len_B = count_len(B);
+  return build_BST_from_sorted_doubly_list(merge_sorted_linked_lists(A, B),
+                                           len_A + len_B);
 }
 // @exclude
 

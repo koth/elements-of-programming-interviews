@@ -12,10 +12,9 @@ bool search_min_first_BST(const shared_ptr<BinarySearchTree<T>> &r,
     return false;
   } else if (r->data == k) {
     return true;
-  } else if (search_min_first_BST(r->left, k)) {
-    return true;
-  }
-  return (!r->left || r->left->data < k) && search_min_first_BST(r->right, k);
+  } 
+  return search_min_first_BST(r->left, k) || 
+         search_min_first_BST(r->right, k);
 }
 // @exclude
 

@@ -26,20 +26,19 @@ void append_node_and_advance(shared_ptr<node_t<T>> &head,
 template <typename T>
 shared_ptr<node_t<T>> merge_sorted_linked_lists(shared_ptr<node_t<T>> F,
                                                 shared_ptr<node_t<T>> L) {
-  shared_ptr<node_t<T>> sorted_head = nullptr, sorted_tail = nullptr;
+  shared_ptr<node_t<T>> sorted_head = nullptr, tail = nullptr;
 
   while (F && L) {
-    append_node_and_advance(sorted_head, sorted_tail,
-                            F->data < L->data ? F : L);
+    append_node_and_advance(sorted_head, tail, F->data < L->data ? F : L);
   }
 
   // Append the remaining nodes of F
   if (F) {
-    append_node(sorted_head, sorted_tail, F);
+    append_node(sorted_head, tail, F);
   }
   // Append the remaining nodes of L
   if (L) {
-    append_node(sorted_head, sorted_tail, L);
+    append_node(sorted_head, tail, L);
   }
   return sorted_head;
 }

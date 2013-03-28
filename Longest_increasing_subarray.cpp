@@ -38,6 +38,8 @@ pair<int, int> find_longest_increasing_subarray(const vector<T> &A) {
 // @exclude
 
 int main(int argc, char *argv[]) {
+  auto ans = find_longest_increasing_subarray<int>({-1, -1});
+  assert(ans.first == ans.second == 1);
   srand(time(nullptr));
   for (int times = 0; times < 1000; ++times) {
     vector<int> A;
