@@ -14,6 +14,7 @@ void print_binary_tree_level_order(const shared_ptr<BinaryTree<T>> &n) {
 
   queue<shared_ptr<BinaryTree<T>>> q;
   q.emplace(n);
+  size_t count = q.size();
   while (!q.empty()) {
     cout << q.front()->data << ' ';
     if (q.front()->left) {
@@ -23,6 +24,10 @@ void print_binary_tree_level_order(const shared_ptr<BinaryTree<T>> &n) {
       q.emplace(q.front()->right);
     }
     q.pop();
+    if (--count == 0) {
+      cout << endl;
+      count = q.size();
+    }
   }
 }
 // @exclude

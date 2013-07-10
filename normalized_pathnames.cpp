@@ -1,4 +1,5 @@
 #include <cassert>
+#include <stdexcept>
 #include <iostream>
 #include <stack>
 #include <algorithm>

@@ -1,37 +1,38 @@
-#include <iostream>
-#include <cassert>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <cassert>
+#include <iostream>
+
+using std::cout;
+using std::endl;
 
 // @include
 template <typename ValueType, size_t N>
 class Array {
-  private:
-    ValueType A[N];
-    int P[N], S[N], t;
-
-    const bool isValid(const size_t &i) const {
-      return (0 <= P[i] && P[i] < t && S[P[i]] == i);
+ public:
+  const bool read(const size_t& i, ValueType& v) const {
+    if (isValid(i)) {
+      v = A_[i];
+      return true;
     }
+    return false;
+  }
 
-  public:
-    Array(void) : t(0) {};
-
-    const bool read(const size_t &i, ValueType &v) const {
-      if (isValid(i)) {
-        v = A[i];
-        return true;
-      }
-      return false;
+  void write(const size_t& i, const ValueType& v) {
+    if (!isValid(i)) {
+      S_[t_] = i;
+      P_[i] = t_++;
     }
+    A_[i] = v;
+  }
 
-    void write(const size_t &i, const ValueType &v) {
-      if (!isValid(i)) {
-        S[t] = i;
-        P[i] = t++;
-      }
-      A[i] = v;
-    }
+ private:
+  const bool isValid(const size_t& i) const {
+    return (0 <= P_[i] && P_[i] < t_ && S_[P_[i]] == i);
+  }
+
+  ValueType A_[N];
+  int P_[N], S_[N], t_ = 0;
 };
 // @exclude
 

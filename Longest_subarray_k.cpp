@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iterator>
 #include <numeric>
 #include <cassert>
 #include <vector>
@@ -39,12 +40,15 @@ pair<int, int> find_longest_subarray_less_equal_k(const vector<T> &A,
     min_prefix_sum[i] = min(min_prefix_sum[i], min_prefix_sum[i + 1]);
   }
 
-  pair<int, int> arr_idx(0, upper_bound(min_prefix_sum.cbegin(), 
-                                        min_prefix_sum.cend(), k) -
-                            min_prefix_sum.cbegin() - 1);
+  pair<int, int> arr_idx(0,
+                         distance(min_prefix_sum.cbegin(),
+                                  upper_bound(min_prefix_sum.cbegin(),
+                                              min_prefix_sum.cend(), k) - 1));
   for (int i = 0; i < prefix_sum.size(); ++i) {
-    int idx = upper_bound(min_prefix_sum.cbegin(), min_prefix_sum.cend(),
-                          k + prefix_sum[i]) - min_prefix_sum.cbegin() - 1;
+    auto idx = distance(min_prefix_sum.cbegin(),
+                        upper_bound(min_prefix_sum.cbegin(),
+                                    min_prefix_sum.cend(),
+                                    k + prefix_sum[i])) - 1;
     if (idx - i - 1 > arr_idx.second - arr_idx.first) {
       arr_idx = {i + 1, idx};
     }

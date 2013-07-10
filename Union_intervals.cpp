@@ -1,29 +1,31 @@
-#include <iostream>
-#include <cassert>
-#include <ctime>
-#include <cstdlib>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
 #include <algorithm>
+#include <cassert>
+#include <random>
 #include <vector>
 
-using namespace std;
+using std::default_random_engine;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
 template <typename TimeType>
-class Interval {
-  private:
-    class Endpoint {
-      public:
-        bool isClose;
-        TimeType val;
-    };
+struct Interval {
+ private:
+  struct Endpoint {
+    bool isClose;
+    TimeType val;
+  };
 
-  public:
-    Endpoint left, right;
+ public:
+  const bool operator<(const Interval &i) const {
+    return left.val != i.left.val ?
+           left.val < i.left.val : (left.isClose && !i.left.isClose);
+  }
 
-    const bool operator<(const Interval &i) const {
-      return left.val != i.left.val ?
-             left.val < i.left.val : (left.isClose && !i.left.isClose);
-    }
+  Endpoint left, right;
 };
 
 template <typename TimeType>
@@ -57,29 +59,33 @@ vector<Interval<TimeType>> Union_intervals(vector<Interval<TimeType>> I) {
 
 template <typename TimeType>
 void check_intervals(const vector<Interval<TimeType>> &A) {
-  cout << A.size() << endl;
   // only check the intervals do not overlap with each other
-  //cout << "0 " << ((A[0].left.isClose) ? '[' : '(') << A[0].left.val << "," << A[0].right.val << ((A[0].right.isClose) ? ']' : ')') << endl;
   for (size_t i = 1; i < A.size(); ++i) {
-    //cout << i << ' ' << ((A[i].left.isClose) ? '[' : '(') << A[i].left.val << "," << A[i].right.val << ((A[i].right.isClose) ? ']' : ')') << endl;
-    assert(A[i - 1].right.val < A[i].left.val || (A[i - 1].right.val == A[i].left.val && !A[i - 1].right.isClose && !A[i].left.isClose));
+    assert(A[i - 1].right.val < A[i].left.val ||
+           (A[i - 1].right.val == A[i].left.val &&
+            !A[i - 1].right.isClose && !A[i].left.isClose));
   }
 }
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n;
     if (argc == 2) {
       n = atoi(argv[1]);
     } else {
-      n = 1 + rand() % 1000;
+      uniform_int_distribution<int> dis(1, 1000);
+      n = dis(gen);
     }
     vector<Interval<int>> A;
     for (int i = 0; i < n; ++i) {
       Interval<int> temp;
-      temp.left.isClose = rand() & 1, temp.left.val = rand() % 10000;
-      temp.right.isClose = rand() & 1, temp.right.val = 1 + temp.left.val + rand() % 100;
+      uniform_int_distribution<int> zero_or_one(0, 1);
+      uniform_int_distribution<int> dis1(0, 9999);
+      temp.left.isClose = zero_or_one(gen), temp.left.val = dis1(gen);
+      uniform_int_distribution<int> dis2(temp.left.val + 1,
+                                         temp.left.val + 100);
+      temp.right.isClose = zero_or_one(gen), temp.right.val = dis2(gen);
       A.emplace_back(temp);
     }
     vector<Interval<int>> ret = Union_intervals(A);

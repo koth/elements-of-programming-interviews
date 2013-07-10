@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iterator>
 #include <numeric>
 #include <algorithm>
 #include <ctime>
@@ -28,13 +29,13 @@ double completion_search(vector<double> &A, const double &budget) {
   if (lower == costs.cbegin()) {
     return budget / A.size();
   }
-  int idx = lower - costs.cbegin() - 1;
+  auto idx = distance(costs.cbegin(), lower) - 1;
   return A[idx] + (budget - costs[idx]) / (A.size() - idx - 1);
 }
 // @exclude
 
 int main(int argc, char *argv[]) {
-  //srand(time(nullptr));
+  srand(time(nullptr));
   for (int times = 0; times < 10000; ++times) {
     int n;
     vector<double> A;

@@ -1,6 +1,7 @@
 #include "Binary_tree_prototype_template.h"
 #include "Binary_tree_utils.h"
 #include <algorithm>
+#include <iterator>
 #include <vector>
 #include <ctime>
 #include <cstdlib>
@@ -17,18 +18,18 @@ shared_ptr<BinaryTree<T>> reconstruct_pre_in_orders_helper(
     const vector<T> &in, const int &in_s, const int &in_e) {
   if (pre_e > pre_s && in_e > in_s) {
     auto it = find(in.cbegin() + in_s, in.cbegin() + in_e, pre[pre_s]);
-    int left_tree_size = it - (in.cbegin() + in_s);
+    auto left_tree_size = distance(in.cbegin(), it) - in_s;
 
     return shared_ptr<BinaryTree<T>>(new BinaryTree<T>{
       pre[pre_s],
       // Recursively build the left subtree
       reconstruct_pre_in_orders_helper<T>(
         pre, pre_s + 1, pre_s + 1 + left_tree_size,
-        in, in_s, it - in.cbegin()),
+        in, in_s, distance(in.cbegin(), it)),
       // Recursively build the right subtree
       reconstruct_pre_in_orders_helper<T>(
         pre, pre_s + 1 + left_tree_size, pre_e,
-        in, it - in.cbegin() + 1, in_e)
+        in, distance(in.cbegin(), it) + 1, in_e)
       });
   }
   return nullptr;

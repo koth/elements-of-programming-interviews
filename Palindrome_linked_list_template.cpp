@@ -20,7 +20,8 @@ shared_ptr<node_t<T>> reverse_linked_list(const shared_ptr<node_t<T>> &head) {
 // @include
 template <typename T>
 bool is_linked_list_a_palindrome(shared_ptr<node_t<T>> L) {
-  // Find the middle point of L
+  // Find the middle point of L if L is odd length,
+  // and right-middle point if L is even length
   shared_ptr<node_t<T>> slow = L, fast = L;
   while (fast) {
     fast = fast->next;

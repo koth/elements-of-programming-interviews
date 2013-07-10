@@ -28,9 +28,9 @@ short parity2(long x) {
 // @include
 short parity3(const unsigned long &x) {
   return precomputed_parity[x >> 48] ^
-         precomputed_parity[(x >> 32) & 0xFFFF] ^
-         precomputed_parity[(x >> 16) & 0xFFFF] ^
-         precomputed_parity[x & 0xFFFF];
+         precomputed_parity[(x >> 32) & 0b1111111111111111] ^
+         precomputed_parity[(x >> 16) & 0b1111111111111111] ^
+         precomputed_parity[x & 0b1111111111111111];
 }
 // @exclude
 

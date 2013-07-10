@@ -1,47 +1,15 @@
-#include <iostream>
-#include <queue>
-#include <stdexcept>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
+#include "./Queue_with_max_using_deque.h"
+
 #include <cassert>
+#include <iostream>
 
-using namespace std;
+using std::cout;
+using std::endl;
+using std::exception;
 
-// @include
-template <typename T>
-class Queue {
-  private:
-    queue<T> Q;
-    deque<T> D;
-
-  public:
-    void enqueue(const T &x) {
-      Q.emplace(x);
-      while (D.empty() == false && D.back() < x) {
-        D.pop_back();
-      }
-      D.emplace_back(x);
-    }
-
-    T dequeue(void) {
-      if (Q.empty() == false) {
-        T ret = Q.front();
-        if (ret == D.front()) {
-          D.pop_front();
-        }
-        Q.pop();
-        return ret;
-      }
-      throw length_error("empty queue");
-    }
-
-    const T &max(void) const {
-      if (D.empty() == false) {
-        return D.front();
-      }
-      throw length_error("empty queue");
-    }
-};
-// @exclude
-
+// Just for testing.
 int main(int argc, char *argv[]) {
   Queue<int> Q;
   Q.enqueue(1);
@@ -55,12 +23,12 @@ int main(int argc, char *argv[]) {
   assert(3 == Q.dequeue());  // 3
   try {
     Q.max();
-  } catch (exception &e) {
+  } catch(const exception& e) {
     cout << e.what() << endl;  // throw
   }
   try {
     Q.dequeue();
-  } catch (exception &e) {
+  } catch(const exception& e) {
     cout << e.what() << endl;  // throw
   }
   return 0;

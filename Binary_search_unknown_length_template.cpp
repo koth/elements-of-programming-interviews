@@ -49,7 +49,16 @@ int binary_search_unknown_len(const vector<T> &A, const T &k) {
 }
 // @exclude
 
+void small_test(void) {
+  vector<int> A = {1, 2, 3};
+  assert(binary_search_unknown_len(A, 3) == 2);
+  assert(binary_search_unknown_len(A, 1) == 0);
+  assert(binary_search_unknown_len(A, 2) == 1);
+  assert(binary_search_unknown_len(A, 4) == -1);
+}
+
 int main(int argc, char *argv[]) {
+  small_test();
   int n, k;
   srand(time(nullptr));
   for (int times = 0; times < 1000; ++times) {

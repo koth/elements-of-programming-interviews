@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iterator>
 #include <algorithm>
 #include <cassert>
 #include <ctime>
@@ -10,11 +11,12 @@ using namespace std;
 
 // @include
 template <typename T>
-int eliminate_duplicate(vector<T> &A) {
+void eliminate_duplicate(vector<T> &A) {
   sort(A.begin(), A.end());  // makes identical elements become neighbors
-  auto it = unique(A.begin(), A.end());  // removes neighboring duplicates
-  A.resize(it - A.cbegin());  // truncates the unnecessary trailing part
-  return it - A.cbegin();
+  // unique() removes adjacent duplicates and returns an iterator to the 
+  // element the follows the last element not removed. The effect of resize()
+  // is to restrict A to the distinct element.
+  A.resize(distance(A.begin(), unique(A.begin(), A.end())));
 }
 // @exclude
 
@@ -38,7 +40,7 @@ int main(int argc, char *argv[]) {
     for (int i = 0; i < n; ++i) {
       A.emplace_back(rand() % n);
     }
-    cout << eliminate_duplicate(A) << endl;
+    eliminate_duplicate(A);
     check_ans(A);
   }
   return 0;

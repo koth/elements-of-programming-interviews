@@ -1,53 +1,52 @@
-#include <iostream>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
 #include <algorithm>
-#include <limits>
 #include <cassert>
 #include <cstdlib>
 #include <ctime>
+#include <limits>
 #include <vector>
 
-using namespace std;
+using std::vector;
 
 // @include
 template <typename HeightType>
-class Player {
-  public:
-    HeightType height;
+struct Player {
+  const bool operator<(const Player &that) const {
+    return height < that.height;
+  }
 
-    const bool operator<(const Player &that) const {
-      return height < that.height;
-    }
+  HeightType height;
 };
 
 template <typename HeightType>
 class Team {
-  private:
-    vector<Player<HeightType>> members;
-
-    vector<Player<HeightType>> sortHeightMembers(void) const {
-      vector<Player<HeightType>> sorted_members(members);
-      sort(sorted_members.begin(), sorted_members.end());
-      return sorted_members;
+ public:
+  explicit Team(const vector<HeightType>& height) {
+    for (const HeightType& h : height) {
+      members_.emplace_back(Player<HeightType>{h});
     }
+  }
 
-  public:
-    const bool operator<(const Team &that) const {
-      vector<Player<HeightType>> this_sorted(sortHeightMembers());
-      vector<Player<HeightType>> that_sorted(that.sortHeightMembers());
-      for (int i = 0; i < this_sorted.size() && i < that_sorted.size(); ++i) {
-        if (this_sorted[i] < that_sorted[i] == false) {
-          return false;
-        }
-      }
-      return true;
-    }
-    // @exclude
-    Team(const vector<HeightType> &height) {
-      for (const HeightType &h : height) {
-        members.emplace_back(Player<HeightType>{h});
+  const bool operator<(const Team &that) const {
+    vector<Player<HeightType>> this_sorted(sortHeightMembers());
+    vector<Player<HeightType>> that_sorted(that.sortHeightMembers());
+    for (int i = 0; i < this_sorted.size() && i < that_sorted.size(); ++i) {
+      if (this_sorted[i] < that_sorted[i] == false) {
+        return false;
       }
     }
-    // @include
+    return true;
+  }
+
+ private:
+  vector<Player<HeightType>> sortHeightMembers(void) const {
+    vector<Player<HeightType>> sorted_members(members_);
+    sort(sorted_members.begin(), sorted_members.end());
+    return sorted_members;
+  }
+
+  vector<Player<HeightType>> members_;
 };
 // @exclude
 

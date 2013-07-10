@@ -1,4 +1,5 @@
 #include "Linked_list_prototype_template.h"
+#include <stdexcept>
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
@@ -9,32 +10,22 @@ using namespace std;
 // @include
 template <typename T>
 double find_median_sorted_circular_linked_list(
-  const shared_ptr<node_t<T>> &r_node) {
+    const shared_ptr<node_t<T>>& r_node) {
   if (!r_node) {
-    return 0.0;  // no node in this linked list
+    throw length_error("empty list");  // no node in this linked list
   }
 
   // Check all nodes are identical or not and identify the start of list
   shared_ptr<node_t<T>> curr = r_node, start = r_node;
   int count = 0;
-  bool is_identical = true;
   do {
-    if (curr->data != curr->next->data) {
-      is_identical = false;
-    }
     ++count, curr = curr->next;
-
     // start will point to the largest element in the list
-    if (start->data <= start->next->data) {
-      start = start->next;
+    if (start->data <= curr->data) {
+      start = curr;
     }
   } while (curr != r_node);
-  // If all values are identical, median = curr->data
-  if (is_identical == true) {
-    return curr->data;
-  }
-
-  // Since start point to the largest element, its next is the start of list
+  // start's next is the begin of the list
   start = start->next;
 
   // Traverse to the middle of the list and return the median
@@ -65,11 +56,34 @@ int main(int argc, char *argv[]) {
       while (curr->next != shared_ptr<node_t<int>>(nullptr)) {
         curr = curr->next;
       }
-      curr->next = head;  // make the list become circular
+      curr->next = head;  // make the list as a circular list
     }
     double res = find_median_sorted_circular_linked_list<int>(head->next);
     cout << res << endl;
     assert(res == 0.5 * n);
   }
+
+  // Test empty list
+  shared_ptr<node_t<int>> head;
+  try {
+    find_median_sorted_circular_linked_list<int>(head);
+  } catch (exception& e){
+    cout << e.what() << endl;
+  }
+
+  // Test identical list
+  for (int i = 0; i < 10; ++i) {
+    shared_ptr<node_t<int>> curr = shared_ptr<node_t<int>>(new node_t<int>{5, nullptr});
+    curr->next = head;
+    head = curr;
+  }
+  shared_ptr<node_t<int>> curr = head;
+  if (curr != shared_ptr<node_t<int>>(nullptr)) {
+    while (curr->next != shared_ptr<node_t<int>>(nullptr)) {
+      curr = curr->next;
+    }
+    curr->next = head;  // make the list as a circular list
+  }
+  assert(5 == find_median_sorted_circular_linked_list<int>(head));
   return 0;
 }

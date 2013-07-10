@@ -26,14 +26,26 @@ void approximate_sort(istringstream &sin, const int &k) {
   }
 
   // Extract the remaining elements in min_heap
-  while (min_heap.size()) {
+  while (!min_heap.empty()) {
     cout << min_heap.top() << endl;
     min_heap.pop();
   }
 }
 // @exclude
 
+// It should print 1, 2, 3, 4, 5, 6, 7, ,8, 9
+void simple_test(void) {
+  vector<int> A = {2, 1, 5, 4, 3, 9, 8, 7, 6};
+  stringstream ss;
+  for (const int &a : A) {
+    ss << a << ' ';
+  }
+  istringstream sin(ss.str());
+  approximate_sort<int>(sin, 3);
+}
+
 int main(int argc, char *argv[]) {
+  simple_test();
   srand(time(nullptr));
   int n, k;
   if (argc == 2) {

@@ -1,19 +1,24 @@
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
+#include <cassert>
 #include <iostream>
 #include <queue>
-#include <cassert>
-#include <cstdlib>
-#include <ctime>
+#include <random>
 #include <vector>
 
-using namespace std;
+using std::boolalpha;
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::queue;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
-class GraphVertex {
-  public:
-    int d;
-    vector<GraphVertex*> edges;
-
-    GraphVertex(void) : d(-1) {}
+struct GraphVertex {
+  int d = -1;
+  vector<GraphVertex*> edges;
 };
 
 bool BFS(GraphVertex* s) {
@@ -34,8 +39,8 @@ bool BFS(GraphVertex* s) {
   return true;
 }
 
-bool is_any_placement_feasible(vector<GraphVertex> &G) {
-  for (GraphVertex &v : G) {
+bool is_any_placement_feasible(vector<GraphVertex>* G) {
+  for (GraphVertex& v : *G) {
     if (v.d == -1) {  // unvisited vertex
       v.d = 0;
       if (BFS(&v) == false) {
@@ -61,12 +66,12 @@ bool DFS(GraphVertex* s) {
   return true;
 }
 
-bool is_2_colorable(vector<GraphVertex> &G) {
-  for (GraphVertex &v : G) {
+bool is_2_colorable(vector<GraphVertex>* G) {
+  for (GraphVertex& v : *G) {
     v.d = -1;
   }
 
-  for (GraphVertex &v : G) {
+  for (GraphVertex& v : *G) {
     if (v.d == -1) {
       v.d = 0;
       if (DFS(&v) == false) {
@@ -78,22 +83,25 @@ bool is_2_colorable(vector<GraphVertex> &G) {
 }
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 9000; ++times) {
     int n;
     if (argc == 2) {
       n = atoi(argv[1]);
     } else {
-      n = 2 + rand() % 100;
+      uniform_int_distribution<int> dis(2, 101);
+      n = dis(gen);
     }
     vector<GraphVertex> G(n);
-    int m = 1 + rand() % (n * (n - 1) / 2);
+    uniform_int_distribution<int> dis(1, n * (n - 1) >> 1);
+    int m = dis(gen);
     cout << times << ' ' << n << ' ' << m << endl;
     vector<vector<bool>> is_edge_exist(n, vector<bool>(n, false));
     while (m-- > 0) {
+      uniform_int_distribution<int> dis(0, n - 1);
       int a, b;
       do {
-        a = rand() % n, b = rand() % n;
+        a = dis(gen), b = dis(gen);
       } while (a == b || is_edge_exist[a][b] == true);
       is_edge_exist[a][b] = is_edge_exist[b][a] = true;
       G[a].edges.emplace_back(&G[b]);
@@ -109,9 +117,9 @@ int main(int argc, char *argv[]) {
       cout << endl;
     }
     //*/
-    bool res = is_any_placement_feasible(G);
+    bool res = is_any_placement_feasible(&G);
     cout << boolalpha << res << endl;
-    assert(res == is_2_colorable(G));
+    assert(res == is_2_colorable(&G));
   }
   return 0;
 }

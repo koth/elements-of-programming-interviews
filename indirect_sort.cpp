@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iterator>
 #include <fstream>
 #include <cassert>
 #include <algorithm>
@@ -33,7 +34,7 @@ void indirect_sort(const string &file_name) {
   // Output file
   ofstream ofs(file_name.c_str());
   for (const T* p : P) {
-    ofs << p << endl;
+    ofs << *p << endl;
   }
 }
 // @exclude

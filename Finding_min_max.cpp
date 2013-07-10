@@ -18,15 +18,16 @@ pair<T, T> find_min_max(const vector<T> &A) {
 
   // Initialize the min and max pair
   pair<T, T> min_max_pair = minmax(A[0], A[1]);
-  for (int i = 2; i < A.size(); i += 2) {
-    if (i + 1 < A.size()) {
-      pair<T, T> local_pair = minmax(A[i], A[i + 1]);
-      min_max_pair = {min(min_max_pair.first, local_pair.first),
-                      max(min_max_pair.second, local_pair.second)};
-    } else {
-      min_max_pair = {min(min_max_pair.first, A[i]),
-                      max(min_max_pair.second, A[i])};
-    }
+  for (int i = 2; i + 1 < A.size(); i += 2) {
+    pair<T, T> local_pair = minmax(A[i], A[i + 1]);
+    min_max_pair = {min(min_max_pair.first, local_pair.first),
+                    max(min_max_pair.second, local_pair.second)};
+  }
+  // Special case: if there is odd number of elements in the array, we still
+  // need to compare the last element with the existing answer.
+  if (A.size() & 1) {
+    min_max_pair = {min(min_max_pair.first, A.back()),
+                    max(min_max_pair.second, A.back())};
   }
   return min_max_pair;
 }

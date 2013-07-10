@@ -1,16 +1,27 @@
-#include <iostream>
-#include <queue>
-#include <vector>
-#include <cstdlib>
-#include <cassert>
-#include <ctime>
-#include <limits>
-#include <set>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <algorithm>
+#include <cassert>
+#include <iostream>
+#include <limits>
+#include <queue>
+#include <random>
+#include <set>
+#include <vector>
+
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::max;
+using std::min;
+using std::numeric_limits;
+using std::random_device;
+using std::set;
+using std::uniform_int_distribution;
+using std::vector;
 
 template <typename T>
-T distance(const vector<vector<T>> &arrs, const vector<int> &idx) {
+T distance(const vector<vector<T>>& arrs, const vector<int>& idx) {
   T max_T = numeric_limits<T>::min(), min_T = numeric_limits<T>::max();
   for (int i = 0; i < idx.size(); ++i) {
     max_T = max(max_T, arrs[i][idx[i]]);
@@ -21,22 +32,21 @@ T distance(const vector<vector<T>> &arrs, const vector<int> &idx) {
 
 // @include
 template <typename T>
-class ArrData {
-  public:
-    int idx;
-    T val;
-
-    const bool operator<(const ArrData &a) const {
-      if (val != a.val) {
-        return val < a.val;
-      } else {
-        return idx < a.idx;
-      }
+struct ArrData {
+  const bool operator<(const ArrData& a) const {
+    if (val != a.val) {
+      return val < a.val;
+    } else {
+      return idx < a.idx;
     }
+  }
+
+  int idx;
+  T val;
 };
 
 template <typename T>
-T find_min_distance_sorted_arrays(const vector<vector<T>> &arrs) {
+T find_min_distance_sorted_arrays(const vector<vector<T>>& arrs) {
   // Pointers for each of arrs
   vector<int> idx(arrs.size(), 0);
   T min_dis = numeric_limits<T>::max();
@@ -65,7 +75,8 @@ T find_min_distance_sorted_arrays(const vector<vector<T>> &arrs) {
 // @exclude
 
 template <typename T>
-void rec_gen_answer(const vector<vector<T>> &arrs, vector<int> &idx, int level, T &ans) {
+void rec_gen_answer(const vector<vector<T>>& arrs, vector<int>& idx, int level,
+                    T& ans) {
   if (level == arrs.size()) {
     ans = min(distance(arrs, idx), ans);
     return;
@@ -77,7 +88,7 @@ void rec_gen_answer(const vector<vector<T>> &arrs, vector<int> &idx, int level, 
 }
 
 template <typename T>
-T brute_force_gen_answer(const vector<vector<T>> &arrs) {
+T brute_force_gen_answer(const vector<vector<T>>& arrs) {
   T ans = numeric_limits<T>::max();
   vector<int> idx(arrs.size());
   rec_gen_answer(arrs, idx, 0, ans);
@@ -86,24 +97,25 @@ T brute_force_gen_answer(const vector<vector<T>> &arrs) {
 }
 
 int main(int argc, char *argv[]) {
-  //srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n;
     vector<vector<int>> arrs;
     if (argc == 2) {
       n = atoi(argv[1]);
     } else {
-      n = 1 + rand() % 5;
+      uniform_int_distribution<int> dis(1, 5);
+      n = dis(gen);
     }
     arrs.resize(n);
     for (int i = 0; i < n; ++i) {
-      int size = 1 + rand() % 40;
+      uniform_int_distribution<int> dis(1, 40);
+      int size = dis(gen);
       for (int j = 0; j < size; ++j) {
-        arrs[i].emplace_back(rand() % 10000);
+        uniform_int_distribution<int> dis(0, 9999);
+        arrs[i].emplace_back(dis(gen));
       }
       sort(arrs[i].begin(), arrs[i].end());
-      //copy(arrs[i].begin(), arrs[i].end(), ostream_iterator<int>(cout, " "));
-      //cout << endl;
     }
     int ans = find_min_distance_sorted_arrays<int>(arrs);
     cout << ans << endl;

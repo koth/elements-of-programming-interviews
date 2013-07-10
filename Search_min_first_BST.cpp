@@ -12,9 +12,14 @@ bool search_min_first_BST(const shared_ptr<BinarySearchTree<T>> &r,
     return false;
   } else if (r->data == k) {
     return true;
-  } 
-  return search_min_first_BST(r->left, k) || 
-         search_min_first_BST(r->right, k);
+  }
+
+  // Search the right subtree if the smallest key in the right subtree is
+  // greater than or equal to k.
+  if (r->right && k >= r->right->data) {
+    return search_min_first_BST(r->right, k);
+  }
+  return search_min_first_BST(r->left, k);
 }
 // @exclude
 

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdexcept>
 #include <cassert>
 #ifdef __clang__
 #include <unordered_set>
@@ -22,8 +23,8 @@ bool test_Collatz_conjecture(const int &n) {
   for (int i = 2; i <= n; ++i) {
     unordered_set<long> sequence;
     long test_i = i;
-    while (test_i != 1 && test_i >= i) {
-      // A cycle means Collatz fails.
+    while (test_i >= i) {
+      // Emplace failed, it mean we met some number encountered before.
       if (sequence.emplace(test_i).second == false) {
         return false;
       }
@@ -32,7 +33,11 @@ bool test_Collatz_conjecture(const int &n) {
         if (table.emplace(test_i).second == false) {
           break;  // this number have already be proven to converge to 1
         }
-        test_i = 3 * test_i + 1;  // 3n + 1
+        long next_test_i = 3 * test_i + 1;  // 3n + 1
+        if (next_test_i <= test_i) {
+          throw overflow_error("test process overflow");
+        }
+        test_i = next_test_i;
       } else {  // even number
         test_i >>= 1;  // n / 2
       }

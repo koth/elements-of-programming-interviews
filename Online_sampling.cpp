@@ -8,6 +8,7 @@
 #include <vector>
 #include <ctime>
 #include <cstdlib>
+#include <array>
 
 using namespace std;
 #ifndef __clang__
@@ -16,21 +17,31 @@ using namespace std::tr1;
 
 // @include
 vector<int> online_sampling(const int &n, const int &k) {
-  unordered_map<int, int> table;
+  unordered_map<int, int> H;
+  default_random_engine gen((random_device())());  // random num generator
+  for (int i = 0; i < k; ++i) {
+    // Generate random int in [i, n - 1].
+    uniform_int_distribution<int> dis(0, n - 1 - i);
+    int r = dis(gen);
+    auto ptr1 = H.find(r), ptr2 = H.find(n - 1 - i);
+    if (ptr1 == H.end() && ptr2 == H.end()) {
+      H[r] = n - 1 - i;
+      H[n - 1 - i] = r;
+    } else if (ptr1 == H.end() && ptr2 != H.end()) {
+      H[r] = ptr2->second;
+      ptr2->second = r;
+    } else if (ptr1 != H.end() && ptr2 == H.end()) {
+      H[n - 1 - i] = ptr1->second;
+      ptr1->second = n - 1 - i;
+    } else {
+      int temp = ptr2->second;
+      H[n - 1 - i] = ptr1->second;
+      H[r] = temp;
+    }
+  }
   vector<int> res;
   for (int i = 0; i < k; ++i) {
-    default_random_engine gen((random_device())());  // random num generator
-    // Generate random int in [i, n - 1]
-    uniform_int_distribution<int> dis(i, n - 1);
-    int r = dis(gen);
-    auto it = table.find(r);
-    if (it == table.end()) {  // r is not in table
-      res.emplace_back(r);
-      table.emplace(r, i);
-    } else {  // r is in table
-      res.emplace_back(it->second);
-      it->second = i;
-    }
+    res.emplace_back(H[n - 1 - i]);
   }
   return res;
 }
@@ -52,6 +63,7 @@ int main(int argc, char *argv[]) {
   cout << "n = " << n << " k = " << k << endl;
   for (int i = 0; i < 6; ++i) {
     vector<int> res = online_sampling(n, k);
+    cout << "result = ";
     copy(res.begin(), res.end(), ostream_iterator<int>(cout, " "));
     cout << endl;
   }

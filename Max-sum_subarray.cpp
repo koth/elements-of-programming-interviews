@@ -13,7 +13,7 @@ pair<int, int> find_maximum_subarray(const vector<T> &A) {
   // A[range.first : range.second - 1] will be the maximum subarray
   pair<int, int> range(0, 0);
   int min_idx = -1;
-  T min_sum = 0, sum = 0, max_sum = numeric_limits<T>::min();
+  T min_sum = 0, sum = 0, max_sum = 0;
   for (int i = 0; i < A.size(); ++i) {
     sum += A[i];
     if (sum < min_sum) {
@@ -69,7 +69,30 @@ void check_max_sum(vector<T> &A, pair<int, int> &range) {
   }
 }
 
+void simple_test(void) {
+  vector<int> B = {1};
+  pair<int, int> range = find_maximum_subarray(B);
+  cout << range.first << " " << range.second << endl;
+  check_max_sum(B, range);
+  B = {-5};
+  range = find_maximum_subarray(B);
+  cout << range.first << " " << range.second << endl;
+  B = {0};
+  range = find_maximum_subarray(B);
+  cout << range.first << " " << range.second << endl;
+  B = {0,0};
+  range = find_maximum_subarray(B);
+  cout << range.first << " " << range.second << endl;
+  B = {0,0,0};
+  range = find_maximum_subarray(B);
+  cout << range.first << " " << range.second << endl;
+  B = {0,-5,0};
+  range = find_maximum_subarray(B);
+  cout << range.first << " " << range.second << endl;
+}
+
 int main(int argc, char *argv[]) {
+  simple_test();
   srand(time(nullptr));
   for (int times = 0; times < 1000; ++times) {
     vector<int> A;

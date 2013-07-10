@@ -1,44 +1,49 @@
-#include <iostream>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
 #include <cassert>
-#ifdef __clang__
-#include <unordered_set>
-#else
-#include <tr1/unordered_set>
-#endif
 #include <cstdlib>
 #include <ctime>
+#include <iostream>
+#include <random>
+#include <unordered_set>
+#include <utility>
 #include <vector>
 
-using namespace std;
-#ifndef __clang__
-using namespace std::tr1;
-#endif
+using std::boolalpha;
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::hash;
+using std::pair;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::unordered_set;
+using std::vector;
 
 // @include
-class Jug {
-  public:
-    int low, high;
+struct Jug {
+  int low, high;
 };
 
 class PairEqual {
-  public:
-    const bool operator()(const pair<int, int> &a,
-                          const pair<int, int> &b) const {
-      return a.first == b.first && a.second == b.second;
-    }
+ public:
+  const bool operator()(const pair<int, int>& a,
+                        const pair<int, int>& b) const {
+    return a.first == b.first && a.second == b.second;
+  }
 };
 
 class HashPair {
-  public:
-    const size_t operator()(const pair<int, int> &p) const {
-      return hash<int>()(p.first) ^ hash<int>()(p.second);
-    }
+ public:
+  const size_t operator()(const pair<int, int>& p) const {
+    return hash<int>()(p.first) ^ hash<int>()(p.second);
+  }
 };
 
-bool check_feasible_helper(const vector<Jug> &jugs, const int &L,
-                           const int &H, unordered_set<pair<int, int>, 
+bool check_feasible_helper(const vector<Jug>& jugs, const int& L,
+                           const int& H, unordered_set<pair<int, int>,
                                                        HashPair,
-                                                       PairEqual> &c) {
+                                                       PairEqual>& c) {
   if (L > H || c.find({L, H}) != c.cend() || (L < 0 && H < 0)) {
     return false;
   }
@@ -54,7 +59,7 @@ bool check_feasible_helper(const vector<Jug> &jugs, const int &L,
   return false;
 }
 
-bool check_feasible(const vector<Jug> &jugs, const int &L, const int &H) {
+bool check_feasible(const vector<Jug>& jugs, const int& L, const int& H) {
   unordered_set<pair<int, int>, HashPair, PairEqual> cache;
   return check_feasible_helper(jugs, L, H, cache);
 }
@@ -68,20 +73,25 @@ int main(int argc, char *argv[]) {
   jugs.emplace_back(Jug{500, 515});
   assert(check_feasible(jugs, 2100, 2300) == true);
   jugs.clear();
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   if (argc == 2) {
     n = atoi(argv[1]);
   } else {
-    n = 1 + rand() % 100;
+    uniform_int_distribution<int> dis(1, 100);
+    n = dis(gen);
   }
   for (int i = 0; i < n; ++i) {
     Jug t;
-    t.low = rand() % 1000;
-    t.high = t.low + 1 + rand() % 20;
+    uniform_int_distribution<int> dis1(0, 999);
+    t.low = dis1(gen);
+    uniform_int_distribution<int> dis2(t.low + 1, t.low + 20);
+    t.high = dis2(gen);
     jugs.emplace_back(t);
   }
-  int l = rand() % 10000;
-  int h = l + 1 + rand() % 5000;
+  uniform_int_distribution<int> dis1(0, 9999);
+  int l = dis1(gen);
+  uniform_int_distribution<int> dis2(l + 1, l + 5000);
+  int h = dis2(gen);
   cout << boolalpha << check_feasible(jugs, l, h) << endl;
   return 0;
 }

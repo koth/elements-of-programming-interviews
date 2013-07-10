@@ -8,6 +8,7 @@ class Requestor {
   // @include
   public String execute(String req, long delay) {
     try {
+      // simulate the time taken to perform a computation
       Thread.sleep(delay);
     } catch (InterruptedException e) {
       return error(req);

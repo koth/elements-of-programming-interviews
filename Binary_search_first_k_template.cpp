@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iterator>
 #include <vector>
 #include <cstdlib>
 #include <ctime>
@@ -47,7 +48,7 @@ int main(int argc, char *argv[]) {
       cout << "A[k] = " << A[ans] << endl;
     }
     auto it = find(A.cbegin(), A.cend(), k);
-    assert((it == A.cend() && ans == -1) || (it - A.cbegin() == ans));
+    assert((it == A.cend() && ans == -1) || (distance(A.cbegin(), it) == ans));
   }
   return 0;
 }

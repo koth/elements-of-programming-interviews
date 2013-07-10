@@ -59,6 +59,16 @@ void check_ans(vector<T> &A, const vector<T> &res, const int &k) {
 }
 
 int main(int argc, char *argv[]) {
+  vector<int> D = {3,2,3,5,7,3,1};
+  vector<int> Dexpres = {2,3,3};
+  vector<int> Dres = find_k_closest_to_median(D,3);
+  check_ans(D, Dres, 3);
+  for (const int &d : Dres) {
+    cout << d << ' ';
+  }
+  cout << endl;
+
+
   srand(time(nullptr));
   for (int times = 0; times < 1000; ++times) {
     int n, k;

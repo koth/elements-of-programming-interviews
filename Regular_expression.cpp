@@ -12,13 +12,14 @@ bool is_match_here(const string &r, const string &s) {
   }
 
   // Case (2) : ends with '$'
-  if (r.front() == '$' && r.size() == 1) {
+  if (r == "$") {
     return s.empty();
   }
 
   // Case (4.)
   if (r.size() >= 2 && r[1] == '*') {
-    for (int i = 0; i < s.size() && (r.front() == '.' || r.front() == s[i]);
+    for (string::size_type i = 0;
+         i < s.size() && (r.front() == '.' || r.front() == s[i]);
          ++i) {
       if (is_match_here(r.substr(2), s.substr(i + 1))) {
         return true;

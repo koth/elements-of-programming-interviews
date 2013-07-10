@@ -1,35 +1,44 @@
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
 #include <iostream>
+#include <limits>
 #include <stdexcept>
 #include <cassert>
 #include <cmath>
 
-using namespace std;
+using std::cout;
+using std::endl;
+using std::exception;
+using std::length_error;
+using std::numeric_limits;
 
 // @include
 class Queue {
-  private:
-    unsigned val, size;
-
-  public:
-    Queue() : val(0), size(0) {}
-
-    void enqueue(const unsigned &x) {
-      val = val * 10 + x;
-      ++size;
+ public:
+  void enqueue(const unsigned& x) {
+    if (size_ >= max_size_) {
+      throw length_error("queue overflow");
     }
+    val_ = val_ * 10 + x;
+    ++size_;
+  }
 
-    unsigned dequeue(void) {
-      if (size) {
-        unsigned ret = 0, d = floor(log10(val));
-        if (d + 1 == size) {
-          ret = val / pow(10.0, d);
-          val -= pow(10.0, d) * ret;
-        }
-        --size;
-        return ret;
+  unsigned dequeue(void) {
+    if (size_) {
+      unsigned ret = 0, d = floor(log10(val_));
+      if (d + 1 == size_) {
+        ret = val_ / pow(10.0, d);
+        val_ -= pow(10.0, d) * ret;
       }
-      throw length_error("empty queue");
+      --size_;
+      return ret;
     }
+    throw length_error("empty queue");
+  }
+
+ private:
+  unsigned val_ = 0, size_ = 0,
+           max_size_ = floor(log10(numeric_limits<unsigned>::max()));
 };
 // @exclude
 
@@ -49,9 +58,25 @@ int main(int argc, char *argv[]) {
   q.enqueue(0);
   assert(0 == q.dequeue());
   assert(0 == q.dequeue());
+  // empty queue, it should throw.
   try {
     q.dequeue();
-  } catch (exception &e) {
+  } catch(const exception& e) {
+    cout << e.what() << endl;
+  };
+  q.enqueue(0);
+  q.enqueue(0);
+  q.enqueue(0);
+  q.enqueue(0);
+  q.enqueue(5);
+  q.enqueue(0);
+  q.enqueue(2);
+  q.enqueue(5);
+  q.enqueue(0);
+  // queue overflow, it should throw.
+  try {
+    q.enqueue(2);
+  } catch(const exception& e) {
     cout << e.what() << endl;
   };
   return 0;

@@ -1,17 +1,22 @@
-#include "Binary_tree_prototype_template.h"
-#include <iostream>
-#include <queue>
-#include <cassert>
-#include <limits>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include "./Binary_tree_prototype_template.h"
+
+#include <cassert>
+#include <iostream>
+#include <limits>
+#include <queue>
+
+using std::cout;
+using std::endl;
+using std::queue;
+using std::shared_ptr;
 
 // @include
 template <typename T>
-class QNode {
-  public:
-    shared_ptr<BinaryTree<T>> node;
-    T lower, upper;
+struct QNode {
+  shared_ptr<BinaryTree<T>> node;
+  T lower, upper;
 };
 
 template <typename T>
@@ -41,7 +46,8 @@ int main(int argc, char *argv[]) {
   //      3
   //    2   5
   //  1    4 6
-  shared_ptr<BinaryTree<int>> root = shared_ptr<BinaryTree<int>>(new BinaryTree<int>{3});
+  shared_ptr<BinaryTree<int>> root =
+    shared_ptr<BinaryTree<int>>(new BinaryTree<int>{3});
   root->left = shared_ptr<BinaryTree<int>>(new BinaryTree<int>{2});
   root->left->left = shared_ptr<BinaryTree<int>>(new BinaryTree<int>{1});
   root->right = shared_ptr<BinaryTree<int>>(new BinaryTree<int>{5});

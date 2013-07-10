@@ -1,63 +1,56 @@
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
+#include <algorithm>
 #include <iostream>
 #include <memory>
-#ifdef __clang__
 #include <unordered_set>
-#else
-#include <tr1/unordered_set>
-#endif
-#include <cstdlib>
-#include <ctime>
-#include <algorithm>
 #include <vector>
 #include <map>
 
-using namespace std;
-#ifndef __clang__
-using namespace std::tr1;
-#endif
+using std::cout;
+using std::endl;
+using std::map;
+using std::shared_ptr;
+using std::vector;
+using std::unordered_set;
 
 // @include
 template <typename XaxisType, typename ColorType, typename HeightType>
-class LineSegment {
-  public:
-    XaxisType left, right;  // specifies the interval
-    ColorType color;
-    HeightType height;
-
-    const bool operator<(const LineSegment &that) const {
-      return height < that.height;
-    }
+struct LineSegment {
+  XaxisType left, right;  // specifies the interval
+  ColorType color;
+  HeightType height;
 };
 
 template <typename XaxisType, typename ColorType, typename HeightType>
 class Endpoint {
-  public:
-    bool isLeft;
-    const LineSegment<XaxisType, ColorType, HeightType>* l;
+ public:
+  const bool operator<(const Endpoint &that) const {
+    return val() < that.val();
+  }
 
-    const bool operator<(const Endpoint &that) const {
-      return val() < that.val();
-    }
+  const XaxisType &val(void) const {
+    return isLeft_ ? l_->left : l_->right;
+  }
 
-    const XaxisType &val(void) const {
-      return isLeft ? l->left : l->right;
-    }
+  bool isLeft_;
+  const LineSegment<XaxisType, ColorType, HeightType>* l_;
 };
 
 template <typename XaxisType, typename ColorType, typename HeightType>
 void calculate_view_from_above(
-    const vector<LineSegment<XaxisType, ColorType, HeightType>> &A) {
+    const vector<LineSegment<XaxisType, ColorType, HeightType>>& A) {
   vector<Endpoint<XaxisType, ColorType, HeightType>> E;
-  for (int i = 0; i < A.size(); ++i) {
-    E.emplace_back(Endpoint<XaxisType, ColorType, HeightType>{true, &A[i]});
-    E.emplace_back(Endpoint<XaxisType, ColorType, HeightType>{false, &A[i]});
+  for (const auto& a : A) {
+    E.emplace_back(Endpoint<XaxisType, ColorType, HeightType>{true, &a});
+    E.emplace_back(Endpoint<XaxisType, ColorType, HeightType>{false, &a});
   }
   sort(E.begin(), E.end());
 
   XaxisType prev_xaxis = E.front().val();  // the first left end point
   shared_ptr<LineSegment<XaxisType, ColorType, HeightType>> prev = nullptr;
   map<HeightType, const LineSegment<XaxisType, ColorType, HeightType>*> T;
-  for (const Endpoint<XaxisType, ColorType, HeightType> &e: E) {
+  for (const auto& e: E) {
     if (T.empty() == false && prev_xaxis != e.val()) {
       if (prev == nullptr) {  // found first segment
         prev = shared_ptr<LineSegment<XaxisType, ColorType, HeightType>>(
@@ -79,10 +72,10 @@ void calculate_view_from_above(
     }
     prev_xaxis = e.val();
 
-    if (e.isLeft == true) {  // left end point
-      T.emplace(e.l->height, e.l);
+    if (e.isLeft_ == true) {  // left end point
+      T.emplace(e.l_->height, e.l_);
     } else {  // right end point
-      T.erase(e.l->height);
+      T.erase(e.l_->height);
     }
   }
 
@@ -109,36 +102,10 @@ int main(int argc, char *argv[]) {
   A.emplace_back(LineSegment<int, int, int>{12, 15, 4, 1});
   A.emplace_back(LineSegment<int, int, int>{14, 15, 2, 2});
   A.emplace_back(LineSegment<int, int, int>{16, 17, 3, 2});
-  //*
   for (const LineSegment<int, int, int> &s : A) {
-    cout << "line segment, left = " << s.left << ", right = " << s.right << ", color = " << s.color << ", height = " << s.height << endl;
+    cout << "line segment, left = " << s.left << ", right = " << s.right
+         << ", color = " << s.color << ", height = " << s.height << endl;
   }
-  /*/
-  calculate_view_from_above(A);
-  srand(time(nullptr));
-  int n;
-  if (argc == 2) {
-    n = atoi(argv[1]);
-  } else {
-    n = 1 + rand() % 100000;
-  }
-  A.clear();
-  unordered_set<int> heights;
-  for (int i = 0; i < n; ++i) {
-    int l = rand() % n;
-    int r = l + 1 + rand() % 100;
-    int c = rand() % 100;
-    int h;
-    do {
-      h = rand() % (3 * n);
-    } while (heights.find(h) != heights.cend());
-    heights.emplace(h);
-    A.emplace_back(LineSegment<int, int, int>{l, r, c, h});
-  }
-  for (const LineSegment<int, int, int> &s : A) {
-    cout << "line segment, left = " << s.left << ", right = " << s.right << ", color = " << s.color << ", height = " << s.height << endl;
-  }
-  //*/
   calculate_view_from_above(A);
   return 0;
 }

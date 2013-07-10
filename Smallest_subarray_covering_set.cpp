@@ -81,7 +81,7 @@ pair<int, int> find_smallest_subarray_covering_subset(
     }
 
     // Keep moving l until it reaches end or count_Q has less |Q| items
-    while (l < static_cast<int>(A.size()) && count_Q.size() == Q.size()) {
+    while (l < r && count_Q.size() == Q.size()) {
       if (dict.find(A[l]) != dict.end()) {
         auto it = count_Q.find(A[l]);
         if (--(it->second) == 0) {

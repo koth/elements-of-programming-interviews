@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 #include <cmath>
 #include <cassert>
 #include <cstdlib>
@@ -15,25 +16,30 @@ int rabin_karp(const string &t, const string &s) {
     return -1;  // s is not a substring of t
   }
 
-  int t_hash = 0, s_hash = 0;
+  int t_hash = 0, s_hash = 0;  // hash codes for the substring of t and s
+  int power_s = 1;  // the modulo result of base^|s|
   for (int i = 0; i < s.size(); ++i) {
+    power_s = i ? power_s * base % mod : 1;
     t_hash = (t_hash * base + t[i]) % mod;
     s_hash = (s_hash * base + s[i]) % mod;
   }
 
   for(int i = s.size(); i < t.size(); ++i) {
-    // In case of hash collision, check the two substrings are actually equal
-    if (t_hash == s_hash && t.compare(i - s.size(), s.size(), s) == 0) {
-      return i - s.size();  // find match
+    // In case of hash collision but two strings are not equal, check the
+    // two substrings are actually equal or not
+    if (t_hash == s_hash && !t.compare(i - s.size(), s.size(), s)) {
+      return i - s.size();  // find a match
     }
-    t_hash -= (t[i - s.size()] * static_cast<int>(pow(base, s.size() - 1)))
-              % mod;
+    
+    // Use rolling hash to compute the new hash code
+    t_hash -= (t[i - s.size()] * power_s) % mod;
     if (t_hash < 0) {
       t_hash += mod;
     }
     t_hash = (t_hash * base + t[i]) % mod;
   }
 
+  // Try to match s and t[t.size() - s.size() : t.size() - 1].
   if (t_hash == s_hash && t.compare(t.size() - s.size(), s.size(), s) == 0) {
     return t.size() - s.size();
   }
@@ -66,7 +72,7 @@ string rand_string(int len) {
 }
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  //srand(time(nullptr));
   if (argc == 3) {
     string t = argv[1];
     string s = argv[2];

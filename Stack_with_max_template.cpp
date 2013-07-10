@@ -1,44 +1,16 @@
-#include <iostream>
-#include <string>
-#include <stdexcept>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
+#include "./Stack_with_max_template.h"
+
 #include <cassert>
-#include <stack>
+#include <iostream>
+#include <stdexcept>
 
-using namespace std;
+using std::cout;
+using std::endl;
+using std::exception;
 
-// @include
-template <typename T>
-class Stack {
-  private:
-    stack<pair<T, T>> s;
-
-  public:
-    const bool empty(void) const {
-      return s.empty();
-    }
-
-    const T &max(void) const {
-      if (empty() == false) {
-        return s.top().second;
-      }
-      throw length_error("empty stack");
-    }
-
-    T pop(void) {
-      if (empty() == false) {
-        T ret = s.top().first;
-        s.pop();
-        return ret;
-      }
-      throw length_error("empty stack");
-    }
-
-    void push(const T &x) {
-      s.emplace(x, std::max(x, empty() ? x : s.top().second));
-    }
-};
-// @exclude
-
+// Just for testing.
 int main(int argc, char *argv[]) {
   Stack<int> s;
   s.push(1);
@@ -65,7 +37,7 @@ int main(int argc, char *argv[]) {
     s.pop();
     s.pop();
     s.pop();
-  } catch (exception &e) {
+  } catch(const exception& e) {
     cout << e.what() << endl;
   }
   return 0;

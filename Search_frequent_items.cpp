@@ -34,6 +34,8 @@ vector<string> Search_frequent_items(istringstream &sin, const int &k) {
 
   while (sin >> buf) {
     ++hash[buf], ++n;
+    // Detecting k + 1 items in hash, at least one of them must have exactly 1
+    // in it. We will discard those k + 1 items by 1 for each.
     if (hash.size() == k + 1) {
       auto it = hash.begin();
       while (it != hash.end()) {

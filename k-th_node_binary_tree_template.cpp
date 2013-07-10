@@ -17,7 +17,7 @@ class BinaryTree {
 template <typename T>
 shared_ptr<BinaryTree<T>> find_kth_node_binary_tree(
     shared_ptr<BinaryTree<T>> r, int k) {
-  while (k && r) {
+  while (r) {
     int left_size = r->left ? r->left->size : 0;
     if (left_size < k - 1) {
       k -= (left_size + 1);

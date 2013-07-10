@@ -27,7 +27,7 @@ template <typename T>
 shared_ptr<node_t<T>> overlapping_no_cycle_lists(shared_ptr<node_t<T>> L1,
                                                  shared_ptr<node_t<T>> L2) {
   // Count the lengths of L1 and L2
-  int L1_len = count_len<T>(L1), L2_len = count_len<T>(L2);
+  int L1_len = count_len(L1), L2_len = count_len(L2);
 
   // Advance the longer list
   advance_list_by_k(L1_len > L2_len ? L1 : L2, abs(L1_len - L2_len));

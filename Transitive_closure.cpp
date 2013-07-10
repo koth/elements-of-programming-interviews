@@ -1,57 +1,61 @@
-#include <iostream>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
 #include <algorithm>
-#include <limits>
 #include <cassert>
-#include <cstdlib>
-#include <ctime>
+#include <iostream>
+#include <limits>
+#include <random>
 #include <vector>
 
-using namespace std;
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::max;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
-class GraphVertex {
-  public:
-    int visitTime;
-    vector<GraphVertex*> edges, extendedContacts;
-    // @exclude
-    GraphVertex(void) : visitTime(-1) {}
-    // @include
+struct GraphVertex {
+  int visit_time = -1;
+  vector<GraphVertex*> edges, extended_contacts;
 };
 
-void DFS(GraphVertex* cur, const int &time, vector<GraphVertex*> &contacts) {
-  for (GraphVertex* &next : cur->edges) {
-    if (next->visitTime != time) {
-      next->visitTime = time;
+void DFS(GraphVertex* cur, const int& time, vector<GraphVertex*>& contacts) {
+  for (auto& next : cur->edges) {
+    if (next->visit_time != time) {
+      next->visit_time = time;
       contacts.emplace_back(next);
       DFS(next, time, contacts);
     }
   }
 }
 
-void transitive_closure(vector<GraphVertex> &G) {
+void transitive_closure(vector<GraphVertex>& G) {
   // Build extended contacts for each vertex
   for (int i = 0; i < G.size(); ++i) {
-    if (G[i].visitTime != i) {
-      G[i].visitTime = i;
-      DFS(&G[i], i, G[i].extendedContacts);
+    if (G[i].visit_time != i) {
+      G[i].visit_time = i;
+      DFS(&G[i], i, G[i].extended_contacts);
     }
   }
 }
 // @exclude
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   vector<GraphVertex> G;
   int n;
   if (argc == 2) {
     n = atoi(argv[1]);
   } else {
-    n = 1 + rand() % 1000;
+    uniform_int_distribution<int> dis(1, 1000);
+    n = dis(gen);
   }
   fill_n(back_inserter(G), n, GraphVertex());
   cout << G.size() << endl;
-  int m = 1 + rand() % (n * (n - 1) / 2);
-  //cout << n << " " << m << endl;
+  uniform_int_distribution<int> dis(1, n * (n - 1) >> 1);
+  int m = dis(gen);
   vector<vector<bool>> is_edge_exist(n, vector<bool>(n, false));
   /*
   // Make the graph become connected
@@ -64,11 +68,11 @@ int main(int argc, char *argv[]) {
 
   // Generate edges randomly
   while (m-- > 0) {
+    uniform_int_distribution<int> dis(0, n - 1);
     int a, b;
     do {
-      a = rand() % n, b = rand() % n;
+      a = dis(gen), b = dis(gen);
     } while (a == b || is_edge_exist[a][b] == true);
-    //cout << a << " " << b << endl;
     is_edge_exist[a][b] = is_edge_exist[b][a] = true;
     G[a].edges.emplace_back(&G[b]);
     G[b].edges.emplace_back(&G[a]);
@@ -78,7 +82,7 @@ int main(int argc, char *argv[]) {
   /*
   for (int i = 0; i < G.size(); ++i) {
     cout << i << endl << '\t';
-    for (GraphVertex* &e : G[i].extendedContacts) {
+    for (GraphVertex* &e : G[i].extended_contacts) {
       cout << e << ' ';
     }
     cout << endl;

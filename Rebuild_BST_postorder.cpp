@@ -14,7 +14,7 @@ shared_ptr<BinarySearchTree<T>> rebuild_BST_postorder_helper(
     const vector<T> &postorder, const int &s, const int &e) {
   if (s < e) {
     int x = s;
-    while (x < e && postorder[x] < postorder[s]) {
+    while (x < e && postorder[x] < postorder[e - 1]) {
       ++x;
     }
     return shared_ptr<BinarySearchTree<T>>(

@@ -1,35 +1,41 @@
-#include <iostream>
-#include <stdexcept>
-#include <cassert>
-#include <stack>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <cassert>
+#include <iostream>
+#include <stack>
+#include <stdexcept>
+
+using std::cout;
+using std::endl;
+using std::exception;
+using std::length_error;
+using std::stack;
 
 // @include
 template <typename T>
 class Queue {
-  private:
-    stack<T> A, B;
+ public:
+  void enqueue(const T& x) {
+    A_.emplace(x);
+  }
 
-  public:
-    void enqueue(const T &x) {
-      A.emplace(x);
+  T dequeue(void) {
+    if (B_.empty()) {
+      while (!A_.empty()) {
+        B_.emplace(A_.top());
+        A_.pop();
+      }
     }
+    if (B_.empty() == false) {
+      T ret = B_.top();
+      B_.pop();
+      return ret;
+    }
+    throw length_error("empty queue");
+  }
 
-    T dequeue(void) {
-      if (B.empty()) {
-        while (!A.empty()) {
-          B.emplace(A.top());
-          A.pop();
-        }
-      }
-      if (B.empty() == false) {
-        T ret = B.top();
-        B.pop();
-        return ret;
-      }
-      throw length_error("empty queue");
-    }
+ private:
+  stack<T> A_, B_;
 };
 // @exclude
 
@@ -43,7 +49,7 @@ int main(int argc, char *argv[]) {
   assert(3 == Q.dequeue());  // 3
   try {
     Q.dequeue();
-  } catch (exception &e) {
+  } catch(const exception& e) {
     cout << e.what() << endl;  // throw
   }
   return 0;

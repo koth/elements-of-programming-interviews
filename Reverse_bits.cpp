@@ -30,10 +30,10 @@ void create_precomputed_table() {
 
 // @include
 long reverse_bits(const long &x) {
-  return precomputed_reverse[(x >> 48) & 0xFFFF] |
-         precomputed_reverse[(x >> 32) & 0xFFFF] << 16 |
-         precomputed_reverse[(x >> 16) & 0xFFFF] << 32 |
-         precomputed_reverse[x & 0xFFFF] << 48;
+  return precomputed_reverse[(x >> 48) & 0b1111111111111111] |
+         precomputed_reverse[(x >> 32) & 0b1111111111111111] << 16 |
+         precomputed_reverse[(x >> 16) & 0b1111111111111111] << 32 |
+         precomputed_reverse[x & 0b1111111111111111] << 48;
 }
 // @exclude
 

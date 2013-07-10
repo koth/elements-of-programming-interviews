@@ -1,57 +1,66 @@
-#include <iostream>
-#include <string>
-#include <stdexcept>
-#include <cassert>
-#include <stack>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <algorithm>
+#include <cassert>
+#include <iostream>
+#include <stack>
+#include <stdexcept>
+#include <string>
+#include <utility>
+
+using std::cout;
+using std::endl;
+using std::exception;
+using std::length_error;
+using std::stack;
+using std::pair;
 
 // @include
 template <typename T>
 class Stack {
-  private:
-    stack<T> s;
-    stack<pair<T, int>> aux;
+ public:
+  const bool empty(void) const {
+    return s_.empty();
+  }
 
-  public:
-    const bool empty(void) const {
-      return s.empty();
+  const T &max(void) const {
+    if (empty() == false) {
+      return aux_.top().first;
     }
+    throw length_error("empty stack");
+  }
 
-    const T &max(void) const {
-      if (empty() == false) {
-        return aux.top().first;
-      }
-      throw length_error("empty stack");
-    }
-
-    T pop(void) {
-      if (empty() == false) {
-        T ret = s.top();
-        s.pop();
-        if (ret == aux.top().first) {
-          --aux.top().second;
-          if (aux.top().second == 0) {
-            aux.pop();
-          }
+  T pop(void) {
+    if (empty() == false) {
+      T ret = s_.top();
+      s_.pop();
+      if (ret == aux_.top().first) {
+        --aux_.top().second;
+        if (aux_.top().second == 0) {
+          aux_.pop();
         }
-        return ret;
       }
-      throw length_error("empty stack");
+      return ret;
     }
+    throw length_error("empty stack");
+  }
 
-    void push(const T &x) {
-      s.emplace(x);
-      if (aux.empty() == false) {
-        if (x == aux.top().first) {
-          ++aux.top().second;
-        } else if (x > aux.top().first) {
-          aux.emplace(x, 1);
-        }
-      } else {
-        aux.emplace(x, 1);
+  void push(const T& x) {
+    s_.emplace(x);
+    if (aux_.empty() == false) {
+      if (x == aux_.top().first) {
+        ++aux_.top().second;
+      } else if (x > aux_.top().first) {
+        aux_.emplace(x, 1);
       }
+    } else {
+      aux_.emplace(x, 1);
     }
+  }
+
+ private:
+  stack<T> s_;
+  stack<pair<T, int>> aux_;
 };
 // @exclude
 
@@ -81,7 +90,7 @@ int main(int argc, char *argv[]) {
     s.pop();
     s.pop();
     s.pop();
-  } catch (exception &e) {
+  } catch(const exception& e) {
     cout << e.what() << endl;
   }
   return 0;

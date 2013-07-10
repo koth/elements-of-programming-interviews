@@ -28,7 +28,6 @@ import java.math.BigInteger;
       while (true) {
         synchronized (RW.LR) {
           RW.readCount++;
-          RW.LR.notify();
         }
 	//@exclude
 	System.out.println("Reader " + name + " is about to read");
@@ -51,24 +50,27 @@ import java.math.BigInteger;
     public void run() {
       while (true) {
         synchronized (RW.LW) {
-	  boolean done = false;
-	  while (!done) {
+          boolean done = false;
+          while (!done) {
             synchronized (RW.LR) {
               if (RW.readCount == 0) {
-	        //@exclude
-	        System.out.println("Writer " + name + " is about to write");
-		//@include
+        //@exclude
+        System.out.println("Writer " + name + " is about to write");
+        //@include
                 RW.data = new Date().toString();
                 done = true;
               } else {
                 // use wait/notify to avoid busy waiting 
                 try {
-                  RW.LR.wait();
+                  // protect against spurious notify, see
+                  // stackoverflow.com do-spurious-wakeups-actually-happen
+                  while ( RW.readCount != 0 ) {
+                    RW.LR.wait();
+                  }
                 } catch (InterruptedException e) {
                   System.out.println("InterruptedException in Writer wait");
                 }
               }
-              RW.LR.notify();
             }
           }
         }

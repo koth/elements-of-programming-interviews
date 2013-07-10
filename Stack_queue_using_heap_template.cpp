@@ -1,55 +1,72 @@
-#include <iostream>
-#include <stdexcept>
-#include <cassert>
-#include <queue>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <cassert>
+#include <iostream>
+#include <queue>
+#include <stdexcept>
+#include <vector>
+#include <utility>
+
+using std::cout;
+using std::endl;
+using std::exception;
+using std::pair;
+using std::priority_queue;
+using std::vector;
 
 // @include
 template <typename T>
 class Compare {
-  public:
-    bool operator()(const pair<int, T> &lhs, const pair<int, T> &rhs) const {
-      return lhs.first < rhs.first;
-    }
+ public:
+  bool operator()(const pair<int, T>& lhs, const pair<int, T>& rhs) const {
+    return lhs.first < rhs.first;
+  }
 };
 
 template <typename T>
-class Stack :  // inherits empty(), pop(), and size() methods
-  public priority_queue<pair<int, T>, vector<pair<int, T>>, Compare<T>> {
-  private:
-    int order;
-    typedef priority_queue<pair<int, T>, vector<pair<int, T>>, Compare<T>> PQ;
+class Stack {
+ public:
+  void push(const T& x) {
+    H.emplace(order_++, x);
+  }
 
-  public:
-    Stack() : order(0) {}
+  T pop(void) {
+    T ret = H.top().second;
+    H.pop();
+    return ret;
+  }
 
-    const T &top() const {
-      return PQ::top().second;
-    }
+  const T& peek() const {
+    return H.top().second;
+  }
 
-    void push(const T &x) {
-      PQ::emplace(order++, x);
-    }
+ private:
+  int order_ = 0;
+  // Uses a pair where first is the order_ and the second is the element.
+  priority_queue<pair<int, T>, vector<pair<int, T>>, Compare<T>> H;
 };
 
 template <typename T>
-class Queue :  // inherits empty(), pop(), and size() methods
-  public priority_queue<pair<int, T>, vector<pair<int, T>>, Compare<T>> {
-  private:
-    int order;
-    typedef priority_queue<pair<int, T>, vector<pair<int, T>>, Compare<T>> PQ;
+class Queue {
+ public:
+  void enqueue(const T& x) {
+    H.emplace(order_--, x);
+  }
 
-  public:
-    Queue() : order(0) {}
+  T dequeue(void) {
+    T ret = H.top().second;
+    H.pop();
+    return ret;
+  }
 
-    const T &front() const {
-      return PQ::top().second;
-    }
+  const T& head() const {
+    return H.top().second;
+  }
 
-    void push(const T &x) {
-      PQ::emplace(order--, x);
-    }
+ private:
+  int order_ = 0;
+  // Uses a pair where first is the order_ and the second is the element.
+  priority_queue<pair<int, T>, vector<pair<int, T>>, Compare<T>> H;
 };
 // @exclude
 
@@ -58,35 +75,31 @@ int main(int argc, char *argv[]) {
   s.push(1);
   s.push(2);
   s.push(3);
-  assert(s.empty() == false);
-  assert(s.size() == 3);
-  assert(s.top() == 3);
+  assert(s.peek() == 3);
   s.pop();
-  assert(s.top() == 2);
+  assert(s.peek() == 2);
   s.pop();
   s.push(4);
-  assert(s.top() == 4);
+  assert(s.peek() == 4);
   s.pop();
   s.pop();
-  assert(s.empty() == true);
   try {
     s.pop();
-  } catch (exception &e) {
+  } catch(const exception& e) {
     cout << "empty stack" << endl;
     cout << e.what() << endl;
   }
 
   Queue<int> q;
-  q.push(1);
-  q.push(2);
-  assert(q.front() == 1);
-  q.pop();
-  assert(q.front() == 2);
-  q.pop();
-  assert(q.empty() == true);
+  q.enqueue(1);
+  q.enqueue(2);
+  assert(q.head() == 1);
+  q.dequeue();
+  assert(q.head() == 2);
+  q.dequeue();
   try {
-    q.pop();
-  } catch (exception &e) {
+    q.dequeue();
+  } catch(const exception& e) {
     cout << "empty queue" << endl;
     cout << e.what() << endl;
   }
