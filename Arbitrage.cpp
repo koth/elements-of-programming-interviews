@@ -1,12 +1,21 @@
-#include <iostream>
-#include <cassert>
-#include <limits>
-#include <vector>
-#include <ctime>
-#include <cstdlib>
-#include <cmath>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <cassert>
+#include <cmath>
+#include <iostream>
+#include <limits>
+#include <random>
+#include <vector>
+
+using std::boolalpha;
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::numeric_limits;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::uniform_real_distribution;
+using std::vector;
 
 // @include
 bool Bellman_Ford(const vector<vector<double>> &G, const int &source) {
@@ -57,24 +66,28 @@ bool is_Arbitrage_exist(vector<vector<double>> G) {
 // @exclude
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   int n, m;
   if (argc == 2) {
     n = atoi(argv[1]);
-    m = 1 + rand() % (n * (n - 1) / 2);
+    uniform_int_distribution<int> m_dis(1, n * (n - 1) / 2);
+    m = m_dis(gen);
   } else if (argc == 3) {
     n = atoi(argv[1]);
     m = atoi(argv[2]);
   } else {
-    n = 1 + rand() % 100;
-    m = 1 + rand() % (n * (n - 1) / 2);
+    uniform_int_distribution<int> n_dis(1, 100);
+    n = n_dis(gen);
+    uniform_int_distribution<int> m_dis(1, n * (n - 1) / 2);
+    m = m_dis(gen);
   }
   vector<vector<double>> G(n, vector<double>(n));
   // Assume the input is a complete graph
   for (int i = 0; i < G.size(); ++i) {
     G[i][i] = 1;
     for (int j = i + 1; j < G.size(); ++j) {
-      G[i][j] = static_cast<double>(rand()) / static_cast<double>(RAND_MAX);
+      uniform_real_distribution<double> dis(0, 1);
+      G[i][j] = dis(gen);
       G[j][i] = 1.0 / G[i][j];
     }
   }
@@ -84,19 +97,10 @@ int main(int argc, char *argv[]) {
   for (int i = 0; i < 3; ++i) {
     g[i][i] = 1;
   }
-  g[0][1] = 2, g[1][0] = 0.5, g[0][2] = g[2][0] = 1, g[1][2] = 4, g[2][1] = 0.25;
+  g[0][1] = 2, g[1][0] = 0.5, g[0][2] = g[2][0] = 1,
+  g[1][2] = 4, g[2][1] = 0.25;
   res = is_Arbitrage_exist(g);
   assert(res == true);
   cout << boolalpha << is_Arbitrage_exist(g) << endl;
-  /*
-  vector<vector<bool>> have_edges(n, vector<bool>(n, false));
-  for (int i = 0; i < m; ++i) {
-    int a, b;
-    do {
-      a = rand() % n, b = rand() % n;
-    } while (a == b || have_edges[a][b] == true);
-    have_edges[a][b] = have_edges[b][a] = true;
-  }
-  */
   return 0;
 }

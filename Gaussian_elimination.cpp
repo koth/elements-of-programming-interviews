@@ -1,13 +1,24 @@
-#include <iostream>
-#include <cstdlib>
-#include <cmath>
-#include <vector>
-#include <cassert>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <algorithm>
+#include <cassert>
+#include <cmath>
+#include <deque>
+#include <iostream>
+#include <random>
+#include <vector>
+
+using std::cout;
+using std::default_random_engine;
+using std::deque;
+using std::endl;
+using std::ostream_iterator;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
-void Eliminate_rows(vector<vector<bool>> &B, const int &i, const int &j) {
+void Eliminate_rows(vector<deque<bool>> &B, const int &i, const int &j) {
   // Use B[i] to eliminate other rows' entry j
   for (int a = 0; a < B.size(); ++a) {
     if (i != a && B[a][j]) {
@@ -18,9 +29,9 @@ void Eliminate_rows(vector<vector<bool>> &B, const int &i, const int &j) {
   }
 }
 
-vector<bool> Gaussian_elimination(const vector<vector<bool>> &A,
-                                  const vector<bool> &y) {
-  vector<vector<bool>> B(A);
+deque<bool> Gaussian_elimination(const vector<deque<bool>> &A,
+                                 const deque<bool> &y) {
+  vector<deque<bool>> B(A);
   for (int i = 0; i < B.size(); ++i) {
     B[i].push_back(y[i]);
   }
@@ -35,7 +46,7 @@ vector<bool> Gaussian_elimination(const vector<vector<bool>> &A,
       }
     }
     swap(B[i], B[idx]);
-    
+
     // Perform elimination except i-th row
     if (B[i][i]) {
       Eliminate_rows(B, i, i);
@@ -61,7 +72,7 @@ vector<bool> Gaussian_elimination(const vector<vector<bool>> &A,
     }
   }
 
-  vector<bool> x;
+  deque<bool> x;
   for (int i = 0; i < B.size(); ++i) {
     x.push_back(B[i].back());
   }
@@ -69,7 +80,9 @@ vector<bool> Gaussian_elimination(const vector<vector<bool>> &A,
 }
 // @exclude
 
-bool check_answer_with_solution(const vector<vector<bool>> &A, const vector<bool> &b, const vector<bool> & x) {
+bool check_answer_with_solution(const vector<deque<bool>> &A,
+                                const deque<bool> &b,
+                                const deque<bool> &x) {
   for (int i = 0; i < A.size(); ++i) {
     bool res = A[i][0] && x[0];
     for (int j = 1; j < A[i].size(); ++j) {
@@ -83,10 +96,12 @@ bool check_answer_with_solution(const vector<vector<bool>> &A, const vector<bool
   return true;
 }
 
-bool check_answer_no_solution(const vector<vector<bool>> &A, const vector<bool> &b) {
-  // Generate all possible combinations of x to test there is no solution actually
+bool check_answer_no_solution(const vector<deque<bool>> &A,
+                              const deque<bool> &b) {
+  // Generate all possible combinations of x to test
+  // there is no solution actually.
   for (int val = 0; val < (1 << b.size()); ++val) {
-    vector<bool> x;
+    deque<bool> x;
     int temp = val;
     for (int i = 0; i < b.size(); ++i) {
       x.push_back(temp & 1);
@@ -101,29 +116,34 @@ bool check_answer_no_solution(const vector<vector<bool>> &A, const vector<bool> 
   return true;
 }
 
-void rand_matrix(vector<vector<bool>> &A) {
-  for (int i = 0; i < A.size(); ++i) {
-    for (int j = 0; j < A[i].size(); ++j) {
-      A[i][j] = rand() & 1;
+void rand_matrix(vector<deque<bool>> *A) {
+  default_random_engine gen((random_device())());
+  for (int i = 0; i < A->size(); ++i) {
+    for (int j = 0; j < (*A)[i].size(); ++j) {
+      uniform_int_distribution<int> zero_or_one(0, 1);
+      (*A)[i][j] = zero_or_one(gen);
     }
   }
 }
 
-void rand_vec(vector<bool> &b) {
-  for (int i = 0; i < b.size(); ++i) {
-    b[i] = rand() & 1;
+void rand_vec(deque<bool> *b) {
+  default_random_engine gen((random_device())());
+  for (int i = 0; i < b->size(); ++i) {
+    uniform_int_distribution<int> zero_or_one(0, 1);
+    (*b)[i] = zero_or_one(gen);
   }
 }
 
 int main(int argc, char *argv[]) {
+  default_random_engine gen((random_device())());
   // Predefined tests
-  vector<vector<bool>> A(4);
+  vector<deque<bool>> A(4);
   A[0] = {false, false, false, true};
   A[1] = {false, false, false, true};
   A[2] = {false, true, true, true};
   A[3] = {true, false, false, false};
-  vector<bool> b = {true, true, false, true};
-  vector<bool> x = Gaussian_elimination(A, b);
+  deque<bool> b = {true, true, false, true};
+  deque<bool> x = Gaussian_elimination(A, b);
   copy(x.begin(), x.end(), ostream_iterator<bool>(cout, " "));
   cout << endl;
   if (x.empty()) {  // no solution
@@ -139,13 +159,14 @@ int main(int argc, char *argv[]) {
       n = atoi(argv[1]);
       cout << "n = " << n << endl;
     } else {
-      n = 1 + rand() % 16;
+      uniform_int_distribution<int> dis(1, 16);
+      n = dis(gen);
     }
-    vector<vector<bool>> A(n, vector<bool>(n));
-    rand_matrix(A);
-    vector<bool> b(n);
-    rand_vec(b);
-    vector<bool> x = Gaussian_elimination(A, b);
+    vector<deque<bool>> A(n, deque<bool>(n));
+    rand_matrix(&A);
+    deque<bool> b(n);
+    rand_vec(&b);
+    deque<bool> x = Gaussian_elimination(A, b);
     cout << "n = " << n << endl;
     cout << "A = \n";
     for (int i = 0; i < A.size(); ++i) {

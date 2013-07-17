@@ -1,26 +1,26 @@
-#include <iostream>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
 #include <cassert>
-#ifdef __clang__
-#include <unordered_set>
-#else
-#include <tr1/unordered_set>
-#endif
 #include <cmath>
-#include <ctime>
-#include <cstdlib>
+#include <functional>
+#include <iostream>
 #include <queue>
+#include <random>
+#include <unordered_set>
 #include <vector>
 
-using namespace std;
-#ifndef __clang__
-using namespace std::tr1;
-#endif
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::hash;
+using std::priority_queue;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::unordered_set;
+using std::vector;
 
 // @include
 struct Num {
-  int a, b;
-  double val;
-
   Num(const int &a, const int &b) : a(a), b(b), val(a + b * sqrt(2)) {}
 
   const bool operator<(const Num &n) const {
@@ -31,14 +31,17 @@ struct Num {
   const bool operator==(const Num &n) const {
     return a == n.a && b == n.b;
   }
+
+  int a, b;
+  double val;
 };
 
 // Hash function for Num
 class HashNum {
-  public:
-    const size_t operator()(const Num &n) const {
-      return hash<int>()(n.a) ^ hash<int>()(n.b);
-    }
+ public:
+  const size_t operator()(const Num &n) const {
+    return hash<int>()(n.a) ^ hash<int>()(n.b);
+  }
 };
 
 vector<Num> generate_first_k(const int &k) {
@@ -70,13 +73,14 @@ vector<Num> generate_first_k(const int &k) {
 // @exclude
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int k;
     if (argc == 2) {
       k = atoi(argv[1]);
     } else {
-      k = 1 + rand() % 10000;
+      uniform_int_distribution<int> dis(1, 10000);
+      k = dis(gen);
     }
     vector<Num> ans(generate_first_k(k));
     for (int i = 0; i < ans.size(); ++i) {

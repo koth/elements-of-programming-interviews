@@ -4,6 +4,7 @@
 #include <vector>
 #include <complex>
 #include <set>
+#include <cmath>
 #include <ctime>
 #include <cstdlib>
 
@@ -48,11 +49,17 @@ vector<complex<int>> generate_Gaussian_primes(const int& n) {
     complex<double> p = *(candidates.begin());
     candidates.erase(candidates.begin());
     primes.emplace_back(p);
-    int max_multiplier = n / floor(sqrt(norm(p))) + 1;
+    int max_multiplier = ceil(sqrt(2.0) * n / floor(sqrt(norm(p))));
 
+    // any Gaussian integer outside the range we're iterating
+    // over below has a modulus greater than max_multiplier
     for (int i = max_multiplier; i >= -max_multiplier; --i) {
       for (int j = max_multiplier; j >= -max_multiplier; --j) {
         complex<double> x = {i, j};
+        if (floor(sqrt(norm(x))) > max_multiplier) {
+          // skip multipliers whose modulus exceeds max_multiplier
+          continue;
+        }
         if (is_unit(x) == false) {
           candidates.erase(x * p);
         }
@@ -80,16 +87,12 @@ vector<complex<int>> generate_Gaussian_primes_canary(const int& n) {
     complex<double> p = *(candidates.begin());
     candidates.erase(candidates.begin());
     primes.emplace_back(p);
-    int max_multiplier = 2 * n / floor(sqrt(norm(p))) + 1;
+    int max_multiplier = n;
 
     for (int i = max_multiplier; i >= -max_multiplier; --i) {
       for (int j = max_multiplier; j >= -max_multiplier; --j) {
         complex<double> x = {i, j};
         if (is_unit(x) == false) {
-          complex<double> temp = x * p;
-          if (temp.real() == 29 && temp.imag() == 28) {
-            cout << "sieving 29 + 28i is " << x.real() << ", " << x.imag() << " " << p.real() << ", " << p.imag() << endl;
-          }
           candidates.erase(x * p);
         }
       }
@@ -107,7 +110,7 @@ int main(int argc, char *argv[]) {
     n = 1 + rand() % 100;
   }
 
-  for (int i = 1; i <= 35; ++i) {
+  for (int i = 1; i <= 100; ++i) {
     cout << "n = " << i << endl;
     vector<complex<int>> first = generate_Gaussian_primes_canary(i);
     vector<complex<int>> g_primes = generate_Gaussian_primes(i);
@@ -123,14 +126,5 @@ int main(int argc, char *argv[]) {
     }
     assert(first.size() == g_primes.size());
   }
-  //copy(g_primes.begin(), g_primes.end(), ostream_iterator<complex<int>>(cout, " "));
-  /*
-  for (int i = 0; i < g_primes.size(); ++i) {
-    if (g_primes[i].real() > 0 && g_primes[i].imag() > 0) {
-      cout << "(" << g_primes[i].real() << "," << g_primes[i].imag() << ") ";
-    }
-  }
-  */
-  cout << endl;
   return 0;
 }

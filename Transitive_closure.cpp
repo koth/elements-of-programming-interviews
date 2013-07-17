@@ -2,13 +2,14 @@
 
 #include <algorithm>
 #include <cassert>
+#include <deque>
 #include <iostream>
-#include <limits>
 #include <random>
 #include <vector>
 
 using std::cout;
 using std::default_random_engine;
+using std::deque;
 using std::endl;
 using std::max;
 using std::random_device;
@@ -21,22 +22,22 @@ struct GraphVertex {
   vector<GraphVertex*> edges, extended_contacts;
 };
 
-void DFS(GraphVertex* cur, const int& time, vector<GraphVertex*>& contacts) {
-  for (auto& next : cur->edges) {
+void DFS(GraphVertex* cur, const int& time, vector<GraphVertex*>* contacts) {
+  for (const auto& next : cur->edges) {
     if (next->visit_time != time) {
       next->visit_time = time;
-      contacts.emplace_back(next);
+      contacts->emplace_back(next);
       DFS(next, time, contacts);
     }
   }
 }
 
-void transitive_closure(vector<GraphVertex>& G) {
+void transitive_closure(vector<GraphVertex>* G) {
   // Build extended contacts for each vertex
-  for (int i = 0; i < G.size(); ++i) {
-    if (G[i].visit_time != i) {
-      G[i].visit_time = i;
-      DFS(&G[i], i, G[i].extended_contacts);
+  for (int i = 0; i < G->size(); ++i) {
+    if ((*G)[i].visit_time != i) {
+      (*G)[i].visit_time = i;
+      DFS(&(*G)[i], i, &(*G)[i].extended_contacts);
     }
   }
 }
@@ -56,7 +57,7 @@ int main(int argc, char *argv[]) {
   cout << G.size() << endl;
   uniform_int_distribution<int> dis(1, n * (n - 1) >> 1);
   int m = dis(gen);
-  vector<vector<bool>> is_edge_exist(n, vector<bool>(n, false));
+  vector<deque<bool>> is_edge_exist(n, deque<bool>(n, false));
   /*
   // Make the graph become connected
   for (int i = 1; i < n; ++i) {
@@ -78,7 +79,7 @@ int main(int argc, char *argv[]) {
     G[b].edges.emplace_back(&G[a]);
   }
 
-  transitive_closure(G);
+  transitive_closure(&G);
   /*
   for (int i = 0; i < G.size(); ++i) {
     cout << i << endl << '\t';
@@ -94,6 +95,6 @@ int main(int argc, char *argv[]) {
     }
     cout << endl;
   }
-  //*/
+  */
   return 0;
 }

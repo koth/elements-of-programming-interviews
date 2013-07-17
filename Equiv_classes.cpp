@@ -1,10 +1,16 @@
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
+#include <cassert>
 #include <iostream>
 #include <iterator>
-#include <cassert>
 #include <numeric>
 #include <vector>
 
-using namespace std;
+using std::copy;
+using std::cout;
+using std::iota;
+using std::ostream_iterator;
+using std::vector;
 
 // @include
 int backtrace(const vector<int> &F, int idx) {

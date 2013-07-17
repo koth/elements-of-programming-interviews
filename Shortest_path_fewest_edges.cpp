@@ -1,6 +1,7 @@
 // Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
 #include <cassert>
+#include <deque>
 #include <iostream>
 #include <limits>
 #include <queue>
@@ -12,6 +13,7 @@
 
 using std::cout;
 using std::default_random_engine;
+using std::deque;
 using std::endl;
 using std::numeric_limits;
 using std::pair;
@@ -156,7 +158,7 @@ int main(int argc, char *argv[]) {
   }
   uniform_int_distribution<int> dis(1, n * (n - 1) >> 1);
   int m = dis(gen);
-  vector<vector<bool>> is_edge_exist(n, vector<bool>(n, false));
+  vector<deque<bool>> is_edge_exist(n, deque<bool>(n, false));
   // Make the graph become connected
   for (int i = 1; i < n; ++i) {
     uniform_int_distribution<int> dis(1, 100);

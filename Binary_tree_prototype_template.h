@@ -8,6 +8,6 @@ template <typename T>
 class BinaryTree {
   public:
     T data;
-    shared_ptr<BinaryTree<T> > left, right;
+    shared_ptr<BinaryTree<T>> left, right;
 };
 // @exclude

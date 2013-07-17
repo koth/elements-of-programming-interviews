@@ -1,12 +1,19 @@
-#include <iostream>
-#include <cmath>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
 #include <algorithm>
-#include <cstdlib>
-#include <ctime>
 #include <cassert>
+#include <cmath>
+#include <iostream>
+#include <random>
 #include <vector>
 
-using namespace std;
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::nth_element;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
 // Promote to double to prevent precision error
@@ -25,15 +32,15 @@ double find_median(vector<T> &A) {
 
 template <typename T>
 class Comp {
-  private:
-    double m_;
+ public:
+  Comp(const double &m) : m_(m) {};
 
-  public:
-    Comp(const double &m) : m_(m) {};
+  const bool operator()(const T &a, const T &b) const {
+    return fabs(a - m_) < fabs(b - m_);
+  }
 
-    const bool operator()(const T &a, const T &b) const {
-      return fabs(a - m_) < fabs(b - m_);
-    }
+ private:
+  double m_;
 };
 
 template <typename T>
@@ -58,7 +65,7 @@ void check_ans(vector<T> &A, const vector<T> &res, const int &k) {
   }
 }
 
-int main(int argc, char *argv[]) {
+void simple_test(void) {
   vector<int> D = {3,2,3,5,7,3,1};
   vector<int> Dexpres = {2,3,3};
   vector<int> Dres = find_k_closest_to_median(D,3);
@@ -67,24 +74,29 @@ int main(int argc, char *argv[]) {
     cout << d << ' ';
   }
   cout << endl;
+}
 
-
-  srand(time(nullptr));
+int main(int argc, char *argv[]) {
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n, k;
     if (argc == 2) {
       n = atoi(argv[1]);
-      k = 1 + rand() % n;
+      uniform_int_distribution<int> k_dis(1, n);
+      k = k_dis(gen);
     } else if (argc == 3) {
       n = atoi(argv[1]);
       k = atoi(argv[2]);
     } else {
-      n = 1 + rand() % 100000;
-      k = 1 + rand() % n;
+      uniform_int_distribution<int> n_dis(1, 100000);
+      n = n_dis(gen);
+      uniform_int_distribution<int> k_dis(1, n);
+      k = k_dis(gen);
     }
     vector<int> A;
+    uniform_int_distribution<int> dis(0, (n << 1) - 1);
     for (int i = 0; i < n; ++i) {
-      A.emplace_back(rand() % (n << 1));
+      A.emplace_back(dis(gen));
     }
     /*
     for (const int &a : A) {

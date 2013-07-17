@@ -1,6 +1,7 @@
 // Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
 #include <cassert>
+#include <deque>
 #include <iostream>
 #include <random>
 #include <vector>
@@ -10,6 +11,7 @@
 using std::boolalpha;
 using std::cout;
 using std::default_random_engine;
+using std::deque;
 using std::endl;
 using std::pair;
 using std::random_device;
@@ -103,7 +105,7 @@ int main(int argc, char *argv[]) {
     k = dis3(gen);
   }
   cout << "n = " << n << ", m = " << m << ", k = " << k << endl;
-  vector<vector<bool>> have_edges(n, vector<bool>(n, false));
+  vector<deque<bool>> have_edges(n, deque<bool>(n, false));
   vector<Constraint> E;
   uniform_int_distribution<int> dis(0, n - 1);
   for (int i = 0; i < m; ++i) {

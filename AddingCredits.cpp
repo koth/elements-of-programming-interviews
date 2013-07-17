@@ -1,19 +1,15 @@
-#include <iostream>
-#ifdef __clang__
-#include <unordered_set>
-#include <unordered_map>
-#else
-#include <tr1/unordered_set>
-#include <tr1/unordered_map>
-#endif
-#include <vector>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
 #include <cassert>
 #include <map>
+#include <string>
+#include <unordered_set>
+#include <unordered_map>
 
-using namespace std;
-#ifndef __clang__
-using namespace std::tr1;
-#endif
+using std::map;
+using std::string;
+using std::unordered_map;
+using std::unordered_set;
 
 // @include
 class ClientsCreditsInfo {
@@ -49,7 +45,7 @@ class ClientsCreditsInfo {
 
     string max(void) const {
       auto it = inverse_credits.crbegin();
-      return it == inverse_credits.crend() || it->second.empty() ? 
+      return it == inverse_credits.crend() || it->second.empty() ?
              "" : *it->second.cbegin();
     }
 };

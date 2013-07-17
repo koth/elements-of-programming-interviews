@@ -1,71 +1,78 @@
-#include <iostream>
-#include <cassert>
-#include <algorithm>
-#include <cstring>
-#include <vector>
-#include <string>
-#include <cstdlib>
-#include <ctime>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <algorithm>
+#include <cassert>
+#include <cstring>
+#include <iostream>
+#include <random>
+#include <string>
+#include <vector>
+
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::max;
+using std::random_device;
+using std::string;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
 class BigInt {
-  private:
-    int sign;  // -1 or 1;
-    vector<char> digits;
+ public:
+  explicit BigInt(const int &capacity) : sign_(1), digits_(capacity) {}
 
-  public:
-    BigInt(const int &capacity) : sign(1), digits(capacity) {}
-
-    BigInt(const string &s) : sign(s[0] == '-' ? -1 : 1),
-                              digits(s.size() - (s[0] == '-')) {
-        for (int i = s.size() - 1, j = 0; i >= (s[0] == '-'); --i, ++j) {
-          if (isdigit(s[i])) {
-            digits[j] = s[i] - '0';
-          }
-        }
+  explicit BigInt(const string &s) : sign_(s[0] == '-' ? -1 : 1),
+                                     digits_(s.size() - (s[0] == '-')) {
+    for (int i = s.size() - 1, j = 0; i >= (s[0] == '-'); --i, ++j) {
+      if (isdigit(s[i])) {
+        digits_[j] = s[i] - '0';
+      }
     }
+  }
 
-    BigInt operator*(const BigInt &n) const {
-      BigInt result(digits.size() + n.digits.size());
-      result.sign = sign * n.sign;
-      int i, j;
-      for (i = 0; i < n.digits.size(); ++i) {
-        if (n.digits[i]) {
-          int carry = 0;
-          for (j = 0; j < digits.size() || carry; ++j) {
-            int n_digit = result.digits[i + j] +
-                          (j < digits.size() ? n.digits[i] * digits[j] : 0) +
-                          carry;
-            result.digits[i + j] = n_digit % 10;
-            carry = n_digit / 10;
-          }
+  BigInt operator*(const BigInt &n) const {
+    BigInt result(digits_.size() + n.digits_.size());
+    result.sign_ = sign_ * n.sign_;
+    int i, j;
+    for (i = 0; i < n.digits_.size(); ++i) {
+      if (n.digits_[i]) {
+        int carry = 0;
+        for (j = 0; j < digits_.size() || carry; ++j) {
+          int n_digit = result.digits_[i + j] +
+            (j < digits_.size() ? n.digits_[i] * digits_[j] : 0) +
+            carry;
+          result.digits_[i + j] = n_digit % 10;
+          carry = n_digit / 10;
         }
       }
-
-      // If one number is 0, the result size should be 0
-      if ((digits.size() == 1 && digits.front() == 0) ||
-          (n.digits.size() == 1 && n.digits.front() == 0)) {
-        result.digits.resize(1);
-      } else {
-        result.digits.resize(i + j - 1);
-      }
-      return result;
     }
-    // @exclude
 
-    string toString() const {
-      string s = (sign > 0 ? "" : "-");
-      for (int i = digits.size() - 1; i >= 0; --i) {
-        s += digits[i] + '0';
-      }
-      if (digits.empty() == true) {
-        s += '0';
-      }
-      return s;
+    // If one number is 0, the result size should be 0
+    if ((digits_.size() == 1 && digits_.front() == 0) ||
+      (n.digits_.size() == 1 && n.digits_.front() == 0)) {
+      result.digits_.resize(1);
+    } else {
+      result.digits_.resize(i + j - 1);
     }
-    // @include
+    return result;
+  }
+
+  // @exclude
+  string toString() const {
+    string s = (sign_ > 0 ? "" : "-");
+    for (int i = digits_.size() - 1; i >= 0; --i) {
+      s += digits_[i] + '0';
+    }
+    if (digits_.empty() == true) {
+      s += '0';
+    }
+    return s;
+  }
+  // @include
+ private:
+  int sign_;  // -1 or 1;
+  vector<char> digits_;
 };
 // @exclude
 
@@ -74,13 +81,17 @@ string rand_string(int len) {
   if (!len) {
     ret += '0';
   } else {
-    if (rand() & 1) {
+    default_random_engine gen((random_device())());
+    uniform_int_distribution<int> positive_or_negative(0, 1);
+    if (positive_or_negative(gen)) {
       ret += '-';
     }
-    ret += 1 + rand() % 9 + '0';
+    uniform_int_distribution<int> dis(1, 9);
+    ret += dis(gen) + '0';
     --len;
     while (len--) {
-      ret += rand() % 10 + '0';
+      uniform_int_distribution<int> dis(0, 9);
+      ret += dis(gen) + '0';
     }
   }
   return ret;
@@ -93,8 +104,9 @@ int main(int argc, char *argv[]) {
   if (argc == 3) {
     s1 = argv[1], s2 = argv[2];
   } else {
-    srand(time(nullptr));
-    s1 = rand_string(rand() % 20), s2 = rand_string(rand() % 20);
+    default_random_engine gen((random_device())());
+    uniform_int_distribution<int> dis(0, 19);
+    s1 = rand_string(dis(gen)), s2 = rand_string(dis(gen));
   }
   BigInt res = BigInt(s1) * BigInt(s2);
   cout << s1 << " * " << s2 << " = " << res.toString() << endl;

@@ -1,12 +1,19 @@
-#include <iostream>
-#include <cmath>
-#include <ctime>
-#include <cstdlib>
-#include <cassert>
-#include <vector>
-#include <cstring>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <cassert>
+#include <cmath>
+#include <deque>
+#include <iostream>
+#include <random>
+#include <vector>
+
+using std::cout;
+using std::default_random_engine;
+using std::deque;
+using std::endl;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
 // Given n, return the primes from 1 to n
@@ -15,7 +22,7 @@ vector<int> generate_primes_from_1_to_n(const int &n) {
   // is_prime[i] represents (2i + 3) is prime or not
   vector<int> primes;  // stores the primes from 1 to n
   primes.emplace_back(2);
-  vector<bool> is_prime(size, true);
+  deque<bool> is_prime(size, true);
   for (long i = 0; i < size; ++i) {
     if (is_prime[i]) {
       int p = (i << 1) + 3;
@@ -31,7 +38,7 @@ vector<int> generate_primes_from_1_to_n(const int &n) {
 // @exclude
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   if (argc == 2) {
     int n = atoi(argv[1]);
     cout << "n = " << n << endl;
@@ -44,7 +51,8 @@ int main(int argc, char *argv[]) {
     }
   } else {
     for (int times = 0; times < 100; ++times) {
-      int n = 2 + rand() % 100000;
+      uniform_int_distribution<int> dis(2, 100000);
+      int n = dis(gen);
       cout << "n = " << n << endl;
       vector<int> primes = generate_primes_from_1_to_n(n);
       for (size_t i = 0; i < primes.size(); ++i) {

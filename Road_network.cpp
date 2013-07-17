@@ -1,12 +1,14 @@
 // Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
 #include <iostream>
+#include <deque>
 #include <limits>
 #include <random>
 #include <vector>
 
 using std::cout;
 using std::default_random_engine;
+using std::deque;
 using std::endl;
 using std::numeric_limits;
 using std::random_device;
@@ -97,7 +99,7 @@ int main(int argc, char *argv[]) {
     uniform_int_distribution<int> dis2(1, n * ((n - 1) >> 1) - m);
     k = dis2(gen);
   }
-  vector<vector<bool>> have_edges(n, vector<bool>(n, false));
+  vector<deque<bool>> have_edges(n, deque<bool>(n, false));
   vector<HighwaySection<double>> H;  // existing highway sections
   uniform_int_distribution<int> vertex_dis(0, n - 1);
   uniform_real_distribution<double> cost_dis(1.0, 10000.0);

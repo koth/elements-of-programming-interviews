@@ -1,52 +1,32 @@
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
+#include "./Max_submatrix_rectangle_brute_force.h"
+
+#include <algorithm>
+#include <cassert>
+#include <deque>
 #include <iostream>
 #include <limits>
+#include <random>
 #include <vector>
-#include <cassert>
-#include <ctime>
-#include <cstdlib>
 
-using namespace std;
-
-// O(m^3 n^3) time solution
-int check_ans(const vector<vector<bool>> &A) {
-  int max = 0;
-  for (int a = 0; a < A.size(); ++a) {
-    for (int b = 0; b < A[a].size(); ++b) {
-      for (int c = a; c < A.size(); ++c) {
-        for (int d = b; d < A[c].size(); ++d) {
-          bool all_1 = true;
-          int count = 0;
-          for (int i = a; i <= c; ++i) {
-            for (int j = b; j <= d; ++j) {
-              if (A[i][j] == false) {
-                all_1 = false;
-                count = 0;
-                break;
-              } else {
-                ++count;
-              }
-            }
-            if (all_1 == false) {
-              break;
-            }
-          }
-          if (all_1 == true && count > max) {
-            max = count;
-          }
-        }
-      }
-    }
-  }
-  return max;
-}
+using std::cout;
+using std::default_random_engine;
+using std::deque;
+using std::endl;
+using std::max;
+using std::min;
+using std::numeric_limits;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
-class MaxHW {
-  public:
-    int h, w;
+struct MaxHW {
+  int h, w;
 };
 
-int max_rectangle_submatrix(const vector<vector<bool>> &A) {
+int max_rectangle_submatrix(const vector<deque<bool>> &A) {
   // DP table stores (h, w) for each (i, j)
   vector<vector<MaxHW>> table(A.size(), vector<MaxHW>(A.front().size()));
 
@@ -55,7 +35,7 @@ int max_rectangle_submatrix(const vector<vector<bool>> &A) {
       // Find the largest h such that (i, j) to (i + h - 1, j) are feasible
       // Find the largest w such that (i, j) to (i, j + w - 1) are feasible
       table[i][j] = A[i][j] ?
-                    MaxHW{i + 1 < A.size() ? table[i + 1][j].h + 1 : 1, 
+                    MaxHW{i + 1 < A.size() ? table[i + 1][j].h + 1 : 1,
                           j + 1 < A[i].size() ? table[i][j + 1].w + 1 : 1} :
                     MaxHW{0, 0};
     }
@@ -80,18 +60,20 @@ int max_rectangle_submatrix(const vector<vector<bool>> &A) {
 // @exclude
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n, m;
     if (argc == 3) {
       n = atoi(argv[1]), m = atoi(argv[2]);
     } else {
-      n = 1 + rand() % 50, m = 1 + rand() % 50;
+      uniform_int_distribution<int> dis(1, 50);
+      n = dis(gen), m = dis(gen);
     }
-    vector<vector<bool>> A(n, vector<bool>(m));
+    vector<deque<bool>> A(n, deque<bool>(m));
     for (int i = 0; i < n; ++i) {
       for (int j = 0; j < m; ++j) {
-        A[i][j] = (rand() & 1 ? true : false);
+        uniform_int_distribution<int> true_or_false(0, 1);
+        A[i][j] = true_or_false(gen) ? true : false;
       }
     }
     for (int i = 0; i < n; ++i) {
@@ -101,8 +83,9 @@ int main(int argc, char *argv[]) {
       cout << endl;
     }
     cout << max_rectangle_submatrix(A) << endl;
-    cout << check_ans(A) << endl;
-    assert(check_ans(A) == max_rectangle_submatrix(A));
+    int test_area = max_rectangle_submatrix_brute_force(A);
+    cout << test_area << endl;
+    assert(test_area == max_rectangle_submatrix(A));
   }
   return 0;
 }

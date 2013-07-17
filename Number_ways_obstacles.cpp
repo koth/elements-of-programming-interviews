@@ -1,15 +1,23 @@
-#include <iostream>
-#include <vector>
-#include <ctime>
-#include <cstdlib>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <deque>
+#include <iostream>
+#include <random>
+#include <vector>
+
+using std::cout;
+using std::default_random_engine;
+using std::deque;
+using std::endl;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
 // Given the dimensions of A, n and m, and B, return the number of ways
 // from A[0][0] to A[n - 1][m - 1] considering obstacles
 int number_of_ways_with_obstacles(const int &n, const int &m,
-                                  const vector<vector<bool>> &B) {
+                                  const vector<deque<bool>> &B) {
   vector<vector<int>> A(n, vector<int>(m, 0));
   // No way to start from (0, 0) if B[0][0] == true
   A[0][0] = !B[0][0];
@@ -25,18 +33,20 @@ int number_of_ways_with_obstacles(const int &n, const int &m,
 // @exclude
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   int n, m;
   if (argc == 3) {
     n = atoi(argv[1]), m = atoi(argv[2]);
   } else {
-    n = 1 + (rand() % 10);
-    m = 1 + (rand() % 10);
+    uniform_int_distribution<int> dis(1, 10);
+    n = dis(gen);
+    m = dis(gen);
   }
-  vector<vector<bool>> B(n, vector<bool>(m));
+  vector<deque<bool>> B(n, deque<bool>(m));
   for (size_t i = 0; i < n; ++i) {
     for (size_t j = 0; j < m; ++j) {
-      int x = rand() % 10;
+      uniform_int_distribution<int> dis(0, 9);
+      int x = dis(gen);
       B[i][j] = ((x < 2) ? 1 : 0);
     }
   }

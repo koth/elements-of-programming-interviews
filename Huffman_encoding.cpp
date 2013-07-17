@@ -1,37 +1,45 @@
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
 #include <iostream>
-#include <string>
-#include <ctime>
-#include <cstdlib>
-#include <vector>
 #include <queue>
+#include <memory>
+#include <random>
+#include <string>
+#include <vector>
 
-using namespace std;
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::priority_queue;
+using std::random_device;
+using std::shared_ptr;
+using std::string;
+using std::uniform_int_distribution;
+using std::vector;
 
-double EnglishFreq[] = { 8.167, 1.492, 2.782, 4.253, 12.702, 2.228,
-2.015, 6.094, 6.966, 0.153, 0.772, 4.025, 2.406, 6.749,
-7.507, 1.929, 0.095, 5.987, 6.327, 9.056, 2.758, 0.978, 2.360, 0.150, 1.974, 0.074};
+double EnglishFreq[] = {8.167, 1.492, 2.782, 4.253, 12.702, 2.228, 2.015,
+                        6.094, 6.966, 0.153, 0.772, 4.025, 2.406, 6.749,
+                        7.507, 1.929, 0.095, 5.987, 6.327, 9.056, 2.758,
+                        0.978, 2.360, 0.150, 1.974, 0.074};
 
 // @include
-class Symbol {
-  public:
-    char c;
-    double prob;
-    string code;
+struct Symbol {
+  char c;
+  double prob;
+  string code;
 };
 
-class BinaryTree {
-  public:
-    double prob;
-    shared_ptr<Symbol> s;
-    BinaryTree *left, *right;
+struct BinaryTree {
+  double prob;
+  shared_ptr<Symbol> s;
+  BinaryTree *left, *right;
 };
 
 class Compare {
-  public:
-    const bool operator()(const BinaryTree* lhs,
-                          const BinaryTree* rhs) const {
-      return lhs->prob > rhs->prob;
-    }
+ public:
+  const bool operator()(const BinaryTree* lhs, const BinaryTree* rhs) const {
+    return lhs->prob > rhs->prob;
+  }
 };
 
 // Traverse tree and assign code
@@ -47,10 +55,10 @@ void assign_huffman_code(const BinaryTree* r, const string &s) {
   }
 }
 
-void Huffman_encoding(vector<Symbol> &symbols) {
+void Huffman_encoding(vector<Symbol> *symbols) {
   // Initially assign each symbol into min->heap
   priority_queue<BinaryTree*, vector<BinaryTree*>, Compare> min_heap;
-  for (Symbol &s : symbols) {
+  for (auto &s : *symbols) {
     min_heap.emplace(new BinaryTree{s.prob, shared_ptr<Symbol>(&s),
                                     nullptr, nullptr});
   }
@@ -71,7 +79,7 @@ void Huffman_encoding(vector<Symbol> &symbols) {
 
 int main(int argc, char *argv[]) {
   int n;
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   if (argc == 2) {
     if (0 != strcmp(argv[1], "huffman"))  {
       n = atoi(argv[1]);
@@ -79,7 +87,8 @@ int main(int argc, char *argv[]) {
       n = 26;
     }
   } else {
-    n = 1 + rand() % 255;
+    uniform_int_distribution<int> dis(1, 255);
+    n = dis(gen);
   }
   vector<Symbol> symbols;
   int sum = 0;
@@ -87,7 +96,8 @@ int main(int argc, char *argv[]) {
     for (int i = 0; i < n; ++i) {
       Symbol t;
       t.c = i;
-      t.prob = rand() % 100000;
+      uniform_int_distribution<int> dis(0, 100000);
+      t.prob = dis(gen);
       sum += t.prob;
       symbols.emplace_back(t);
     }
@@ -102,10 +112,11 @@ int main(int argc, char *argv[]) {
       symbols.emplace_back(t);
     }
   }
-  Huffman_encoding(symbols);
+  Huffman_encoding(&symbols);
   double avg = 0.0;
   for (int i = 0; i < symbols.size(); ++i) {
-    cout << symbols[i].c << ' ' << symbols[i].prob << ' ' << symbols[i].code << endl;
+    cout << symbols[i].c << ' ' << symbols[i].prob << ' '
+         << symbols[i].code << endl;
     avg += symbols[i].prob / 100 * symbols[i].code.size();
   }
   cout << "average huffman code length = " << avg << endl;

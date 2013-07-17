@@ -1,10 +1,18 @@
-#include <iostream>
-#include <vector>
-#include <cassert>
-#include <ctime>
-#include <cstdlib>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <algorithm>
+#include <cassert>
+#include <iostream>
+#include <random>
+#include <vector>
+
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::random_device;
+using std::swap;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
 template <typename T>
@@ -42,16 +50,18 @@ vector<T> rand_vector(int len) {
 }
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n;
     if (argc == 2) {
       n = atoi(argv[1]);
     } else {
-      n = 1 + rand() % 100;
+      uniform_int_distribution<int> dis(1, 100);
+      n = dis(gen);
     }
     vector<int> A(rand_vector<int>(n));
-    int pivot_index = rand() % A.size();
+    uniform_int_distribution<int> dis(0, A.size() - 1);
+    int pivot_index = dis(gen);
     int pivot = A[pivot_index];
     dutch_flag_partition(A, pivot_index);
     int i = 0;

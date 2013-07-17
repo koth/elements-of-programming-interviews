@@ -1,52 +1,55 @@
-#include <iostream>
-#include <numeric>
-#include <array>
-#include <limits>
-#include <ctime>
-#include <cstdlib>
-#include <vector>
-#ifdef __clang__
-#include <unordered_map>
-#else
-#include <tr1/unordered_map>
-#endif
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
-#ifndef __clang__
-using namespace std::tr1;
-#endif
+#include <array>
+#include <iostream>
+#include <limits>
+#include <functional>
+#include <memory>
+#include <numeric>
+#include <random>
+#include <unordered_map>
+#include <vector>
+
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::hash;
+using std::numeric_limits;
+using std::random_device;
+using std::shared_ptr;
+using std::uniform_int_distribution;
+using std::unordered_map;
+using std::vector;
 
 // @include
-class Point {
-  public:
-    int i, j;
+struct Point {
+  const bool operator>(const Point &that) const {
+    return i > that.i || j > that.j;
+  }
 
-    const bool operator>(const Point &that) const {
-      return i > that.i || j > that.j;
-    }
+  // Equal function for hash
+  const bool operator==(const Point &that) const {
+    return i == that.i && j == that.j;
+  }
 
-    // Equal function for hash
-    const bool operator==(const Point &that) const {
-      return i == that.i && j == that.j;
-    }
+  int i, j;
 };
 
 // Hash function for Point
 class HashPoint {
-  public:
-    const size_t operator()(const Point &p) const {
-      return hash<int>()(p.i) ^ hash<int>()(p.j);
-    }
+ public:
+  const size_t operator()(const Point &p) const {
+    return hash<int>()(p.i) ^ hash<int>()(p.j);
+  }
 };
 
-class TreeNode {
-  public:
-    int node_num;  // stores the number of node in its subtree
+struct TreeNode {
+  int node_num;  // stores the number of node in its subtree
 
-    Point lowerLeft, upperRight;
+  Point lowerLeft, upperRight;
 
-    // Store the SW, NW, NE, and SE rectangles if color is mixed
-    vector<shared_ptr<TreeNode>> children;
+  // Store the SW, NW, NE, and SE rectangles if color is mixed
+  vector<shared_ptr<TreeNode>> children;
 };
 
 bool is_monochromatic(const vector<vector<int>> &image_sum,
@@ -150,7 +153,8 @@ shared_ptr<TreeNode> calculate_optimal_2D_tree(
 // @exclude
 
 void recursive_print_tree(const shared_ptr<TreeNode> &r) {
-  cout << "(" << r->lowerLeft.i << "," << r->lowerLeft.j << ")-(" << r->upperRight.i << "," << r->upperRight.j << ")" << endl;
+  cout << "(" << r->lowerLeft.i << "," << r->lowerLeft.j << ")-("
+       << r->upperRight.i << "," << r->upperRight.j << ")" << endl;
   for (const shared_ptr<TreeNode> &ptr : r->children) {
     if (ptr) {
       recursive_print_tree(ptr);
@@ -159,19 +163,21 @@ void recursive_print_tree(const shared_ptr<TreeNode> &r) {
 }
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   int m, n;
   if (argc == 3) {
     m = atoi(argv[1]);
     n = atoi(argv[2]);
   } else {
-    m = 1 + rand() % 20;
-    n = 1 + rand() % 20;
+    uniform_int_distribution<int> dis(1, 20);
+    m = dis(gen);
+    n = dis(gen);
   }
   vector<vector<int>> image(m, vector<int>(n));
   for (int i = 0; i < m; ++i) {
     for (int j = 0; j < n; ++j) {
-      image[i][j] = (rand() & 1);
+      uniform_int_distribution<int> zero_or_one(0, 1);
+      image[i][j] = zero_or_one(gen);
     }
   }
   cout << m << ' ' << n << endl;

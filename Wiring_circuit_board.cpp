@@ -1,6 +1,7 @@
 // Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
 #include <cassert>
+#include <deque>
 #include <iostream>
 #include <queue>
 #include <random>
@@ -9,6 +10,7 @@
 using std::boolalpha;
 using std::cout;
 using std::default_random_engine;
+using std::deque;
 using std::endl;
 using std::queue;
 using std::random_device;
@@ -96,7 +98,7 @@ int main(int argc, char *argv[]) {
     uniform_int_distribution<int> dis(1, n * (n - 1) >> 1);
     int m = dis(gen);
     cout << times << ' ' << n << ' ' << m << endl;
-    vector<vector<bool>> is_edge_exist(n, vector<bool>(n, false));
+    vector<deque<bool>> is_edge_exist(n, deque<bool>(n, false));
     while (m-- > 0) {
       uniform_int_distribution<int> dis(0, n - 1);
       int a, b;

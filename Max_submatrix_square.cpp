@@ -1,13 +1,24 @@
-#include <iostream>
-#include <vector>
-#include <cassert>
-#include <ctime>
-#include <cstdlib>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <algorithm>
+#include <cassert>
+#include <deque>
+#include <iostream>
+#include <random>
+#include <vector>
+
+using std::cout;
+using std::default_random_engine;
+using std::deque;
+using std::endl;
+using std::max;
+using std::min;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // O(m^3 n^3) time solution
-int check_ans(const vector<vector<bool>> &A) {
+int check_ans(const vector<deque<bool>> &A) {
   int max = 0;
   for (int a = 0; a < A.size(); ++a) {
     for (int b = 0; b < A[a].size(); ++b) {
@@ -38,12 +49,11 @@ int check_ans(const vector<vector<bool>> &A) {
 }
 
 // @include
-class MaxHW {
-  public:
-    int h, w;
+struct MaxHW {
+  int h, w;
 };
 
-int max_square_submatrix(const vector<vector<bool>> &A) {
+int max_square_submatrix(const vector<deque<bool>> &A) {
   // DP table stores (h, w) for each (i, j)
   vector<vector<MaxHW>> table(A.size(), vector<MaxHW>(A.front().size()));
 
@@ -79,18 +89,20 @@ int max_square_submatrix(const vector<vector<bool>> &A) {
 // @exclude
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n, m;
     if (argc == 3) {
       n = atoi(argv[1]), m = atoi(argv[2]);
     } else {
-      n = 1 + rand() % 50, m = 1 + rand() % 50;
+      uniform_int_distribution<int> dis(1, 50);
+      n = dis(gen), m = dis(gen);
     }
-    vector<vector<bool>> A(n, vector<bool>(m));
+    vector<deque<bool>> A(n, deque<bool>(m));
     for (int i = 0; i < n; ++i) {
       for (int j = 0; j < m; ++j) {
-        A[i][j] = (rand() & 1 ? true : false);
+        uniform_int_distribution<int> true_or_false(0, 1);
+        A[i][j] = true_or_false(gen) ? true : false;
       }
     }
     for (int i = 0; i < n; ++i) {

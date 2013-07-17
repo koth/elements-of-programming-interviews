@@ -1,19 +1,27 @@
-#include <iostream>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
 #include <cassert>
-#include <cstdlib>
-#include <ctime>
+#include <deque>
+#include <iostream>
+#include <random>
 #include <vector>
 
-using namespace std;
+using std::boolalpha;
+using std::cout;
+using std::default_random_engine;
+using std::deque;
+using std::endl;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
-class GraphVertex {
-  public:
-    enum Color {white, gray, black} color;
-    vector<GraphVertex*> edges;
-    // @exclude
-    GraphVertex(void) : color(white) {}
-    // @include
+struct GraphVertex {
+  enum Color {white, gray, black} color;
+  vector<GraphVertex*> edges;
+  // @exclude
+  GraphVertex(void) : color(white) {}
+  // @include
 };
 
 bool DFS(GraphVertex* cur, const GraphVertex* pre) {
@@ -35,9 +43,9 @@ bool DFS(GraphVertex* cur, const GraphVertex* pre) {
   return false;
 }
 
-bool is_graph_2_exist(vector<GraphVertex> &G) {
-  if (G.empty() == false) {
-    return DFS(&G.front(), nullptr);
+bool is_graph_2_exist(vector<GraphVertex> *G) {
+  if (!G->empty()) {
+    return DFS(&G->front(), nullptr);
   }
   return false;
 }
@@ -46,30 +54,31 @@ bool is_graph_2_exist(vector<GraphVertex> &G) {
 void DFS_exclusion(GraphVertex* cur, GraphVertex* a, GraphVertex* b) {
   cur->color = GraphVertex::black;
   for (GraphVertex* &next : cur->edges) {
-    if (next->color == GraphVertex::white && ((cur != a && cur != b) || (next != a && next != b))) {
+    if (next->color == GraphVertex::white &&
+        ((cur != a && cur != b) || (next != a && next != b))) {
       DFS_exclusion(next, a, b);
     }
   }
 }
 
 // O(n^2) check answer
-bool check_answer(vector<GraphVertex> &G) {
+bool check_answer(vector<GraphVertex> *G) {
   // marks all vertices as white
-  for (GraphVertex &n : G) {
+  for (GraphVertex &n : *G) {
     n.color = GraphVertex::white;
   }
 
-  for (GraphVertex &g : G) {
+  for (GraphVertex &g : *G) {
     for (GraphVertex* &t : g.edges) {
       DFS_exclusion(&g, &g, t);
       int count = 0;
-      for (GraphVertex &n : G) {
+      for (GraphVertex &n : *G) {
         if (n.color == GraphVertex::black) {
           ++count;
           n.color = GraphVertex::white;
         }
       }
-      if (count == G.size()) {
+      if (count == G->size()) {
         return true;
       }
     }
@@ -78,17 +87,19 @@ bool check_answer(vector<GraphVertex> &G) {
 }
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
-  for (int times = 0; times < 9000; ++times) {
+  default_random_engine gen((random_device())());
+  for (int times = 0; times < 1000; ++times) {
     int n;
     if (argc == 2) {
       n = atoi(argv[1]);
     } else {
-      n = 2 + rand() % 2000;
+      uniform_int_distribution<int> dis(2, 2000);
+      n = dis(gen);
     }
     vector<GraphVertex> G(n);
-    int m = 1 + rand() % (n * (n - 1) / 2);
-    vector<vector<bool>> is_edge_exist(n, vector<bool>(n, false));
+    uniform_int_distribution<int> dis(1, n * (n - 1) / 2);
+    int m = dis(gen);
+    vector<deque<bool>> is_edge_exist(n, deque<bool>(n, false));
     // Make the graph become connected
     for (int i = 1; i < n; ++i) {
       G[i - 1].edges.emplace_back(&G[i]);
@@ -100,7 +111,8 @@ int main(int argc, char *argv[]) {
     while (m-- > 0) {
       int a, b;
       do {
-        a = rand() % n, b = rand() % n;
+        uniform_int_distribution<int> dis(0, n - 1);
+        a = dis(gen), b = dis(gen);
       } while (a == b || is_edge_exist[a][b] == true);
       is_edge_exist[a][b] = is_edge_exist[b][a] = true;
       G[a].edges.emplace_back(&G[b]);
@@ -116,9 +128,9 @@ int main(int argc, char *argv[]) {
       cout << endl;
     }
     //*/
-    bool res = is_graph_2_exist(G);
+    bool res = is_graph_2_exist(&G);
     cout << boolalpha << res << endl;
-    assert(check_answer(G) == res);
+    assert(check_answer(&G) == res);
   }
   return 0;
 }

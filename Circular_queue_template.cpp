@@ -1,52 +1,58 @@
-#include <iostream>
-#include <algorithm>
-#include <vector>
-#include <cassert>
-#include <stdexcept>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <algorithm>
+#include <cassert>
+#include <iostream>
+#include <stdexcept>
+#include <vector>
+
+using std::cout;
+using std::endl;
+using std::exception;
+using std::length_error;
+using std::vector;
 
 // @include
 template <typename T>
 class Queue {
-  private:
-    size_t head, tail, count;
-    vector<T> data;
+ public:
+  explicit Queue(const size_t &cap) : data_({cap}) {}
 
-  public:
-    Queue(const size_t &cap = 8) : head(0), tail(0), count(0), data({cap}) {}
-
-    void enqueue(const T &x) {
-      // Dynamically resize due to data.size() limit
-      if (count == data.size()) {
-        // Rearrange elements.
-        rotate(data.begin(), data.begin() + head, data.end());
-        head = 0, tail = count;  // reset head and tail
-        data.resize(data.size() << 1);
-      }
-      // Perform enqueue
-      data[tail] = x;
-      tail = (tail + 1) % data.size(), ++count;
+  void enqueue(const T &x) {
+    // Dynamically resize due to data_.size() limit
+    if (count_ == data_.size()) {
+      // Rearrange elements.
+      rotate(data_.begin(), data_.begin() + head_, data_.end());
+      head_ = 0, tail_ = count_;  // reset head and tail
+      data_.resize(data_.size() << 1);
     }
+    // Perform enqueue
+    data_[tail_] = x;
+    tail_ = (tail_ + 1) % data_.size(), ++count_;
+  }
 
-    T dequeue(void) {
-      if (count) {
-        --count;
-        T ret = data[head];
-        head = (head + 1) % data.size();
-        return ret;
-      }
-      throw length_error("empty queue");
+  T dequeue(void) {
+    if (count_) {
+      --count_;
+      T ret = data_[head_];
+      head_ = (head_ + 1) % data_.size();
+      return ret;
     }
+    throw length_error("empty queue");
+  }
 
-    const size_t &size(void) const {
-      return count;
-    }
+  const size_t &size(void) const {
+    return count_;
+  }
+
+ private:
+  size_t head_ = 0, tail_ = 0, count_ = 0;
+  vector<T> data_;
 };
 // @exclude
 
 void test(void) {
-  Queue<int> q;
+  Queue<int> q(8);
   q.enqueue(1);
   q.enqueue(2);
   q.enqueue(3);
@@ -67,7 +73,8 @@ void test(void) {
   q.enqueue(13);
   // Ok till here. Now head = 3 and tail = 3
 
-  q.enqueue(14); // now the vector (data) is resized; but the head and tail (or elements) does not change accordingly. data[tail]=data[3]=14!
+  q.enqueue(14); // now the vector (data) is resized; but the head and tail
+                 // (or elements) does not change accordingly.
   q.enqueue(15);
   q.enqueue(16);
   q.enqueue(17);
@@ -85,7 +92,7 @@ void test(void) {
 
 int main(int argc, char *argv[]) {
   test();
-  Queue<int> q;
+  Queue<int> q(8);
   q.enqueue(1);
   q.enqueue(2);
   q.enqueue(3);
@@ -96,7 +103,7 @@ int main(int argc, char *argv[]) {
   assert(4 == q.dequeue());
   try {
     q.dequeue();
-  } catch (exception &e) {
+  } catch(const exception &e) {
     cout << e.what() << endl;
   };
   // test resize()

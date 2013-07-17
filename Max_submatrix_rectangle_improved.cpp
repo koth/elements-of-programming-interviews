@@ -1,15 +1,26 @@
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
+#include <algorithm>
+#include <cassert>
+#include <deque>
 #include <iostream>
 #include <limits>
+#include <random>
 #include <stack>
 #include <vector>
-#include <cassert>
-#include <ctime>
-#include <cstdlib>
 
-using namespace std;
+using std::cout;
+using std::default_random_engine;
+using std::deque;
+using std::endl;
+using std::max;
+using std::random_device;
+using std::stack;
+using std::uniform_int_distribution;
+using std::vector;
 
 // O(m^3 n^3) time solution
-int check_ans(const vector<vector<bool>> &A) {
+int check_ans(const vector<deque<bool>> &A) {
   int max = 0;
   for (int a = 0; a < A.size(); ++a) {
     for (int b = 0; b < A[a].size(); ++b) {
@@ -76,7 +87,7 @@ T calculate_largest_rectangle(const vector<T> &A) {
 }
 
 // @include
-int max_rectangle_submatrix(const vector<vector<bool>> &A) {
+int max_rectangle_submatrix(const vector<deque<bool>> &A) {
   vector<vector<int>> table(A.size(), vector<int>(A.front().size()));
 
   for (int i = A.size() - 1; i >= 0; --i) {
@@ -95,18 +106,20 @@ int max_rectangle_submatrix(const vector<vector<bool>> &A) {
 // @exclude
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n, m;
     if (argc == 3) {
       n = atoi(argv[1]), m = atoi(argv[2]);
     } else {
-      n = 1 + rand() % 60, m = 1 + rand() % 60;
+      uniform_int_distribution<int> dis(1, 60);
+      n = dis(gen), m = dis(gen);
     }
-    vector<vector<bool>> A(n, vector<bool>(m));
+    vector<deque<bool>> A(n, deque<bool>(m));
     for (int i = 0; i < n; ++i) {
       for (int j = 0; j < m; ++j) {
-        A[i][j] = (rand() & 1 ? true : false);
+        uniform_int_distribution<int> true_or_false(0, 1);
+        A[i][j] = true_or_false(gen);
       }
     }
     /*

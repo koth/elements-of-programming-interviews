@@ -1,14 +1,25 @@
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
+#include <algorithm>
+#include <cassert>
+#include <deque>
 #include <iostream>
 #include <iterator>
 #include <numeric>
-#include <algorithm>
 #include <queue>
-#include <cstdlib>
-#include <ctime>
+#include <random>
+#include <utility>
 #include <vector>
-#include <cassert>
 
-using namespace std;
+using std::cout;
+using std::default_random_engine;
+using std::deque;
+using std::endl;
+using std::pair;
+using std::queue;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
 vector<pair<int, int>> find_stable_assignment(
@@ -55,11 +66,13 @@ vector<pair<int, int>> find_stable_assignment(
 }
 // @exclude
 
-void check_ans(const vector<vector<int>> &professor_preference, const vector<vector<int>> &student_preference, const vector<pair<int, int>> &match_result) {
+void check_ans(const vector<vector<int>> &professor_preference,
+               const vector<vector<int>> &student_preference,
+               const vector<pair<int, int>> &match_result) {
   assert(match_result.size() == professor_preference.size());
-  vector<bool> professor(professor_preference.size(), false), student(student_preference.size(), false);
+  deque<bool> professor(professor_preference.size(), false),
+                        student(student_preference.size(), false);
   for (const pair<int, int> &p: match_result) {
-    //cout << p.first << " " << p.second << endl;
     student[p.first] = true;
     professor[p.second] = true;
   }
@@ -74,23 +87,37 @@ void check_ans(const vector<vector<int>> &professor_preference, const vector<vec
     for (int j = i + 1; j < match_result.size(); ++j) {
       int s0 = match_result[i].first, a0 = match_result[i].second;
       int s1 = match_result[j].first, a1 = match_result[j].second;
-      int a0_in_s0_order = distance(student_preference[s0].cbegin(), find(student_preference[s0].cbegin(), student_preference[s0].cend(), a0));
-      int a1_in_s0_order = distance(student_preference[s0].cbegin(), find(student_preference[s0].cbegin(), student_preference[s0].cend(), a1));
-      int s0_in_a1_order = distance(professor_preference[a1].cbegin(), find(professor_preference[a1].cbegin(), professor_preference[a1].cend(), s0));
-      int s1_in_a1_order = distance(professor_preference[a1].cbegin(), find(professor_preference[a1].cbegin(), professor_preference[a1].cend(), s1));
-      assert(a0_in_s0_order < a1_in_s0_order || s1_in_a1_order < s0_in_a1_order);
+      int a0_in_s0_order =
+        distance(student_preference[s0].cbegin(),
+                 find(student_preference[s0].cbegin(),
+                      student_preference[s0].cend(), a0));
+      int a1_in_s0_order =
+        distance(student_preference[s0].cbegin(),
+                 find(student_preference[s0].cbegin(),
+                      student_preference[s0].cend(), a1));
+      int s0_in_a1_order =
+        distance(professor_preference[a1].cbegin(),
+                 find(professor_preference[a1].cbegin(),
+                      professor_preference[a1].cend(), s0));
+      int s1_in_a1_order =
+        distance(professor_preference[a1].cbegin(),
+                 find(professor_preference[a1].cbegin(),
+                      professor_preference[a1].cend(), s1));
+      assert(a0_in_s0_order < a1_in_s0_order ||
+             s1_in_a1_order < s0_in_a1_order);
     }
   }
 }
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n;
     if (argc == 2) {
       n = atoi(argv[1]);
     } else {
-      n = 1 + rand() % 300;
+      uniform_int_distribution<int> dis(1, 300);
+      n = dis(gen);
     }
     vector<vector<int>> professor_preference(n), student_preference(n);
     for (int i = 0; i < n; ++i) {
@@ -98,8 +125,10 @@ int main(int argc, char *argv[]) {
         professor_preference[i].emplace_back(j);
         student_preference[i].emplace_back(j);
       }
-      random_shuffle(professor_preference[i].begin(), professor_preference[i].end());
-      random_shuffle(student_preference[i].begin(), student_preference[i].end());
+      random_shuffle(professor_preference[i].begin(),
+                     professor_preference[i].end());
+      random_shuffle(student_preference[i].begin(),
+                     student_preference[i].end());
     }
 
     /*
@@ -119,7 +148,8 @@ int main(int argc, char *argv[]) {
     }
     */
 
-    vector<pair<int, int>> res = find_stable_assignment(professor_preference, student_preference);
+    vector<pair<int, int>> res = find_stable_assignment(professor_preference,
+                                                        student_preference);
     check_ans(professor_preference, student_preference, res);
   }
   return 0;

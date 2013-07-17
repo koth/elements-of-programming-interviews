@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <cassert>
+#include <deque>
 #include <iostream>
 #include <random>
 #include <set>
@@ -67,7 +68,7 @@ vector<TimeType> find_minimum_visits(const vector<Interval<TimeType>> &I) {
 template <typename TimeType>
 void check_ans(const vector<Interval<TimeType>>& I,
                const vector<TimeType>& ans) {
-  vector<bool> is_visited(I.size(), false);
+  deque<bool> is_visited(I.size(), false);
   for (const TimeType &a : ans) {
     for (int i = 0; i < I.size(); ++i) {
       if (a >= I[i].left && a <= I[i].right) {

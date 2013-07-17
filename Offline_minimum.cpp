@@ -1,13 +1,25 @@
-#include <iostream>
-#include <random>
-#include <cassert>
-#include <algorithm>
-#include <numeric>
-#include <vector>
-#include <ctime>
-#include <cstdlib>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <algorithm>
+#include <cassert>
+#include <deque>
+#include <iostream>
+#include <limits>
+#include <numeric>
+#include <random>
+#include <vector>
+
+using std::cout;
+using std::default_random_engine;
+using std::deque;
+using std::endl;
+using std::max;
+using std::min;
+using std::mt19937;
+using std::numeric_limits;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
 int find_set(vector<int> &set, const int &x) {
@@ -49,7 +61,7 @@ vector<int> offline_minimum(const vector<int> &A, const vector<int> &E) {
 
 // O(nm) checking method
 vector<int> check_answer(const vector<int> &A, const vector<int> &E) {
-  vector<bool> exist(A.size(), false);
+  deque<bool> exist(A.size(), false);
   vector<int> ans(E.size());
 
   for (int i = 0; i < E.size(); ++i) {
@@ -71,18 +83,21 @@ vector<int> check_answer(const vector<int> &A, const vector<int> &E) {
 }
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n, m;
     if (argc == 2) {
       n = atoi(argv[1]);
-      m = 1 + rand() % n;
+      uniform_int_distribution<int> dis(1, n);
+      m = dis(gen);
     } else if (argc == 3) {
       n = atoi(argv[1]);
       m = atoi(argv[2]);
     } else {
-      n = 1 + rand() % 1000;
-      m = 1 + rand() % n;
+      uniform_int_distribution<int> n_dis(1, 1000);
+      n = n_dis(gen);
+      uniform_int_distribution<int> m_dis(1, n);
+      m = m_dis(gen);
     }
     cout << "n = " << n << ", m = " << m << endl;
     vector<int> A(n);
@@ -90,7 +105,6 @@ int main(int argc, char *argv[]) {
     random_device rd;
     mt19937 g(rd());
     shuffle(A.begin(), A.end(), g);
-    //random_shuffle(A.begin(), A.end());
     /*
     cout << "A = ";
     copy(A.begin(), A.end(), ostream_iterator<int>(cout, " "));
@@ -98,7 +112,8 @@ int main(int argc, char *argv[]) {
     */
     vector<int> E;
     for (int i = 0; i < m; ++i) {
-      E.emplace_back(i + rand() % (n - i));
+      uniform_int_distribution<int> dis(i, n - 1);
+      E.emplace_back(dis(gen));
     }
     sort(E.begin(), E.end());
     /*

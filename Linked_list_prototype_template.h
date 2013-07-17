@@ -9,6 +9,6 @@ template <typename T>
 class node_t {
   public:
     T data;
-    shared_ptr<node_t<T> > next;
+    shared_ptr<node_t<T>> next;
 };
 // @exclude
