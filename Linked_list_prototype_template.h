@@ -1,14 +1,17 @@
-#include <iostream>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
+#ifndef SOLUTIONS_LINKED_LIST_PROTOTYPE_TEMPLATE_H_
+#define SOLUTIONS_LINKED_LIST_PROTOTYPE_TEMPLATE_H_
+
 #include <memory>
 
-using namespace std;
+using std::shared_ptr;
 
-#pragma once
 // @include
 template <typename T>
-class node_t {
-  public:
-    T data;
-    shared_ptr<node_t<T>> next;
+struct node_t {
+  T data;
+  shared_ptr<node_t<T>> next;
 };
 // @exclude
+#endif  // SOLUTIONS_LINKED_LIST_PROTOTYPE_TEMPLATE_H_

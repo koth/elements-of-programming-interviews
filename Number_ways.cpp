@@ -1,10 +1,16 @@
-#include <iostream>
-#include <cassert>
-#include <vector>
-#include <ctime>
-#include <cstdlib>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <cassert>
+#include <iostream>
+#include <random>
+#include <vector>
+
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
 int number_of_ways(const int &n, const int &m) {
@@ -39,16 +45,18 @@ int check_ans(int n, int k) {
 }
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n, m;
     if (argc == 3) {
       n = atoi(argv[1]), m = atoi(argv[2]);
     } else {
-      n = 1 + (rand() % 10);
-      m = 1 + (rand() % 10);
+      uniform_int_distribution<int> dis(1, 10);
+      n = dis(gen);
+      m = dis(gen);
     }
-    cout << "n = " << n << ", m = " << m << ", number of ways = " << number_of_ways(n, m) << endl;
+    cout << "n = " << n << ", m = " << m << ", number of ways = "
+         << number_of_ways(n, m) << endl;
     assert(check_ans(n + m - 2, m - 1) == number_of_ways(n, m));
     if (argc == 3) {
       break;

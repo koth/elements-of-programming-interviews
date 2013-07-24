@@ -1,9 +1,16 @@
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
+#include <cassert>
 #include <iostream>
-#include <ctime>
-#include <cstdlib>
+#include <random>
 #include <vector>
 
-using namespace std;
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
 int count_permutations(const int &k, const vector<int> &score_ways) {
@@ -20,21 +27,33 @@ int count_permutations(const int &k, const vector<int> &score_ways) {
 }
 // @exclude
 
+void simple_test() {
+  int k = 12;
+  vector<int> score_ways = {2, 3, 7};
+  assert(18 == count_permutations(k, score_ways));
+}
+
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  simple_test();
+  default_random_engine gen((random_device())());
   int k;
   vector<int> score_ways;
   if (argc == 1) {
-    k = rand() % 1000;
-    score_ways.resize(1 + rand() % 50);
+    uniform_int_distribution<int> k_dis(0, 999);
+    k = k_dis(gen);
+    uniform_int_distribution<int> size_dis(1, 50);
+    score_ways.resize(size_dis(gen));
     for (int i = 0; i < score_ways.size(); ++i) {
-      score_ways[i] = 1 + rand() % 1000;
+      uniform_int_distribution<int> score_dis(1, 1000);
+      score_ways[i] = score_dis(gen);
     }
   } else if (argc == 2) {
     k = atoi(argv[1]);
-    score_ways.resize(1 + rand() % 50);
+    uniform_int_distribution<int> size_dis(1, 50);
+    score_ways.resize(size_dis(gen));
     for (int i = 0; i < score_ways.size(); ++i) {
-      score_ways[i] = 1 + rand() % 1000;
+      uniform_int_distribution<int> score_dis(1, 1000);
+      score_ways[i] = score_dis(gen);
     }
   } else {
     k = atoi(argv[1]);

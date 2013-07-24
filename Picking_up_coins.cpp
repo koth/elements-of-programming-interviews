@@ -1,9 +1,18 @@
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
+#include <algorithm>
 #include <iostream>
-#include <ctime>
-#include <cstdlib>
+#include <random>
 #include <vector>
 
-using namespace std;
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::max;
+using std::min;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
 template <typename CoinType>
@@ -23,23 +32,25 @@ CoinType pick_up_coins_helper(const vector<CoinType> &C, const int &a,
 }
 
 template <typename CoinType>
-CoinType pick_up_coins(vector<CoinType> &C) {
+CoinType pick_up_coins(const vector<CoinType> &C) {
   vector<vector<CoinType>> T(C.size(), vector<int>(C.size(), -1));
   return pick_up_coins_helper(C, 0, C.size() - 1, T);
 }
 // @exclude
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   vector<int> C;
   if (argc >= 2) {
     for (int i = 1; i < argc; ++i) {
       C.emplace_back(atoi(argv[i]));
     }
   } else {
-    C.resize(1 + rand() % 1000);
+    uniform_int_distribution<int> dis(1, 1000);
+    C.resize(dis(gen));
     for (int i = 0; i < C.size(); ++i) {
-      C[i] = rand() % 100;
+      uniform_int_distribution<int> dis(0, 99);
+      C[i] = dis(gen);
     }
   }
   for (size_t i = 0; i < C.size(); ++i) {

@@ -1,9 +1,16 @@
-#include <iostream>
-#include <cassert>
-#include <ctime>
-#include <cstdlib>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <cassert>
+#include <iostream>
+#include <limits>
+#include <random>
+
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::numeric_limits;
+using std::random_device;
+using std::uniform_int_distribution;
 
 short parity1(unsigned long x) {
   short result = 0;
@@ -26,14 +33,15 @@ short parity2(unsigned long x) {
 // @exclude
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   if (argc == 2) {
     long int x = atol(argv[1]);
     assert(parity1(x) == parity2(x));
     cout << "x = " << x << ", parity = " << parity2(x) << endl;
   } else {
     for (int times = 0; times < 1000; ++times) {
-      long int x = rand();
+      uniform_int_distribution<int> dis(0, numeric_limits<int>::max());
+      long int x = dis(gen);
       assert(parity1(x) == parity2(x));
       cout << "x = " << x << ", parity = " << parity2(x) << endl;
     }
