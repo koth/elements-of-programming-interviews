@@ -1,18 +1,25 @@
-#include "Linked_list_prototype_template.h"
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
 #include <iostream>
 #include <stdexcept>
 #include <cassert>
 
-using namespace std;
+#include "./Linked_list_prototype_template.h"
+
+using std::cout;
+using std::endl;
+using std::exception;
+using std::length_error;
 
 // @include
 template <typename T>
-void remove_kth_last(shared_ptr<node_t<T>> &L, const int &k) {
-  // Advance k steps first
+void remove_kth_last(shared_ptr<node_t<T>> &L, int k) {
+  // Advance k steps first.
   shared_ptr<node_t<T>> ahead = L;
   int num = k;
-  while (ahead && num--) {
+  while (ahead && num) {
     ahead = ahead->next;
+    --num;
   }
 
   if (num) {
@@ -35,13 +42,18 @@ void remove_kth_last(shared_ptr<node_t<T>> &L, const int &k) {
 
 int main(int argc, char *argv[]) {
   shared_ptr<node_t<int>> L;
-  L = shared_ptr<node_t<int>>(new node_t<int>{1, shared_ptr<node_t<int>>(new node_t<int>{2, shared_ptr<node_t<int>>(new node_t<int>{3, nullptr})})});
+  L = shared_ptr<node_t<int>>(
+    new node_t<int>{1, shared_ptr<node_t<int>>(
+      new node_t<int>{2, shared_ptr<node_t<int>>(
+        new node_t<int>{3, nullptr})})});
   try {
     remove_kth_last(L, 4);
-  } catch (exception &e) {
+  } catch(const exception &e) {
     cout << e.what() << endl;
   };
-  remove_kth_last<int>(L, 3);
-  assert(L->data == 2 && L->next->data == 3);
+  remove_kth_last<int>(L, 2);
+  assert(L->data == 1 && L->next->data == 3);
+  remove_kth_last<int>(L, 2);
+  assert(L->data == 3 && L->next == nullptr);
   return 0;
 }

@@ -22,7 +22,7 @@ struct GraphVertex {
   vector<GraphVertex*> edges, extended_contacts;
 };
 
-void DFS(GraphVertex* cur, const int& time, vector<GraphVertex*>* contacts) {
+void DFS(GraphVertex* cur, int time, vector<GraphVertex*>* contacts) {
   for (const auto& next : cur->edges) {
     if (next->visit_time != time) {
       next->visit_time = time;

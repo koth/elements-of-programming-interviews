@@ -1,11 +1,12 @@
-#include <iostream>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
 #include <cassert>
 #include <vector>
 
-using namespace std;
+using std::vector;
 
 // @include
-int bsearch(const int &t, const vector<int> &A) {
+int bsearch(int t, const vector<int> &A) {
   int L = 0, U = A.size() - 1;
   while (L <= U) {
     int M = (L + U) / 2;

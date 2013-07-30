@@ -1,13 +1,19 @@
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
 #include <iostream>
 #include <algorithm>
 #include <cstdlib>
 #include <fstream>
 #include <string>
 
-using namespace std;
+using std::cout;
+using std::endl;
+using std::fstream;
+using std::ios;
+using std::string;
 
 // @include
-string tail(const string &file_name, const int &tail_count) {
+string tail(const string &file_name, int tail_count) {
   fstream file_ptr(file_name.c_str());
 
   file_ptr.seekg(0, ios::end);
@@ -15,7 +21,7 @@ string tail(const string &file_name, const int &tail_count) {
   string output;  // stores the last tail_count lines
   // Reads file in reverse looking for '\n'
   for (int i = 0; i < file_size; ++i) {
-    file_ptr.seekg(file_size - i - 1, ios::beg);
+    file_ptr.seekg(-1 - i, ios::end);
     char c;
     file_ptr.get(c);
     if (c == '\n') {
@@ -26,9 +32,8 @@ string tail(const string &file_name, const int &tail_count) {
     }
     output.push_back(c);
   }
-  // Reverse the output string using the reverse function
-  // from the <algorithm> library in STL. The arguments
-  // are iterators to the start and end of String object.
+  // Reverse the output string using the reverse() function. 
+  // The arguments are iterators to the start and end of string object.
   reverse(output.begin(), output.end());
   return output;
 }

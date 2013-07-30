@@ -1,13 +1,17 @@
-#include <iostream>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
+#ifndef SOLUTIONS_BINARY_TREE_WITH_PARENT_PROTOTYPE_H_
+#define SOLUTIONS_BINARY_TREE_WITH_PARENT_PROTOTYPE_H_
+
 #include <memory>
 
-using namespace std;
-#pragma once
+using std::shared_ptr;
+
 // @include
 template <typename T>
-class BinaryTree {
-  public:
-    T data;
-    shared_ptr<BinaryTree<T> > left, right, parent;
+struct BinaryTree {
+  T data;
+  shared_ptr<BinaryTree<T>> left, right, parent;
 };
 // @exclude
+#endif  // SOLUTIONS_BINARY_TREE_WITH_PARENT_PROTOTYPE_H_
