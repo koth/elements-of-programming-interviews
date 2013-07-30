@@ -1,0 +1,7 @@
+// @include
+WinChomp():
+  You choose square (1,1);
+  Until you win:
+    Wait for your opponent to choose square (i,j);
+    You choose square (j,i);
+// @exclude
