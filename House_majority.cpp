@@ -1,18 +1,23 @@
-#include <iostream>
-#include <cassert>
-#include <cmath>
-#include <ctime>
-#include <cstdlib>
-#include <vector>
-#include <algorithm>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <algorithm>
+#include <cassert>
+#include <iostream>
+#include <random>
+#include <vector>
+
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::random_device;
+using std::uniform_real_distribution;
+using std::vector;
 
 // @include
 // prob is the probability that each Republican wins.
 // r is the number of Republicans wins, and n is the number of elections.
-double house_majority_helper(const vector<double> &prob, const int &r,
-                             const int &n, vector<vector<double>> &P) {
+double house_majority_helper(const vector<double> &prob, int r, int n, 
+                             vector<vector<double>> &P) {
   if (r > n) {
     return 0.0;  // base case: not enough Republicans
   } else if (r == 0 && n == 0) {
@@ -28,7 +33,7 @@ double house_majority_helper(const vector<double> &prob, const int &r,
   return P[r][n];
 }
 
-double house_majority(const vector<double> &prob, const int &n) {
+double house_majority(const vector<double> &prob, int n) {
   // Initialize DP table
   vector<vector<double>> P(n + 1, vector<double>(n + 1, -1.0));
 
@@ -44,18 +49,20 @@ double house_majority(const vector<double> &prob, const int &n) {
 void print_vector(vector<double> prob) {
   sort(prob.begin(), prob.end());
   for (int i = 0; i < prob.size(); ++i) {
-    cout << i << ":" << static_cast<int>( 100 * prob[i]) << (((i + 1) % 10 == 0)? "\n" : " ");
+    cout << i << ":" << static_cast<int>( 100 * prob[i]) 
+         << (((i + 1) % 10 == 0)? "\n" : " ");
   }
   cout << endl;
 }
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   int n = 435;
   vector<double> prob;
   prob.emplace_back(0.0);
   for (int i = 0; i < n; ++i) {
-    prob.emplace_back(static_cast<double>(rand()) / static_cast<double>(RAND_MAX));
+    uniform_real_distribution<double> dis(0, 1);
+    prob.emplace_back(dis(gen));
   }
   print_vector(prob);
   double ans = house_majority(prob, n);

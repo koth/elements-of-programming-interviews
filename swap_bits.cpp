@@ -3,23 +3,12 @@
 #include <cassert>
 #include <iostream>
 #include <limits>
-#include <random>
+
+#include "./swap_bits.h"
 
 using std::cout;
-using std::default_random_engine;
 using std::endl;
 using std::numeric_limits;
-using std::random_device;
-using std::uniform_int_distribution;
-
-// @include
-long swap_bits(long x, int i, int j) {
-  if (((x >> i) & 1) != ((x >> j) & 1)) {
-    x ^= (1L << i) | (1L << j);
-  }
-  return x;
-}
-// @exclude
 
 void simple_test() {
   assert(swap_bits(47, 1, 4) == 61);

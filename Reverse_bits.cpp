@@ -5,6 +5,8 @@
 #include <random>
 #include <vector>
 
+#include "./swap_bits.h"
+
 using std::cout;
 using std::default_random_engine;
 using std::endl;
@@ -14,13 +16,6 @@ using std::uniform_int_distribution;
 using std::vector;
 
 vector<long> precomputed_reverse;
-
-long swap_bits(long x, int i, int j) {
-  if (((x >> i) & 1) != ((x >> j) & 1)) {
-    x ^= (1L << i) | (1L << j);
-  }
-  return x;
-}
 
 long reverse_x(long x, int n) {
   for (int i = 0, j = n; i < j; ++i, --j) {
