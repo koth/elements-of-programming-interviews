@@ -11,7 +11,6 @@ using std::cout;
 using std::default_random_engine;
 using std::deque;
 using std::endl;
-using std::max;
 using std::random_device;
 using std::uniform_int_distribution;
 using std::vector;

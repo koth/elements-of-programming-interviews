@@ -31,19 +31,20 @@ struct Symbol {
 
 struct BinaryTree {
   double prob;
-  shared_ptr<Symbol> s;
-  BinaryTree *left, *right;
+  Symbol *s;
+  shared_ptr<BinaryTree> left, right;
 };
 
 class Compare {
  public:
-  const bool operator()(const BinaryTree* lhs, const BinaryTree* rhs) const {
+  bool operator()(const shared_ptr<BinaryTree> &lhs,
+                  const shared_ptr<BinaryTree> &rhs) const {
     return lhs->prob > rhs->prob;
   }
 };
 
 // Traverse tree and assign code
-void assign_huffman_code(const BinaryTree* r, const string &s) {
+void assign_huffman_code(const shared_ptr<BinaryTree> &r, const string &s) {
   if (r) {
     // This node (i.e.,leaf) contains symbol
     if (r->s) {
@@ -57,17 +58,17 @@ void assign_huffman_code(const BinaryTree* r, const string &s) {
 
 void Huffman_encoding(vector<Symbol> *symbols) {
   // Initially assign each symbol into min->heap
-  priority_queue<BinaryTree*, vector<BinaryTree*>, Compare> min_heap;
+  priority_queue<shared_ptr<BinaryTree>, vector<shared_ptr<BinaryTree>>, 
+                 Compare> min_heap;
   for (auto &s : *symbols) {
-    min_heap.emplace(new BinaryTree{s.prob, shared_ptr<Symbol>(&s),
-                                    nullptr, nullptr});
+    min_heap.emplace(new BinaryTree{s.prob, &s, nullptr, nullptr});
   }
 
   // Keep combining two nodes until there is one node left
   while (min_heap.size() > 1) {
-    BinaryTree* l = min_heap.top();
+    shared_ptr<BinaryTree> l = min_heap.top();
     min_heap.pop();
-    BinaryTree* r = min_heap.top();
+    shared_ptr<BinaryTree> r = min_heap.top();
     min_heap.pop();
     min_heap.emplace(new BinaryTree{l->prob + r->prob, nullptr, l, r});
   }

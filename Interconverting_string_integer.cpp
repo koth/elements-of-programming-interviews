@@ -1,25 +1,40 @@
-#include <iostream>
-#include <stdexcept>
-#include <cctype>
-#include <cassert>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
 #include <algorithm>
-#include <cstdlib>
-#include <ctime>
+#include <cassert>
+#include <cctype>
+#include <iostream>
+#include <limits>
+#include <random>
+#include <stdexcept>
 #include <string>
 
-using namespace std;
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::exception;
+using std::invalid_argument;
+using std::max;
+using std::numeric_limits;
+using std::random_device;
+using std::string;
+using std::uniform_int_distribution;
 
 string rand_int_string(int len) {
+  default_random_engine gen((random_device())());
   string ret;
   if (len == 0) {
     return {"0"};
   }
-  if (rand() & 1) {
+  uniform_int_distribution<int> pos_or_neg(0, 1);
+  if (pos_or_neg(gen)) {
     ret.push_back('-');
   }
-  ret.push_back('1' + rand() % 9);
+  uniform_int_distribution<int> num_dis('1', '9');
+  ret.push_back(num_dis(gen));
   while (--len) {
-    ret.push_back(rand() % 10 + '0');
+    uniform_int_distribution<int> dis('0', '9');
+    ret.push_back(dis(gen));
   }
   return ret;
 }
@@ -65,20 +80,23 @@ int stringToInt(const string &s) {
 // @exclude
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 10000; ++times) {
-    int x = (rand() & 1 ? -1 : 1) * rand();
+    uniform_int_distribution<int> dis(numeric_limits<int>::min(),
+                                      numeric_limits<int>::max());
+    int x = dis(gen);
     string str = intToString(x);
     cout << x << " " << str << endl;
     assert(x == stoi(str));
-    str = rand_int_string(rand() % 10);
+    uniform_int_distribution<int> len_dis(0, 9);
+    str = rand_int_string(len_dis(gen));
     x = stringToInt(str);
     cout << str << " " << x << endl;
     assert(x == stoi(str));
   }
   try {
     stringToInt("123abc");
-  } catch (exception &e) {
+  } catch(const exception &e) {
     cout << e.what() << endl;
   }
   return 0;

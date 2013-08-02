@@ -1,11 +1,19 @@
-#include <iostream>
-#include <stdexcept>
-#include <cassert>
-#include <ctime>
-#include <limits>
-#include <cstdlib>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <cassert>
+#include <iostream>
+#include <limits>
+#include <random>
+#include <stdexcept>
+
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::exception;
+using std::invalid_argument;
+using std::numeric_limits;
+using std::random_device;
+using std::uniform_int_distribution;
 
 int set_bit(int x, int bit, int set_value) {
   return set_value ? x | (1 << bit) : x & ~(1 << bit);
@@ -67,18 +75,19 @@ int count_bits_set_to_1(int x) {
 }
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   unsigned long x;
   if (argc == 2) {
     x = atol(argv[1]);
   } else {
-    x = rand();
+    uniform_int_distribution<int> dis(0, numeric_limits<int>::max());
+    x = dis(gen);
   }
   try {
     unsigned long res = closest_int_same_bits(x);
     cout << x << ' ' << res << endl;
     assert(count_bits_set_to_1(x) == count_bits_set_to_1(res));
-  } catch (exception &e) {
+  } catch(const exception &e) {
     cout << x << ' ' << e.what() << endl;
   }
   return 0;

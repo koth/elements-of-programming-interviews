@@ -1,14 +1,20 @@
-#include <iostream>
-#include <cassert>
-#include <ctime>
-#include <cstdlib>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
 #include <algorithm>
+#include <cassert>
+#include <iostream>
+#include <random>
 #include <string>
 
-using namespace std;
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::random_device;
+using std::string;
+using std::uniform_int_distribution;
 
 // @include
-string convert_base(const string &s, const int &b1, const int &b2) {
+string convert_base(const string &s, int b1, int b2) {
   bool neg = s.front() == '-';
   int x = 0;
   for (int i = (neg == true ? 1 : 0); i < s.size(); ++i) {
@@ -35,29 +41,39 @@ string convert_base(const string &s, const int &b1, const int &b2) {
 // @exclude
 
 string rand_int_string(int len) {
+  default_random_engine gen((random_device())());
   string ret;
-  if (rand() & 1) {
+  if (len == 0) {
+    return {"0"};
+  }
+  uniform_int_distribution<int> pos_or_neg(0, 1);
+  if (pos_or_neg(gen)) {
     ret.push_back('-');
   }
-  ret.push_back('1' + rand() % 9);
-  --len;
-  while (len--) {
-    ret.push_back('0' + rand() % 10);
+  uniform_int_distribution<int> num_dis('1', '9');
+  ret.push_back(num_dis(gen));
+  while (--len) {
+    uniform_int_distribution<int> dis('0', '9');
+    ret.push_back(dis(gen));
   }
   return ret;
 }
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   if (argc == 4) {
     string input(argv[1]);
     cout << convert_base(input, atoi(argv[2]), atoi(argv[3])) << endl;
-    assert(input == convert_base(convert_base(input, atoi(argv[2]), atoi(argv[3])), atoi(argv[3]), atoi(argv[2])));
+    assert(input == convert_base(convert_base(input, atoi(argv[2]),
+                                 atoi(argv[3])), atoi(argv[3]), atoi(argv[2])));
   } else {
     for (int times = 0; times < 100000; ++times) {
-      string input = rand_int_string(1 + rand() % 9);
-      int base = 2 + rand() % 15;
-      cout << "input is " << input << ", base1 = 10, base2 = " << base << ", ans = " << convert_base(input, 10, base) << endl;
+      uniform_int_distribution<int> len_dis(1, 9);
+      string input = rand_int_string(len_dis(gen));
+      uniform_int_distribution<int> base_dis(2, 16);
+      int base = base_dis(gen);
+      cout << "input is " << input << ", base1 = 10, base2 = "
+           << base << ", ans = " << convert_base(input, 10, base) << endl;
       assert(input == convert_base(convert_base(input, 10, base), base, 10));
     }
   }
