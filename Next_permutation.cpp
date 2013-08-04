@@ -1,11 +1,18 @@
-#include <iostream>
-#include <cassert>
-#include <ctime>
-#include <algorithm>
-#include <vector>
-#include <cstdlib>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <algorithm>
+#include <cassert>
+#include <iostream>
+#include <random>
+#include <vector>
+
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::random_device;
+using std::swap;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
 vector<int> next_permutation(vector<int> p) {
@@ -33,8 +40,8 @@ vector<int> next_permutation(vector<int> p) {
 }
 // @exclude
 
-int main(int argc, char *argv[]){
-  srand(time(nullptr));
+int main(int argc, char *argv[]) {
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     vector<int> p;
     if (argc > 2) {
@@ -42,29 +49,16 @@ int main(int argc, char *argv[]){
         p.emplace_back(atoi(argv[i]));
       }
     } else {
-      int n = (argc == 2 ? atoi(argv[1]) : 1 + rand() % 100);
+      uniform_int_distribution<int> dis(1, 100);
+      int n = (argc == 2 ? atoi(argv[1]) : dis(gen));
+      uniform_int_distribution<int> n_dis(0, n - 1);
       for (size_t i = 0; i < n; ++i) {
-        p.emplace_back(rand() % n);
+        p.emplace_back(n_dis(gen));
       }
     }
-    /*
-    for (size_t i = 0; i < p.size(); ++i) {
-      cout << p[i] << ' ';
-    }
-    cout << endl;
-    //*/
+
     vector<int> ans(next_permutation(p));
     next_permutation(p.begin(), p.end());
-    /*
-    for (const int &a : ans) {
-      cout << a << ' ';
-    }
-    cout << endl;
-    for (const int &a : p) {
-      cout << a << ' ';
-    }
-    cout << endl;
-    //*/
     assert(equal(ans.cbegin(), ans.cend(), p.cbegin()));
   }
   return 0;

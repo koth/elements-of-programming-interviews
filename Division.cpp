@@ -1,18 +1,24 @@
-#include <iostream>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
 #include <cassert>
-#include <ctime>
-#include <climits>
-#include <cstdlib>
+#include <iostream>
+#include <limits>
+#include <random>
 
-using namespace std;
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::numeric_limits;
+using std::random_device;
+using std::uniform_int_distribution;
 
-unsigned divide_x_y_bsearch(const unsigned &x, const unsigned &y) {
+unsigned divide_x_y_bsearch(unsigned x, unsigned y) {
   if (x < y) {
     return 0;
   }
 
   int power_left = 0;
-  int power_right = sizeof(unsigned) << 3; 
+  int power_right = sizeof(unsigned) << 3;
   int power_mid = -1;
   while (power_left < power_right) {
     int tmp = power_mid;
@@ -39,7 +45,7 @@ unsigned divide_x_y_bsearch(const unsigned &x, const unsigned &y) {
 }
 
 // @include
-unsigned divide_x_y(const unsigned &x, const unsigned &y) {
+unsigned divide_x_y(unsigned x, unsigned y) {
   if (x < y) {
     return 0;
   }
@@ -53,10 +59,7 @@ unsigned divide_x_y(const unsigned &x, const unsigned &y) {
 }
 // @exclude
 
-
-void foo() { } 
-
-void simple_test(void) {
+void simple_test() {
   assert(divide_x_y(64, 1) == 64);
   assert(divide_x_y(64, 2) == 32);
   assert(divide_x_y(64, 3) == 21);
@@ -77,19 +80,20 @@ void simple_test(void) {
 
 int main(int argc, char *argv[]) {
   simple_test();
-  int MAX = UINT_MAX;
-  //srand(time(nullptr));
   if (argc == 3) {
     unsigned x = atoi(argv[1]), y = atoi(argv[2]);
     assert(x / y == divide_x_y(x, y));
     assert(x / y == divide_x_y_bsearch(x, y));
   } else {
-    for (int times = 0; times < 100000000; ++times) {
-      unsigned x = rand() % MAX; 
-      unsigned y = rand() % MAX;
-      y = (y==0) ? 1 : y; // ensure no divide by 0
-      assert((x/y) == divide_x_y(x, y));
-      assert( (x/y) == divide_x_y_bsearch(x, y));
+    default_random_engine gen((random_device())());
+    uniform_int_distribution<unsigned> dis(0, numeric_limits<int>::max());
+    for (int times = 0; times < 100000; ++times) {
+      unsigned x = dis(gen), y = dis(gen);
+      y = (y == 0) ? 1 : y;  // ensure no divide by 0
+      cout << "times = " << times << ", x = " << x << ", y = " << y << endl;
+      cout << "first = " << x / y << ", second = " << divide_x_y(x, y) << endl;
+      assert(x / y == divide_x_y(x, y));
+      assert(x / y == divide_x_y_bsearch(x, y));
     }
   }
   return 0;

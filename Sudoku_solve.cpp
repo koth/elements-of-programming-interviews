@@ -7,6 +7,8 @@
 #include <iterator>
 #include <vector>
 
+#include "./Sudoku_check.h"
+
 using std::cout;
 using std::deque;
 using std::endl;
@@ -14,9 +16,8 @@ using std::ostream_iterator;
 using std::vector;
 
 // @include
-bool valid_to_add(const vector<vector<int>> &A, const int &i, const int &j,
-                  const int &val) {
-  // Check row constraints
+bool valid_to_add(const vector<vector<int>> &A, int i, int j, int val) {
+  // Check row constraints.
   for (int k = 0; k < A.size(); ++k) {
     if (val == A[k][j]) {
       return false;
@@ -30,7 +31,7 @@ bool valid_to_add(const vector<vector<int>> &A, const int &i, const int &j,
     }
   }
 
-  // Check region constraints
+  // Check region constraints.
   int region_size = sqrt(A.size());
   int I = i / region_size, J = j / region_size;
   for (int a = 0; a < region_size; ++a) {
@@ -45,13 +46,13 @@ bool valid_to_add(const vector<vector<int>> &A, const int &i, const int &j,
 
 bool solve_Sudoku_helper(vector<vector<int>> *A, int i, int j) {
   if (i == A->size()) {
-    i = 0;  // start a new row
+    i = 0;  // starts a new row.
     if (++j == (*A)[i].size()) {
-      return true;  // entire matrix has been filled without conflict
+      return true;  // Entire matrix has been filled without conflict.
     }
   }
 
-  // Skip nonempty entries
+  // Skips nonempty entries.
   if ((*A)[i][j] != 0) {
     return solve_Sudoku_helper(A, i + 1, j);
   }
@@ -70,54 +71,8 @@ bool solve_Sudoku_helper(vector<vector<int>> *A, int i, int j) {
     }
   }
 
-  (*A)[i][j] = 0;  // undo assignment
+  (*A)[i][j] = 0;  // undos assignment.
   return false;
-}
-
-// Check if a partially filled matrix has any conflicts
-bool is_valid_Sudoku(const vector<vector<int>> &A) {
-  // Check row constraints
-  for (int i = 0; i < A.size(); ++i) {
-    deque<bool> is_present(A.size() + 1, false);
-    for (int j = 0; j < A.size(); ++j) {
-      if (A[i][j] != 0 && is_present[A[i][j]] == true) {
-        return false;
-      } else {
-        is_present[A[i][j]] = true;
-      }
-    }
-  }
-
-  // Check column constraints
-  for (int j = 0; j < A.size(); ++j) {
-    deque<bool> is_present(A.size() + 1, false);
-    for (int i = 0; i < A.size(); ++i) {
-      if (A[i][j] != 0 && is_present[A[i][j]] == true) {
-        return false;
-      } else {
-        is_present[A[i][j]] = true;
-      }
-    }
-  }
-
-  // Check region constraints
-  int region_size = sqrt(A.size());
-  for (int I = 0; I < region_size; ++I) {
-    for (int J = 0; J < region_size; ++J) {
-      deque<bool> is_present(A.size() + 1, false);
-      for (int i = 0; i < region_size; ++i) {
-        for (int j = 0; j < region_size; ++j) {
-          if (A[region_size * I + i][region_size * J + j] != 0 &&
-              is_present[A[region_size * I + i][region_size * J + j]]) {
-            return false;
-          } else {
-            is_present[A[region_size * I + i][region_size * J + j]] = true;
-          }
-        }
-      }
-    }
-  }
-  return true;
 }
 
 bool solve_Sudoku(vector<vector<int>> *A) {

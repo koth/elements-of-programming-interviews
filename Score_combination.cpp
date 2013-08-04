@@ -13,9 +13,9 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-int count_combinations(const int &k, const vector<int> &score_ways) {
+int count_combinations(int k, const vector<int> &score_ways) {
   vector<int> combinations(k + 1, 0);
-  combinations[0] = 1;  // 1 way to reach 0
+  combinations[0] = 1;  // one way to reach 0.
   for (const int &score : score_ways) {
     for (int j = score; j <= k; ++j) {
       combinations[j] += combinations[j - score];

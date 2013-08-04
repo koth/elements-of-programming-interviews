@@ -1,11 +1,21 @@
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
+#include <algorithm>
+#include <cassert>
 #include <iostream>
 #include <limits>
-#include <ctime>
-#include <cstdlib>
+#include <random>
 #include <vector>
-#include <cassert>
 
-using namespace std;
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::max;
+using std::min;
+using std::numeric_limits;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
 template <typename HeightType>
@@ -33,17 +43,19 @@ HeightType check_ans(const vector<HeightType>& h) {
 }
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n;
     if (argc == 2) {
       n = atoi(argv[1]);
     } else {
-      n = 1 + rand() % 10000;
+      uniform_int_distribution<int> dis(1, 10000);
+      n = dis(gen);
     }
     vector<int> A;
+    uniform_int_distribution<int> dis(0, numeric_limits<int>::max());
     for (int i = 0; i < n; ++i) {
-      A.emplace_back(rand());
+      A.emplace_back(dis(gen));
     }
     cout << find_battery_capacity(A) << endl;
     assert(check_ans(A) == find_battery_capacity(A));

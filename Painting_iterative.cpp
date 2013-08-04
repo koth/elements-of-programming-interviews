@@ -29,9 +29,9 @@ void print_matrix(const vector<deque<bool>> &A) {
 }
 
 // @include
-void flip_color(vector<deque<bool>> *A, const int &x, const int &y) {
+void flip_color(vector<deque<bool>> *A, int x, int y) {
   const array<array<int, 2>, 4> dir = {{{{0, 1}}, {{0, -1}},
-                                       {{1, 0}}, {{-1, 0}}}};
+                                        {{1, 0}}, {{-1, 0}}}};
   const bool color = (*A)[x][y];
 
   queue<pair<int, int>> q;

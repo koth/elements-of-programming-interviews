@@ -1,11 +1,19 @@
-#include <iostream>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
 #include <algorithm>
 #include <cassert>
-#include <cstdlib>
-#include <ctime>
+#include <iostream>
+#include <random>
+#include <utility>
 #include <vector>
 
-using namespace std;
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::pair;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
 template <typename T>
@@ -37,12 +45,16 @@ pair<int, int> find_longest_increasing_subarray(const vector<T> &A) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+void simple_test() {
   auto ans = find_longest_increasing_subarray<int>({-1, -1});
   assert(ans.first == 0 && ans.second == 0);
   ans = find_longest_increasing_subarray<int>({1, 2});
   assert(ans.first == 0 && ans.second == 1);
-  srand(time(nullptr));
+}
+
+int main(int argc, char *argv[]) {
+  simple_test();
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     vector<int> A;
     if (argc > 2) {
@@ -54,16 +66,15 @@ int main(int argc, char *argv[]) {
       if (argc == 2) {
         n = atoi(argv[1]);
       } else {
-        n = 1 + rand() % 1000000;
+        uniform_int_distribution<int> dis(1, 1000000);
+        n = dis(gen);
       }
+      uniform_int_distribution<int> pos_or_neg(0, 1);
+      uniform_int_distribution<int> dis(0, n - 1);
       for (int i = 0; i < n; ++i) {
-        A.emplace_back((rand() & 1 ? -1 : 1) * rand() % n);
+        A.emplace_back((pos_or_neg(gen) ? -1 : 1) * dis(gen));
       }
     }
-    /*
-    copy(A.cbegin(), A.cend(), ostream_iterator<int>(cout, " "));
-    cout << endl;
-    */
     pair<int, int> result = find_longest_increasing_subarray(A);
     cout << result.first << ' ' << result.second << endl;
     int len = 1;

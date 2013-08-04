@@ -1,14 +1,22 @@
-#include <iostream>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
 #include <array>
-#include <cstdlib>
-#include <ctime>
+#include <iostream>
+#include <random>
 #include <vector>
 
-using namespace std;
+using std::array;
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
-void print_matrix_spiral(vector<vector<int>> A) {
-  const array<array<int, 2>, 4> shift = {0, 1, 1, 0, 0, -1, -1, 0};
+void print_matrix_in_spiral_order(vector<vector<int>> A) {
+  const array<array<int, 2>, 4> shift = {{{{0, 1}}, {{1, 0}},
+                                          {{0, -1}}, {{-1, 0}}}};
   int dir = 0, x = 0, y = 0;
 
   for (int i = 0; i < A.size() * A.size(); ++i) {
@@ -26,12 +34,13 @@ void print_matrix_spiral(vector<vector<int>> A) {
 // @exclude
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   int N;
   if (argc == 2) {
     N = atoi(argv[1]);
   } else {
-    N = 1 + rand() % 50;
+    uniform_int_distribution<int> dis(1, 50);
+    N = dis(gen);
   }
   vector<vector<int>> A(N, vector<int>(N));
   int x = 1;
@@ -40,6 +49,6 @@ int main(int argc, char *argv[]) {
       A[i][j] = x++;
     }
   }
-  print_matrix_spiral(A);
+  print_matrix_in_spiral_order(A);
   return 0;
 }

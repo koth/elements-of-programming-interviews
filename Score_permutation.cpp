@@ -13,9 +13,9 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-int count_permutations(const int &k, const vector<int> &score_ways) {
+int count_permutations(int k, const vector<int> &score_ways) {
   vector<int> permutations(k + 1, 0);
-  permutations[0] = 1;  // 1 way to reach 0
+  permutations[0] = 1;  // one way to reach 0.
   for (int i = 0; i <= k; ++i) {
     for (const int &score : score_ways) {
       if (i >= score) {

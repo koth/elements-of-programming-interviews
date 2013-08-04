@@ -1,12 +1,18 @@
-#include <iostream>
-#include <algorithm>
-#include <numeric>
-#include <cassert>
-#include <vector>
-#include <cstdlib>
-#include <ctime>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <algorithm>
+#include <cassert>
+#include <iostream>
+#include <numeric>
+#include <random>
+#include <vector>
+
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
 vector<int> find_0_sum_subset(const vector<int> &A) {
@@ -30,12 +36,12 @@ vector<int> find_0_sum_subset(const vector<int> &A) {
     table[prefix_sum[i]] = i;
   }
   // @exclude
-  return {};   // it should not happen
+  return {};  // it should not happen
   // @include
 }
 // @exclude
 
-void check_ans(vector<int> &A, vector<int> &ans) {
+void check_ans(const vector<int> &A, const vector<int> &ans) {
   int sum = 0;
   for (const int &a : ans) {
     sum = (sum + A[a]) % A.size();
@@ -44,29 +50,30 @@ void check_ans(vector<int> &A, vector<int> &ans) {
 }
 
 int main(int argc, char *argv[]) {
-  //srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n;
     vector<int> A;
     if (argc == 2) {
       n = atoi(argv[1]);
       A.resize(n);
+      uniform_int_distribution<int> dis(0, 9999);
       for (int i = 0; i < n; ++i) {
-        A[i] = rand() % 10000;
+        A[i] = dis(gen);
       }
     } else if (argc > 2) {
       for (int i = 1; i < argc; ++i) {
         A.emplace_back(atoi(argv[i]));
       }
     } else {
-      n = 1 + rand() % 100;
+      uniform_int_distribution<int> n_dis(1, 100);
+      n = n_dis(gen);
       A.resize(n);
+      uniform_int_distribution<int> dis(0, 9999);
       for (int i = 0; i < n; ++i) {
-        A[i] = rand() % 10000;
+        A[i] = dis(gen);
       }
     }
-    //copy(A.begin(), A.end(), ostream_iterator<int>(cout, " "));
-    //cout << endl;
     vector<int> ans = find_0_sum_subset(A);
     check_ans(A, ans);
   }

@@ -1,5 +1,6 @@
 // Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
+#include <algorithm>
 #include <cassert>
 #include <iostream>
 #include <iterator>
@@ -31,7 +32,7 @@ int backtrace(const vector<int> &F, int idx) {
  * F of length N; F[i] holds the smallest index of all the elements that
  * i is equivalent to.
  */
-vector<int> compute_equival_classes(const int &n, const vector<int> &A,
+vector<int> compute_equival_classes(int n, const vector<int> &A,
                                     const vector<int> &B) {
   // Each element maps to itself
   vector<int> F(n);

@@ -1,19 +1,24 @@
 // Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-#include <iostream>
 #include <algorithm>
 #include <cassert>
-#include <ctime>
-#include <cstdlib>
+#include <iostream>
+#include <random>
 #include <vector>
 
-using namespace std;
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::ostream_iterator;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 template <typename T>
 void print_matrix(const vector<vector<T>> &A) {
   for (int i = 0; i < A.size(); ++i) {
     // copy(A[i].begin(), A[i].end(), ostream_iterator<int>(cout, " "));
-    for ( int j = 0 ; j < A.size(); ++j) {
+    for (int j = 0 ; j < A.size(); ++j) {
       cout << "A[" << i << "," << j << "] = " << A[i][j] << "  ";
     }
     cout << endl;
@@ -57,13 +62,14 @@ int main(int argc, char *argv[]) {
       }
     }
     print_matrix(A);
-    rotate_matrix(A);
+    rotate_matrix(&A);
     check_answer(A);
     print_matrix(A);
   } else {
-    srand(time(nullptr));
+    default_random_engine gen((random_device())());
+    uniform_int_distribution<int> dis(1, 10);
     for (int times = 0; times < 100; ++times) {
-      n = 1 + rand() % 10;
+      n = dis(gen);
       vector<vector<int>> A(1 << n, vector<int>(1 << n));
       int k = 1;
       for (int i = 0; i < A.size(); ++i) {
@@ -71,10 +77,8 @@ int main(int argc, char *argv[]) {
           A[i][j] = k++;
         }
       }
-      //print_matrix(A);
-      rotate_matrix(A);
+      rotate_matrix(&A);
       check_answer(A);
-      //print_matrix(A);
     }
   }
   return 0;

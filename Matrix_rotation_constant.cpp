@@ -31,15 +31,15 @@ class RotatedMatrix {
  public:
   explicit RotatedMatrix(const vector<vector<T>>& A) : A_(A) {}
 
-  const T& ReadEntry(const int& i, const int& j) const {
+  T ReadEntry(int i, int j) const {
     return A_[A_.size() - 1 - j][i];
   }
 
-  void WriteEntry(const int& i, const int& j, const T& v) {
+  void WriteEntry(int i, int j, const T& v) {
     A_[A_.size() - 1 - j][i] = v;
   }
 
-  const size_t& size() {
+  size_t size() const {
     return A_.size();
   }
 

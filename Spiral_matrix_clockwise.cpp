@@ -1,18 +1,23 @@
-#include <iostream>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
 #include <cmath>
-#include <array>
-#include <cstdlib>
-#include <ctime>
+#include <iostream>
+#include <random>
 #include <vector>
 
-using namespace std;
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
-void print_matrix_clockwise(const vector<vector<int>> &A, const int &offset) {
-  if (offset == A.size() - offset - 1) {  // for matrix with odd size
+void print_matrix_clockwise(const vector<vector<int>> &A, int offset) {
+  if (offset == A.size() - offset - 1) {  // for matrix with odd size.
     cout << A[offset][offset];
   }
-  
+
   for (int j = offset; j < A.size() - offset - 1; ++j) {
     cout << A[offset][j] << ' ';
   }
@@ -35,12 +40,13 @@ void print_matrix_in_spiral_order(const vector<vector<int>> &A) {
 // @exclude
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   int N;
   if (argc == 2) {
     N = atoi(argv[1]);
   } else {
-    N = 1 + rand() % 50;
+    uniform_int_distribution<int> dis(1, 50);
+    N = dis(gen);
   }
   vector<vector<int>> A(N, vector<int>(N));
   int x = 1;

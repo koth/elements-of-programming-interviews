@@ -1,9 +1,9 @@
 // Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-#include <iostream>
 #include <algorithm>
 #include <cstdlib>
 #include <fstream>
+#include <iostream>
 #include <string>
 
 using std::cout;
@@ -11,6 +11,7 @@ using std::endl;
 using std::fstream;
 using std::ios;
 using std::string;
+using std::to_string;
 
 // @include
 string tail(const string &file_name, int tail_count) {
@@ -32,7 +33,7 @@ string tail(const string &file_name, int tail_count) {
     }
     output.push_back(c);
   }
-  // Reverse the output string using the reverse() function. 
+  // Reverse the output string using the reverse() function.
   // The arguments are iterators to the start and end of string object.
   reverse(output.begin(), output.end());
   return output;
@@ -42,7 +43,7 @@ string tail(const string &file_name, int tail_count) {
 int main(int argc, char *argv[]) {
   cout << "Usage: file name and tail count" << endl;
   int tail_count = 10;
-  char* file_name;
+  string file_name;
   if (argc == 2) {
     file_name = argv[1];
   } else if (argc == 3) {
@@ -53,5 +54,8 @@ int main(int argc, char *argv[]) {
   }
   string output = tail(file_name, tail_count);
   cout << output;
+  string command = "tail -n " + to_string(tail_count) + " " + file_name;
+  cout << "command = " << command << endl;
+  system(command.c_str());
   return 0;
 }
