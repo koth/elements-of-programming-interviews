@@ -1,8 +1,12 @@
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
+#include <cassert>
 #include <iostream>
 #include <string>
-#include <cassert>
 
-using namespace std;
+using std::cout;
+using std::endl;
+using std::string;
 
 // @include
 bool is_match_here(const string &r, const string &s) {
@@ -49,34 +53,34 @@ bool is_match(const string &r, const string &s) {
 // @exclude
 
 int main(int argc, char *argv[]) {
-  assert( is_match( ".", "a") );
-  assert( is_match( "a", "a") );
-  assert( !is_match( "a", "b") );
-  assert( is_match( "a.9", "aW9") );
-  assert( !is_match( "a.9", "aW19") );
-  assert( is_match( "^a.9", "aW9") );
-  assert( !is_match( "^a.9", "baW19") );
-  assert( is_match( ".*", "a"));
-  assert( is_match( ".*", ""));
-  assert( is_match( "c*", "c"));
-  assert( !is_match( "aa*", "c"));
-  assert( is_match( "ca*", "c"));
-  assert( is_match( ".*",  "asdsdsa"));
-  assert( is_match( "9$" , "xxxxW19" ) );
+  assert(is_match(".", "a"));
+  assert(is_match("a", "a"));
+  assert(!is_match("a", "b"));
+  assert(is_match("a.9", "aW9"));
+  assert(!is_match("a.9", "aW19"));
+  assert(is_match("^a.9", "aW9"));
+  assert(!is_match("^a.9", "baW19"));
+  assert(is_match(".*", "a"));
+  assert(is_match(".*", ""));
+  assert(is_match("c*", "c"));
+  assert(!is_match("aa*", "c"));
+  assert(is_match("ca*", "c"));
+  assert(is_match(".*",  "asdsdsa"));
+  assert(is_match("9$" , "xxxxW19"));
 
-  assert( is_match( ".*a", "ba") );
+  assert(is_match(".*a", "ba"));
 
-  assert( is_match( ".*a", "ba") );
-  assert( is_match( "^a.*9$", "axxxxW19") );
+  assert(is_match(".*a", "ba"));
+  assert(is_match("^a.*9$", "axxxxW19"));
 
-  assert( is_match( "^a.*W19$", "axxxxW19") );
-  assert( is_match( ".*a.*W19", "axxxxW19123") );
-  assert( !is_match( ".*b.*W19", "axxxxW19123") );
-  assert( is_match( "n.*", "n") );
-  assert( is_match( "a*n.*", "an") );
-  assert( is_match( "a*n.*", "ana") );
-  assert( is_match( "a*n.*W19", "anaxxxxW19123") );
-  assert( is_match( ".*a*n.*W19", "asdaaadnanaxxxxW19123") );
-  assert( is_match( ".*.*.a*n.*W19", "asdaaadnanaxxxxW19123") );
+  assert(is_match("^a.*W19$", "axxxxW19"));
+  assert(is_match(".*a.*W19", "axxxxW19123"));
+  assert(!is_match(".*b.*W19", "axxxxW19123"));
+  assert(is_match("n.*", "n"));
+  assert(is_match("a*n.*", "an"));
+  assert(is_match("a*n.*", "ana"));
+  assert(is_match("a*n.*W19", "anaxxxxW19123"));
+  assert(is_match(".*a*n.*W19", "asdaaadnanaxxxxW19123"));
+  assert(is_match(".*.*.a*n.*W19", "asdaaadnanaxxxxW19123"));
   return 0;
 }

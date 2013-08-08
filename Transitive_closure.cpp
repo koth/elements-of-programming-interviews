@@ -32,12 +32,10 @@ void DFS(GraphVertex* cur, int time, vector<GraphVertex*>* contacts) {
 }
 
 void transitive_closure(vector<GraphVertex>* G) {
-  // Build extended contacts for each vertex
+  // Build extended contacts for each vertex.
   for (int i = 0; i < G->size(); ++i) {
-    if ((*G)[i].visit_time != i) {
-      (*G)[i].visit_time = i;
-      DFS(&(*G)[i], i, &(*G)[i].extended_contacts);
-    }
+    (*G)[i].visit_time = i;
+    DFS(&(*G)[i], i, &(*G)[i].extended_contacts);
   }
 }
 // @exclude

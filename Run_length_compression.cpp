@@ -1,11 +1,16 @@
-#include <sstream>
-#include <iostream>
-#include <cassert>
-#include <cstdlib>
-#include <string>
-#include <cctype>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <cassert>
+#include <cctype>
+#include <cstdlib>
+#include <iostream>
+#include <sstream>
+#include <string>
+
+using std::cout;
+using std::endl;
+using std::string;
+using std::stringstream;
 
 // @include
 string decoding(const string &s) {

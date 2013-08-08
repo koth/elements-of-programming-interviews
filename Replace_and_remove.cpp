@@ -1,14 +1,20 @@
-#include <iostream>
-#include <cassert>
-#include <string>
-#include <cstdlib>
-#include <ctime>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <cassert>
+#include <iostream>
+#include <random>
+#include <string>
+
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::random_device;
+using std::string;
+using std::uniform_int_distribution;
 
 // @include
 string replace_and_remove(string s) {
-  // Remove "b" and count the number of "a"
+  // Removes "b" and count the number of "a".
   int write_idx = 0, a_count = 0;
   for (const char &c : s) {
     if (c != 'b') {
@@ -19,9 +25,9 @@ string replace_and_remove(string s) {
     }
   }
 
-  // Allocate space according to the number of "a"
+  // Allocates space according to the number of "a".
   s.resize(write_idx + a_count);
-  // Replace "a" with "dd";
+  // Replace "a" with "dd".
   int cur_idx = write_idx - 1;
   write_idx = s.size() - 1;
   while (cur_idx >= 0) {
@@ -37,14 +43,16 @@ string replace_and_remove(string s) {
 // @exclude
 
 string rand_string(int len) {
+  default_random_engine gen((random_device())());
   string ret;
   while (len--) {
-    ret += 'a' + rand() % 4;
+    uniform_int_distribution<char> dis('a', 'd');
+    ret += dis(gen);
   }
   return ret;
 }
 
-void check_ans(string &s, string &ans) {
+void check_ans(const string &s, const string &ans) {
   string temp;
   for (int i = 0; i < s.size(); ++i) {
     if (s[i] == 'a') {
@@ -57,13 +65,14 @@ void check_ans(string &s, string &ans) {
 }
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     string s;
     if (argc == 2) {
       s = argv[1];
     } else {
-      s = rand_string(1 + rand() % 1000);
+      uniform_int_distribution<int> dis(1, 1000);
+      s = rand_string(dis(gen));
     }
     cout << s << endl << endl;
     string ans = replace_and_remove(s);

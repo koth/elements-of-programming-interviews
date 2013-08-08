@@ -1,12 +1,19 @@
-#include <iostream>
-#include <vector>
-#include <cmath>
-#include <cassert>
-#include <cstdlib>
-#include <ctime>
-#include <string>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <cassert>
+#include <cmath>
+#include <iostream>
+#include <random>
+#include <string>
+#include <vector>
+
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::random_device;
+using std::string;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
 const int base = 26, mod = 997;
@@ -30,7 +37,7 @@ int rabin_karp(const string &t, const string &s) {
     if (t_hash == s_hash && !t.compare(i - s.size(), s.size(), s)) {
       return i - s.size();  // find a match
     }
-    
+
     // Use rolling hash to compute the new hash code
     t_hash -= (t[i - s.size()] * power_s) % mod;
     if (t_hash < 0) {
@@ -64,15 +71,16 @@ int check_answer(const string &t, const string &s) {
 }
 
 string rand_string(int len) {
+  default_random_engine gen((random_device())());
   string ret;
   while (len--) {
-    ret += rand() % 26 + 'a';
+    uniform_int_distribution<char> dis('a', 'z');
+    ret += dis(gen);
   }
   return ret;
 }
 
 int main(int argc, char *argv[]) {
-  //srand(time(nullptr));
   if (argc == 3) {
     string t = argv[1];
     string s = argv[2];
@@ -80,9 +88,12 @@ int main(int argc, char *argv[]) {
     cout << "s = " << s << endl;
     assert(rabin_karp(t, s) == check_answer(t, s));
   } else {
-    for (int times = 0; times < 100000; ++times) {
-      string t = rand_string(1 + rand() % 1000);
-      string s = rand_string(1 + rand() % 20);
+    default_random_engine gen((random_device())());
+    for (int times = 0; times < 10000; ++times) {
+      uniform_int_distribution<int> t_dis(1, 1000);
+      uniform_int_distribution<int> s_dis(1, 20);
+      string t = rand_string(t_dis(gen));
+      string s = rand_string(s_dis(gen));
       cout << "t = " << t << endl;
       cout << "s = " << s << endl;
       int ret1 = rabin_karp(t, s);
