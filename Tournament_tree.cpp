@@ -1,9 +1,6 @@
 // Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
 #include <algorithm>
-#include <cmath>
-#include <cstdlib>
-#include <ctime>
 #include <iostream>
 #include <limits>
 #include <vector>
@@ -17,9 +14,9 @@ using std::vector;
 template <typename ItemType, typename CapacityType>
 class TournamentTree {
  public:
-  // n items, and each box has unit_cap
-  TournamentTree(const int& n, const CapacityType& unit_cap) :
-    // Complete tree_ with n leafs has 2n - 1 nodes
+  // n items, and each box has unit_cap.
+  TournamentTree(int n, const CapacityType& unit_cap) :
+    // Complete binary tree with n leafs has 2n - 1 nodes.
     tree_(vector<TreeNode>((n << 1) - 1, {unit_cap})) {}
 
   void insert(const ItemType& item, const CapacityType& item_cap) {
@@ -39,23 +36,22 @@ class TournamentTree {
 
  private:
   struct TreeNode {
-    CapacityType cap;  // leaf: remaining capacity in the box
-    // non-leaf: max remaining capacity in the subtree
-    vector<ItemType> items;  // stores the items in the leaf node
+    CapacityType cap;  // leaf: remaining capacity in the box.
+                       // non-leaf: max remaining capacity in the subtree.
+    vector<ItemType> items;  // stores the items in the leaf node.
   };
 
-  // Store the complete binary tree. For tree_[i],
+  // Stores the complete binary tree. For tree_[i],
   // left subtree is tree_[2i + 1], and right subtree is tree_[2i + 2].
   vector<TreeNode> tree_;
 
-  // Recursively inserts item in tournament tree
-  void insertHelper(const int& idx, const ItemType& item,
-                    const CapacityType& cap) {
+  // Recursively inserts item in tournament tree.
+  void insertHelper(int idx, const ItemType& item, const CapacityType& cap) {
     int left = (idx << 1) + 1, right = (idx << 1) + 2;
-    if (left < tree_.size()) {  // internal node
+    if (left < tree_.size()) {  // tree_[idx] is an internal node.
       insertHelper(tree_[left].cap >= cap ? left : right, item, cap);
       tree_[idx].cap = max(tree_[left].cap, tree_[right].cap);
-    } else {  // leaf node
+    } else {  // tree_[idx] is a leaf node.
       tree_[idx].cap -= cap, tree_[idx].items.emplace_back(item);
     }
   }

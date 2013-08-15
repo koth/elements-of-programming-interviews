@@ -16,7 +16,7 @@ using std::vector;
 // @include
 // prob is the probability that each Republican wins.
 // r is the number of Republicans wins, and n is the number of elections.
-double house_majority_helper(const vector<double> &prob, int r, int n, 
+double house_majority_helper(const vector<double> &prob, int r, int n,
                              vector<vector<double>> &P) {
   if (r > n) {
     return 0.0;  // base case: not enough Republicans
@@ -34,10 +34,10 @@ double house_majority_helper(const vector<double> &prob, int r, int n,
 }
 
 double house_majority(const vector<double> &prob, int n) {
-  // Initialize DP table
+  // Initialize DP table.
   vector<vector<double>> P(n + 1, vector<double>(n + 1, -1.0));
 
-  // Accumulate the probabilities of majority cases
+  // Accumulate the probabilities of majority cases.
   double prob_sum = 0.0;
   for (int r = ceil(0.5 * n); r <= n; ++r) {
     prob_sum += house_majority_helper(prob, r, n, P);
@@ -49,7 +49,7 @@ double house_majority(const vector<double> &prob, int n) {
 void print_vector(vector<double> prob) {
   sort(prob.begin(), prob.end());
   for (int i = 0; i < prob.size(); ++i) {
-    cout << i << ":" << static_cast<int>( 100 * prob[i]) 
+    cout << i << ":" << static_cast<int>( 100 * prob[i])
          << (((i + 1) % 10 == 0)? "\n" : " ");
   }
   cout << endl;

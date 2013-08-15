@@ -1,8 +1,11 @@
-#include "Linked_list_prototype_template.h"
-#include <iostream>
-#include <cstdlib>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <iostream>
+
+#include "./Linked_list_prototype_template.h"
+
+using std::cout;
+using std::endl;
 
 // @include
 template <typename T>
@@ -27,10 +30,13 @@ void print(shared_ptr<node_t<T>> head) {
 }
 
 int main(int argc, char *argv[]) {
-  shared_ptr<node_t<int>> L1 = shared_ptr<node_t<int>>(new node_t<int>{1, nullptr});
-  shared_ptr<node_t<int>> L2 = shared_ptr<node_t<int>>(new node_t<int>{2, nullptr});
+  shared_ptr<node_t<int>> L1 =
+      shared_ptr<node_t<int>>(new node_t<int>{1, nullptr});
+  shared_ptr<node_t<int>> L2 =
+      shared_ptr<node_t<int>>(new node_t<int>{2, nullptr});
   L1->next = L2;
-  shared_ptr<node_t<int>> L3 = shared_ptr<node_t<int>>(new node_t<int>{3, nullptr});
+  shared_ptr<node_t<int>> L3 =
+      shared_ptr<node_t<int>>(new node_t<int>{3, nullptr});
   L2->next = L3;
 
   cout << "before reverse" << endl;

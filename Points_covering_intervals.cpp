@@ -23,19 +23,17 @@ struct Interval {
 };
 
 template <typename TimeType>
-class LeftComp {
- public:
-  const bool operator()(const Interval<TimeType>* a,
-                        const Interval<TimeType>* b) const {
+struct LeftComp {
+  bool operator()(const Interval<TimeType>* a,
+                  const Interval<TimeType>* b) const {
     return a->left != b->left ? a->left < b->left : a->right < b->right;
   }
 };
 
 template <typename TimeType>
-class RightComp {
- public:
-  const bool operator()(const Interval<TimeType>* a,
-                        const Interval<TimeType>* b) const {
+struct RightComp {
+  bool operator()(const Interval<TimeType>* a,
+                  const Interval<TimeType>* b) const {
     return a->right != b->right ? a->right < b->right : a->left < b->left;
   }
 };

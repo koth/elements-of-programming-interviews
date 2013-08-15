@@ -1,10 +1,16 @@
-#include "Linked_list_prototype_template.h"
-#include <iostream>
-#include <cassert>
-#include <cstdlib>
-#include <ctime>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <cassert>
+#include <iostream>
+#include <random>
+
+#include "./Linked_list_prototype_template.h"
+
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::random_device;
+using std::uniform_int_distribution;
 
 // @include
 template <typename T>
@@ -23,11 +29,11 @@ shared_ptr<node_t<T>> even_odd_merge(const shared_ptr<node_t<T>> &L) {
     }
   }
 
-  // Odd number of nodes
+  // Odd number of nodes.
   if (even_curr) {
     pre_even_curr = even_curr;
   }
-  // Prevent empty list
+  // Prevents empty list.
   if (pre_even_curr) {
     pre_even_curr->next = odd;
   }
@@ -37,7 +43,7 @@ shared_ptr<node_t<T>> even_odd_merge(const shared_ptr<node_t<T>> &L) {
 
 int main(int argc, char *argv[]) {
   // input a list in reverse order.
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   shared_ptr<node_t<int>> head = nullptr;
   int n;
   if (argc > 2) {
@@ -50,7 +56,8 @@ int main(int argc, char *argv[]) {
     if (argc == 2) {
       n = atoi(argv[1]);
     } else {
-      n = 1 + rand() % 1000;
+      uniform_int_distribution<int> dis(1, 1000);
+      n = dis(gen);
     }
     for (int i = n - 1; i >= 0; --i) {
       shared_ptr<node_t<int>> curr = shared_ptr<node_t<int>>(new node_t<int>{i, nullptr});

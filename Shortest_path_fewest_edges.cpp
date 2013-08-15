@@ -33,10 +33,9 @@ struct GraphVertex {
 };
 
 template <typename DistanceType>
-class Comp {
- public:
-  const bool operator()(const GraphVertex<DistanceType>* lhs,
-                        const GraphVertex<DistanceType>* rhs) const {
+struct Comp {
+  bool operator()(const GraphVertex<DistanceType>* lhs,
+                  const GraphVertex<DistanceType>* rhs) const {
     return lhs->distance.first < rhs->distance.first ||
            (lhs->distance.first == rhs->distance.first &&
             lhs->distance.second < rhs->distance.second);

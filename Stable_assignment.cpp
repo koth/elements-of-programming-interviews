@@ -25,23 +25,23 @@ using std::vector;
 vector<pair<int, int>> find_stable_assignment(
     const vector<vector<int>> &professor_preference,
     const vector<vector<int>> &student_preference) {
-  queue<int> free_student;  // stores currently free students
+  queue<int> free_student;  // stores currently free students.
   for (int i = 0; i < student_preference.size(); ++i) {
     free_student.emplace(i);
   }
 
-  // Records the professor each student have asked
+  // Records the professors that each student have asked.
   vector<int> student_pref_idx(student_preference.size(), 0);
-  // Records each professor currently student choice
+  // Records the current student choice for each professor.
   vector<int> professor_choice(professor_preference.size(), -1);
 
   while (free_student.empty() == false) {
-    int i = free_student.front();   // free student
-    int j = student_preference[i][student_pref_idx[i]];   // target professor
+    int i = free_student.front();  // free student
+    int j = student_preference[i][student_pref_idx[i]];  // target professor
     if (professor_choice[j] == -1) {  // this professor is free
       professor_choice[j] = i;
       free_student.pop();
-    } else {  // this professor has student now
+    } else {  // this professor has student now.
       auto original_pref = distance(professor_preference[j].cbegin(),
                                     find(professor_preference[j].cbegin(),
                                          professor_preference[j].cend(),
@@ -49,7 +49,7 @@ vector<pair<int, int>> find_stable_assignment(
       auto new_pref = distance(professor_preference[j].cbegin(),
                                find(professor_preference[j].cbegin(),
                                     professor_preference[j].cend(), i));
-      if (new_pref < original_pref) {   // this professor prefers the new one
+      if (new_pref < original_pref) {  // this professor prefers the new one
         free_student.emplace(professor_choice[j]);
         professor_choice[j] = i;
         free_student.pop();
@@ -150,6 +150,11 @@ int main(int argc, char *argv[]) {
 
     vector<pair<int, int>> res = find_stable_assignment(professor_preference,
                                                         student_preference);
+    /*
+    for (int i = 0; i < res.size(); ++i) {
+      cout << res[i].first << ", " << res[i].second << endl;
+    }
+    */
     check_ans(professor_preference, student_preference, res);
   }
   return 0;

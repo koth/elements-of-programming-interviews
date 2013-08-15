@@ -22,7 +22,7 @@ pair<int, int> find_longest_increasing_subarray(const vector<T> &A) {
   pair<int, int> ans(0, 0);
   int i = 0;
   while (i < A.size()) {
-    // Check backwardly and skip if A[j] >= A[j + 1]
+    // Checks backwardly and skip if A[j] >= A[j + 1].
     bool is_skippable = false;
     for (int j = i + max_len - 1; j >= i; --j) {
       if (j + 1 >= A.size() || A[j] >= A[j + 1]) {
@@ -32,7 +32,7 @@ pair<int, int> find_longest_increasing_subarray(const vector<T> &A) {
       }
     }
 
-    // Check forwardly if it is not skippable
+    // Checks forwardly if it is not skippable.
     if (is_skippable == false) {
       i += max_len - 1;
       while (i + 1 < A.size() && A[i] < A[i + 1]) {

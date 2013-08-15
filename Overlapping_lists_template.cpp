@@ -1,69 +1,14 @@
-#include "Linked_list_prototype_template.h"
-#include <iostream>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
 #include <cassert>
-#include <cstdlib>
+#include <iostream>
 
-using namespace std;
+#include "./Checking_cycle.h"
+#include "./Linked_list_prototype_template.h"
+#include "./Overlapping_lists_no_cycle.h"
 
-template <typename T>
-shared_ptr<node_t<T>> has_cycle(const shared_ptr<node_t<T>> &head) {
-  shared_ptr<node_t<T>> fast = head, slow = head;
-
-  while (slow && slow->next && fast && fast->next && fast->next->next) {
-    slow = slow->next, fast = fast->next->next;
-    // Found cycle
-    if (slow == fast) {
-      // Calculate the cycle length
-      int cycle_len = 0;
-      do {
-        ++cycle_len;
-        fast = fast->next;
-      } while (slow != fast);
-
-      // Try to find the start of the cycle
-      slow = head, fast = head;
-      // Fast pointer advances cycle_len first
-      while (cycle_len--) {
-        fast = fast->next;
-      }
-      // Both pointers advance at the same time
-      while (slow != fast) {
-        slow = slow->next, fast = fast->next;
-      }
-      return slow;  // the start of cycle
-    }
-  }
-  return nullptr;  // no cycle
-}
-
-// Count the list length till end
-template <typename T>
-int count_len(shared_ptr<node_t<T>> L) {
-  int len = 0;
-  while (L) {
-    ++len, L = L->next;
-  }
-  return len;
-}
-
-template <typename T>
-shared_ptr<node_t<T>> overlapping_no_cycle_lists(
-  shared_ptr<node_t<T>> L1, shared_ptr<node_t<T>> L2) {
-  // Count the lengths of L1 and L2
-  int L1_len = count_len<T>(L1), L2_len = count_len<T>(L2);
-
-  while (L1_len > L2_len) {
-    L1 = L1->next, --L1_len;
-  }
-  while (L2_len > L1_len) {
-    L2 = L2->next, --L2_len;
-  }
-
-  while (L1 && L2 && L1 != L2) {
-    L1 = L1->next, L2 = L2->next;
-  }
-  return L1;  // nullptr means no overlap between L1 and L2
-}
+using std::cout;
+using std::endl;
 
 // @include
 template <typename T>
@@ -88,11 +33,15 @@ shared_ptr<node_t<T>> overlapping_lists(shared_ptr<node_t<T>> L1,
 int main(int argc, char *argv[]) {
   shared_ptr<node_t<int>> L1, L2;
   // L1: 1->2->3->null
-  L1 = shared_ptr<node_t<int>>(new node_t<int>{1, shared_ptr<node_t<int>>(new node_t<int>{2, shared_ptr<node_t<int>>(new node_t<int>{3, nullptr})})});
+  L1 = shared_ptr<node_t<int>>(
+    new node_t<int>{1, shared_ptr<node_t<int>>(
+      new node_t<int>{2, shared_ptr<node_t<int>>(
+        new node_t<int>{3, nullptr})})});
   L2 = L1->next->next;
   assert(overlapping_lists<int>(L1, L2)->data == 3);
   // L2: 4->5->null
-  L2 = shared_ptr<node_t<int>>(new node_t<int>{4, shared_ptr<node_t<int>>(new node_t<int>{5, nullptr})});
+  L2 = shared_ptr<node_t<int>>(
+    new node_t<int>{4, shared_ptr<node_t<int>>(new node_t<int>{5, nullptr})});
   assert(!overlapping_lists<int>(L1, L2));
   L1->next->next->next = L1;
   assert(!overlapping_lists<int>(L1, L2));

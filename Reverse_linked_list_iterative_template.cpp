@@ -1,22 +1,12 @@
-#include "Linked_list_prototype_template.h"
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
 #include <iostream>
-#include <cstdlib>
 
-using namespace std;
+#include "./Linked_list_prototype_template.h"
+#include "./Reverse_linked_list_iterative_template.h"
 
-// @include
-template <typename T>
-shared_ptr<node_t<T>> reverse_linked_list(const shared_ptr<node_t<T>> &head) {
-  shared_ptr<node_t<T>> prev = nullptr, curr = head;
-  while (curr) {
-    shared_ptr<node_t<T>> temp = curr->next;
-    curr->next = prev;
-    prev = curr;
-    curr = temp;
-  }
-  return prev;
-}
-// @exclude
+using std::cout;
+using std::endl;
 
 template <typename T>
 void print(shared_ptr<node_t<T>> head) {
@@ -27,10 +17,13 @@ void print(shared_ptr<node_t<T>> head) {
 }
 
 int main(int argc, char *argv[]) {
-  shared_ptr<node_t<int>> L1 = shared_ptr<node_t<int>>(new node_t<int>{1, nullptr});
-  shared_ptr<node_t<int>> L2 = shared_ptr<node_t<int>>(new node_t<int>{2, nullptr});
+  shared_ptr<node_t<int>> L1 =
+      shared_ptr<node_t<int>>(new node_t<int>{1, nullptr});
+  shared_ptr<node_t<int>> L2 =
+      shared_ptr<node_t<int>>(new node_t<int>{2, nullptr});
   L1->next = L2;
-  shared_ptr<node_t<int>> L3 = shared_ptr<node_t<int>>(new node_t<int>{3, nullptr});
+  shared_ptr<node_t<int>> L3 =
+      shared_ptr<node_t<int>>(new node_t<int>{3, nullptr});
   L2->next = L3;
 
   cout << "before reverse" << endl;

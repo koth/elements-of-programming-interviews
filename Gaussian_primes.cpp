@@ -18,18 +18,17 @@ bool is_unit(const complex<int>& z) {
          (z.real() == 0 && z.imag() == -1);
 }
 
-class ComplexCompare {
-  public:
-    const bool operator()(const complex<double>& lhs,
-                          const complex<double>& rhs) const {
-      if (norm(lhs) != norm(rhs)) {
-        return norm(lhs) < norm(rhs);
-      } else if (lhs.real() != rhs.real()) {
-        return lhs.real() < rhs.real();
-      } else {
-        return lhs.imag() < rhs.imag();
-      }
+struct ComplexCompare {
+  bool operator()(const complex<double>& lhs, 
+                  const complex<double>& rhs) const {
+    if (norm(lhs) != norm(rhs)) {
+      return norm(lhs) < norm(rhs);
+    } else if (lhs.real() != rhs.real()) {
+      return lhs.real() < rhs.real();
+    } else {
+      return lhs.imag() < rhs.imag();
     }
+  }
 };
 
 vector<complex<int>> generate_Gaussian_primes(const int& n) {

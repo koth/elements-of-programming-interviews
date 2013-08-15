@@ -35,8 +35,7 @@ struct BinaryTree {
   shared_ptr<BinaryTree> left, right;
 };
 
-class Compare {
- public:
+struct Compare {
   bool operator()(const shared_ptr<BinaryTree> &lhs,
                   const shared_ptr<BinaryTree> &rhs) const {
     return lhs->prob > rhs->prob;

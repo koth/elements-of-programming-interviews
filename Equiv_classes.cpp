@@ -34,7 +34,7 @@ int backtrace(const vector<int> &F, int idx) {
  */
 vector<int> compute_equival_classes(int n, const vector<int> &A,
                                     const vector<int> &B) {
-  // Each element maps to itself
+  // Each element maps to itself.
   vector<int> F(n);
   iota(F.begin(), F.end(), 0);
 
@@ -43,7 +43,7 @@ vector<int> compute_equival_classes(int n, const vector<int> &A,
     a < b ? F[b] = a : F[a] = b;
   }
 
-  // Generate the weakest equivalence relation
+  // Generates the weakest equivalence relation.
   for (int &f : F) {
     while (f != F[f]) {
       f = F[f];

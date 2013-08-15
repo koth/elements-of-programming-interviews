@@ -1,34 +1,42 @@
-#include "Linked_list_prototype_template.h"
-#include <stdexcept>
-#include <iostream>
-#include <cstdlib>
-#include <ctime>
-#include <cassert>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <cassert>
+#include <iostream>
+#include <random>
+#include <stdexcept>
+
+#include "./Linked_list_prototype_template.h"
+
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::exception;
+using std::length_error;
+using std::random_device;
+using std::uniform_int_distribution;
 
 // @include
 template <typename T>
 double find_median_sorted_circular_linked_list(
     const shared_ptr<node_t<T>>& r_node) {
   if (!r_node) {
-    throw length_error("empty list");  // no node in this linked list
+    throw length_error("empty list");  // no node in this linked list.
   }
 
-  // Check all nodes are identical or not and identify the start of list
+  // Checks all nodes are identical or not and identify the start of list.
   shared_ptr<node_t<T>> curr = r_node, start = r_node;
   int count = 0;
   do {
     ++count, curr = curr->next;
-    // start will point to the largest element in the list
+    // start will point to the largest element in the list.
     if (start->data <= curr->data) {
       start = curr;
     }
   } while (curr != r_node);
-  // start's next is the begin of the list
+  // start's next is the begin of the list.
   start = start->next;
 
-  // Traverse to the middle of the list and return the median
+  // Traverses to the middle of the list and return the median.
   for (int i = 0; i < (count - 1) >> 1; ++i) {
     start = start->next;
   }
@@ -37,13 +45,14 @@ double find_median_sorted_circular_linked_list(
 // @exclude
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n;
     if (argc == 2) {
       n = atoi(argv[1]);
     } else {
-      n = 1 + rand() % 1000;
+      uniform_int_distribution<int> dis(1, 1000);
+      n = dis(gen);
     }
     shared_ptr<node_t<int>> head;
     for (int i = n; i >= 0; --i) {

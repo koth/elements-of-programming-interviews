@@ -3,12 +3,17 @@
 #include <cassert>
 #include <iostream>
 #include <limits>
+#include <random>
 
 #include "./swap_bits.h"
 
 using std::cout;
+using std::default_random_engine;
 using std::endl;
 using std::numeric_limits;
+using std::random_device;
+using std::uniform_int_distribution;
+
 
 void simple_test() {
   assert(swap_bits(47, 1, 4) == 61);

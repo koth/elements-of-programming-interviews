@@ -14,7 +14,7 @@ using std::length_error;
 // @include
 template <typename T>
 void remove_kth_last(shared_ptr<node_t<T>> &L, int k) {
-  // Advance k steps first.
+  // Advances k steps first.
   shared_ptr<node_t<T>> ahead = L;
   int num = k;
   while (ahead && num) {
@@ -27,7 +27,7 @@ void remove_kth_last(shared_ptr<node_t<T>> &L, int k) {
   }
 
   shared_ptr<node_t<T>> pre = nullptr, curr = L;
-  // Find the k-th last node
+  // Finds the k-th last node.
   while (ahead) {
     pre = curr;
     curr = curr->next, ahead = ahead->next;
@@ -35,7 +35,7 @@ void remove_kth_last(shared_ptr<node_t<T>> &L, int k) {
   if (pre) {
     pre->next = curr->next;
   } else {
-    L = curr->next;  // special case: delete L
+    L = curr->next;  // special case: delete L.
   }
 }
 // @exclude

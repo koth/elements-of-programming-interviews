@@ -27,41 +27,40 @@ struct Jug {
 
 class PairEqual {
  public:
-  const bool operator()(const pair<int, int>& a,
-                        const pair<int, int>& b) const {
+  bool operator()(const pair<int, int>& a, const pair<int, int>& b) const {
     return a.first == b.first && a.second == b.second;
   }
 };
 
 class HashPair {
  public:
-  const size_t operator()(const pair<int, int>& p) const {
+  size_t operator()(const pair<int, int>& p) const {
     return hash<int>()(p.first) ^ hash<int>()(p.second);
   }
 };
 
-bool check_feasible_helper(const vector<Jug>& jugs, const int& L,
-                           const int& H, unordered_set<pair<int, int>,
-                                                       HashPair,
-                                                       PairEqual>& c) {
-  if (L > H || c.find({L, H}) != c.cend() || (L < 0 && H < 0)) {
+bool check_feasible_helper(const vector<Jug>& jugs, int L, int H, 
+                           unordered_set<pair<int, int>,
+                                         HashPair,
+                                         PairEqual>* c) {
+  if (L > H || c->find({L, H}) != c->cend() || (L < 0 && H < 0)) {
     return false;
   }
 
-  // Check the volume for each jug to see if it is possible
+  // Checks the volume for each jug to see if it is possible.
   for (const Jug &j : jugs) {
     if ((L <= j.low && j.high <= H) ||  // base case: j is contained in [L, H]
-      check_feasible_helper(jugs, L - j.low, H - j.high, c)) {
+        check_feasible_helper(jugs, L - j.low, H - j.high, c)) {
       return true;
     }
   }
-  c.emplace(L, H);  // marks this as impossible
+  c->emplace(L, H);  // marks this as impossible
   return false;
 }
 
-bool check_feasible(const vector<Jug>& jugs, const int& L, const int& H) {
+bool check_feasible(const vector<Jug>& jugs, int L, int H) {
   unordered_set<pair<int, int>, HashPair, PairEqual> cache;
-  return check_feasible_helper(jugs, L, H, cache);
+  return check_feasible_helper(jugs, L, H, &cache);
 }
 // @exclude
 

@@ -19,10 +19,8 @@ using std::vector;
 
 // @include
 template <typename T>
-class Compare {
- public:
-  const bool operator()(const pair<T, int>& lhs,
-                        const pair<T, int>& rhs) const {
+struct Compare {
+  bool operator()(const pair<T, int>& lhs, const pair<T, int>& rhs) const {
     return lhs.first > rhs.first;
   }
 };

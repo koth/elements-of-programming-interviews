@@ -1,10 +1,12 @@
-#include "Linked_list_prototype_template.h"
-#include <cstdio>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
 #include <cassert>
 #include <iostream>
-#include <cstdlib>
 
-using namespace std;
+#include "Linked_list_prototype_template.h"
+
+using std::cout;
+using std::endl;
 
 // @include
 template <typename T>
@@ -13,29 +15,30 @@ shared_ptr<node_t<T>> has_cycle(const shared_ptr<node_t<T>> &head) {
 
   while (slow && slow->next && fast && fast->next && fast->next->next) {
     slow = slow->next, fast = fast->next->next;
-    // Found cycle
-    if (slow == fast) {
-      // Try to find the start of the cycle
+    if (slow == fast) {  // there is a cycle.
+      // Tries to find the start of the cycle.
       slow = head;
-      // Both pointers advance at the same time
+      // Both pointers advance at the same time.
       while (slow != fast) {
         slow = slow->next, fast = fast->next;
       }
-      return slow;  // slow is the start of cycle
+      return slow;  // slow is the start of cycle.
     }
   }
-  return nullptr;  // means no cycle
+  return nullptr;  // means no cycle.
 }
 // @exclude
 
 int main(int argc, char *argv[]) {
-  shared_ptr<node_t<int>> L3 = shared_ptr<node_t<int>>(new node_t<int>{3, nullptr});
+  shared_ptr<node_t<int>> L3 =
+      shared_ptr<node_t<int>>(new node_t<int>{3, nullptr});
   shared_ptr<node_t<int>> L2 = shared_ptr<node_t<int>>(new node_t<int>{2, L3});
   shared_ptr<node_t<int>> L1 = shared_ptr<node_t<int>>(new node_t<int>{1, L2});
 
   // should output "L1 does not have cycle."
   assert(has_cycle(L1) == shared_ptr<node_t<int>>(nullptr));
-  cout << "L1 " << (has_cycle(L1) ? "has" : "does not have") << " cycle." << endl;
+  cout << "L1 " << (has_cycle(L1) ? "has" : "does not have")
+       << " cycle." << endl;
 
   // make it a cycle
   L3->next = L2;
