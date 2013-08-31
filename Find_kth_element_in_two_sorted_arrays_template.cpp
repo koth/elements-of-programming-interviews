@@ -1,12 +1,21 @@
-#include <iostream>
-#include <vector>
-#include <ctime>
-#include <cstdlib>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
 #include <algorithm>
 #include <cassert>
-#include <limits.h>
+#include <iostream>
+#include <limits>
+#include <random>
+#include <vector>
 
-using namespace std;
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::max;
+using std::min;
+using std::numeric_limits;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 /*
 template <typename T>
@@ -48,11 +57,11 @@ T find_kth_in_two_sorted_arrays(
 */
 // @include
 template <typename T>
-T find_kth_in_two_sorted_arrays(const vector<T> &A, const vector<T> &B, 
-                                const int &k) {
-  // Lower bound of elements we will choose in A
+T find_kth_in_two_sorted_arrays(const vector<T> &A, const vector<T> &B,
+                                int k) {
+  // Lower bound of elements we will choose in A.
   int l = max(0, static_cast<int>(k - B.size()));
-  // Upper bound of elements we will choose in A
+  // Upper bound of elements we will choose in A.
   int u = min(static_cast<int>(A.size()), k);
 
   while (l < u) {
@@ -67,7 +76,7 @@ T find_kth_in_two_sorted_arrays(const vector<T> &A, const vector<T> &B,
     } else if (A_x_1 > B_k_x) {
       u = x - 1;
     } else {
-      // B[k - x - 1] <= A[x] && A[x - 1] < B[k - x]
+      // B[k - x - 1] <= A[x] && A[x - 1] < B[k - x].
       return max(A_x_1, B_k_x_1);
     }
   }
@@ -79,7 +88,7 @@ T find_kth_in_two_sorted_arrays(const vector<T> &A, const vector<T> &B,
 // @exclude
 
 template <typename T>
-T check_answer(const vector<T> &A, const vector<T> &B, const int &k) {
+T check_answer(const vector<T> &A, const vector<T> &B, int k) {
   int i = 0, j = 0, count = 0;
   T ret;
   while ((i < A.size() || j < B.size()) && count < k) {
@@ -103,7 +112,7 @@ T check_answer(const vector<T> &A, const vector<T> &B, const int &k) {
   return ret;
 }
 
-int main(int argc, char *argv[]) {
+void small_test() {
   // AA: handwritten test
   vector<int> A0;
   vector<int> B0;
@@ -115,28 +124,35 @@ int main(int argc, char *argv[]) {
   B0.emplace_back(1);
   B0.emplace_back(2);
   B0.emplace_back(3);
-  cout << "AA hand test output " << find_kth_in_two_sorted_arrays(A0, B0, 1) << endl;
-  assert( 0 == find_kth_in_two_sorted_arrays(A0, B0, 1));
+  cout << "test output " << find_kth_in_two_sorted_arrays(A0, B0, 1) << endl;
+  assert(0 == find_kth_in_two_sorted_arrays(A0, B0, 1));
+}
 
-  srand(time(nullptr));
+int main(int argc, char *argv[]) {
+  small_test();
+  default_random_engine gen((random_device())());
   // Random test 10000 times
   for (int times = 0; times < 10000; ++times) {
     vector<int> A, B;
     int n, m, k;
     if (argc == 3) {
       n = atoi(argv[1]), m = atoi(argv[2]);
-      k = 1 + rand() % (n + m);
+      uniform_int_distribution<int> k_dis(1, n + m);
+      k = k_dis(gen);
     } else if (argc == 4) {
       n = atoi(argv[1]), m = atoi(argv[2]), k = atoi(argv[3]);
     } else {
-      n = 1 + rand() % 10000, m = 1 + rand() % 10000;
-      k = 1 + rand() % (n + m);
+      uniform_int_distribution<int> dis(1, 10000);
+      n = dis(gen), m = dis(gen);
+      uniform_int_distribution<int> k_dis(1, n + m);
+      k = k_dis(gen);
     }
+    uniform_int_distribution<int> dis(0, 99999);
     for (size_t i = 0; i < n; ++i) {
-      A.emplace_back(rand() % 100000);
+      A.emplace_back(dis(gen));
     }
     for (size_t i = 0; i < m; ++i) {
-      B.emplace_back(rand() % 100000);
+      B.emplace_back(dis(gen));
     }
     sort(A.begin(), A.end()), sort(B.begin(), B.end());
     /*

@@ -1,8 +1,6 @@
 // Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
 #include <cassert>
-#include <cmath>
-#include <functional>
 #include <iostream>
 #include <queue>
 #include <random>
@@ -21,14 +19,14 @@ using std::vector;
 
 // @include
 struct Num {
-  Num(const int &a, const int &b) : a(a), b(b), val(a + b * sqrt(2)) {}
+  Num(int a, int b) : a(a), b(b), val(a + b * sqrt(2)) {}
 
-  const bool operator<(const Num &n) const {
+  bool operator<(const Num &n) const {
     return val > n.val;
   }
 
-  // Equal function for hash
-  const bool operator==(const Num &n) const {
+  // Equal function for hash.
+  bool operator==(const Num &n) const {
     return a == n.a && b == n.b;
   }
 
@@ -36,20 +34,20 @@ struct Num {
   double val;
 };
 
-// Hash function for Num
+// Hash function for Num.
 class HashNum {
  public:
-  const size_t operator()(const Num &n) const {
+  size_t operator()(const Num &n) const {
     return hash<int>()(n.a) ^ hash<int>()(n.b);
   }
 };
 
-vector<Num> generate_first_k(const int &k) {
+vector<Num> generate_first_k(int k) {
   priority_queue<Num, vector<Num>> min_heap;
   vector<Num> smallest;
   unordered_set<Num, HashNum> hash;
 
-  // Initial for 0 + 0 * sqrt(2)
+  // Initial for 0 + 0 * sqrt(2).
   min_heap.emplace(0, 0);
   hash.emplace(0, 0);
 
@@ -59,7 +57,7 @@ vector<Num> generate_first_k(const int &k) {
     hash.erase(s);
     min_heap.pop();
 
-    // Add the next two numbers derived from s
+    // Add the next two numbers derived from s.
     Num c1(s.a + 1, s.b), c2(s.a, s.b + 1);
     if (hash.emplace(c1).second) {
       min_heap.emplace(c1);

@@ -1,26 +1,30 @@
-#include "Binary_tree_prototype_template.h"
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
 #include <iostream>
 
-using namespace std;
+#include "./Binary_tree_prototype_template.h"
+
+using std::cout;
+using std::endl;
 
 // @include
 template <typename T>
 void inorder_traversal(shared_ptr<BinaryTree<T>> n) {
   while (n) {
     if (n->left) {
-      // Find the predecessor of n
+      // Find the predecessor of n.
       shared_ptr<BinaryTree<T>> pre = n->left;
       while (pre->right && pre->right != n) {
         pre = pre->right;
       }
 
-      // Build the successor link
+      // Build the successor link.
       if (pre->right) {  // pre->right == n
-        // Revert the successor link if predecessor's successor is n
+        // Revert the successor link if predecessor's successor is n.
         pre->right = nullptr;
         cout << n->data << endl;
         n = n->right;
-      } else {  // if predecessor's successor is not n
+      } else {  // if predecessor's successor is not n.
         pre->right = n;
         n = n->left;
       }
@@ -36,7 +40,8 @@ int main(int argc, char *argv[]) {
   //      3
   //    2   5
   //  1    4 6
-  shared_ptr<BinaryTree<int>> root = shared_ptr<BinaryTree<int>>(new BinaryTree<int>{3});
+  shared_ptr<BinaryTree<int>> root =
+      shared_ptr<BinaryTree<int>>(new BinaryTree<int>{3});
   root->left = shared_ptr<BinaryTree<int>>(new BinaryTree<int>{2});
   root->left->left = shared_ptr<BinaryTree<int>>(new BinaryTree<int>{1});
   root->right = shared_ptr<BinaryTree<int>>(new BinaryTree<int>{5});

@@ -33,7 +33,7 @@ string rand_string(int len) {
 class Trie {
  public:
   // @exclude
-  ~Trie() {
+  virtual ~Trie() {
     clear();
   }
   // @include
@@ -46,8 +46,8 @@ class Trie {
       p = p->l[c];
     }
 
-    // s already existed in this trie
-    if (p->isString == true) {
+    // s already existed in this trie.
+    if (p->isString) {
       return false;
     } else {  // p->isString == false
       p->isString = true;  // inserts s into this trie
@@ -93,7 +93,7 @@ class Trie {
 };
 
 string find_shortest_prefix(const string& s, const unordered_set<string>& D) {
-  // Build a trie according to given dictionary D
+  // Build a trie according to given dictionary D.
   Trie T;
   for (const string& word : D) {
     T.insert(word);

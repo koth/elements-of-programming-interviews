@@ -1,32 +1,37 @@
-#include "Binary_tree_prototype_template.h"
-#include "Binary_tree_utils.h"
-#include <algorithm>
-#include <iterator>
-#include <vector>
-#include <ctime>
-#include <cstdlib>
-#include <iostream>
-#include <limits>
-#include <cassert>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <algorithm>
+#include <cassert>
+#include <iostream>
+#include <random>
+#include <vector>
+
+#include "./Binary_tree_prototype_template.h"
+#include "./Binary_tree_utils.h"
+
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
 template <typename T>
 shared_ptr<BinaryTree<T>> reconstruct_pre_in_orders_helper(
-    const vector<T> &pre, const int &pre_s, const int &pre_e,
-    const vector<T> &in, const int &in_s, const int &in_e) {
+    const vector<T>& pre, int pre_s, int pre_e,
+    const vector<T>& in, int in_s, int in_e) {
   if (pre_e > pre_s && in_e > in_s) {
     auto it = find(in.cbegin() + in_s, in.cbegin() + in_e, pre[pre_s]);
     auto left_tree_size = distance(in.cbegin(), it) - in_s;
 
     return shared_ptr<BinaryTree<T>>(new BinaryTree<T>{
       pre[pre_s],
-      // Recursively build the left subtree
+      // Recursively build the left subtree.
       reconstruct_pre_in_orders_helper<T>(
         pre, pre_s + 1, pre_s + 1 + left_tree_size,
         in, in_s, distance(in.cbegin(), it)),
-      // Recursively build the right subtree
+      // Recursively build the right subtree.
       reconstruct_pre_in_orders_helper<T>(
         pre, pre_s + 1 + left_tree_size, pre_e,
         in, distance(in.cbegin(), it) + 1, in_e)
@@ -36,22 +41,23 @@ shared_ptr<BinaryTree<T>> reconstruct_pre_in_orders_helper(
 }
 
 template <typename T>
-shared_ptr<BinaryTree<T>> reconstruct_pre_in_orders(const vector<T> &pre,
-                                                    const vector<T> &in) {
+shared_ptr<BinaryTree<T>> reconstruct_pre_in_orders(const vector<T>& pre,
+                                                    const vector<T>& in) {
   return reconstruct_pre_in_orders_helper(pre, 0, pre.size(),
                                           in, 0, in.size());
 }
 // @exclude
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     cout << times << endl;
     int n;
     if (argc == 2) {
       n = atoi(argv[1]);
     } else {
-      n = 1 + rand() % 10000;
+      uniform_int_distribution<int> dis(1, 10000);
+      n = dis(gen);
     }
     shared_ptr<BinaryTree<int>> root = generate_rand_binary_tree<int>(n, true);
     vector<int> pre = generate_preorder(root);

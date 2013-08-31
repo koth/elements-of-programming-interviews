@@ -1,22 +1,23 @@
-#include <iostream>
-#include <cassert>
-#ifdef __clang__
-#include <unordered_map>
-#else
-#include <tr1/unordered_map>
-#endif
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
-#ifndef __clang__
-using namespace std::tr1;
-#endif
+#include <algorithm>
+#include <cassert>
+#include <iostream>
+#include <limits>
+#include <unordered_map>
+
+using std::cout;
+using std::endl;
+using std::max;
+using std::min;
+using std::numeric_limits;
+using std::unordered_map;
 
 // @include
 double compute_best_payoff_helper(
     unordered_map<int,
                   unordered_map<int, unordered_map<int, double>>> &cache,
-    const double &upper_bound, const int &cash, const int &num_red,
-    const int &num_cards) {
+    double upper_bound, int cash, int num_red, int num_cards) {
   if (cash >= upper_bound) {
     return cash;
   }
@@ -46,7 +47,7 @@ double compute_best_payoff_helper(
   return cache[cash][num_red][num_cards];
 }
 
-double compute_best_payoff(const int &cash) {
+double compute_best_payoff(int cash) {
   double upper_bound = 9.09 * cash;
   unordered_map<int, unordered_map<int, unordered_map<int, double>>> cache;
   return compute_best_payoff_helper(cache, upper_bound, cash, 26, 52);

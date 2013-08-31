@@ -1,37 +1,47 @@
-#include <iostream>
-#include <ctime>
-#include <cassert>
-#include <vector>
-#include <cstdlib>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <cassert>
+#include <iostream>
+#include <random>
+#include <vector>
+
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
-int close_search(const vector<int> &A, const int &k) {
+int close_search(const vector<int> &A, int k) {
   int idx = 0;
   while (idx < A.size() && A[idx] != k) {
     idx += abs(A[idx] - k);
   }
-  return idx < A.size() ? idx : -1;  // -1 means no result
+  return idx < A.size() ? idx : -1;  // -1 means no result.
 }
 // @exclude
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 10000; ++times) {
     int n;
     if (argc == 2) {
       n = atoi(argv[1]);
     } else {
-      n = 1 + rand() % 10000;
+      uniform_int_distribution<int> dis(1, 10000);
+      n = dis(gen);
     }
     vector<int> A;
-    A.emplace_back(rand() % 10);
+    uniform_int_distribution<int> dis(0, 9);
+    A.emplace_back(dis(gen));
     for (size_t i = 1; i < n; ++i) {
-      int shift = (rand() % 3) - 1;
+      uniform_int_distribution<int> shift_dis(-1, 1);
+      int shift = shift_dis(gen);
       A.emplace_back(A[i - 1] + shift);
     }
-    int k = rand() % 100;
+    uniform_int_distribution<int> k_dis(0, 99);
+    int k = k_dis(gen);
     int ans = close_search(A, k);
     cout << ans << endl;
     if (ans != -1) {

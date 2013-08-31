@@ -1,19 +1,19 @@
-#include <iostream>
-#include <cstdlib>
-#include <ctime>
-#include <vector>
-#include <cassert>
-#include <algorithm>
-#ifdef __clang__
-#include <unordered_set>
-#else
-#include <tr1/unordered_set>
-#endif
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
-#ifndef __clang__
-using namespace std::tr1;
-#endif
+#include <algorithm>
+#include <cassert>
+#include <iostream>
+#include <random>
+#include <unordered_set>
+#include <vector>
+
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::unordered_set;
+using std::vector;
 
 // @include
 int search_index_value_equal(const vector<int> &A) {
@@ -45,7 +45,7 @@ int check_ans(const vector<int> &A) {
 }
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n;
     vector<int> A;
@@ -53,13 +53,16 @@ int main(int argc, char *argv[]) {
     if (argc == 2) {
       n = atoi(argv[1]);
     } else {
-      n = 1 + rand() % 1000;
+      uniform_int_distribution<int> dis(1, 1000);
+      n = dis(gen);
     }
     for (int i = 0; i < n; ++i) {
       int x;
       unordered_set<int>::iterator iter;
       do {
-        x = ((rand() & 1) ? -1 : 1) * rand() % 1000;
+        uniform_int_distribution<int> pos_or_neg(0, 1);
+        uniform_int_distribution<int> dis(0, 999);
+        x = ((pos_or_neg(gen) & 1) ? -1 : 1) * dis(gen);
         iter = table.find(x);
       } while (iter != table.cend());
       table.emplace_hint(iter, x);

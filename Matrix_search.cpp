@@ -1,10 +1,18 @@
-#include <iostream>
-#include <vector>
-#include <cstdlib>
-#include <ctime>
-#include <cassert>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <algorithm>
+#include <cassert>
+#include <iostream>
+#include <random>
+#include <vector>
+
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::max;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
 template <typename T>
@@ -23,7 +31,7 @@ bool matrix_search(const vector<vector<T>> &A, const T &x) {
 }
 // @exclude
 
-// O(n^2) solution for verifying answer
+// O(n^2) solution for verifying answer.
 template <typename T>
 bool brute_force_search(const vector<vector<T>> &A, const T &x) {
   for (int i = 0; i < A.size(); ++i) {
@@ -37,24 +45,28 @@ bool brute_force_search(const vector<vector<T>> &A, const T &x) {
 }
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 10000; ++times) {
     int n, m;
     if (argc == 3) {
       n = atoi(argv[1]), m = atoi(argv[2]);
     } else {
-      n = 1 + rand() % 100, m = 1 + rand() % 100;
+      uniform_int_distribution<int> dis(1, 100);
+      n = dis(gen), m = dis(gen);
     }
     vector<vector<int>> A(n, vector<int>(m));
-    A[0][0] = rand() % 100;
+    uniform_int_distribution<int> dis(0, 99);
+    A[0][0] = dis(gen);
     for (int i = 0; i < n; ++i) {
       for (int j = 0; j < m; ++j) {
         int up = (i == 0) ? 0 : A[i - 1][j];
         int left = (j == 0) ? 0 : A[i][j - 1];
-        A[i][j] = max(up, left) + 1 + rand() % 20;
+        uniform_int_distribution<int> shift_dis(1, 20);
+        A[i][j] = max(up, left) + shift_dis(gen);
       }
     }
-    int x = rand() % 1000;
+    uniform_int_distribution<int> x_dis(0, 999);
+    int x = x_dis(gen);
     assert(brute_force_search(A, x) == matrix_search(A, x));
   }
   return 0;

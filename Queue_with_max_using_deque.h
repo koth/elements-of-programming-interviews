@@ -18,14 +18,14 @@ class Queue {
  public:
   void enqueue(const T& x) {
     Q_.emplace(x);
-    while (D_.empty() == false && D_.back() < x) {
+    while (!D_.empty() && D_.back() < x) {
       D_.pop_back();
     }
     D_.emplace_back(x);
   }
 
-  T dequeue(void) {
-    if (Q_.empty() == false) {
+  T dequeue() {
+    if (!Q_.empty()) {
       T ret = Q_.front();
       if (ret == D_.front()) {
         D_.pop_front();
@@ -37,17 +37,17 @@ class Queue {
   }
 
   const T& max(void) const {
-    if (D_.empty() == false) {
+    if (!D_.empty()) {
       return D_.front();
     }
     throw length_error("empty queue");
   }
   // @exclude
-  T& head(void) {
+  T& head() {
     return Q_.front();
   }
 
-  const T& head(void) const {
+  const T& head() const {
     return Q_.front();
   }
   // @include

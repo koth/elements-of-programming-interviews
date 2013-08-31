@@ -1,13 +1,13 @@
-#include <iostream>
-#include <vector>
-#include <string>
-#include <sstream>
-#include <algorithm>
-#include <iterator>
-#include <cassert>
-#include <stack>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <cassert>
+#include <sstream>
+#include <stack>
+#include <string>
+
+using std::stack;
+using std::string;
+using std::stringstream;
 
 // @include
 int eval(const string &s) {
@@ -44,13 +44,13 @@ int eval(const string &s) {
 // @exclude
 
 int main(int argc, char *argv[]) {
-  assert (0 == eval("2,-10,/"));
-  assert (-5 == eval("-10,2,/"));
-  assert (5 == eval("-10,-2,/"));
-  assert (-5 == eval("5,10,-"));
-  assert (-6 == eval("-10,-16,-"));
-  assert (12 == eval("10,2,+"));
-  assert (15 == eval("1,2,+,3,4,*,+"));
-  assert (42 == eval("1,2,3,4,5,+,*,+,+,3,4,*,+"));
+  assert(0 == eval("2,-10,/"));
+  assert(-5 == eval("-10,2,/"));
+  assert(5 == eval("-10,-2,/"));
+  assert(-5 == eval("5,10,-"));
+  assert(6 == eval("-10,-16,-"));
+  assert(12 == eval("10,2,+"));
+  assert(15 == eval("1,2,+,3,4,*,+"));
+  assert(42 == eval("1,2,3,4,5,+,*,+,+,3,4,*,+"));
   return 0;
 }

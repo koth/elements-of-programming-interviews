@@ -1,18 +1,32 @@
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
 #include <iostream>
-#include <sstream>
+#include <functional>
 #include <queue>
-#include <cstdlib>
-#include <ctime>
+#include <random>
+#include <sstream>
+#include <string>
 #include <vector>
 
-using namespace std;
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::greater;
+using std::istringstream;
+using std::less;
+using std::priority_queue;
+using std::random_device;
+using std::string;
+using std::stringstream;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
 template <typename T>
 void online_median(istringstream &sin) {
-  // Min-heap stores the bigger part of the stream
+  // Min-heap stores the bigger part of the stream.
   priority_queue<T, vector<T>, greater<T>> H;
-  // Max-heap stores the smaller part of the stream
+  // Max-heap stores the smaller part of the stream.
   priority_queue<T, vector<T>, less<T>> L;
 
   T x;
@@ -40,16 +54,18 @@ void online_median(istringstream &sin) {
 // @exclude
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   int num;
   if (argc == 2) {
     num = atoi(argv[1]);
   } else {
-    num = 1 + rand() % 100000;
+    uniform_int_distribution<int> dis(1, 100000);
+    num = dis(gen);
   }
   vector<int> stream;
   for (int i = 0; i < num; ++i) {
-    stream.emplace_back(rand() % 10000);
+    uniform_int_distribution<int> dis(1, 10000);
+    stream.emplace_back(dis(gen));
   }
   string s;
   for (int i = 0; i < stream.size(); ++i) {

@@ -1,16 +1,21 @@
-#include <memory>
-#include <iostream>
-#include <stdexcept>
-#include <cassert>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <cassert>
+#include <iostream>
+#include <memory>
+#include <stdexcept>
+
+using std::cout;
+using std::endl;
+using std::exception;
+using std::length_error;
+using std::shared_ptr;
 
 template <typename T>
-class BinaryTree {
-  public:
-    T data;
-    shared_ptr<BinaryTree<T>> left, right;
-    int size;
+struct BinaryTree {
+  T data;
+  shared_ptr<BinaryTree<T>> left, right;
+  int size;
 };
 
 // @include
@@ -42,7 +47,8 @@ int main(int argc, char *argv[]) {
   //      3
   //    2   5
   //  1    4 6
-  shared_ptr<BinaryTree<int>> root = shared_ptr<BinaryTree<int>>(new BinaryTree<int>());
+  shared_ptr<BinaryTree<int>> root =
+      shared_ptr<BinaryTree<int>>(new BinaryTree<int>());
   root->size = 6;
   root->data = 3;
   root->left = shared_ptr<BinaryTree<int>>(new BinaryTree<int>());
@@ -63,7 +69,7 @@ int main(int argc, char *argv[]) {
   // should throw
   try {
     find_kth_node_binary_tree<int>(root, 0);
-  } catch (exception &e) {
+  } catch(const exception &e) {
     cout << e.what() << endl;
   };
   // should output 1
@@ -87,7 +93,7 @@ int main(int argc, char *argv[]) {
   // should throw
   try {
     find_kth_node_binary_tree<int>(root, 7);
-  } catch (exception &e) {
+  } catch(const exception &e) {
     cout << e.what() << endl;
   };
   return 0;

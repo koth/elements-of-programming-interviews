@@ -1,11 +1,17 @@
-#include <iostream>
-#include <cassert>
-#include <vector>
-#include <cstdlib>
-#include <ctime>
-#include <algorithm>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <algorithm>
+#include <cassert>
+#include <iostream>
+#include <random>
+#include <vector>
+
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 /*
 template <typename T>
@@ -46,9 +52,10 @@ int search_smallest(const vector<T> &A) {
   return search_smallest_helper(A, 0, A.size() - 1);
 }
 */
+
 // @include
 template <typename T>
-int search_smallest_helper(const vector<T> &A, const int &l, const int &r) {
+int search_smallest_helper(const vector<T> &A, int l, int r) {
   if (l == r) {
     return l;
   }
@@ -59,7 +66,7 @@ int search_smallest_helper(const vector<T> &A, const int &l, const int &r) {
   } else if (A[m] < A[r]) {
     return search_smallest_helper(A, l, m);
   } else {  // A[m] == A[r]
-    // Smallest element must exist in either left or right side
+    // Smallest element must exist in either left or right side.
     int l_res = search_smallest_helper(A, l, m);
     int r_res = search_smallest_helper(A, m + 1, r);
     return A[r_res] < A[l_res] ? r_res : l_res;
@@ -73,20 +80,23 @@ int search_smallest(const vector<T> &A) {
 // @exclude
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 10000; ++times) {
     int n;
     if (argc == 2) {
       n = atoi(argv[1]);
     } else {
-      n = 1 + rand() % 10000;
+      uniform_int_distribution<int> dis(1, 10000);
+      n = dis(gen);
     }
     vector<int> A;
     for (size_t i = 0; i < n; ++i) {
-      A.emplace_back(rand());
+      uniform_int_distribution<int> dis(0, 999999);
+      A.emplace_back(dis(gen));
     }
     sort(A.begin(), A.end());
-    int shift = rand() % n;
+    uniform_int_distribution<int> n_dis(0, n - 1);
+    int shift = n_dis(gen);
     reverse(A.begin(), A.end());
     reverse(A.begin(), A.begin() + shift + 1);
     reverse(A.begin() + shift + 1, A.end());

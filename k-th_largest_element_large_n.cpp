@@ -1,22 +1,32 @@
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
+#include <algorithm>
+#include <cassert>
 #include <iostream>
+#include <functional>
+#include <random>
 #include <sstream>
 #include <vector>
-#include <ctime>
-#include <cstdlib>
-#include <cassert>
-#include <algorithm>
 
-using namespace std;
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::greater;
+using std::istringstream;
+using std::random_device;
+using std::stringstream;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
 template <typename T>
-T find_k_th_largest_unknown_length(istringstream &sin, const int &k) {
+T find_k_th_largest_unknown_length(istringstream &sin, int k) {
   vector<T> M;
   T x;
   while (sin >> x) {
     M.emplace_back(x);
     if (M.size() == (k << 1) - 1) {
-      // Keep the k largest elements and discard the small ones
+      // Keep the k largest elements and discard the small ones.
       nth_element(M.begin(), M.begin() + k - 1, M.end(), greater<T>());
       M.resize(k);
     }
@@ -27,21 +37,25 @@ T find_k_th_largest_unknown_length(istringstream &sin, const int &k) {
 // @exclude
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n, k;
     if (argc == 2) {
       n = atoi(argv[1]);
-      k = 1 + rand() % n;
+      uniform_int_distribution<int> k_dis(1, n);
+      k = k_dis(gen);
     } else if (argc == 3) {
       n = atoi(argv[1]), k = atoi(argv[2]);
     } else {
-      n = 1 + rand() % 100000;
-      k = 1 + rand() % n;
+      uniform_int_distribution<int> n_dis(1, 100000);
+      n = n_dis(gen);
+      uniform_int_distribution<int> k_dis(1, n);
+      k = k_dis(gen);
     }
     vector<int> A;
     for (int i = 0; i < n; ++i) {
-      A.emplace_back(rand() % 10000000);
+      uniform_int_distribution<int> dis(0, 9999999);
+      A.emplace_back(dis(gen));
     }
     stringstream ss;
     for (const int &a : A) {

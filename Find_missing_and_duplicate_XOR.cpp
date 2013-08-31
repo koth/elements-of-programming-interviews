@@ -1,11 +1,19 @@
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
+#include <cassert>
 #include <iostream>
 #include <numeric>
+#include <random>
+#include <utility>
 #include <vector>
-#include <cstdlib>
-#include <ctime>
-#include <cassert>
 
-using namespace std;
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::pair;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
 // Return pair<int, int>(duplicate, missing)
@@ -15,9 +23,9 @@ pair<int, int> find_duplicate_missing(const vector<int> &A) {
     miss_XOR_dup ^= i ^ A[i];
   }
 
-  // We need to find a bit that's set to 1 in miss_XOR_dup.
-  // This assignment sets all of bits in differ_bit to 0 
-  // except for the least significant bit in miss_XOR_dup that's 1.
+  // We need to find a bit that's set to 1 in miss_XOR_dup. This assignment
+  // sets all of bits in differ_bit to 0 except for the least significant
+  // bit in miss_XOR_dup that's 1.
   int differ_bit = miss_XOR_dup & (~(miss_XOR_dup - 1));
 
   int miss_or_dup = 0;
@@ -31,33 +39,35 @@ pair<int, int> find_duplicate_missing(const vector<int> &A) {
   }
 
   for (const int &A_i : A) {
-    if (A_i == miss_or_dup) {   // find duplicate
+    if (A_i == miss_or_dup) {   // find duplicate.
       return {miss_or_dup, miss_or_dup ^ miss_XOR_dup};
     }
   }
-  // miss_or_dup is missing element
+  // miss_or_dup is missing element.
   return {miss_or_dup ^ miss_XOR_dup, miss_or_dup};
 }
 // @exclude
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n;
     if (argc == 2) {
       n = atoi(argv[1]);
     } else {
-      n = 2 + rand() % 10000;
+      uniform_int_distribution<int> n_dis(2, 10000);
+      n = n_dis(gen);
     }
     vector<int> A;
     for (int i = 0; i < n; ++i) {
       A.emplace_back(i);
     }
-    int missing_idx = rand() % n;
+    uniform_int_distribution<int> dis(0, n - 1);
+    int missing_idx = dis(gen);
     int missing = A[missing_idx];
-    int dup_idx = rand() % n;
+    int dup_idx = dis(gen);
     while (dup_idx == missing_idx) {
-      dup_idx = rand() % n;
+      dup_idx = dis(gen);
     }
     int dup = A[dup_idx];
     A[missing_idx] = dup;

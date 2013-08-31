@@ -13,22 +13,22 @@ using std::shared_ptr;
 template <typename T>
 class BinaryTree {
  public:
-  const bool &isLock(void) const {
+  bool isLock() const {
     return locked_;
   }
 
-  void lock(void) {
-    if (numChildreLocks_ == 0 && locked_ == false) {
-      // Make sure all parents do not lock
+  void lock() {
+    if (numChildreLocks_ == 0 && !locked_) {
+      // Make sure all parents do not lock.
       shared_ptr<BinaryTree<T>> n = parent_;
       while (n) {
-        if (n->locked_ == true) {
+        if (n->locked_) {
           return;
         }
         n = n->parent_;
       }
 
-      // Lock itself and update its parents
+      // Lock itself and update its parents.
       locked_ = true;
       n = parent_;
       while (n) {
@@ -38,9 +38,9 @@ class BinaryTree {
     }
   }
 
-  void unLock(void) {
+  void unLock() {
     if (locked_) {
-      // Unlock itself and update its parents
+      // Unlock itself and update its parents.
       locked_ = false;
       shared_ptr<BinaryTree<T>> n = parent_;
       while (n) {

@@ -16,24 +16,24 @@ using std::stack;
 template <typename T>
 class Stack {
  public:
-  const bool empty(void) const {
+  bool empty() const {
     return s_.empty();
   }
 
-  const T& max(void) const {
-    if (empty() == false) {
+  const T& max() const {
+    if (!empty()) {
       return s_.top().second;
     }
     throw length_error("empty stack");
   }
 
-  T pop(void) {
-    if (empty() == false) {
-      T ret = s_.top().first;
-      s_.pop();
-      return ret;
+  T pop() {
+    if (empty()) {
+      throw length_error("empty stack");
     }
-    throw length_error("empty stack");
+    T ret = s_.top().first;
+    s_.pop();
+    return ret;
   }
 
   void push(const T& x) {

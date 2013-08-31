@@ -1,19 +1,25 @@
-#include <cassert>
-#include <stdexcept>
-#include <iostream>
-#include <stack>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
 #include <algorithm>
-#include <iterator>
-#include <vector>
+#include <cassert>
+#include <iostream>
+#include <stdexcept>
 #include <string>
 #include <sstream>
+#include <vector>
 
-using namespace std;
+using std::cout;
+using std::endl;
+using std::exception;
+using std::invalid_argument;
+using std::stringstream;
+using std::string;
+using std::vector;
 
 // @include
 string normalized_path_names(const string &path) {
-  vector<string> s;  // Use vector as a stack
-  // Special case: starts with "/", which is an absolute path
+  vector<string> s;  // Use vector as a stack.
+  // Special case: starts with "/", which is an absolute path.
   if (path.front() == '/') {
     s.emplace_back("/");
   }
@@ -64,15 +70,16 @@ int main(int argc, char *argv[]) {
   assert(normalized_path_names("./.././../local") == string("../../local"));
   try {
     normalized_path_names("/..");
-  } catch (exception &e) {
+  } catch(const exception &e) {
     cout << e.what() << endl;
   }
   try {
     normalized_path_names("/cpp_name/bin/");
-  } catch (exception &e) {
+  } catch(const exception &e) {
     cout << e.what() << endl;
   }
-  assert(normalized_path_names("scripts//./../scripts/awkscripts/././") == string("scripts/awkscripts"));
+  assert(normalized_path_names("scripts//./../scripts/awkscripts/././") ==
+         string("scripts/awkscripts"));
   if (argc == 2) {
     cout << normalized_path_names(argv[1]) << endl;
   }

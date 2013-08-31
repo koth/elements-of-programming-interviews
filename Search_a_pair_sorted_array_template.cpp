@@ -1,11 +1,22 @@
-#include <iostream>
-#include <cassert>
-#include <algorithm>
-#include <vector>
-#include <ctime>
-#include <cstdlib>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <algorithm>
+#include <cassert>
+#include <functional>
+#include <iostream>
+#include <random>
+#include <utility>
+#include <vector>
+
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::greater_equal;
+using std::less;
+using std::pair;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 /*
 template <typename T>
@@ -100,19 +111,19 @@ pair<int, int> find_pair_using_comp(const vector<T> &A, const T &k,
       } while (ret.first < ret.second && comp(A[ret.second], 0));
     }
   }
-  return {-1, -1};  // no answer
+  return {-1, -1};  // no answer.
 }
 
 template <typename T>
 pair<int, int> find_pos_neg_pair(const vector<T> &A, const T &k) {
-  // ret.first for positive, and ret.second for negative
+  // ret.first for positive, and ret.second for negative.
   pair<int, int> ret(A.size() - 1, A.size() - 1);
-  // Find the last positive or zero
+  // Find the last positive or zero.
   while (ret.first >= 0 && A[ret.first] < 0) {
     --ret.first;
   }
 
-  // Find the last negative
+  // Find the last negative.
   while (ret.second >= 0 && A[ret.second] >= 0) {
     --ret.second;
   }
@@ -124,13 +135,13 @@ pair<int, int> find_pos_neg_pair(const vector<T> &A, const T &k) {
       do {
         --ret.first;
       } while (ret.first >= 0 && A[ret.first] < 0);
-    } else {  // A[ret.first] + A[ret.second] < k
+    } else {  // A[ret.first] + A[ret.second] < k.
       do {
         --ret.second;
       } while (ret.second >= 0 && A[ret.second] >= 0);
     }
   }
-  return {-1, -1};  // no answer
+  return {-1, -1};  // no answer.
 }
 
 template <typename T>
@@ -145,20 +156,23 @@ pair<int, int> find_pair_sum_k(const vector<T> &A, const T &k) {
 // @exclude
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 10000; ++times) {
     int n;
     if (argc >= 2) {
       n = atoi(argv[1]);
     } else {
-      n = 1 + rand() % 10000;
+      uniform_int_distribution<int> dis(1, 10000);
+      n = dis(gen);
     }
     vector<int> A;
+    uniform_int_distribution<int> pos_or_neg(0, 1);
+    uniform_int_distribution<int> dis(0, 10000);
     for (size_t i = 0; i < n; ++i) {
-      A.emplace_back(((rand() & 1) ? 1 : -1) * (rand() % 10000));
+      A.emplace_back(((pos_or_neg(gen)) ? 1 : -1) * (dis(gen)));
     }
     sort(A.begin(), A.end(), [](int x, int y) {return abs(x) < abs(y);});
-    int k = ((rand() & 1) ? 1 : -1) * (rand() % 10000);
+    int k = ((pos_or_neg(gen)) ? 1 : -1) * (dis(gen));
     /*
     for (const int & a : A) {
       cout << a << " ";

@@ -1,10 +1,16 @@
-#include <iostream>
-#include <cassert>
-#include <vector>
-#include <cstdlib>
-#include <ctime>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <cassert>
+#include <iostream>
+#include <random>
+#include <vector>
+
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
 int find_element_appears_once(const vector<int> &A) {
@@ -20,16 +26,18 @@ int find_element_appears_once(const vector<int> &A) {
 // @exclude
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 10000; ++times) {
     vector<int> A;
     int n;
     if (argc == 2) {
       n = atoi(argv[1]);
     } else {
-      n = 1 + rand() % 10000;
+      uniform_int_distribution<int> n_dis(1, 10000);
+      n = n_dis(gen);
     }
-    int single = rand() % n;
+    uniform_int_distribution<int> dis(0, n - 1);
+    int single = dis(gen);
     for (int i = 0; i < n; ++i) {
       A.emplace_back(i);
       if (i != single) {

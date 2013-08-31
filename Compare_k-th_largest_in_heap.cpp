@@ -1,22 +1,26 @@
-#include <iostream>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
 #include <cassert>
+#include <iostream>
 #include <vector>
 
-using namespace std;
+using std::cout;
+using std::endl;
+using std::vector;
 
 // @include
 template <typename T>
-void compare_k_th_largest_heap_helper(const vector<T> &max_heap, const int &k,
-                                      const T &x, const int &idx, int &larger,
-                                      int &equal) {
-  if (larger >= k || idx >= max_heap.size() || max_heap[idx] < x) {
+void compare_k_th_largest_heap_helper(const vector<T> &max_heap, int k,
+                                      const T &x, int idx, int *larger,
+                                      int *equal) {
+  if (*larger >= k || idx >= max_heap.size() || max_heap[idx] < x) {
     return;
   } else if (max_heap[idx] == x) {
-    if (++equal >= k) {
+    if (++*equal >= k) {
       return;
-    } 
+    }
   } else {  // max_heap[idx] > x
-    ++larger;
+    ++*larger;
   }
   compare_k_th_largest_heap_helper(max_heap, k, x, (idx << 1) + 1, larger,
                                    equal);
@@ -24,12 +28,11 @@ void compare_k_th_largest_heap_helper(const vector<T> &max_heap, const int &k,
                                    equal);
 }
 
-// -1 means smaller, 0 means equal, and 1 means larger
+// -1 means smaller, 0 means equal, and 1 means larger.
 template <typename T>
-int compare_k_th_largest_heap(const vector<T> &max_heap, const int &k,
-                              const T &x) {
+int compare_k_th_largest_heap(const vector<T> &max_heap, int k, const T &x) {
   int larger = 0, equal = 0;
-  compare_k_th_largest_heap_helper(max_heap, k, x, 0, larger, equal);
+  compare_k_th_largest_heap_helper(max_heap, k, x, 0, &larger, &equal);
   return larger >= k ? 1 : (larger + equal >= k ? 0 : -1);
 }
 // @exclude

@@ -1,19 +1,19 @@
-#include <iostream>
-#include <cassert>
-#include <vector>
-#include <cstdlib>
-#include <ctime>
-#include <algorithm>
-#ifdef __clang__
-#include <unordered_set>
-#else
-#include <tr1/unordered_set>
-#endif
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
-#ifndef __clang__
-using namespace std::tr1;
-#endif
+#include <algorithm>
+#include <cassert>
+#include <iostream>
+#include <random>
+#include <unordered_set>
+#include <vector>
+
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::unordered_set;
+using std::vector;
 
 // @include
 template <typename T>
@@ -32,19 +32,21 @@ int search_smallest(const vector<T> &A) {
 // @exclude
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n;
     if (argc == 2) {
       n = atoi(argv[1]);
     } else {
-      n = 1 + rand() % 10000;
+      uniform_int_distribution<int> dis(1, 10000);
+      n = dis(gen);
     }
     vector<int> A;
     unordered_set<int> table;
     for (size_t i = 0; i < n; ++i) {
       while (true) {
-        int x = rand();
+        uniform_int_distribution<int> dis(0, 100000);
+        int x = dis(gen);
         if (table.emplace(x).second) {
           A.emplace_back(x);
           break;
@@ -52,7 +54,8 @@ int main(int argc, char *argv[]) {
       }
     }
     sort(A.begin(), A.end());
-    int shift = rand() % n;
+    uniform_int_distribution<int> n_dis(0, n - 1);
+    int shift = n_dis(gen);
     reverse(A.begin(), A.end());
     reverse(A.begin(), A.begin() + shift + 1);
     reverse(A.begin() + shift + 1, A.end());

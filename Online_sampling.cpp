@@ -1,22 +1,22 @@
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
+#include <algorithm>
 #include <iostream>
 #include <random>
-#ifdef __clang__
 #include <unordered_map>
-#else
-#include <tr1/unordered_map>
-#endif
 #include <vector>
-#include <ctime>
-#include <cstdlib>
-#include <array>
 
-using namespace std;
-#ifndef __clang__
-using namespace std::tr1;
-#endif
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::ostream_iterator;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::unordered_map;
+using std::vector;
 
 // @include
-vector<int> online_sampling(const int &n, const int &k) {
+vector<int> online_sampling(int n, int k) {
   unordered_map<int, int> H;
   default_random_engine gen((random_device())());  // random num generator
   for (int i = 0; i < k; ++i) {
@@ -48,17 +48,20 @@ vector<int> online_sampling(const int &n, const int &k) {
 // @exclude
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   int n, k;
   if (argc == 2) {
     n = atoi(argv[1]);
-    k = 1 + rand() % n;
+    uniform_int_distribution<int> dis(1, n);
+    k = dis(gen);
   } else if (argc == 3) {
     n = atoi(argv[1]);
     k = atoi(argv[2]);
   } else {
-    n = 1 + rand() % 10000;
-    k = 1 + rand() % n;
+    uniform_int_distribution<int> n_dis(1, 10000);
+    n = n_dis(gen);
+    uniform_int_distribution<int> k_dis(1, n);
+    k = k_dis(gen);
   }
   cout << "n = " << n << " k = " << k << endl;
   for (int i = 0; i < 6; ++i) {

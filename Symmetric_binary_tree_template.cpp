@@ -1,14 +1,13 @@
 // Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-#include "./Binary_tree_prototype_template.h"
-
 #include <cassert>
-
 #include <iostream>
 
+#include "./Binary_tree_prototype_template.h"
+
+using std::boolalpha;
 using std::cout;
 using std::endl;
-using std::shared_ptr;
 
 // @include
 template <typename T>
@@ -26,7 +25,7 @@ bool is_symmetric_helper(const shared_ptr<BinaryTree<T>>& l,
 
 template <typename T>
 bool is_symmetric(const shared_ptr<BinaryTree<T>>& n) {
-  return (!n || is_symmetric_helper<T>(n->left, n->right));
+  return !n || is_symmetric_helper<T>(n->left, n->right);
 }
 // @exclude
 

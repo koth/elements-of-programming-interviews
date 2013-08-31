@@ -1,18 +1,28 @@
-#include <iostream>
-#include <vector>
-#include <cassert>
-#include <sstream>
-#include <ctime>
-#include <cstdlib>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <cassert>
+#include <iostream>
+#include <random>
+#include <sstream>
+#include <utility>
+#include <vector>
+
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::istringstream;
+using std::pair;
+using std::random_device;
+using std::stringstream;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
 template <typename T>
 vector<pair<int, T>> examine_buildings_with_sunset(istringstream &sin) {
   int idx = 0;  // building's index
   T height;
-  // Stores (building_idx, building_height) pair with sunset views
+  // Stores (building_idx, building_height) pair with sunset views.
   vector<pair<int, T>> buildings_with_sunset;
   while (sin >> height) {
     while (buildings_with_sunset.empty() == false &&
@@ -28,17 +38,19 @@ vector<pair<int, T>> examine_buildings_with_sunset(istringstream &sin) {
 // @exclude
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n;
     if (argc == 2) {
       n = atoi(argv[1]);
     } else {
-      n = 1 + rand() % 10000;
+      uniform_int_distribution<int> dis(1, 10000);
+      n = dis(gen);
     }
     stringstream ss;
     for (int i = 0; i < n; ++i) {
-      int height = 1 + rand() % (2 * n);
+      uniform_int_distribution<int> dis(1, 2 * n);
+      int height = dis(gen);
       ss << height << ' ';
     }
     istringstream sin(ss.str());

@@ -1,7 +1,6 @@
 // Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
 #include <cassert>
-
 #include <iostream>
 
 using std::cout;

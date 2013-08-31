@@ -1,11 +1,11 @@
 // Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-#include "./Stack_with_max_template.h"
-
 #include <algorithm>
 #include <cassert>
 #include <iostream>
 #include <stdexcept>
+
+#include "./Stack_with_max_template.h"
 
 using std::cout;
 using std::endl;
@@ -22,18 +22,18 @@ class Queue {
 
   T dequeue(void) {
     if (B_.empty()) {
-      while (A_.empty() == false) {
+      while (!A_.empty()) {
         B_.push(A_.pop());
       }
     }
-    if (B_.empty() == false) {
+    if (!B_.empty()) {
       return B_.pop();
     }
     throw length_error("empty queue");
   }
 
-  const T& max(void) const {
-    if (A_.empty() == false) {
+  const T& max() const {
+    if (!A_.empty()) {
       return B_.empty() ? A_.max() : std::max(A_.max(), B_.max());
     } else {  // A_.empty() == true
       if (B_.empty() == false) {

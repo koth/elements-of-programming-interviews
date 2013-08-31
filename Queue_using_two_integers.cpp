@@ -23,7 +23,7 @@ class Queue {
     ++size_;
   }
 
-  unsigned dequeue(void) {
+  unsigned dequeue() {
     if (size_) {
       unsigned ret = 0, d = floor(log10(val_));
       if (d + 1 == size_) {
@@ -37,8 +37,8 @@ class Queue {
   }
 
  private:
-  unsigned val_ = 0, size_ = 0,
-           max_size_ = floor(log10(numeric_limits<unsigned>::max()));
+  unsigned val_ = 0;
+  size_t size_ = 0, max_size_ = floor(log10(numeric_limits<unsigned>::max()));
 };
 // @exclude
 

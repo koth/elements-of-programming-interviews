@@ -1,18 +1,26 @@
-#include "Binary_tree_prototype_template.h"
-#include "Binary_tree_utils.h"
-#include <iostream>
-#include <ctime>
-#include <cstdlib>
-#include <cassert>
-#include <vector>
-#include <stack>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <cassert>
+#include <iostream>
+#include <random>
+#include <stack>
+#include <vector>
+
+#include "./Binary_tree_prototype_template.h"
+#include "./Binary_tree_utils.h"
+
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::random_device;
+using std::stack;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
 template <typename T>
 shared_ptr<BinaryTree<T>> reconstruct_preorder(
-  const vector<shared_ptr<T>> &preorder) {
+  const vector<shared_ptr<T>>& preorder) {
   stack<shared_ptr<BinaryTree<T>>> s;
   for (auto it = preorder.crbegin(); it != preorder.crend(); ++it) {
     if (!(*it)) {
@@ -30,7 +38,8 @@ shared_ptr<BinaryTree<T>> reconstruct_preorder(
 // @exclude
 
 template <typename T>
-void gen_preorder_with_null(shared_ptr<BinaryTree<T>> n, vector<shared_ptr<T>> &p) {
+void gen_preorder_with_null(shared_ptr<BinaryTree<T>> n,
+                            vector<shared_ptr<T>>& p) {
   if (!n) {
     p.emplace_back(nullptr);
     return;
@@ -42,7 +51,7 @@ void gen_preorder_with_null(shared_ptr<BinaryTree<T>> n, vector<shared_ptr<T>> &
 }
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   // Random test 3000 times
   for (int times = 0; times < 1000; ++times) {
     cout << times << endl;
@@ -50,7 +59,8 @@ int main(int argc, char *argv[]) {
     if (argc == 2) {
       n = atoi(argv[1]);
     } else {
-      n = 1 + rand() % 10000;
+      uniform_int_distribution<int> dis(1, 10000);
+      n = dis(gen);
     }
     shared_ptr<BinaryTree<int>> root = generate_rand_binary_tree<int>(n);
     vector<shared_ptr<int>> p;

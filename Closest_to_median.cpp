@@ -16,26 +16,26 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-// Promote to double to prevent precision error
+// Promote to double to prevent precision error.
 template <typename T>
-double find_median(vector<T> &A) {
-  int half = A.size() >> 1;
-  nth_element(A.begin(), A.begin() + half, A.end());
-  if (A.size() & 1) {  // A has odd number elements
-    return A[half];
-  } else {  // A has even number elements
-    T x = A[half];
-    nth_element(A.begin(), A.begin() + half - 1, A.end());
-    return 0.5 * (x + A[half - 1]);
+double find_median(vector<T> *A) {
+  int half = A->size() >> 1;
+  nth_element(A->begin(), A->begin() + half, A->end());
+  if (A->size() & 1) {  // A has odd number elements.
+    return (*A)[half];
+  } else {  // A has even number elements.
+    T x = (*A)[half];
+    nth_element(A->begin(), A->begin() + half - 1, A->end());
+    return 0.5 * (x + (*A)[half - 1]);
   }
 }
 
 template <typename T>
 class Comp {
  public:
-  Comp(const double &m) : m_(m) {};
+  explicit Comp(double m) : m_(m) {};
 
-  const bool operator()(const T &a, const T &b) const {
+  bool operator()(const T &a, const T &b) const {
     return fabs(a - m_) < fabs(b - m_);
   }
 
@@ -44,17 +44,19 @@ class Comp {
 };
 
 template <typename T>
-vector<T> find_k_closest_to_median(vector<T> A, const int &k) {
-  // Find the element i where |A[i] - median| is k-th smallest
-  nth_element(A.begin(), A.begin() + k - 1, A.end(), Comp<T>{find_median(A)});
+vector<T> find_k_closest_to_median(vector<T> A, int k) {
+  // Find the element i where |A[i] - median| is k-th smallest.
+  nth_element(A.begin(), A.begin() + k - 1, A.end(),
+              Comp<T>{find_median(&A)});
   return {A.cbegin(), A.cbegin() + k};
 }
 // @exclude
 
 template <typename T>
-void check_ans(vector<T> &A, const vector<T> &res, const int &k) {
+void check_ans(vector<T> &A, const vector<T> &res, int k) {
   sort(A.begin(), A.end());
-  double median = (A.size() & 1) ? A[A.size() >> 1] : 0.5 * (A[(A.size() >> 1) - 1] + A[A.size() >> 1]);
+  double median = (A.size() & 1) ? A[A.size() >> 1] :
+                  0.5 * (A[(A.size() >> 1) - 1] + A[A.size() >> 1]);
   vector<double> temp;
   for (const T &a : A) {
     temp.emplace_back(fabs(median - a));

@@ -1,13 +1,21 @@
-#include <iostream>
-#include <vector>
-#include <cstdlib>
-#include <ctime>
-#include <cassert>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <cassert>
+#include <iostream>
+#include <random>
+#include <utility>
+#include <vector>
+
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::pair;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
-// Return pair<int, int>(duplicate, missing)
+// Return pair<int, int>(duplicate, missing).
 pair<int, int> find_duplicate_missing(const vector<int> &A) {
   int sum = 0, square_sum = 0;
   for (int i = 0; i < A.size(); ++i) {
@@ -18,23 +26,25 @@ pair<int, int> find_duplicate_missing(const vector<int> &A) {
 // @exclude
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n;
     if (argc == 2) {
       n = atoi(argv[1]);
     } else {
-      n = 2 + rand() % 10000;
+      uniform_int_distribution<int> dis(2, 10000);
+      n = dis(gen);
     }
     vector<int> A;
     for (int i = 0; i < n; ++i) {
       A.emplace_back(i);
     }
-    int missing_idx = rand() % n;
+    uniform_int_distribution<int> n_dis(0, n - 1);
+    int missing_idx = n_dis(gen);
     int missing = A[missing_idx];
-    int dup_idx = rand() % n;
+    int dup_idx = n_dis(gen);
     while (dup_idx == missing_idx) {
-      dup_idx = rand() % n;
+      dup_idx = n_dis(gen);
     }
     int dup = A[dup_idx];
     A[missing_idx] = dup;

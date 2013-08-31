@@ -1,12 +1,18 @@
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
+#include <algorithm>
+#include <cassert>
 #include <iostream>
 #include <iterator>
+#include <random>
 #include <vector>
-#include <cstdlib>
-#include <ctime>
-#include <cassert>
-#include <algorithm>
 
-using namespace std;
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
 template <typename T>
@@ -17,7 +23,7 @@ int search_first(const vector<T> &A, const T &k) {
     if (A[m] > k) {
       r = m - 1;
     } else if (A[m] == k) {
-      // Record the solution and keep searching the left part
+      // Record the solution and keep searching the left part.
       res = m, r = m - 1;
     } else {  // A[m] < k
       l = m + 1;
@@ -28,18 +34,21 @@ int search_first(const vector<T> &A, const T &k) {
 // @exclude
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++ times) {
     int n;
     if (argc == 2) {
       n = atoi(argv[1]);
     } else {
-      n = 1 + rand() % 100000;
+      uniform_int_distribution<int> dis(1, 100000);
+      n = dis(gen);
     }
     vector<int> A;
-    int k = rand() % n;
+    uniform_int_distribution<int> k_dis(0, n - 1);
+    int k = k_dis(gen);
     for (int i = 0; i < n; ++i) {
-      A.emplace_back(rand() % n);
+      uniform_int_distribution<int> dis(0, n - 1);
+      A.emplace_back(dis(gen));
     }
     sort(A.begin(), A.end());
     int ans = search_first(A, k);

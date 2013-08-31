@@ -18,7 +18,7 @@ class Queue {
  public:
   explicit Queue(const size_t &cap) : data_({cap}) {}
 
-  void enqueue(const T &x) {
+  void enqueue(const T& x) {
     // Dynamically resize due to data_.size() limit
     if (count_ == data_.size()) {
       // Rearrange elements.
@@ -31,7 +31,7 @@ class Queue {
     tail_ = (tail_ + 1) % data_.size(), ++count_;
   }
 
-  T dequeue(void) {
+  T dequeue() {
     if (count_) {
       --count_;
       T ret = data_[head_];
@@ -41,7 +41,7 @@ class Queue {
     throw length_error("empty queue");
   }
 
-  const size_t &size(void) const {
+  size_t size() const {
     return count_;
   }
 

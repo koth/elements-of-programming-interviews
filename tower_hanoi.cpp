@@ -14,7 +14,7 @@ using std::stack;
 using std::uniform_int_distribution;
 
 // @include
-void transfer(int n, array<stack<int>, 3> &pegs, int from, int to, int use) {
+void transfer(int n, array<stack<int>, 3>& pegs, int from, int to, int use) {
   if (n > 0) {
     transfer(n - 1, pegs, from, use, to);
     pegs[to].push(pegs[from].top());

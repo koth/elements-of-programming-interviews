@@ -19,35 +19,35 @@ using std::pair;
 template <typename T>
 class Stack {
  public:
-  const bool empty(void) const {
+  bool empty() const {
     return s_.empty();
   }
 
-  const T &max(void) const {
-    if (empty() == false) {
+  const T& max() const {
+    if (!empty()) {
       return aux_.top().first;
     }
     throw length_error("empty stack");
   }
 
-  T pop(void) {
-    if (empty() == false) {
-      T ret = s_.top();
-      s_.pop();
-      if (ret == aux_.top().first) {
-        --aux_.top().second;
-        if (aux_.top().second == 0) {
-          aux_.pop();
-        }
-      }
-      return ret;
+  T pop() {
+    if (empty()) {
+      throw length_error("empty stack");
     }
-    throw length_error("empty stack");
+    T ret = s_.top();
+    s_.pop();
+    if (ret == aux_.top().first) {
+      --aux_.top().second;
+      if (aux_.top().second == 0) {
+        aux_.pop();
+      }
+    }
+    return ret;
   }
 
   void push(const T& x) {
     s_.emplace(x);
-    if (aux_.empty() == false) {
+    if (!aux_.empty()) {
       if (x == aux_.top().first) {
         ++aux_.top().second;
       } else if (x > aux_.top().first) {

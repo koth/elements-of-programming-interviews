@@ -1,9 +1,10 @@
-#include "Binary_tree_with_parent_prototype.h"
-#include <iostream>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
 #include <cassert>
 #include <cstdlib>
+#include <iostream>
 
-using namespace std;
+#include "./Binary_tree_with_parent_prototype.h"
 
 // @include
 template <typename T>
@@ -41,9 +42,11 @@ int main(int argc, char *argv[]) {
   //      3
   //    2   5
   //  1    4 6
-  shared_ptr<BinaryTree<int>> root = shared_ptr<BinaryTree<int>>(new BinaryTree<int>{3, nullptr, nullptr});
+  shared_ptr<BinaryTree<int>> root =
+      shared_ptr<BinaryTree<int>>(new BinaryTree<int>{3, nullptr, nullptr});
   root->parent = nullptr;
-  root->left = shared_ptr<BinaryTree<int>>(new BinaryTree<int>{2, nullptr, nullptr});
+  root->left =
+      shared_ptr<BinaryTree<int>>(new BinaryTree<int>{2, nullptr, nullptr});
   root->left->parent = root;
   root->left->left = shared_ptr<BinaryTree<int>>(new BinaryTree<int>{1, nullptr, nullptr});
   root->left->left->parent = root->left;

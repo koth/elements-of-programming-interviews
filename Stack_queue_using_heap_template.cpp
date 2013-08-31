@@ -29,7 +29,7 @@ class Stack {
     H.emplace(order_++, x);
   }
 
-  T pop(void) {
+  T pop() {
     T ret = H.top().second;
     H.pop();
     return ret;
@@ -52,7 +52,7 @@ class Queue {
     H.emplace(order_--, x);
   }
 
-  T dequeue(void) {
+  T dequeue() {
     T ret = H.top().second;
     H.pop();
     return ret;

@@ -19,14 +19,14 @@ class Queue {
     A_.emplace(x);
   }
 
-  T dequeue(void) {
+  T dequeue() {
     if (B_.empty()) {
       while (!A_.empty()) {
         B_.emplace(A_.top());
         A_.pop();
       }
     }
-    if (B_.empty() == false) {
+    if (!B_.empty()) {
       T ret = B_.top();
       B_.pop();
       return ret;

@@ -1,15 +1,14 @@
 // Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-#include "./Queue_with_max_using_deque.h"
-
+#include <cassert>
 #include <iostream>
-#include <vector>
 #include <queue>
 #include <stdexcept>
-#include <cassert>
+#include <vector>
+
+#include "./Queue_with_max_using_deque.h"
 
 using std::cout;
-using std::deque;
 using std::endl;
 using std::length_error;
 using std::queue;
@@ -17,18 +16,18 @@ using std::vector;
 
 // @include
 struct TrafficElement {
-  const bool operator<(const TrafficElement& that) const {
+  bool operator<(const TrafficElement& that) const {
     return volume < that.volume;
   }
 
-  const bool operator==(const TrafficElement& that) const {
+  bool operator==(const TrafficElement& that) const {
     return time == that.time && volume == that.volume;
   }
 
   int time, volume;
 };
 
-void TrafficVolumes(const vector<TrafficElement>& A, const int& w) {
+void TrafficVolumes(const vector<TrafficElement>& A, int w) {
   Queue<TrafficElement> Q;
   for (int i = 0; i < A.size(); ++i) {
     Q.enqueue(A[i]);
