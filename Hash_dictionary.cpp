@@ -1,21 +1,30 @@
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
 #include <iostream>
 #include <numeric>
+#include <random>
 #include <string>
-#include <ctime>
-#include <cstdlib>
 
-using namespace std;
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::random_device;
+using std::string;
+using std::uniform_int_distribution;
 
 string rand_string(int len) {
   string ret;
+  default_random_engine gen((random_device())());
   while (len--) {
-    ret += ((rand() & 1) ? 'a' : 'A') + rand() % 26;
+    uniform_int_distribution<int> zero_or_one(0, 1);
+    uniform_int_distribution<int> dis(0, 26);
+    ret += (zero_or_one(gen) ? 'a' : 'A') + dis(gen);
   }
   return ret;
 }
 
 // @include
-int string_hash(const string &str, const int &modulus) {
+int string_hash(const string &str, int modulus) {
   const int MULT = 997;
   // @exclude
   /*
@@ -34,12 +43,13 @@ int string_hash(const string &str, const int &modulus) {
 // @exclude
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   string str;
   if (argc == 2) {
     str = argv[1];
   } else {
-    str = rand_string(1 + rand() % 20);
+    uniform_int_distribution<int> dis(1, 20);
+    str = rand_string(dis(gen));
   }
   cout << "string = " << str << endl;
   cout << string_hash(str, 1 << (16)) << endl;

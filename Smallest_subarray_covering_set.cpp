@@ -1,103 +1,39 @@
-#include <iostream>
-#include <list>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
 #include <cassert>
-#include <string>
+#include <iostream>
+#include <random>
 #include <sstream>
-#include <ctime>
-#include <cstdlib>
-#ifdef __clang__
+#include <string>
 #include <unordered_map>
 #include <unordered_set>
-#else
-#include <tr1/unordered_map>
-#include <tr1/unordered_set>
-#endif
+#include <utility>
 #include <vector>
 
-using namespace std;
-#ifndef __clang__
-using namespace std::tr1;
-#endif
+#include "./Smallest_subarray_covering_set.h"
+#include "./Smallest_subarray_covering_set_stream.h"
+
+
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::istringstream;
+using std::pair;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::unordered_map;
+using std::unordered_set;
+using std::vector;
 
 string rand_string(int len) {
   string ret;
+  default_random_engine gen((random_device())());
   while (len--) {
-    ret += rand() % 26 + 'a';
+    uniform_int_distribution<int> dis('a', 'z');
+    ret += dis(gen);
   }
   return ret;
 }
-
-pair<int, int> find_smallest_subarray_covering_subset(
-  istringstream &sin, const vector<string> &Q) {
-  list<int> loc;
-  unordered_map<string, list<int>::iterator> dict;
-  for (const string &s : Q) {
-    dict.emplace(s, loc.end());
-  }
-
-  pair<int, int> res(-1, -1);
-  int idx = 0;
-  string s;
-  while (sin >> s) {
-    auto it = dict.find(s);
-    if (it != dict.end()) {
-      if (it->second != loc.end()) {
-        loc.erase(it->second);
-      }
-      loc.emplace_back(idx);
-      it->second = --loc.end();
-    }
-
-    if (loc.size() == Q.size() &&
-      ((res.first == -1 && res.second == -1) ||
-       res.second - res.first > idx - loc.front())) {
-      res = {loc.front(), idx};
-    }
-    ++idx;
-  }
-  return res;
-}
-
-// @include
-pair<int, int> find_smallest_subarray_covering_subset(
-    const vector<string> &A, const vector<string> &Q) {
-  unordered_set<string> dict(Q.cbegin(), Q.cend());
-  unordered_map<string, int> count_Q;
-  int l = 0, r = 0;
-  pair<int, int> res(-1, -1);
-  while (r < static_cast<int>(A.size())) {
-    // Keep moving r until it reaches end or count_Q has |Q| items
-    while (r < static_cast<int>(A.size()) && count_Q.size() < Q.size()) {
-      if (dict.find(A[r]) != dict.end()) {
-        ++count_Q[A[r]];
-      }
-      ++r;
-    }
-
-    if (count_Q.size() == Q.size() &&
-        ((res.first == -1 && res.second == -1) ||
-         r - 1 - l < res.second - res.first)) {
-      res = {l, r - 1};
-    }
-
-    // Keep moving l until it reaches end or count_Q has less |Q| items
-    while (l < r && count_Q.size() == Q.size()) {
-      if (dict.find(A[l]) != dict.end()) {
-        auto it = count_Q.find(A[l]);
-        if (--(it->second) == 0) {
-          count_Q.erase(it);
-          if ((res.first == -1 && res.second == -1) ||
-              r - 1 - l < res.second - res.first) {
-            res = {l, r - 1};
-          }
-        }
-      }
-      ++l;
-    }
-  }
-  return res;
-}
-// @exclude
 
 // O(n^2) solution
 int check_ans(const vector<string> &A, const vector<string> &Q) {
@@ -126,17 +62,19 @@ int check_ans(const vector<string> &A, const vector<string> &Q) {
 }
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n;
     vector<string> A;
     if (argc == 2) {
       n = atoi(argv[1]);
     } else {
-      n = 1 + rand() % 10000;
+      uniform_int_distribution<int> dis(1, 10000);
+      n = dis(gen);
     }
     for (int i = 0; i < n; ++i) {
-      A.emplace_back(rand_string(1 + rand() % 10));
+      uniform_int_distribution<int> dis(1, 10);
+      A.emplace_back(rand_string(dis(gen)));
     }
     /*
     for (int i = 0; i < A.size(); ++i) {
@@ -151,7 +89,8 @@ int main(int argc, char *argv[]) {
       s += A[i];
       s += ' ';
     }
-    int m = 1 + rand() % dict.size();
+    uniform_int_distribution<int> dis(1, dict.size());
+    int m = dis(gen);
     vector<string> Q;
     for (auto it = dict.cbegin(); it != dict.cend(); ++it) {
       Q.emplace_back(*it);

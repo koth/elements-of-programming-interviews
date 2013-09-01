@@ -2,6 +2,7 @@
 
 #include <cassert>
 #include <iostream>
+#include <memory>
 #include <random>
 
 #include "./Linked_list_prototype_template.h"
@@ -10,6 +11,7 @@
 using std::cout;
 using std::default_random_engine;
 using std::endl;
+using std::make_shared;
 using std::random_device;
 using std::uniform_int_distribution;
 
@@ -60,8 +62,7 @@ int main(int argc, char *argv[]) {
   int n;
   if (argc > 2) {
     for (size_t i = 1; i < argc; ++i) {
-      shared_ptr<node_t<int>> curr =
-          shared_ptr<node_t<int>>(new node_t<int>{atoi(argv[i]), nullptr});
+      auto curr = make_shared<node_t<int>>(node_t<int>{atoi(argv[i]), nullptr});
       curr->next = head;
       head = curr;
     }
@@ -73,8 +74,7 @@ int main(int argc, char *argv[]) {
       n = dis(gen);
     }
     for (int i = n; i >= 0; --i) {
-      shared_ptr<node_t<int>> curr =
-          shared_ptr<node_t<int>>(new node_t<int>{i, nullptr});
+      auto curr = make_shared<node_t<int>>(node_t<int>{i, nullptr});
       curr->next = head;
       head = curr;
     }

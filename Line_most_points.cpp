@@ -1,7 +1,5 @@
 // Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-#include "./GCD.h"
-
 #include <algorithm>
 #include <cassert>
 #include <iostream>
@@ -10,6 +8,8 @@
 #include <unordered_set>
 #include <utility>
 #include <vector>
+
+#include "./GCD.h"
 
 using std::cout;
 using std::default_random_engine;
@@ -27,7 +27,7 @@ using std::vector;
 // @include
 struct Point {
   // Equal function for hash
-  const bool operator==(const Point &that) const {
+  bool operator==(const Point &that) const {
     return x == that.x && y == that.y;
   }
 
@@ -37,7 +37,7 @@ struct Point {
 // Hash function for Point
 class HashPoint {
  public:
-  const size_t operator()(const Point &p) const {
+  size_t operator()(const Point &p) const {
     return hash<int>()(p.x) ^ hash<int>()(p.y);
   }
 };
@@ -49,7 +49,7 @@ pair<int, int> get_canonical_fractional(int a, int b) {
 }
 
 // Line function of two points, a and b, and the equation is
-// y = x(b.y - a.y) / (b.x - a.x) + (b.x * a.y - a.x * b.y) / (b.x - a.x)
+// y = x(b.y - a.y) / (b.x - a.x) + (b.x * a.y - a.x * b.y) / (b.x - a.x).
 struct Line {
   Line(const Point &a, const Point &b) :
     slope(a.x != b.x ? get_canonical_fractional(b.y - a.y, b.x - a.x) :
@@ -59,22 +59,22 @@ struct Line {
       make_pair(a.x, 1)) {}
 
   // Equal function for hash
-  const bool operator==(const Line &that) const {
+  bool operator==(const Line &that) const {
     return slope == that.slope && intercept == that.intercept;
   }
 
   // Store the numerator and denominator pair of slope unless the line is
-  // parallel to y-axis that we store 1/0
+  // parallel to y-axis that we store 1/0.
   pair<int, int> slope;
   // Store the numerator and denominator pair of the y-intercept unless
-  // the line is parallel to y-axis that we store the x-intercept
+  // the line is parallel to y-axis that we store the x-intercept.
   pair<int, int> intercept;
 };
 
-// Hash function for Line
+// Hash function for Line.
 class HashLine {
  public:
-  const size_t operator()(const Line &l) const {
+  size_t operator()(const Line &l) const {
     return hash<int>()(l.slope.first) ^ hash<int>()(l.slope.second) ^
            hash<int>()(l.intercept.first) ^ hash<int>()(l.intercept.second);
   }
@@ -102,7 +102,7 @@ int check(const vector<Point> &P) {
 // @include
 
 Line find_line_with_most_points(const vector<Point> &P) {
-  // Add all possible lines into hash table
+  // Add all possible lines into hash table.
   unordered_map<Line, unordered_set<Point, HashPoint>, HashLine> table;
   for (int i = 0; i < P.size(); ++i) {
     for (int j = i + 1; j < P.size(); ++j) {
@@ -121,7 +121,7 @@ Line find_line_with_most_points(const vector<Point> &P) {
   // cout << res << " " << line_max_points.second.size() << endl;
   assert(res == line_max_points->second.size());
   // @include
-  // Return the line with most points have passed
+  // Return the line with most points have passed.
   return max_element(table.cbegin(), table.cend(),
     [](const pair<Line, unordered_set<Point, HashPoint>> &a,
        const pair<Line, unordered_set<Point, HashPoint>> &b) {

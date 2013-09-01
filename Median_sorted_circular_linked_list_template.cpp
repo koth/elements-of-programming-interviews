@@ -2,6 +2,7 @@
 
 #include <cassert>
 #include <iostream>
+#include <memory>
 #include <random>
 #include <stdexcept>
 
@@ -12,6 +13,7 @@ using std::default_random_engine;
 using std::endl;
 using std::exception;
 using std::length_error;
+using std::make_shared;
 using std::random_device;
 using std::uniform_int_distribution;
 
@@ -56,7 +58,7 @@ int main(int argc, char *argv[]) {
     }
     shared_ptr<node_t<int>> head;
     for (int i = n; i >= 0; --i) {
-      shared_ptr<node_t<int>> curr = shared_ptr<node_t<int>>(new node_t<int>{i, nullptr});
+      auto curr = make_shared<node_t<int>>(node_t<int>{i, nullptr});
       curr->next = head;
       head = curr;
     }
@@ -82,13 +84,13 @@ int main(int argc, char *argv[]) {
 
   // Test identical list
   for (int i = 0; i < 10; ++i) {
-    shared_ptr<node_t<int>> curr = shared_ptr<node_t<int>>(new node_t<int>{5, nullptr});
+    auto curr = make_shared<node_t<int>>(node_t<int>{5, nullptr});
     curr->next = head;
     head = curr;
   }
   shared_ptr<node_t<int>> curr = head;
   if (curr != shared_ptr<node_t<int>>(nullptr)) {
-    while (curr->next != shared_ptr<node_t<int>>(nullptr)) {
+    while (curr->next != nullptr) {
       curr = curr->next;
     }
     curr->next = head;  // make the list as a circular list

@@ -15,7 +15,7 @@ using std::vector;
 
 // @include
 // Return 0 means choosing F (even numbered coins),
-// and return 1 means choosing S (odd numbered coins)
+// and return 1 means choosing S (odd numbered coins).
 template <typename CoinType>
 int pick_up_coins(const vector<CoinType> &C) {
   int even_sum = 0, odd_sum = 0;

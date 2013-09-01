@@ -3,6 +3,7 @@
 #include <cassert>
 #include <iostream>
 #include <limits>
+#include <memory>
 #include <random>
 
 #include "./Linked_list_prototype_template.h"
@@ -11,6 +12,7 @@
 using std::cout;
 using std::default_random_engine;
 using std::endl;
+using std::make_shared;
 using std::numeric_limits;
 using std::random_device;
 using std::uniform_int_distribution;
@@ -18,8 +20,7 @@ using std::uniform_int_distribution;
 int main(int argc, char *argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 10000; ++times) {
-    shared_ptr<node_t<int>> F = shared_ptr<node_t<int>>(nullptr),
-                            L = shared_ptr<node_t<int>>(nullptr);
+    shared_ptr<node_t<int>> F = nullptr, L = nullptr;
     int n, m;
     if (argc == 3) {
       n = atoi(argv[1]), m = atoi(argv[2]);
@@ -30,14 +31,14 @@ int main(int argc, char *argv[]) {
       n = dis(gen), m = dis(gen);
     }
     for (int i = n; i > 0; --i) {
-      shared_ptr<node_t<int>>
-          temp = shared_ptr<node_t<int>>(new node_t<int>{i, nullptr});
+      shared_ptr<node_t<int>> temp =
+          make_shared<node_t<int>>(node_t<int>{i, nullptr});
       temp->next = F;
       F = temp;
     }
     for (int j = m; j > 0; --j) {
-      shared_ptr<node_t<int>>
-          temp = shared_ptr<node_t<int>>(new node_t<int>{j, nullptr});
+      shared_ptr<node_t<int>> temp =
+          make_shared<node_t<int>>(node_t<int>{j, nullptr});
       temp->next = L;
       L = temp;
     }

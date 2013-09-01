@@ -11,14 +11,14 @@ using std::random_device;
 using std::uniform_int_distribution;
 
 // @include
-bool is_door_open(const int &i) {
+bool is_door_open(int i) {
   double sqrt_i = sqrt(i);
   int floor_sqrt_i = floor(sqrt_i);
   return floor_sqrt_i * floor_sqrt_i == i;
 }
 // @exclude
 
-void check_answer(const int &n) {
+void check_answer(int n) {
   deque<bool> doors(n + 1, false);  // false means closed door
   for (int i = 1; i <= n; ++i) {
     int start = 0;

@@ -1,24 +1,28 @@
-#include <iostream>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
 #include <algorithm>
 #include <cassert>
-#ifdef __clang__
-#include <unordered_map>
-#else
-#include <tr1/unordered_map>
-#endif
+#include <iostream>
+#include <random>
 #include <string>
-#include <cstdlib>
-#include <ctime>
+#include <unordered_map>
 
-using namespace std;
-#ifndef __clang__
-using namespace std::tr1;
-#endif
+using std::boolalpha;
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::random_device;
+using std::string;
+using std::uniform_int_distribution;
+using std::unordered_map;
+using std::vector;
 
 string rand_string(int len) {
   string ret;
+  default_random_engine gen((random_device())());
   while (len--) {
-    int x = rand() % 27;
+    uniform_int_distribution<int> dis(0, 26);
+    int x = dis(gen);
     ret += (x < 26) ? 'a' + x : ' ';
   }
   return ret;
@@ -27,10 +31,10 @@ string rand_string(int len) {
 // @include
 bool anonymous_letter(const string &L, const string &M) {
   unordered_map<char, int> hash;
-  // Insert all chars in L into a hash table
+  // Insert all chars in L into a hash table.
   for_each(L.begin(), L.end(), [&hash](const char &c) { ++hash[c]; });
 
-  // Check chars in M that could cover chars in a hash table
+  // Check chars in M that could cover chars in a hash table.
   for (const char &c : M) {
     auto it = hash.find(c);
     if (it != hash.cend()) {
@@ -42,18 +46,20 @@ bool anonymous_letter(const string &L, const string &M) {
       }
     }
   }
-  // No entry in hash means L can be covered by M
+  // No entry in hash means L can be covered by M.
   return hash.empty();
 }
 // @exclude
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   string L, M;
   if (argc == 3) {
     L = argv[1], M = argv[2];
   } else {
-    L = rand_string(1 + rand() % 1000), M = rand_string(1 + rand() % 100000);
+    uniform_int_distribution<int> L_dis(1, 1000);
+    uniform_int_distribution<int> M_dis(1, 100000);
+    L = rand_string(L_dis(gen)), M = rand_string(M_dis(gen));
   }
   cout << L << endl;
   cout << M << endl;

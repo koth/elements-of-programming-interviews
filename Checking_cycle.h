@@ -3,6 +3,8 @@
 #ifndef SOLUTIONS_CHECKING_CYCLE_H_
 #define SOLUTIONS_CHECKING_CYCLE_H_
 
+#include <memory>
+
 #include "./Linked_list_prototype_template.h"
 
 // @include
