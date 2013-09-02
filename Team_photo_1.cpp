@@ -2,9 +2,6 @@
 
 #include <algorithm>
 #include <cassert>
-#include <cstdlib>
-#include <ctime>
-#include <limits>
 #include <vector>
 
 using std::vector;
@@ -12,7 +9,7 @@ using std::vector;
 // @include
 template <typename HeightType>
 struct Player {
-  const bool operator<(const Player &that) const {
+  bool operator<(const Player &that) const {
     return height < that.height;
   }
 
@@ -28,9 +25,9 @@ class Team {
     }
   }
 
-  const bool operator<(const Team &that) const {
-    vector<Player<HeightType>> this_sorted(sortHeightMembers());
-    vector<Player<HeightType>> that_sorted(that.sortHeightMembers());
+  bool operator<(const Team &that) const {
+    vector<Player<HeightType>> this_sorted(SortHeightMembers());
+    vector<Player<HeightType>> that_sorted(that.SortHeightMembers());
     for (int i = 0; i < this_sorted.size() && i < that_sorted.size(); ++i) {
       if (this_sorted[i] < that_sorted[i] == false) {
         return false;
@@ -40,7 +37,7 @@ class Team {
   }
 
  private:
-  vector<Player<HeightType>> sortHeightMembers(void) const {
+  vector<Player<HeightType>> SortHeightMembers(void) const {
     vector<Player<HeightType>> sorted_members(members_);
     sort(sorted_members.begin(), sorted_members.end());
     return sorted_members;

@@ -25,4 +25,3 @@ string execute_shell(const string &cmd) {
   return result;
 }
 #endif  // SOLUTIONS_EXECUTE_SHELL_H_
-#endif  // SOLUTIONS_EXECUTE_SHELL_H_

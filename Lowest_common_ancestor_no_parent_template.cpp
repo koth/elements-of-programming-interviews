@@ -8,22 +8,22 @@
 
 using std::cout;
 using std::endl;
-using std::shared_ptr;
+using std::unique_ptr;
 
 // @include
 template <typename T>
-shared_ptr<BinaryTree<T>> LCA(const shared_ptr<BinaryTree<T>> &n,
-                              const shared_ptr<BinaryTree<T>> &a,
-                              const shared_ptr<BinaryTree<T>> &b) {
+BinaryTree<T>* LCA(const unique_ptr<BinaryTree<T>> &n,
+                   const unique_ptr<BinaryTree<T>> &a,
+                   const unique_ptr<BinaryTree<T>> &b) {
   if (!n) {  // empty subtree.
     return nullptr;
   } else if (n == a || n == b) {
-    return n;
+    return n.get();
   }
 
-  auto l_res = LCA(n->left, a, b), r_res = LCA(n->right, a, b);
+  auto *l_res = LCA(n->left, a, b), *r_res = LCA(n->right, a, b);
   if (l_res && r_res) {
-    return n;  // found a and b in different subtrees.
+    return n.get();  // found a and b in different subtrees.
   } else {
     return l_res ? l_res : r_res;
   }
@@ -34,20 +34,20 @@ int main(int argc, char *argv[]) {
   //      3
   //    2   5
   //  1    4 6
-  shared_ptr<BinaryTree<int>> root =
-      shared_ptr<BinaryTree<int>>(new BinaryTree<int>{3, nullptr, nullptr});
+  unique_ptr<BinaryTree<int>> root =
+      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{3, nullptr, nullptr});
   root->left =
-      shared_ptr<BinaryTree<int>>(new BinaryTree<int>{2, nullptr, nullptr});
+      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{2, nullptr, nullptr});
   root->left->left =
-      shared_ptr<BinaryTree<int>>(new BinaryTree<int>{1, nullptr, nullptr});
+      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{1, nullptr, nullptr});
   root->right =
-      shared_ptr<BinaryTree<int>>(new BinaryTree<int>{5, nullptr, nullptr});
+      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{5, nullptr, nullptr});
   root->right->left =
-      shared_ptr<BinaryTree<int>>(new BinaryTree<int>{4, nullptr, nullptr});
+      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{4, nullptr, nullptr});
   root->right->right =
-      shared_ptr<BinaryTree<int>>(new BinaryTree<int>{6, nullptr, nullptr});
+      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{6, nullptr, nullptr});
   // should output 3
-  shared_ptr<BinaryTree<int>> x = LCA(root, root->left, root->right);
+  auto* x = LCA(root, root->left, root->right);
   assert(x->data == 3);
   cout << x->data << endl;
   // should output 5

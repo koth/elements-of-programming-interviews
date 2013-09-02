@@ -25,15 +25,15 @@ using std::vector;
 
 template <typename KeyType>
 struct Person {
-  const bool operator<(const Person &that) const {
+  bool operator<(const Person &that) const {
     return key < that.key;
   }
 
-  const bool operator==(const Person &that) const {
+  bool operator==(const Person &that) const {
     return key == that.key;
   }
 
-  const bool operator!=(const Person &that) const {
+  bool operator!=(const Person &that) const {
     return key != that.key;
   }
 
@@ -45,7 +45,7 @@ struct Person {
 template <typename KeyType>
 class HashPerson {
  public:
-  const size_t operator()(const Person<KeyType> &n) const {
+  size_t operator()(const Person<KeyType> &n) const {
     return hash<int>()(n.key) ^ hash<string>()(n.name);
   }
 };
@@ -68,7 +68,7 @@ void counting_sort(vector<Person<KeyType>> *people) {
     auto from = key_to_offset.begin();
     auto to = key_to_offset.find((*people)[from->second].key);
     swap((*people)[from->second], (*people)[to->second]);
-    // Use key_to_count to see when we are finished with a particular key
+    // Use key_to_count to see when we are finished with a particular key.
     if (--key_to_count[to->first]) {
       ++to->second;
     } else {
@@ -89,7 +89,6 @@ string rand_string(int len) {
 }
 
 int main(int argc, char *argv[]) {
-  int test = 0;
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int size;

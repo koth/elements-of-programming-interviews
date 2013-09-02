@@ -1,11 +1,20 @@
-#include <iostream>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
 #include <algorithm>
-#include <cstdlib>
-#include <ctime>
+#include <iostream>
 #include <limits>
+#include <random>
+#include <utility>
 #include <vector>
 
-using namespace std;
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::numeric_limits;
+using std::pair;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
 template <typename T>
@@ -20,16 +29,18 @@ vector<pair<T, T>> task_assignment(vector<T> A) {
 // @exclude
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   int n;
   if (argc == 2) {
     n = atoi(argv[1]);
   } else {
-    n = 1 + rand() % 10000;
+    uniform_int_distribution<int> dis(1, 10000);
+    n = dis(gen);
   }
   vector<int> A;
   for (size_t i = 0; i < n; ++i) {
-    A.emplace_back(rand() % 1000);
+    uniform_int_distribution<int> dis(0, 999);
+    A.emplace_back(dis(gen));
   }
   vector<pair<int, int>> P(task_assignment(A));
   int max = numeric_limits<int>::min();

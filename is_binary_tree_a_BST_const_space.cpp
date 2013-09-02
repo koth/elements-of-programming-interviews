@@ -1,44 +1,53 @@
-#include "Binary_tree_prototype_template.h"
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
 #include <iostream>
 #include <cassert>
 #include <limits>
+#include <memory>
 
-using namespace std;
+#include "./Binary_tree_prototype_template.h"
+
+using std::boolalpha;
+using std::cout;
+using std::endl;
+using std::numeric_limits;
+using std::unique_ptr;
 
 // @include
 template <typename T>
-bool is_BST(shared_ptr<BinaryTree<T>> n) {
-  // Store the value of previous visited node
+bool is_BST(const unique_ptr<BinaryTree<T>>& root) {
+  auto* n = root.get();
+  // Store the value of previous visited node.
   int last = numeric_limits<T>::min();
   bool res = true;
 
   while (n) {
-    if (n->left) {
-      // Find the predecessor of n
-      shared_ptr<BinaryTree<T>> pre = n->left;
-      while (pre->right && pre->right != n) {
-        pre = pre->right;
+    if (n->left.get()) {
+      // Find the predecessor of n.
+      auto* pre = n->left.get();
+      while (pre->right.get() && pre->right.get() != n) {
+        pre = pre->right.get();
       }
 
-      // Build the successor link
-      if (pre->right) {  // pre->right == n
-        // Revert the successor link if predecessor's successor is n
-        pre->right = nullptr;
+      // Build the successor link.
+      if (pre->right.get()) {  // pre->right == n.
+        // Revert the successor link if predecessor's successor is n.
+        pre->right.release();
         if (last > n->data) {
           res = false;
         }
         last = n->data;
-        n = n->right;
-      } else {  // if predecessor's successor is not n
-        pre->right = n;
-        n = n->left;
+        n = n->right.get();
+      } else {  // if predecessor's successor is not n.
+        pre->right.reset(n);
+        n = n->left.get();
       }
     } else {
       if (last > n->data) {
         res = false;
       }
       last = n->data;
-      n = n->right;
+      n = n->right.get();
     }
   }
   return res;
@@ -49,12 +58,12 @@ int main(int argc, char *argv[]) {
   //      3
   //    2   5
   //  1    4 6
-  shared_ptr<BinaryTree<int>> root = shared_ptr<BinaryTree<int>>(new BinaryTree<int>{3});
-  root->left = shared_ptr<BinaryTree<int>>(new BinaryTree<int>{2});
-  root->left->left = shared_ptr<BinaryTree<int>>(new BinaryTree<int>{1});
-  root->right = shared_ptr<BinaryTree<int>>(new BinaryTree<int>{5});
-  root->right->left = shared_ptr<BinaryTree<int>>(new BinaryTree<int>{4});
-  root->right->right = shared_ptr<BinaryTree<int>>(new BinaryTree<int>{6});
+  auto root = unique_ptr<BinaryTree<int>>(new BinaryTree<int>{3});
+  root->left = unique_ptr<BinaryTree<int>>(new BinaryTree<int>{2});
+  root->left->left = unique_ptr<BinaryTree<int>>(new BinaryTree<int>{1});
+  root->right = unique_ptr<BinaryTree<int>>(new BinaryTree<int>{5});
+  root->right->left = unique_ptr<BinaryTree<int>>(new BinaryTree<int>{4});
+  root->right->right = unique_ptr<BinaryTree<int>>(new BinaryTree<int>{6});
   assert(is_BST(root) == true);
   cout << boolalpha << is_BST(root) << endl;
   //      10

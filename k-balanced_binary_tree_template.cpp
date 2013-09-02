@@ -3,6 +3,7 @@
 #include <cassert>
 #include <cstdlib>
 #include <iostream>
+#include <memory>
 #include <utility>
 
 #include "./Binary_tree_prototype_template.h"
@@ -10,11 +11,12 @@
 using std::cout;
 using std::endl;
 using std::pair;
+using std::unique_ptr;
 
 // @include
 template <typename T>
-pair<shared_ptr<BinaryTree<T>>, int> find_non_k_balanced_node_helper(
-    const shared_ptr<BinaryTree<T>> &n, int k) {
+pair<BinaryTree<T>*, int> find_non_k_balanced_node_helper(
+    const unique_ptr<BinaryTree<T>> &n, int k) {
   // Empty tree.
   if (!n) {
     return {nullptr, 0};
@@ -33,14 +35,14 @@ pair<shared_ptr<BinaryTree<T>>, int> find_non_k_balanced_node_helper(
 
   int node_num = L.second + R.second + 1;  // # of nodes in n.
   if (abs(L.second - R.second) > k) {
-    return {n, node_num};
+    return {n.get(), node_num};
   }
   return {nullptr, node_num};
 }
 
 template <typename T>
-shared_ptr<BinaryTree<T>> find_non_k_balanced_node(
-    const shared_ptr<BinaryTree<T>> &n, int k) {
+BinaryTree<T>* find_non_k_balanced_node(
+    const unique_ptr<BinaryTree<T>> &n, int k) {
   return find_non_k_balanced_node_helper<T>(n, k).first;
 }
 // @exclude
@@ -49,20 +51,20 @@ int main(int argc, char *argv[]) {
   //      3
   //    2   5
   //  1    4 6
-  shared_ptr<BinaryTree<int>> root =
-      shared_ptr<BinaryTree<int>>(new BinaryTree<int>{3, nullptr, nullptr});
+  unique_ptr<BinaryTree<int>> root =
+      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{3, nullptr, nullptr});
   root->left =
-      shared_ptr<BinaryTree<int>>(new BinaryTree<int>{2, nullptr, nullptr});
+      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{2, nullptr, nullptr});
   root->left->left =
-      shared_ptr<BinaryTree<int>>(new BinaryTree<int>{1, nullptr, nullptr});
+      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{1, nullptr, nullptr});
   root->right =
-      shared_ptr<BinaryTree<int>>(new BinaryTree<int>{5, nullptr, nullptr});
+      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{5, nullptr, nullptr});
   root->right->left =
-      shared_ptr<BinaryTree<int>>(new BinaryTree<int>{4, nullptr, nullptr});
+      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{4, nullptr, nullptr});
   root->right->right =
-      shared_ptr<BinaryTree<int>>(new BinaryTree<int>{6, nullptr, nullptr});
+      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{6, nullptr, nullptr});
   int k = 0;
-  shared_ptr<BinaryTree<int>> ans(find_non_k_balanced_node<int>(root, k));
+  BinaryTree<int>* ans(find_non_k_balanced_node<int>(root, k));
   assert(ans->data == 2);
   if (ans) {
     cout << ans->data << endl;

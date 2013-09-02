@@ -13,7 +13,7 @@ using std::default_random_engine;
 using std::endl;
 using std::pair;
 using std::random_device;
-using std::shared_ptr;
+using std::unique_ptr;
 using std::string;
 using std::uniform_int_distribution;
 using std::unordered_map;
@@ -38,56 +38,56 @@ class Trie {
   }
   // @include
   bool insert(const string& s) {
-    shared_ptr<TrieNode> p = root_;
+    auto* p = root_.get();
     for (const char& c : s) {
-      if (p->l.find(c) == p->l.cend()) {
-        p->l[c] = shared_ptr<TrieNode>(new TrieNode{false});
+      if (p->leaves.find(c) == p->leaves.cend()) {
+        p->leaves[c] = unique_ptr<TrieNode>(new TrieNode);
       }
-      p = p->l[c];
+      p = p->leaves[c].get();
     }
 
     // s already existed in this trie.
     if (p->isString) {
       return false;
-    } else {  // p->isString == false
-      p->isString = true;  // inserts s into this trie
+    } else {  // p->isString == false.
+      p->isString = true;  // inserts s into this trie.
       return true;
     }
   }
 
-  string getShortestUniquePrefix(const string& s) {
-    shared_ptr<TrieNode> p = root_;
+  string GetShortestUniquePrefix(const string& s) {
+    auto* p = root_.get();
     string prefix;
     for (const char& c : s) {
       prefix += c;
-      if (p->l.find(c) == p->l.cend()) {
+      if (p->leaves.find(c) == p->leaves.cend()) {
         return prefix;
       }
-      p = p->l[c];
+      p = p->leaves[c].get();
     }
     return {};
   }
   // @exclude
   void clear() {
-    clear(root_);
+    clear(&root_);
   }
   // @include
 
  private:
   struct TrieNode {
-    bool isString;
-    unordered_map<char, shared_ptr<TrieNode>> l;
+    bool isString = false;
+    unordered_map<char, unique_ptr<TrieNode>> leaves;
   };
 
-  shared_ptr<TrieNode> root_ = shared_ptr<TrieNode>(new TrieNode{false});
+  unique_ptr<TrieNode> root_ = unique_ptr<TrieNode>(new TrieNode);
   // @exclude
-  void clear(shared_ptr<TrieNode> p) {
-    for (const pair<char, shared_ptr<TrieNode>> &e : p->l) {
+  void clear(unique_ptr<TrieNode>* p) {
+    for (auto &e : (*p)->leaves) {
       if (e.second) {
-        clear(e.second);
+        clear(&(e.second));
       }
     }
-    p = nullptr;
+    p->reset(nullptr);
   }
   // @include
 };
@@ -98,7 +98,7 @@ string find_shortest_prefix(const string& s, const unordered_set<string>& D) {
   for (const string& word : D) {
     T.insert(word);
   }
-  return T.getShortestUniquePrefix(s);
+  return T.GetShortestUniquePrefix(s);
 }
 // @exclude
 
@@ -139,12 +139,6 @@ int main(int argc, char *argv[]) {
       uniform_int_distribution<int> dis(1, 10);
       D.emplace(rand_string(dis(gen)));
     }
-    /*
-    for (unordered_set<string>::iterator iter = D.begin(); iter != D.end(); ++iter) {
-      cout << *iter << ' ';
-    }
-    cout << endl;
-    //*/
     cout << s << ' '  << "shortest prefix = " << find_shortest_prefix(s, D)
          << endl;
     assert(find_shortest_prefix(s, D) == check_ans(s, D));

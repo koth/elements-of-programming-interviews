@@ -11,16 +11,16 @@
 using std::cout;
 using std::endl;
 using std::list;
-using std::shared_ptr;
+using std::unique_ptr;
 using std::vector;
 
 // @include
 template <typename T>
-void connect_leaves_helper(const shared_ptr<BinaryTree<T>>& n,
-                           list<shared_ptr<BinaryTree<T>>>* L) {
+void connect_leaves_helper(const unique_ptr<BinaryTree<T>>& n,
+                           list<BinaryTree<T>*>* L) {
   if (n) {
     if (!n->left && !n->right) {
-      L->emplace_back(n);
+      L->emplace_back(n.get());
     } else {
       connect_leaves_helper(n->left, L);
       connect_leaves_helper(n->right, L);
@@ -29,9 +29,9 @@ void connect_leaves_helper(const shared_ptr<BinaryTree<T>>& n,
 }
 
 template <typename T>
-list<shared_ptr<BinaryTree<T>>> connect_leaves(
-    const shared_ptr<BinaryTree<T>>& n) {
-  list<shared_ptr<BinaryTree<T>>> L;
+list<BinaryTree<T>*> connect_leaves(
+    const unique_ptr<BinaryTree<T>>& n) {
+  list<BinaryTree<T>*> L;
   connect_leaves_helper(n, &L);
   return L;
 }
@@ -41,20 +41,20 @@ int main(int argc, char *argv[]) {
   //      3
   //    2   5
   //  1    4 6
-  shared_ptr<BinaryTree<int>> root =
-      shared_ptr<BinaryTree<int>>(new BinaryTree<int>{3, nullptr, nullptr});
+  unique_ptr<BinaryTree<int>> root =
+      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{3, nullptr, nullptr});
   root->left =
-      shared_ptr<BinaryTree<int>>(new BinaryTree<int>{2, nullptr, nullptr});
+      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{2, nullptr, nullptr});
   root->left->left =
-      shared_ptr<BinaryTree<int>>(new BinaryTree<int>{1, nullptr, nullptr});
+      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{1, nullptr, nullptr});
   root->right =
-      shared_ptr<BinaryTree<int>>(new BinaryTree<int>{5, nullptr, nullptr});
+      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{5, nullptr, nullptr});
   root->right->left =
-      shared_ptr<BinaryTree<int>>(new BinaryTree<int>{4, nullptr, nullptr});
+      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{4, nullptr, nullptr});
   root->right->right =
-    shared_ptr<BinaryTree<int>>(new BinaryTree<int>{6, nullptr, nullptr});
+      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{6, nullptr, nullptr});
   // should output 1, 4, 6
-  list<shared_ptr<BinaryTree<int>>> L = connect_leaves(root);
+  list<BinaryTree<int>*> L = connect_leaves(root);
   vector<int> output;
   for (const auto &l : L) {
     output.push_back(l->data);

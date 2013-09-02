@@ -1,11 +1,18 @@
-#include <iostream>
-#include <cassert>
-#include <cstdlib>
-#include <ctime>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
 #include <algorithm>
+#include <cassert>
+#include <iostream>
+#include <random>
 #include <vector>
 
-using namespace std;
+using std::boolalpha;
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
 template <typename T>
@@ -17,7 +24,7 @@ bool has_2_sum(const vector<T> &A, const T &t) {
       return true;
     } else if (A[j] + A[k] < t) {
       ++j;
-    } else {  // A[j] + A[k] > t
+    } else {  // A[j] + A[k] > t.
       --k;
     }
   }
@@ -29,7 +36,7 @@ bool has_3_sum(vector<T> A, const T &t) {
   sort(A.begin(), A.end());
 
   for (const T &a : A) {
-    // Find if the sum of two numbers in A equals to t - a
+    // Find if the sum of two numbers in A equals to t - a.
     if (has_2_sum(A, t - a)) {
       return true;
     }
@@ -54,19 +61,23 @@ bool check_ans(const vector<T> &A, const T &t) {
 }
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n, T;
     if (argc == 2) {
       n = atoi(argv[1]);
-      T = rand() % n;
+      uniform_int_distribution<int> dis(0, n - 1);
+      T = dis(gen);
     } else {
-      n = 1 + rand() % 10000;
-      T = rand() % n;
+      uniform_int_distribution<int> dis(1, 10000);
+      n = dis(gen);
+      uniform_int_distribution<int> T_dis(0, n - 1);
+      T = T_dis(gen);
     }
     vector<int> A;
     for (size_t i = 0; i < n; ++i) {
-      A.emplace_back(((rand() & 1) ? -1 : 1) * rand() % 100000);
+      uniform_int_distribution<int> dis(-100000, 100000);
+      A.emplace_back(dis(gen));
     }
     cout << boolalpha << has_3_sum(A, T) << endl;
     assert(check_ans(A, T) == has_3_sum(A, T));

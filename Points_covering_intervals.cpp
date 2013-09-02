@@ -51,7 +51,7 @@ vector<TimeType> find_minimum_visits(const vector<Interval<TimeType>> &I) {
     TimeType b = (*R.cbegin())->right;
     S.emplace_back(b);
 
-    // Remove the intervals which intersect with R.cbegin()
+    // Remove the intervals which intersect with R.cbegin().
     auto it = L.cbegin();
     while (it != L.cend() && (*it)->left <= b) {
       R.erase(*it);

@@ -4,31 +4,27 @@
 #include <iostream>
 #include <memory>
 
+#include "./Binary_tree_with_parent_prototype.h"
+
 using std::cout;
 using std::endl;
-using std::make_shared;
-using std::shared_ptr;
-
-template <typename T>
-struct BinaryTree {
-  T data;
-  shared_ptr<BinaryTree<T>> left, right, parent;
-};
+using std::unique_ptr;
 
 // @include
 template <typename T>
-shared_ptr<BinaryTree<T>> find_successor(shared_ptr<BinaryTree<T>> n) {
+BinaryTree<T>* find_successor(const unique_ptr<BinaryTree<T>>& node) {
+  auto* n = node.get();
   if (n->right) {
     // Find the leftmost element in n's right subtree.
-    n = n->right;
+    n = n->right.get();
     while (n->left) {
-      n = n->left;
+      n = n->left.get();
     }
     return n;
   }
 
   // Find the first parent whose left child contains n.
-  while (n->parent && n->parent->right == n) {
+  while (n->parent && n->parent->right.get() == n) {
     n = n->parent;
   }
   // Return nullptr means n does not have successor.
@@ -40,21 +36,20 @@ int main(int argc, char *argv[]) {
   //      3
   //    2   5
   //  1    4  6
-  shared_ptr<BinaryTree<int>> root =
-      make_shared<BinaryTree<int>>(BinaryTree<int>{3});
+  auto root = unique_ptr<BinaryTree<int>>(new BinaryTree<int>{3});
   root->parent = nullptr;
-  root->left = make_shared<BinaryTree<int>>(BinaryTree<int>{2});
-  root->left->parent = root;
-  root->left->left = make_shared<BinaryTree<int>>(BinaryTree<int>{1});
-  root->left->left->parent = root->left;
-  root->right = make_shared<BinaryTree<int>>(BinaryTree<int>{5});
-  root->right->parent = root;
-  root->right->left = make_shared<BinaryTree<int>>(BinaryTree<int>{4});
-  root->right->left->parent = root->right;
-  root->right->right = make_shared<BinaryTree<int>>(BinaryTree<int>{6});
-  root->right->right->parent = root->right;
+  root->left = unique_ptr<BinaryTree<int>>(new BinaryTree<int>{2});
+  root->left->parent = root.get();
+  root->left->left = unique_ptr<BinaryTree<int>>(new BinaryTree<int>{1});
+  root->left->left->parent = root->left.get();
+  root->right = unique_ptr<BinaryTree<int>>(new BinaryTree<int>{5});
+  root->right->parent = root.get();
+  root->right->left = unique_ptr<BinaryTree<int>>(new BinaryTree<int>{4});
+  root->right->left->parent = root->right.get();
+  root->right->right = unique_ptr<BinaryTree<int>>(new BinaryTree<int>{6});
+  root->right->right->parent = root->right.get();
   // should output 6
-  shared_ptr<BinaryTree<int>> node = find_successor(root->right);
+  auto* node = find_successor(root->right);
   assert(6 == node->data);
   if (node) {
     cout << node->data << endl;

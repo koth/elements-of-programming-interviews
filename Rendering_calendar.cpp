@@ -22,7 +22,7 @@ struct Interval {
 
 template <typename TimeType>
 struct Endpoint {
-  const bool operator<(const Endpoint &e) const {
+  bool operator<(const Endpoint &e) const {
     return time != e.time ? time < e.time : (isStart && !e.isStart);
   }
 
@@ -32,16 +32,16 @@ struct Endpoint {
 
 template <typename TimeType>
 int find_max_concurrent_events(const vector<Interval<TimeType>>& A) {
-  // Build the endpoint array
+  // Build the endpoint array.
   vector<Endpoint<TimeType>> E;
   for (const Interval<TimeType>& i : A) {
     E.emplace_back(Endpoint<TimeType>{i.start, true});
     E.emplace_back(Endpoint<TimeType>{i.finish, false});
   }
-  // Sort the endpoint array according to the time
+  // Sort the endpoint array according to the time.
   sort(E.begin(), E.end());
 
-  // Find the maximum number of events overlapped
+  // Find the maximum number of events overlapped.
   int max_count = 0, count = 0;
   for (const Endpoint<TimeType>& e : E) {
     if (e.isStart) {

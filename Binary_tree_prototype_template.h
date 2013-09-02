@@ -5,13 +5,13 @@
 
 #include <memory>
 
-using std::shared_ptr;
+using std::unique_ptr;
 
 // @include
 template <typename T>
 struct BinaryTree {
   T data;
-  shared_ptr<BinaryTree<T>> left, right;
+  unique_ptr<BinaryTree<T>> left, right;
 };
 // @exclude
 #endif  // SOLUTIONS_BINARY_TREE_PROTOTYPE_TEMPLATE_H_

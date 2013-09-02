@@ -1,11 +1,16 @@
-// Compile this with the support of C++0x since it uses back() of string
-#include <iostream>
-#include <cstdlib>
-#include <ctime>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
 #include <algorithm>
+#include <iostream>
+#include <random>
 #include <string>
 
-using namespace std;
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::random_device;
+using std::string;
+using std::uniform_int_distribution;
 
 // @include
 void count_occurrences(string S) {
@@ -25,20 +30,23 @@ void count_occurrences(string S) {
 // @exclude
 
 string rand_string(int len) {
+  default_random_engine gen((random_device())());
   string ret;
   while (len--) {
-    ret += rand() % 26 + 'a';
+    uniform_int_distribution<int> dis('a', 'z');
+    ret += dis(gen);
   }
   return ret;
 }
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   string S;
   if (argc == 2) {
     S = argv[1];
   } else {
-    S = rand_string(1 + rand() % 1000);
+    uniform_int_distribution<int> dis(1, 1000);
+    S = rand_string(dis(gen));
   }
   cout << S << endl;
   count_occurrences(S);

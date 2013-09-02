@@ -20,7 +20,7 @@ struct Interval {
   };
 
  public:
-  const bool operator<(const Interval &i) const {
+  bool operator<(const Interval &i) const {
     return left.val != i.left.val ?
            left.val < i.left.val : (left.isClose && !i.left.isClose);
   }
@@ -30,12 +30,12 @@ struct Interval {
 
 template <typename TimeType>
 vector<Interval<TimeType>> Union_intervals(vector<Interval<TimeType>> I) {
-  // Empty input
+  // Empty input.
   if (I.empty()) {
     return {};
   }
 
-  // Sort intervals according to their left endpoints
+  // Sort intervals according to their left endpoints.
   sort(I.begin(), I.end());
   Interval<TimeType> curr(I.front());
   vector<Interval<TimeType>> uni;
@@ -59,7 +59,7 @@ vector<Interval<TimeType>> Union_intervals(vector<Interval<TimeType>> I) {
 
 template <typename TimeType>
 void check_intervals(const vector<Interval<TimeType>> &A) {
-  // only check the intervals do not overlap with each other
+  // only check the intervals do not overlap with each other.
   for (size_t i = 1; i < A.size(); ++i) {
     assert(A[i - 1].right.val < A[i].left.val ||
            (A[i - 1].right.val == A[i].left.val &&

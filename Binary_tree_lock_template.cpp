@@ -7,6 +7,7 @@
 using std::boolalpha;
 using std::cout;
 using std::endl;
+using std::make_shared;
 using std::shared_ptr;
 
 // @include
@@ -72,15 +73,14 @@ class BinaryTree {
 // @exclude
 
 int main(int argc, char *argv[]) {
-  shared_ptr<BinaryTree<int>> root =
-    shared_ptr<BinaryTree<int>>(new BinaryTree<int>());
-  root->left() = shared_ptr<BinaryTree<int>>(new BinaryTree<int>());
+  auto root = make_shared<BinaryTree<int>>(BinaryTree<int>());
+  root->left() = make_shared<BinaryTree<int>>(BinaryTree<int>());
   root->left()->parent() = root;
-  root->right() = shared_ptr<BinaryTree<int>>(new BinaryTree<int>());
+  root->right() = make_shared<BinaryTree<int>>(BinaryTree<int>());
   root->right()->parent() = root;
-  root->left()->left() = shared_ptr<BinaryTree<int>>(new BinaryTree<int>());
+  root->left()->left() = make_shared<BinaryTree<int>>(BinaryTree<int>());
   root->left()->left()->parent() = root->left();
-  root->left()->right() = shared_ptr<BinaryTree<int>>(new BinaryTree<int>());
+  root->left()->right() = make_shared<BinaryTree<int>>(BinaryTree<int>());
   root->left()->right()->parent() = root->left();
   // should output false
   assert(root->isLock() == false);

@@ -5,13 +5,11 @@
 
 #include <memory>
 
-using std::shared_ptr;
-
 // @include
 template <typename T>
 struct node_t {
   T data;
-  shared_ptr<node_t<T>> next;
+  std::shared_ptr<node_t<T>> next;
 };
 // @exclude
 #endif  // SOLUTIONS_LINKED_LIST_PROTOTYPE_TEMPLATE_H_

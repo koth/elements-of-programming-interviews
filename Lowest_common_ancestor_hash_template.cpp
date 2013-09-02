@@ -11,26 +11,27 @@
 using std::cout;
 using std::endl;
 using std::invalid_argument;
-using std::shared_ptr;
+using std::unique_ptr;
 using std::unordered_set;
 
 // @include
 template <typename T>
-shared_ptr<BinaryTree<T>> LCA(shared_ptr<BinaryTree<T>> a,
-                              shared_ptr<BinaryTree<T>> b) {
-  unordered_set<shared_ptr<BinaryTree<T>>> hash;
-  while (a || b) {
-    if (a) {
-      if (hash.emplace(a).second == false) {
-        return a;  // adds a failed because a exists in hash.
+BinaryTree<T>* LCA(const unique_ptr<BinaryTree<T>>& a,
+                   const unique_ptr<BinaryTree<T>>& b) {
+  auto *i = a.get(), *j = b.get();
+  unordered_set<const BinaryTree<T>*> hash;
+  while (i || j) {
+    if (i) {
+      if (hash.emplace(i).second == false) {
+        return i;  // adds a failed because a exists in hash.
       }
-      a = a->parent;
+      i = i->parent;
     }
-    if (b) {
-      if (hash.emplace(b).second == false) {
-        return b;  // adds b failed because b exists in hash.
+    if (j) {
+      if (hash.emplace(j).second == false) {
+        return j;  // adds b failed because b exists in hash.
       }
-      b = b->parent;
+      j = j->parent;
     }
   }
   // Throw error if a and b are not in the same tree.
@@ -42,24 +43,24 @@ int main(int argc, char *argv[]) {
   //      3
   //    2   5
   //  1    4 6
-  shared_ptr<BinaryTree<int>> root =
-      shared_ptr<BinaryTree<int>>(new BinaryTree<int>{3, nullptr, nullptr});
+  unique_ptr<BinaryTree<int>> root =
+      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{3, nullptr, nullptr});
   root->parent = nullptr;
   root->left =
-      shared_ptr<BinaryTree<int>>(new BinaryTree<int>{2, nullptr, nullptr});
-  root->left->parent = root;
+      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{2, nullptr, nullptr});
+  root->left->parent = root.get();
   root->left->left =
-      shared_ptr<BinaryTree<int>>(new BinaryTree<int>{1, nullptr, nullptr});
-  root->left->left->parent = root->left;
+      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{1, nullptr, nullptr});
+  root->left->left->parent = root->left.get();
   root->right =
-      shared_ptr<BinaryTree<int>>(new BinaryTree<int>{5, nullptr, nullptr});
-  root->right->parent = root;
+      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{5, nullptr, nullptr});
+  root->right->parent = root.get();
   root->right->left =
-      shared_ptr<BinaryTree<int>>(new BinaryTree<int>{4, nullptr, nullptr});
-  root->right->left->parent = root->right;
+      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{4, nullptr, nullptr});
+  root->right->left->parent = root->right.get();
   root->right->right =
-      shared_ptr<BinaryTree<int>>(new BinaryTree<int>{6, nullptr, nullptr});
-  root->right->right->parent = root->right;
+      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{6, nullptr, nullptr});
+  root->right->right->parent = root->right.get();
 
   // should output 3
   assert(LCA(root->left, root->right)->data == 3);
