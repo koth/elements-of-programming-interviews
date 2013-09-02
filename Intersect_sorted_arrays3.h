@@ -1,5 +1,8 @@
 // Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
+#ifndef SOLUTIONS_INTERSECT_SORTED_ARRAYS3_H_
+#define SOLUTIONS_INTERSECT_SORTED_ARRAYS3_H_
+
 #include <vector>
 
 using std::vector;
@@ -22,3 +25,4 @@ vector<T> intersect_arrs3(const vector<T> &A, const vector<T> &B) {
   return intersect;
 }
 // @exclude
+#endif  // SOLUTIONS_INTERSECT_SORTED_ARRAYS3_H_
