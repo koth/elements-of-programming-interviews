@@ -2,16 +2,23 @@
 
 #include <cassert>
 #include <iostream>
+#include <memory>
 #include <random>
 #include <vector>
 
-#include "BST_prototype.h"
+#include "./BST_prototype.h"
 
-using namespace std;
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::unique_ptr;
+using std::vector;
 
 // @include
 template <typename T>
-void find_k_largest_in_BST_helper(const shared_ptr<BinarySearchTree<T>> &r,
+void find_k_largest_in_BST_helper(const unique_ptr<BinarySearchTree<T>> &r,
                                   int k, vector<T>* k_elements) {
   // Performs reverse inorder traversal.
   if (r && k_elements->size() < k) {
@@ -24,7 +31,7 @@ void find_k_largest_in_BST_helper(const shared_ptr<BinarySearchTree<T>> &r,
 }
 
 template <typename T>
-vector<T> find_k_largest_in_BST(const shared_ptr<BinarySearchTree<T>> &root,
+vector<T> find_k_largest_in_BST(const unique_ptr<BinarySearchTree<T>> &root,
                                 int k) {
   vector<T> k_elements;
   find_k_largest_in_BST_helper(root, k, &k_elements);
@@ -36,18 +43,16 @@ int main(int argc, char *argv[]) {
   //    3
   //  2   5
   // 1   4 6
-  shared_ptr<BinarySearchTree<int>>
-      root = shared_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{3});
-  root->left = shared_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{2});
+  unique_ptr<BinarySearchTree<int>>
+      root = unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{3});
+  root->left = unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{2});
   root->left->left =
-      shared_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{1});
-  /*
-  root->right = shared_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{5});
+      unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{1});
+  root->right = unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{5});
   root->right->left =
-      shared_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{4});
+      unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{4});
   root->right->right =
-      shared_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{6});
-      */
+      unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{6});
   default_random_engine gen((random_device())());
   int k;
   if (argc == 2) {
@@ -56,6 +61,7 @@ int main(int argc, char *argv[]) {
     uniform_int_distribution<int> dis(1, 6);
     k = dis(gen);
   }
+  cout << "k = " << k << endl;
   vector<int> ans = find_k_largest_in_BST(root, k);
   for (int i = 0; i < ans.size(); ++i) {
     cout << ans[i] << endl;

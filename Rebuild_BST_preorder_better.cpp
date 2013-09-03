@@ -1,44 +1,53 @@
-#include "BST_prototype.h"
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
+#include <cassert>
 #include <iostream>
 #include <limits>
-#include <cassert>
+#include <memory>
 #include <vector>
-#include <string>
 
-using namespace std;
+#include "./BST_prototype.h"
+
+using std::cout;
+using std::endl;
+using std::numeric_limits;
+using std::unique_ptr;
+using std::vector;
 
 // @include
 template <typename T>
-shared_ptr<BinarySearchTree<T>> rebuild_BST_from_preorder_helper(
-    const vector<T> &preorder, int &idx, const T &min, const T &max) { 
-  if (idx == preorder.size()) {
+BinarySearchTree<T>* rebuild_BST_from_preorder_helper(
+    const vector<T> &preorder, int* idx, const T &min, const T &max) {
+  if (*idx == preorder.size()) {
     return nullptr;
   }
 
-  T curr = preorder[idx];
+  T curr = preorder[*idx];
   if (curr < min || curr > max) {
     return nullptr;
   }
 
-  ++idx;
-  shared_ptr<BinarySearchTree<T> > root(new BinarySearchTree<T>{curr,
-      rebuild_BST_from_preorder_helper(preorder, idx, min, curr),
-      rebuild_BST_from_preorder_helper(preorder, idx, curr, max)});
-  return root;
+  ++*idx;
+  return new BinarySearchTree<T>{
+      curr,
+      unique_ptr<BinarySearchTree<T>>(
+        rebuild_BST_from_preorder_helper(preorder, idx, min, curr)),
+      unique_ptr<BinarySearchTree<T>>(
+        rebuild_BST_from_preorder_helper(preorder, idx, curr, max))
+  };
 }
 
 template <typename T>
-shared_ptr<BinarySearchTree<T> > rebuild_BST_from_preorder(
-    const vector<T> &preorder) {
+BinarySearchTree<T>* rebuild_BST_from_preorder(const vector<T> &preorder) {
   int idx = 0;
-  return rebuild_BST_from_preorder_helper(preorder, idx, 
+  return rebuild_BST_from_preorder_helper(preorder, &idx,
                                           numeric_limits<T>::min(),
                                           numeric_limits<T>::max());
 }
 // @exclude
 
 template <typename T>
-void check_ans(const shared_ptr<BinarySearchTree<T>> &n, const T &pre) {
+void check_ans(const unique_ptr<BinarySearchTree<T>> &n, const T &pre) {
   if (n) {
     check_ans(n->left, pre);
     assert(pre <= n->data);
@@ -60,7 +69,7 @@ int main(int argc, char *argv[]) {
   preorder.emplace_back(5);
   preorder.emplace_back(4);
   preorder.emplace_back(6);
-  shared_ptr<BinarySearchTree<int>> root(rebuild_BST_from_preorder(preorder));
+  unique_ptr<BinarySearchTree<int>> root(rebuild_BST_from_preorder(preorder));
   check_ans<int>(root, numeric_limits<int>::min());
   return 0;
 }

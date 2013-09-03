@@ -1,47 +1,53 @@
-#include "BST_prototype.h"
-#include <iostream>
-#include <cassert>
-#include <cstdlib>
-#include <vector>
-#include <ctime>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <cassert>
+#include <iostream>
+#include <memory>
+#include <vector>
+
+#include "./BST_prototype.h"
+
+using std::cout;
+using std::endl;
+using std::unique_ptr;
+using std::vector;
 
 // @include
-// Build BST based on subarray A[start : end - 1]
+// Build BST based on subarray A[start : end - 1].
 template <typename T>
-shared_ptr<BinarySearchTree<T>> build_BST_from_sorted_array_helper(
-    const vector<T> &A, const int &start, const int &end) {
+BinarySearchTree<T>* build_BST_from_sorted_array_helper(
+    const vector<T> &A, int start, int end) {
   if (start < end) {
     int mid = start + ((end - start) >> 1);
-    return shared_ptr<BinarySearchTree<T>>(new BinarySearchTree<T>{
+    return new BinarySearchTree<T>{
         A[mid],
-        build_BST_from_sorted_array_helper(A, start, mid),
-        build_BST_from_sorted_array_helper(A, mid + 1, end)}
-    );
+        unique_ptr<BinarySearchTree<T>>(
+            build_BST_from_sorted_array_helper(A, start, mid)),
+        unique_ptr<BinarySearchTree<T>>(
+            build_BST_from_sorted_array_helper(A, mid + 1, end))
+    };
   }
   return nullptr;
 }
 
 template <typename T>
-shared_ptr<BinarySearchTree<T>> build_BST_from_sorted_array(
+BinarySearchTree<T>* build_BST_from_sorted_array(
     const vector<T> &A) {
   return build_BST_from_sorted_array_helper(A, 0, A.size());
 }
 // @exclude
 
 template <typename T>
-void traversal_check(shared_ptr<BinarySearchTree<T>> root, T &target) {
+void traversal_check(const unique_ptr<BinarySearchTree<T>>& root, T *target) {
   if (root) {
     traversal_check(root->left, target);
-    assert(target == root->data);
-    ++target;
+    assert(*target == root->data);
+    ++*target;
     traversal_check(root->right, target);
   }
 }
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
   for (int times = 0; times < 1000; ++times) {
     vector<int> A;
     int n;
@@ -51,11 +57,12 @@ int main(int argc, char *argv[]) {
       n = 1 + rand() % 1000;
     }
     for (size_t i = 0; i < n; ++i) {
-      A.push_back(i);
+      A.emplace_back(i);
     }
-    shared_ptr<BinarySearchTree<int>> root = build_BST_from_sorted_array(A);
+    unique_ptr<BinarySearchTree<int>> root =
+        unique_ptr<BinarySearchTree<int>>(build_BST_from_sorted_array(A));
     int target = 0;
-    traversal_check<int>(root, target);
+    traversal_check<int>(root, &target);
   }
   return 0;
 }

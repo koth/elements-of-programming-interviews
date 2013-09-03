@@ -1,26 +1,34 @@
-#include "BST_prototype.h"
-#include <limits>
-#include <iostream>
-#include <cassert>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <cassert>
+#include <iostream>
+#include <limits>
+#include <memory>
+
+#include "./BST_prototype_shared_ptr.h"
+
+using std::cout;
+using std::endl;
+using std::make_shared;
+using std::numeric_limits;
+using std::shared_ptr;
 
 // @include
 // Transform a BST into a circular sorted doubly linked list in-place,
-// return the head of the list
+// return the head of the list.
 template <typename T>
 shared_ptr<BinarySearchTree<T>> BST_to_doubly_list(
     const shared_ptr<BinarySearchTree<T>> &n) {
-  // Empty subtree
+  // Empty subtree.
   if (!n) {
     return nullptr;
   }
 
-  // Recursively build the list from left and right subtrees
+  // Recursively build the list from left and right subtrees.
   auto l_head(BST_to_doubly_list(n->left));
   auto r_head(BST_to_doubly_list(n->right));
 
-  // Append n to the list from left subtree
+  // Append n to the list from left subtree.
   shared_ptr<BinarySearchTree<T>> l_tail = nullptr;
   if (l_head) {
     l_tail = l_head->left;
@@ -31,7 +39,7 @@ shared_ptr<BinarySearchTree<T>> BST_to_doubly_list(
     l_head = l_tail = n;
   }
 
-  // Append the list from right subtree to n
+  // Append the list from right subtree to n.
   shared_ptr<BinarySearchTree<T>> r_tail = nullptr;
   if (r_head) {
     r_tail = r_head->left;
@@ -50,12 +58,15 @@ int main(int argc, char *argv[]) {
   //    3
   //  2   5
   // 1   4 6
-  shared_ptr<BinarySearchTree<int>> root = shared_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{3});
-  root->left = shared_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{2});
-  root->left->left = shared_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{1});
-  root->right = shared_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{5});
-  root->right->left = shared_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{4});
-  root->right->right = shared_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{6});
+  auto root = make_shared<BinarySearchTree<int>>(BinarySearchTree<int>{3});
+  root->left = make_shared<BinarySearchTree<int>>(BinarySearchTree<int>{2});
+  root->left->left =
+      make_shared<BinarySearchTree<int>>(BinarySearchTree<int>{1});
+  root->right = make_shared<BinarySearchTree<int>>(BinarySearchTree<int>{5});
+  root->right->left =
+      make_shared<BinarySearchTree<int>>(BinarySearchTree<int>{4});
+  root->right->right =
+      make_shared<BinarySearchTree<int>>(BinarySearchTree<int>{6});
   shared_ptr<BinarySearchTree<int>> L = BST_to_doubly_list(root);
   shared_ptr<BinarySearchTree<int>> curr = L;
   int pre = numeric_limits<int>::min();

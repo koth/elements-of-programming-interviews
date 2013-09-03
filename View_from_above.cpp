@@ -17,7 +17,7 @@ using std::unordered_set;
 // @include
 template <typename XaxisType, typename ColorType, typename HeightType>
 struct LineSegment {
-  XaxisType left, right;  // specifies the interval
+  XaxisType left, right;  // specifies the interval.
   ColorType color;
   HeightType height;
 };
@@ -25,7 +25,7 @@ struct LineSegment {
 template <typename XaxisType, typename ColorType, typename HeightType>
 class Endpoint {
  public:
-  const bool operator<(const Endpoint &that) const {
+  bool operator<(const Endpoint &that) const {
     return val() < that.val();
   }
 
@@ -47,12 +47,12 @@ void calculate_view_from_above(
   }
   sort(E.begin(), E.end());
 
-  XaxisType prev_xaxis = E.front().val();  // the first left end point
+  XaxisType prev_xaxis = E.front().val();  // the first left end point.
   shared_ptr<LineSegment<XaxisType, ColorType, HeightType>> prev = nullptr;
   map<HeightType, const LineSegment<XaxisType, ColorType, HeightType>*> T;
   for (const auto& e: E) {
     if (T.empty() == false && prev_xaxis != e.val()) {
-      if (prev == nullptr) {  // found first segment
+      if (prev == nullptr) {  // found first segment.
         prev = shared_ptr<LineSegment<XaxisType, ColorType, HeightType>>(
           new LineSegment<XaxisType, ColorType, HeightType>{
             prev_xaxis, e.val(), T.crbegin()->second->color,
@@ -72,14 +72,14 @@ void calculate_view_from_above(
     }
     prev_xaxis = e.val();
 
-    if (e.isLeft_ == true) {  // left end point
+    if (e.isLeft_ == true) {  // left end point.
       T.emplace(e.l_->height, e.l_);
-    } else {  // right end point
+    } else {  // right end point.
       T.erase(e.l_->height);
     }
   }
 
-  // Output the remaining segment if any
+  // Output the remaining segment if any.
   if (prev) {
     cout << "[" << prev->left << ", " << prev->right << "]"
          << ", color = " << prev->color << ", height = "

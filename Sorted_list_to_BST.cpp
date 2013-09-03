@@ -1,25 +1,28 @@
-#include "Doubly_linked_list_prototype_template.h"
-#include <iostream>
-#include <limits>
-#include <cassert>
-#include <vector>
-#include <cstdlib>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <cassert>
+#include <iostream>
+#include <memory>
+
+#include "./Doubly_linked_list_prototype_template.h"
+
+using std::cout;
+using std::endl;
+using std::shared_ptr;
 
 // @include
 // Build a BST from the (s + 1)-th to the e-th node in L.
 // Node numbering is from 1 to n.
 template <typename T>
 shared_ptr<node_t<T>> build_BST_from_sorted_doubly_list_helper(
-    shared_ptr<node_t<T>> &L, const int &s, const int &e) {
+    shared_ptr<node_t<T>> *L, int s, int e) {
   shared_ptr<node_t<T>> curr = nullptr;
   if (s < e) {
     int m = s + ((e - s) >> 1);
     auto temp_left = build_BST_from_sorted_doubly_list_helper(L, s, m);
-    curr = L; // the last function call sets L to the successor of the
-              // maximum node in the tree rooted at temp_left
-    L = L->next;
+    curr = *L; // the last function call sets L to the successor of the
+               // maximum node in the tree rooted at temp_left.
+    *L = (*L)->next;
     curr->prev = temp_left;
     curr->next = build_BST_from_sorted_doubly_list_helper(L, m + 1, e);
   }
@@ -28,14 +31,14 @@ shared_ptr<node_t<T>> build_BST_from_sorted_doubly_list_helper(
 
 template <typename T>
 shared_ptr<node_t<T>> build_BST_from_sorted_doubly_list(
-    shared_ptr<node_t<T>> L, const int &n) {
-  return build_BST_from_sorted_doubly_list_helper(L, 0, n);
+    shared_ptr<node_t<T>> L, int n) {
+  return build_BST_from_sorted_doubly_list_helper(&L, 0, n);
 }
 // @exclude
 
 int depth = 0;
 template <typename T>
-void inorder_traversal(shared_ptr<node_t<T>> node, const T &pre) {
+void inorder_traversal(const shared_ptr<node_t<T>>& node, const T &pre) {
   if (node) {
     depth++;
     inorder_traversal(node->prev, pre);
@@ -49,8 +52,8 @@ void inorder_traversal(shared_ptr<node_t<T>> node, const T &pre) {
 }
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
   /*
+  srand(time(nullptr));
   for (int times = 0; times < 1000; ++times) {
     shared_ptr<node_t<int>> L = nullptr;
     int n;
@@ -71,9 +74,10 @@ int main(int argc, char *argv[]) {
   */
 
   shared_ptr<node_t<int>> A[1000];
-  
+
   for ( int i = 0 ; i < 1000; i++ ) {
     A[i] = shared_ptr<node_t<int>>(new node_t<int>{0});
+  }
 
   shared_ptr<node_t<int>> temp0 = shared_ptr<node_t<int>>(new node_t<int>{0});
   shared_ptr<node_t<int>> temp1 = shared_ptr<node_t<int>>(new node_t<int>{1});
@@ -90,8 +94,6 @@ int main(int argc, char *argv[]) {
 
   shared_ptr<node_t<int>> L = temp0;
   auto root = build_BST_from_sorted_doubly_list(L, 4);
-  inorder_traversal(root, -1 );
-
-
+  inorder_traversal(root, -1);
   return 0;
 }

@@ -13,53 +13,51 @@ using std::unordered_set;
 
 // @include
 class ClientsCreditsInfo {
-  private:
-    int offset;
-    unordered_map<string, int> credits;
-    map<int, unordered_set<string>> inverse_credits;
+ public:
+  void insert(const string &s, int c) {
+    credits_.emplace(s, c - offset_);
+    inverse_credits_[c - offset_].emplace(s);
+  }
 
-  public:
-    ClientsCreditsInfo(void) : offset(0) {}
-
-    void insert(const string &s, const int &c) {
-      credits.emplace(s, c - offset);
-      inverse_credits[c - offset].emplace(s);
+  void remove(const string &s) {
+    auto credits_it = credits_.find(s);
+    if (credits_it != credits_.end()) {
+      inverse_credits_[credits_it->second].erase(s);
+      credits_.erase(credits_it);
     }
+  }
 
-    void remove(const string &s) {
-      auto credits_it = credits.find(s);
-      if (credits_it != credits.end()) {
-        inverse_credits[credits_it->second].erase(s);
-        credits.erase(credits_it);
-      }
-    }
+  int lookup(const string &s) const {
+    auto it = credits_.find(s);
+    return it == credits_.cend() ? -1 : it->second + offset_;
+  }
 
-    int lookup(const string &s) const {
-      auto it = credits.find(s);
-      return it == credits.cend() ? -1 : it->second + offset;
-    }
+  void addAll(int C) {
+    offset_ += C;
+  }
 
-    void addAll(const int &C) {
-      offset += C;
-    }
+  string max() const {
+    auto it = inverse_credits_.crbegin();
+    return it == inverse_credits_.crend() ||
+           it->second.empty() ? "" : *it->second.cbegin();
+  }
 
-    string max(void) const {
-      auto it = inverse_credits.crbegin();
-      return it == inverse_credits.crend() || it->second.empty() ?
-             "" : *it->second.cbegin();
-    }
+ private:
+  int offset_ = 0;
+  unordered_map<string, int> credits_;
+  map<int, unordered_set<string>> inverse_credits_;
 };
 // @exclude
 
 int main(int argc, char *argv[]) {
   ClientsCreditsInfo a;
   assert(a.max() == "");
-  a.insert( "foo", 1 );
-  a.insert( "bar", 2 );
+  a.insert("foo", 1);
+  a.insert("bar", 2);
   a.addAll(5);
-  a.insert( "widget", 3 );
+  a.insert("widget", 3);
   a.addAll(5);
-  a.insert( "dothis", 4 );
+  a.insert("dothis", 4);
   assert(11 == a.lookup("foo"));
   assert(12 == a.lookup("bar"));
   assert(8 == a.lookup("widget"));

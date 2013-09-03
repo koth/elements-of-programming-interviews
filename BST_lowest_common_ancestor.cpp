@@ -1,26 +1,29 @@
 // Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-#include "./BST_prototype.h"
 #include <cassert>
-#include <iostream>
+#include <memory>
+
+#include "./BST_prototype.h"
+
+using std::unique_ptr;
 
 // @include
 template <typename T>
-shared_ptr<BinarySearchTree<T>> find_LCA(
-    shared_ptr<BinarySearchTree<T>> x,
-    const shared_ptr<BinarySearchTree<T>>& s,
-    const shared_ptr<BinarySearchTree<T>>& b) {
-  while (x->data < s->data || x->data > b->data) {
-    while (x->data < s->data) {
-      x = x->right;  // LCA must be in x's right child
+BinarySearchTree<T>* find_LCA(const unique_ptr<BinarySearchTree<T>>& x,
+                              const unique_ptr<BinarySearchTree<T>>& s,
+                              const unique_ptr<BinarySearchTree<T>>& b) {
+  auto* p = x.get();
+  while (p->data < s->data || p->data > b->data) {
+    while (p->data < s->data) {
+      p = p->right.get();  // LCA must be in p's right child.
     }
-    while (x->data > b->data) {
-      x = x->left;  // LCA must be in x's left child
+    while (p->data > b->data) {
+      p = p->left.get();  // LCA must be in p's left child.
     }
   }
 
-  // x->data >= s->data && x->data <= b->data
-  return x;  // x is LCA
+  // p->data >= s->data && p->data <= b->data.
+  return p;
 }
 // @exclude
 
@@ -28,16 +31,16 @@ int main(int argc, char *argv[]) {
   //      3
   //    2   5
   //  1    4 6
-  shared_ptr<BinarySearchTree<int>> root =
-    shared_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{3});
-  root->left = shared_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{2});
+  unique_ptr<BinarySearchTree<int>> root =
+      unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{3});
+  root->left = unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{2});
   root->left->left =
-    shared_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{1});
-  root->right = shared_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{5});
+      unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{1});
+  root->right = unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{5});
   root->right->left =
-    shared_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{4});
+      unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{4});
   root->right->right =
-    shared_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{6});
+      unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{6});
   assert(3 == find_LCA(root, root->left->left, root->right->left)->data);
   assert(5 == find_LCA(root, root->right->left, root->right->right)->data);
   assert(2 == find_LCA(root, root->left->left, root->left)->data);

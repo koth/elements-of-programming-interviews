@@ -1,26 +1,27 @@
-#include "BST_prototype.h"
-#include <iostream>
-#include <cstdlib>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
 #include <cassert>
 
-using namespace std;
+#include "./BST_prototype.h"
+
+using std::unique_ptr;
 
 // @include
 template <typename T>
-shared_ptr<BinarySearchTree<T>> find_first_larger_k_with_k_exist(
-    shared_ptr<BinarySearchTree<T>> r, const T &k) {
+BinarySearchTree<T>* find_first_larger_k_with_k_exist(
+    const unique_ptr<BinarySearchTree<T>>& r, const T &k) {
   bool found_k = false;
-  shared_ptr<BinarySearchTree<T>> first = nullptr;
+  BinarySearchTree<T> *curr = r.get(), *first = nullptr;
 
-  while (r) {
-    if (r->data == k) {
+  while (curr) {
+    if (curr->data == k) {
       found_k = true;
-      r = r->right;
-    } else if (r->data > k) {
-      first = r;
-      r = r->left;
-    } else {  // r->data < k
-      r = r->right;
+      curr = curr->right.get();
+    } else if (curr->data > k) {
+      first = curr;
+      curr = curr->left.get();
+    } else {  // curr->data < k
+      curr = curr->right.get();
     }
   }
   return found_k ? first : nullptr;
@@ -31,14 +32,17 @@ int main(int argc, char *argv[]) {
   //    3
   //  2   5
   // 1   4 7
-  shared_ptr<BinarySearchTree<int>> root = shared_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{3});
-  root->left = shared_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{2});
-  root->left->left = shared_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{1});
-  root->right = shared_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{5});
-  root->right->left = shared_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{4});
-  root->right->right = shared_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{7});
-  assert(find_first_larger_k_with_k_exist(root, 1) == root->left);
-  assert(find_first_larger_k_with_k_exist(root, 5) == root->right->right);
+  auto root = unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{3});
+  root->left = unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{2});
+  root->left->left =
+      unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{1});
+  root->right = unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{5});
+  root->right->left =
+      unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{4});
+  root->right->right =
+      unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{7});
+  assert(find_first_larger_k_with_k_exist(root, 1) == root->left.get());
+  assert(find_first_larger_k_with_k_exist(root, 5) == root->right->right.get());
   assert(!find_first_larger_k_with_k_exist(root, 6));
   assert(!find_first_larger_k_with_k_exist(root, 7));
   return 0;

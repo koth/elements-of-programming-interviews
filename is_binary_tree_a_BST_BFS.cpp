@@ -29,16 +29,16 @@ bool is_BST(const unique_ptr<BinaryTree<T>> &n) {
                      numeric_limits<T>::max()});
 
   while (!q.empty()) {
-    const auto& front = q.front();
-    if (front.node) {
-      if (front.node->data < front.lower || front.node->data > front.upper) {
+    if (q.front().node) {
+      if (q.front().node->data < q.front().lower ||
+          q.front().node->data > q.front().upper) {
         return false;
       }
 
-      q.emplace(QNode<T>{front.node->left.get(), front.lower,
-                         front.node->data});
-      q.emplace(QNode<T>{front.node->right.get(), front.node->data,
-                         front.upper});
+      q.emplace(QNode<T>{q.front().node->left.get(), q.front().lower,
+                         q.front().node->data});
+      q.emplace(QNode<T>{q.front().node->right.get(), q.front().node->data,
+                         q.front().upper});
     }
     q.pop();
   }

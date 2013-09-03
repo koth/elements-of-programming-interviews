@@ -2,99 +2,104 @@
 
 #include <cassert>
 #include <iostream>
+#include <memory>
 
 using std::cout;
 using std::endl;
-using std::shared_ptr;
+using std::unique_ptr;
 
 // @include
 template <typename T>
 class BinarySearchTree {
  public:
-  ~BinarySearchTree(void) {
+  virtual ~BinarySearchTree() {
     clear();
   }
 
-  const bool empty(void) const {
-    return !root_;
+  bool empty() const {
+    return !root_.get();
   }
 
-  void clear(void) {
-    clear(root_);
+  void clear() {
+    clear(&root_);
   }
 
-  const bool insert(const T& key) {
-    shared_ptr<TreeNode>
-      t = shared_ptr<TreeNode>(new TreeNode{key, nullptr, nullptr}),
-      par = nullptr;
-
+  bool insert(const T& key) {
     if (empty()) {
-      root_ = t;
+      root_ = unique_ptr<TreeNode>(new TreeNode{key, nullptr, nullptr});
     } else {
-      shared_ptr<TreeNode> curr = root_;
+      TreeNode *curr = root_.get(), *par;
       while (curr) {
         par = curr;
-        if (t->data == curr->data) {
-          t = nullptr;
-          return false;  // no insertion for duplicate key
-        } else if (t->data < curr->data) {
-          curr = curr->left;
-        } else {  // t->data > curr->data
-          curr = curr->right;
+        if (key == curr->data) {
+          return false;  // no insertion for duplicate key.
+        } else if (key < curr->data) {
+          curr = curr->left.get();
+        } else {  // key > curr->data.
+          curr = curr->right.get();
         }
       }
 
-      // Insert key according to key and par
-      if (t->data < par->data) {
-        par->left = t;
+      // Insert key according to key and par.
+      if (key < par->data) {
+        par->left.reset(new TreeNode{key});
       } else {
-        par->right = t;
+        par->right.reset(new TreeNode{key});
       }
     }
     return true;
   }
 
-  const bool erase(const T& key) {
-    // Find the node with key
-    shared_ptr<TreeNode> curr = root_, par = nullptr;
+  bool erase(const T& key) {
+    // Find the node with key.
+    TreeNode *curr = root_.get(), *par = nullptr;
     while (curr && curr->data != key) {
       par = curr;
-      curr = key < curr->data ? curr->left : curr->right;
+      curr = key < curr->data ? curr->left.get() : curr->right.get();
     }
 
-    // No node with key in this binary tree
+    // No node with key in this binary tree.
     if (!curr) {
       return false;
     }
 
     if (curr->right) {
-      // Find the minimum of the right subtree
-      shared_ptr<TreeNode> r_curr = curr->right, r_par = curr;
+      // Find the minimum of the right subtree.
+      TreeNode *r_curr = curr->right.get(), *r_par = curr;
       while (r_curr->left) {
         r_par = r_curr;
-        r_curr = r_curr->left;
+        r_curr = r_curr->left.get();
       }
-      // Move links to erase the node
-      replaceParentChildLink(par, curr, r_curr);
-      replaceParentChildLink(r_par, r_curr, r_curr->right);
-      r_curr->left = curr->left, r_curr->right = curr->right;
+      // Move links to erase the node.
+      r_curr->left.reset(curr->left.release());
+      TreeNode *r_curr_right = r_curr->right.release();
+      if (curr->right.get() != r_curr) {
+        r_curr->right.reset(curr->right.release());
+      }
+      if (r_par->left.get() == r_curr) {
+        r_curr = r_par->left.release();
+        r_par->left.reset(r_curr_right);
+      } else {  // r_par->right.get() == r_curr.
+        r_curr = r_par->right.release();
+        r_par->right.reset(r_curr_right);
+      }
+      ReplaceParentChildLink(par, curr, r_curr);
 
-      // Update root_ link if needed
-      if (root_ == curr) {
-        root_ = r_curr;
+      // Update root_ link if needed.
+      if (root_.get() == curr) {
+        root_.reset(r_curr);
       }
     } else {
-      // Update root_ link if needed
-      if (root_ == curr) {
-        root_ = curr->left;
+      // Update root_ link if needed.
+      if (root_.get() == curr) {
+        root_.reset(curr->left.release());
       }
-      replaceParentChildLink(par, curr, curr->left);
+      ReplaceParentChildLink(par, curr, curr->left.get());
     }
-    curr = nullptr;
     return true;
   }
   // @exclude
-  T getRootVal() const {
+  T GetRootVal() const {
     return root_->data;
   }
   // @include
@@ -102,56 +107,69 @@ class BinarySearchTree {
  private:
   struct TreeNode {
     T data;
-    shared_ptr<TreeNode> left, right;
+    unique_ptr<TreeNode> left, right;
   };
 
-  void clear(shared_ptr<TreeNode>& n) {
-    if (n) {
-      clear(n->left), clear(n->right);
-      n = nullptr;
+  void clear(unique_ptr<TreeNode>* n) {
+    if (n->get()) {
+      if ((*n)->left.get()) {
+        clear(&((*n)->left));
+      }
+      if ((*n)->right.get()) {
+        clear(&((*n)->right));
+      }
+      n->reset(nullptr);
     }
   }
 
-  // Replace the link between par and child by new_link
-  void replaceParentChildLink(shared_ptr<TreeNode> par,
-    shared_ptr<TreeNode> child,
-    shared_ptr<TreeNode> new_link) {
+  // Replace the link between par and child by new_link.
+  void ReplaceParentChildLink(TreeNode* par,
+                              TreeNode* child,
+                              TreeNode* new_link) {
     if (!par) {
       return;
     }
 
-    if (par->left == child) {
-      par->left = new_link;
-    } else {
-      par->right = new_link;
+    if (par->left.get() == child) {
+      par->left.reset(new_link);
+    } else {  // par->right.get() == child.
+      par->right.reset(new_link);
     }
   }
 
-  shared_ptr<TreeNode> root_ = nullptr;
+  unique_ptr<TreeNode> root_ = nullptr;
 };
 // @exclude
 
 int main(int argc, char *argv[]) {
   BinarySearchTree<int> BST;
+  assert(BST.empty() == true);
   assert(BST.insert(4) == true);
   assert(BST.insert(5) == true);
   assert(BST.insert(2) == true);
   assert(BST.insert(3) == true);
   assert(BST.insert(1) == true);
+  assert(BST.empty() == false);
   assert(BST.erase(0) == false);
   assert(BST.erase(2) == true);
   assert(BST.erase(2) == false);
   assert(BST.insert(4) == false);
   // should output 4
-  assert(BST.getRootVal() == 4);
-  cout << BST.getRootVal() << endl;
+  assert(BST.GetRootVal() == 4);
+  cout << BST.GetRootVal() << endl;
   assert(BST.erase(4) == true);
   // should output 5
-  assert(BST.getRootVal() == 5);
-  cout << BST.getRootVal() << endl;
+  assert(BST.GetRootVal() == 5);
+  cout << BST.GetRootVal() << endl;
   assert(BST.erase(5) == true);
   // should output 3
-  assert(BST.getRootVal() == 3);
-  cout << BST.getRootVal() << endl;
+  assert(BST.GetRootVal() == 3);
+  cout << BST.GetRootVal() << endl;
+  assert(BST.erase(3) == true);
+  // should output 1
+  assert(BST.GetRootVal() == 1);
+  cout << BST.GetRootVal() << endl;
+  assert(BST.erase(1) == true);
+  assert(BST.empty() == true);
   return 0;
 }
