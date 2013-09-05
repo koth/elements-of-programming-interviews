@@ -16,10 +16,10 @@ using std::vector;
 
 // @include
 template <typename CoinType>
-CoinType pick_up_coins_helper(const vector<CoinType> &C, const int &a,
-                              const int &b, vector<vector<CoinType>> &T) {
+CoinType pick_up_coins_helper(const vector<CoinType> &C, int a, int b,
+                              vector<vector<CoinType>> &T) {
   if (a > b) {
-    return 0;  // base condition
+    return 0;  // base condition.
   }
 
   if (T[a][b] == -1) {

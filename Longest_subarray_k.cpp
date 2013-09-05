@@ -1,37 +1,28 @@
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
+#include <algorithm>
+#include <cassert>
 #include <iostream>
 #include <iterator>
 #include <numeric>
-#include <cassert>
+#include <random>
+#include <utility>
 #include <vector>
-#include <ctime>
-#include <cstdlib>
 
-using namespace std;
-
-/*
-// Search the last occurrence of k in A
-template <typename T>
-int search_last_smaller_equal(const vector<T> &A, const T &k) {
-  int l = 0, r = A.size() - 1, ret = -1;
-
-  while (l <= r) {
-    int m = l + ((r - l) >> 1);
-    if (A[m] > k) {
-      r = m - 1;
-    } else {  // (A[m] <= k
-      ret = m;
-      l = m + 1;
-    }
-  }
-  return ret;
-}
-*/
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::min;
+using std::pair;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
 template <typename T>
 pair<int, int> find_longest_subarray_less_equal_k(const vector<T> &A,
                                                   const T &k) {
-  // Build the prefix sum according to A
+  // Build the prefix sum according to A.
   vector<T> prefix_sum;
   partial_sum(A.cbegin(), A.cend(), back_inserter(prefix_sum));
 
@@ -88,21 +79,25 @@ void check_answer(const vector<T> &A, const pair<int, int> &ans, const T &k) {
 }
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n, k;
     if (argc == 3) {
       n = atoi(argv[1]), k = atoi(argv[2]);
     } else if (argc == 2) {
       n = atoi(argv[1]);
-      k = rand() % 10000;
+      uniform_int_distribution<int> dis(0, 9999);
+      k = dis(gen);
     } else {
-      n = 1 + rand() % 10000;
-      k = rand() % 10000;
+      uniform_int_distribution<int> n_dis(1, 10000);
+      n = n_dis(gen);
+      uniform_int_distribution<int> k_dis(0, 9999);
+      k = k_dis(gen);
     }
     vector<int> A;
     for (size_t i = 0; i < n; ++i) {
-      A.emplace_back(((rand() & 1) ? -1 : 1) * rand() % 1000);
+      uniform_int_distribution<int> dis(-1000, 1000);
+      A.emplace_back(dis(gen));
     }
     /*
     copy(A.begin(), A.end(), ostream_iterator<int>(cout, " "));

@@ -1,15 +1,24 @@
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
+#include <algorithm>
+#include <cassert>
 #include <iostream>
 #include <numeric>
-#include <cassert>
+#include <random>
 #include <vector>
-#include <ctime>
-#include <cstdlib>
 
-using namespace std;
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::max;
+using std::min;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
 template <typename T>
-T find_optimum_subarray_using_comp(const vector<T> &A, 
+T find_optimum_subarray_using_comp(const vector<T> &A,
                                    const T&(*comp)(const T&, const T&)) {
   T till = 0, overall = 0;
   for (const T &a : A) {
@@ -21,10 +30,10 @@ T find_optimum_subarray_using_comp(const vector<T> &A,
 
 template <typename T>
 T max_subarray_sum_in_circular(const vector<T> &A) {
-  // Find the max in non-circular case and circular case
-  return max(find_optimum_subarray_using_comp(A, max),  // non-circular case
+  // Find the max in non-circular case and circular case.
+  return max(find_optimum_subarray_using_comp(A, max),  // non-circular case.
              accumulate(A.cbegin(), A.cend(), 0) -
-             find_optimum_subarray_using_comp(A, min));  // circular case
+             find_optimum_subarray_using_comp(A, min));  // circular case.
 }
 // @exclude
 
@@ -44,7 +53,7 @@ T check_ans(const vector<T> &A) {
 }
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n;
     vector<int> A;
@@ -56,10 +65,12 @@ int main(int argc, char *argv[]) {
       if (argc == 2) {
         n = atoi(argv[1]);
       } else {
-        n = 1 + rand() % 10000;
+        uniform_int_distribution<int> dis(1, 10000);
+        n = dis(gen);
       }
       while (n--) {
-        A.emplace_back(((rand() & 1) ? -1 : 1) * rand() % 10000);
+        uniform_int_distribution<int> dis(-10000, 10000);
+        A.emplace_back(dis(gen));
       }
     }
     int ans = max_subarray_sum_in_circular(A);

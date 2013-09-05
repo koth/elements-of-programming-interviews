@@ -17,7 +17,7 @@ using std::random_device;
 using std::uniform_int_distribution;
 using std::vector;
 
-// O(m^3 n^3) time solution
+// O(m^3 n^3) time solution.
 int check_ans(const vector<deque<bool>> &A) {
   int max = 0;
   for (int a = 0; a < A.size(); ++a) {
@@ -54,13 +54,13 @@ struct MaxHW {
 };
 
 int max_square_submatrix(const vector<deque<bool>> &A) {
-  // DP table stores (h, w) for each (i, j)
+  // DP table stores (h, w) for each (i, j).
   vector<vector<MaxHW>> table(A.size(), vector<MaxHW>(A.front().size()));
 
   for (int i = A.size() - 1; i >= 0; --i) {
     for (int j = A[i].size() - 1; j >= 0; --j) {
-      // Find the largest h such that (i, j) to (i + h - 1, j) are feasible
-      // Find the largest w such that (i, j) to (i, j + w - 1) are feasible
+      // Find the largest h such that (i, j) to (i + h - 1, j) are feasible.
+      // Find the largest w such that (i, j) to (i, j + w - 1) are feasible.
       table[i][j] = A[i][j] ?
                     MaxHW{i + 1 < A.size() ? table[i + 1][j].h + 1 : 1,
                           j + 1 < A[i].size() ? table[i][j + 1].w + 1 : 1} :
@@ -68,14 +68,14 @@ int max_square_submatrix(const vector<deque<bool>> &A) {
     }
   }
 
-  // A table stores the length of largest square for each (i, j)
+  // A table stores the length of largest square for each (i, j).
   vector<vector<int>> s(A.size(), vector<int>(A.front().size(), 0));
   int max_square_area = 0;
   for (int i = A.size() - 1; i >= 0; --i) {
     for (int j = A[i].size() - 1; j >= 0; --j) {
       int side = min(table[i][j].h, table[i][j].w);
       if (A[i][j]) {
-        // Get the length of largest square with bottom-left corner (i, j)
+        // Get the length of largest square with bottom-left corner (i, j).
         if (i + 1 < A.size() && j + 1 < A[i + 1].size()) {
           side = min(s[i + 1][j + 1] + 1, side);
         }

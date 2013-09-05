@@ -3,13 +3,13 @@
 #ifndef SOLUTIONS_MAX_SUBMATRIX_RECTANGLE_BRUTE_FORCE_H_
 #define SOLUTIONS_MAX_SUBMATRIX_RECTANGLE_BRUTE_FORCE_H_
 
-#include <vector>
 #include <deque>
+#include <vector>
 
 using std::deque;
 using std::vector;
 
-// O(m^3 n^3) time solution
+// O(m^3 n^3) time solution.
 int max_rectangle_submatrix_brute_force(const vector<deque<bool>> &A) {
   int max = 0;
   for (int a = 0; a < A.size(); ++a) {

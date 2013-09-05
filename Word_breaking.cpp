@@ -1,25 +1,28 @@
-#include <iostream>
-#include <algorithm>
-#include <vector>
-#include <string>
-#ifdef __clang__
-#include <unordered_set>
-#else
-#include <tr1/unordered_set>
-#endif
-#include <cstdlib>
-#include <cassert>
-#include <ctime>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
-#ifndef __clang__
-using namespace std::tr1;
-#endif
+#include <algorithm>
+#include <cassert>
+#include <iostream>
+#include <random>
+#include <string>
+#include <unordered_set>
+#include <vector>
+
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::random_device;
+using std::string;
+using std::uniform_int_distribution;
+using std::unordered_set;
+using std::vector;
 
 string rand_string(int len) {
+  default_random_engine gen((random_device())());
+  uniform_int_distribution<int> dis('a', 'z');
   string ret;
   while (len--) {
-    ret += 'a' + rand() % 26;
+    ret += dis(gen);
   }
   return ret;
 }
@@ -27,15 +30,15 @@ string rand_string(int len) {
 // @include
 vector<string> word_breaking(const string &s,
                              const unordered_set<string> &dict) {
-  // T[i] stores the length of the last string which composed of s(0, i)
+  // T[i] stores the length of the last string which composed of s(0, i).
   vector<int> T(s.size(), 0);
   for (int i = 0; i < s.size(); ++i) {
-    // Set T[i] if s(0, i) is a valid word
+    // Set T[i] if s(0, i) is a valid word.
     if (dict.find(s.substr(0, i + 1)) != dict.cend()) {
       T[i] = i + 1;
     }
 
-    // Set T[i] if T[j] != 0 and s(j + 1, i) is a valid word
+    // Set T[i] if T[j] != 0 and s(j + 1, i) is a valid word.
     for (int j = 0; j < i && T[i] == 0; ++j) {
       if (T[j] != 0 && dict.find(s.substr(j + 1, i - j)) != dict.cend()) {
         T[i] = i - j;
@@ -44,7 +47,7 @@ vector<string> word_breaking(const string &s,
   }
 
   vector<string> ret;
-  // s can be assembled by valid words
+  // s can be assembled by valid words.
   if (T.back()) {
     int idx = s.size() - 1;
     while (idx >= 0) {
@@ -57,7 +60,7 @@ vector<string> word_breaking(const string &s,
 }
 // @exclude
 
-// Verify the strings in ans can be assembled into s
+// Verify the strings in ans can be assembled into s.
 void check_ans(const string &s, vector<string> &ans) {
   string temp;
   cout << s << endl;
@@ -70,7 +73,7 @@ void check_ans(const string &s, vector<string> &ans) {
 }
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     unordered_set<string> dictionary;
     string target;
@@ -81,15 +84,20 @@ int main(int argc, char *argv[]) {
       }
     } else if (argc == 2) {
       target = argv[1];
-      int n = 1 + rand() % 10000;
+      uniform_int_distribution<int> dis(1, 10000);
+      int n = dis(gen);
       while (n--) {
-        dictionary.emplace(rand_string(1 + rand() % 15));
+        uniform_int_distribution<int> dis(1, 15);
+        dictionary.emplace(rand_string(dis(gen)));
       }
     } else {
-      target = rand_string(1 + rand() % 50);
-      int n = 1 + rand() % 10000;
+      uniform_int_distribution<int> dis(1, 50);
+      target = rand_string(dis(gen));
+      uniform_int_distribution<int> n_dis(1, 10000);
+      int n = n_dis(gen);
       while (n--) {
-        dictionary.emplace(rand_string(1 + rand() % 15));
+        uniform_int_distribution<int> dis(1, 15);
+        dictionary.emplace(rand_string(dis(gen)));
       }
     }
     vector<string> ans(word_breaking(target, dictionary));

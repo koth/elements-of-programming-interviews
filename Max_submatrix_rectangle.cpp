@@ -1,7 +1,5 @@
 // Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-#include "./Max_submatrix_rectangle_brute_force.h"
-
 #include <algorithm>
 #include <cassert>
 #include <deque>
@@ -9,6 +7,8 @@
 #include <limits>
 #include <random>
 #include <vector>
+
+#include "./Max_submatrix_rectangle_brute_force.h"
 
 using std::cout;
 using std::default_random_engine;
@@ -27,13 +27,13 @@ struct MaxHW {
 };
 
 int max_rectangle_submatrix(const vector<deque<bool>> &A) {
-  // DP table stores (h, w) for each (i, j)
+  // DP table stores (h, w) for each (i, j).
   vector<vector<MaxHW>> table(A.size(), vector<MaxHW>(A.front().size()));
 
   for (int i = A.size() - 1; i >= 0; --i) {
     for (int j = A[i].size() - 1; j >= 0; --j) {
-      // Find the largest h such that (i, j) to (i + h - 1, j) are feasible
-      // Find the largest w such that (i, j) to (i, j + w - 1) are feasible
+      // Find the largest h such that (i, j) to (i + h - 1, j) are feasible.
+      // Find the largest w such that (i, j) to (i, j + w - 1) are feasible.
       table[i][j] = A[i][j] ?
                     MaxHW{i + 1 < A.size() ? table[i + 1][j].h + 1 : 1,
                           j + 1 < A[i].size() ? table[i][j + 1].w + 1 : 1} :
@@ -45,7 +45,7 @@ int max_rectangle_submatrix(const vector<deque<bool>> &A) {
   for (int i = 0; i < A.size(); ++i) {
     for (int j = 0; j < A[i].size(); ++j) {
       // Process (i, j) if it is feasible and is possible to update
-      // max_rect_area
+      // max_rect_area.
       if (A[i][j] && table[i][j].w * table[i][j].h > max_rect_area) {
         int min_width = numeric_limits<int>::max();
         for (int a = 0; a < table[i][j].h; ++a) {

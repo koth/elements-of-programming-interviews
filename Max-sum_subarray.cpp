@@ -1,16 +1,23 @@
-#include <iostream>
-#include <limits>
-#include <ctime>
-#include <cassert>
-#include <vector>
-#include <cstdlib>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <cassert>
+#include <iostream>
+#include <random>
+#include <utility>
+#include <vector>
+
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::pair;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
 template <typename T>
 pair<int, int> find_maximum_subarray(const vector<T> &A) {
-  // A[range.first : range.second - 1] will be the maximum subarray
+  // A[range.first : range.second - 1] will be the maximum subarray.
   pair<int, int> range(0, 0);
   int min_idx = -1;
   T min_sum = 0, sum = 0, max_sum = 0;
@@ -48,14 +55,16 @@ pair<int, int> find_maximum_subarray(vector<int> &A) {
 template <typename T>
 vector<T> rand_vector(int len) {
   vector<T> ret;
+  default_random_engine gen((random_device())());
   while (len--) {
-    ret.push_back(((rand() & 1) ? -1 : 1) * rand() % 1000);
+    uniform_int_distribution<int> dis(-1000, 1000);
+    ret.push_back(dis(gen));
   }
   return ret;
 }
 
 template <typename T>
-void check_max_sum(vector<T> &A, pair<int, int> &range) {
+void check_max_sum(const vector<T> &A, const pair<int, int> &range) {
   T max_sum = 0;
   for (int i = range.first; i < range.second; ++i) {
     max_sum += A[i];
@@ -93,11 +102,12 @@ void simple_test(void) {
 
 int main(int argc, char *argv[]) {
   simple_test();
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     vector<int> A;
     if (argc == 1) {
-      A = rand_vector<int>(1 + rand() % 10000);
+      uniform_int_distribution<int> dis(1, 10000);
+      A = rand_vector<int>(dis(gen));
     } else if (argc == 2) {
       int n = atoi(argv[1]);
       A = rand_vector<int>(n);

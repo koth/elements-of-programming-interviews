@@ -1,13 +1,21 @@
-#include <iostream>
-#include <cassert>
-#include <vector>
-#include <ctime>
-#include <cstdlib>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <algorithm>
+#include <cassert>
+#include <iostream>
+#include <random>
+#include <vector>
+
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::maxa
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
-// Calculate the non-circular solution
+// Calculate the non-circular solution.
 template <typename T>
 T find_max_subarray(const vector<T> &A) {
   T maximum_till = 0, maximum = 0;
@@ -18,10 +26,10 @@ T find_max_subarray(const vector<T> &A) {
   return maximum;
 }
 
-// Calculate the solution which is circular
+// Calculate the solution which is circular.
 template <typename T>
 T find_circular_max_subarray(const vector<T> &A) {
-  // Maximum subarray sum starts at index 0 and ends at or before index i
+  // Maximum subarray sum starts at index 0 and ends at or before index i.
   vector<T> maximum_begin;
   T sum = A.front();
   maximum_begin.emplace_back(sum);
@@ -30,7 +38,7 @@ T find_circular_max_subarray(const vector<T> &A) {
     maximum_begin.emplace_back(max(maximum_begin.back(), sum));
   }
 
-  // Maximum subarray sum starts at index i + 1 and ends at the last element
+  // Maximum subarray sum starts at index i + 1 and ends at the last element.
   vector<T> maximum_end(A.size());
   maximum_end.back() = 0;
   sum = 0;
@@ -39,7 +47,7 @@ T find_circular_max_subarray(const vector<T> &A) {
     maximum_end[i] = max(maximum_end[i + 1], sum);
   }
 
-  // Calculate the maximum subarray which is circular
+  // Calculate the maximum subarray which is circular.
   T circular_max = 0;
   for (int i = 0; i < A.size(); ++i) {
     circular_max = max(circular_max, maximum_begin[i] + maximum_end[i]);
@@ -69,7 +77,7 @@ T check_ans(const vector<T> &A) {
 }
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n;
     vector<int> A;
@@ -81,10 +89,12 @@ int main(int argc, char *argv[]) {
       if (argc == 2) {
         n = atoi(argv[1]);
       } else {
-        n = 1 + rand() % 10000;
+        uniform_int_distribution<int> dis(1, 10000);
+        n = dis(gen);
       }
       while (n--) {
-        A.emplace_back(((rand() & 1) ? -1 : 1) * rand() % 10000);
+        uniform_int_distribution<int> dis(-10000, 10000);
+        A.emplace_back(dis(gen));
       }
     }
     int ans = max_subarray_sum_in_circular(A);

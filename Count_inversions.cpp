@@ -1,15 +1,21 @@
-#include <iostream>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
 #include <algorithm>
 #include <cassert>
-#include <ctime>
-#include <cstdlib>
+#include <iostream>
+#include <random>
 #include <vector>
 
-using namespace std;
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
 template <typename T>
-int merge(vector<T> &A, const int &start, const int &mid, const int &end) {
+int merge(vector<T> &A, int start, int mid, int end) {
   vector<T> sorted_A;
   int left_start = start, right_start = mid, inver_count = 0;
 
@@ -17,7 +23,7 @@ int merge(vector<T> &A, const int &start, const int &mid, const int &end) {
     if (A[left_start] <= A[right_start]) {
       sorted_A.emplace_back(A[left_start++]);
     } else {
-      // A[left_start:mid - 1] will be the inversions
+      // A[left_start:mid - 1] will be the inversions.
       inver_count += mid - left_start;
       sorted_A.emplace_back(A[right_start++]);
     }
@@ -25,13 +31,13 @@ int merge(vector<T> &A, const int &start, const int &mid, const int &end) {
   copy(A.begin() + left_start, A.begin() + mid, back_inserter(sorted_A));
   copy(A.begin() + right_start, A.begin() + end, back_inserter(sorted_A));
 
-  // Update A with sorted_A
+  // Update A with sorted_A.
   copy(sorted_A.begin(), sorted_A.end(), A.begin() + start);
   return inver_count;
 }
 
 template <typename T>
-int count_inversions_helper(vector<T> &A, const int &start, const int &end) {
+int count_inversions_helper(vector<T> &A, int start, int end) {
   if (end - start <= 1) {
     return 0;
   }
@@ -63,17 +69,19 @@ int n_2_check(const vector<T> &A) {
 }
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n;
     if (argc == 2) {
       n = atoi(argv[1]);
     } else {
-      n = 1 + rand() % 10000;
+      uniform_int_distribution<int> dis(1, 10000);
+      n = dis(gen);
     }
     vector<int> A;
     for (size_t i = 0; i < n; ++i) {
-      A.emplace_back(((rand() & 1) ? -1 : 1) * rand());
+      uniform_int_distribution<int> dis(-1000000, 1000000);
+      A.emplace_back(dis(gen));
     }
     assert(n_2_check(A) == count_inversions(A));
   }

@@ -6,8 +6,10 @@
 #include <iostream>
 #include <limits>
 #include <random>
-#include <stack>
 #include <vector>
+
+#include "./Largest_rectangle_under_skyline.h"
+#include "./Max_submatrix_rectangle_brute_force.h"
 
 using std::cout;
 using std::default_random_engine;
@@ -15,76 +17,8 @@ using std::deque;
 using std::endl;
 using std::max;
 using std::random_device;
-using std::stack;
 using std::uniform_int_distribution;
 using std::vector;
-
-// O(m^3 n^3) time solution
-int check_ans(const vector<deque<bool>> &A) {
-  int max = 0;
-  for (int a = 0; a < A.size(); ++a) {
-    for (int b = 0; b < A[a].size(); ++b) {
-      for (int c = a; c < A.size(); ++c) {
-        for (int d = b; d < A[c].size(); ++d) {
-          bool all_1 = true;
-          int count = 0;
-          for (int i = a; i <= c; ++i) {
-            for (int j = b; j <= d; ++j) {
-              if (A[i][j] == false) {
-                all_1 = false;
-                count = 0;
-                break;
-              } else {
-                ++count;
-              }
-            }
-            if (all_1 == false) {
-              break;
-            }
-          }
-          if (all_1 == true && count > max) {
-            max = count;
-          }
-        }
-      }
-    }
-  }
-  return max;
-}
-
-template <typename T>
-T calculate_largest_rectangle(const vector<T> &A) {
-  // Calculate L
-  stack<int> s;
-  vector<int> L;
-  for (int i = 0; i < A.size(); ++i) {
-    while (!s.empty() && A[s.top()] >= A[i]) {
-      s.pop();
-    }
-    L.emplace_back(s.empty() ? -1 : s.top());
-    s.emplace(i);
-  }
-
-  // Clear stack for calculating R
-  while (!s.empty()) {
-    s.pop();
-  }
-  vector<int> R(A.size());
-  for (int i = A.size() - 1; i >= 0; --i) {
-    while (!s.empty() && A[s.top()] >= A[i]) {
-      s.pop();
-    }
-    R[i] = s.empty() ? A.size() : s.top();
-    s.emplace(i);
-  }
-
-  // For each A[i], find its maximum area include it
-  T max_area = 0;
-  for (int i = 0; i < A.size(); ++i) {
-    max_area = max(max_area, A[i] * (R[i] - L[i] - 1));
-  }
-  return max_area;
-}
 
 // @include
 int max_rectangle_submatrix(const vector<deque<bool>> &A) {
@@ -131,8 +65,9 @@ int main(int argc, char *argv[]) {
     }
     //*/
     cout << max_rectangle_submatrix(A) << endl;
-    cout << check_ans(A) << endl;
-    assert(check_ans(A) == max_rectangle_submatrix(A));
+    cout << max_rectangle_submatrix_brute_force(A) << endl;
+    assert(max_rectangle_submatrix_brute_force(A) ==
+           max_rectangle_submatrix(A));
   }
   return 0;
 }

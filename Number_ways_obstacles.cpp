@@ -16,7 +16,7 @@ using std::vector;
 // @include
 // Given the dimensions of A, n and m, and B, return the number of ways
 // from A[0][0] to A[n - 1][m - 1] considering obstacles.
-int number_of_ways_with_obstacles(const int &n, const int &m,
+int number_of_ways_with_obstacles(int n, int m,
                                   const vector<deque<bool>> &B) {
   vector<vector<int>> A(n, vector<int>(m, 0));
   if (B[0][0]) {  // no way to start from (0, 0) if B[0][0] == true.

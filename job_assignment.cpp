@@ -28,14 +28,14 @@ const bool comp(const pair<int, int> &a, const pair<int, int> &b) {
 }
 
 vector<deque<bool>> find_feasible_job_assignment(const vector<int> &T,
-                                                  const vector<int> &S) {
+                                                 const vector<int> &S) {
   int T_total = accumulate(T.cbegin(), T.cend(), 0),  // aggregated work units
       S_total = accumulate(S.cbegin(), S.cend(), 0,
                            [&T](const int &x, const int &y) -> int {
                              return x + min(y, static_cast<int>(T.size()));
-                           });  // tighter bound of server capacity
+                           });  // tighter bound of server capacity.
   if (T_total > S_total || *max_element(T.cbegin(), T.cend()) > S.size()) {
-    return {};  // too many jobs or one task needs too many servers
+    return {};  // too many jobs or one task needs too many servers.
   }
 
   vector<pair<int, int>> T_idx_data, S_idx_data;
@@ -55,7 +55,7 @@ vector<deque<bool>> find_feasible_job_assignment(const vector<int> &T,
                   comp);
     }
 
-    // Greedily assign jobs
+    // Greedily assign jobs.
     int size = min(static_cast<int>(T_idx_data.size()), S_idx_data[j].second);
     for (int i = 0; i < size; ++i) {
       if (T_idx_data[i].second) {
@@ -66,7 +66,7 @@ vector<deque<bool>> find_feasible_job_assignment(const vector<int> &T,
     }
   }
   if (T_total) {
-    return {};  // still some jobs remain, no feasible assignment
+    return {};  // still some jobs remain, no feasible assignment.
   }
   return X;
 }
@@ -74,7 +74,7 @@ vector<deque<bool>> find_feasible_job_assignment(const vector<int> &T,
 
 void check_answer(const vector<int> &T, const vector<int> &S,
                   const vector<deque<bool>> &res) {
-  // Check row constraints
+  // Check row constraints.
   for (int i = 0; i < T.size(); ++i) {
     int sum = 0;
     for (int j = 0; j < S.size(); ++j) {
@@ -83,7 +83,7 @@ void check_answer(const vector<int> &T, const vector<int> &S,
     assert(sum == T[i]);
   }
 
-  // Check column constraints
+  // Check column constraints.
   for (int j = 0; j < S.size(); ++j) {
     int sum = 0;
     for (int i = 0; i < T.size(); ++i) {
@@ -119,7 +119,7 @@ int main(int argc, char *argv[]) {
     copy(S.cbegin(), S.cend(), ostream_iterator<int>(cout, " "));
     cout << endl;
     vector<deque<bool>> res = find_feasible_job_assignment(T, S);
-    if (res.empty() == false) {   // there is a feasible answer
+    if (res.empty() == false) {   // there is a feasible answer.
       cout << "found feasible assignment!" << endl;
       for (int i = 0; i < res.size(); ++i) {
         copy(res[i].cbegin(), res[i].cend(), ostream_iterator<int>(cout, " "));
@@ -127,7 +127,7 @@ int main(int argc, char *argv[]) {
       }
       check_answer(T, S, res);
     } else {
-      // TODO(THL): find a way to verify there is no assignment
+      // TODO(THL): find a way to verify there is no assignment.
       cout << "no feasible assignment" << endl;
     }
   }

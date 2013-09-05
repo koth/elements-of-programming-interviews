@@ -1,23 +1,35 @@
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
+#include <algorithm>
 #include <iostream>
 #include <limits>
-#include <ctime>
-#include <cstdlib>
-#include <vector>
+#include <random>
 #include <string>
+#include <vector>
 
-using namespace std;
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::min;
+using std::numeric_limits;
+using std::random_device;
+using std::string;
+using std::uniform_int_distribution;
+using std::vector;
 
 string rand_string(int len) {
+  default_random_engine gen((random_device())());
+  uniform_int_distribution<int> dis('a', 'z');
   string ret;
   while (len--) {
-    ret += 'a' + rand() % 26;
+    ret += dis(gen);
   }
   return ret;
 }
 
 // @include
 int find_pretty_printing(const vector<string> &W, const int &L) {
-  // Calculate M(i)
+  // Calculate M(i).
   vector<long> M(W.size(), numeric_limits<long>::max());
   for (int i = 0; i < W.size(); ++i) {
     int b_len = L - W[i].size();
@@ -31,7 +43,7 @@ int find_pretty_printing(const vector<string> &W, const int &L) {
     }
   }
 
-  // Find the minimum cost without considering the last line
+  // Find the minimum cost without considering the last line.
   long min_mess = (W.size() >= 2 ? M[W.size() - 2] : 0);
   int b_len = L - W.back().size();
   for (int i = W.size() - 2; i >= 0; --i) {
@@ -46,21 +58,25 @@ int find_pretty_printing(const vector<string> &W, const int &L) {
 // @exclude
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   int n, L;
   if (argc == 2) {
     n = atoi(argv[1]);
-    L = 10 + rand() % 10;
+    uniform_int_distribution<int> dis(10, 19);
+    L = dis(gen);
   } else if (argc == 3) {
     n = atoi(argv[1]);
     L = atoi(argv[2]);
   } else {
-    n = 1 + rand() % 30;
-    L = 11 + rand() % 10;
+    uniform_int_distribution<int> n_dis(1, 30);
+    n = n_dis(gen);
+    uniform_int_distribution<int> L_dis(11, 20);
+    L = L_dis(gen);
   }
   vector<string> W;
   for (int i = 0; i < n; ++i) {
-    W.push_back(rand_string(1 + rand() % 10));
+    uniform_int_distribution<int> dis(1, 10);
+    W.push_back(rand_string(dis(gen)));
   }
   for (int i = 0; i < n; ++i) {
     cout << W[i] << ' ';

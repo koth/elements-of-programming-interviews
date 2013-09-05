@@ -23,32 +23,32 @@ using std::vector;
 
 // @include
 struct Point {
-  const bool operator>(const Point &that) const {
+  bool operator>(const Point &that) const {
     return i > that.i || j > that.j;
   }
 
-  // Equal function for hash
-  const bool operator==(const Point &that) const {
+  // Equal function for hash.
+  bool operator==(const Point &that) const {
     return i == that.i && j == that.j;
   }
 
   int i, j;
 };
 
-// Hash function for Point
+// Hash function for Point.
 class HashPoint {
  public:
-  const size_t operator()(const Point &p) const {
+  size_t operator()(const Point &p) const {
     return hash<int>()(p.i) ^ hash<int>()(p.j);
   }
 };
 
 struct TreeNode {
-  int node_num;  // stores the number of node in its subtree
+  int node_num;  // stores the number of node in its subtree.
 
   Point lowerLeft, upperRight;
 
-  // Store the SW, NW, NE, and SE rectangles if color is mixed
+  // Store the SW, NW, NE, and SE rectangles if color is mixed.
   vector<shared_ptr<TreeNode>> children;
 };
 
@@ -64,8 +64,8 @@ bool is_monochromatic(const vector<vector<int>> &image_sum,
   if (lower_left.i >= 1 && lower_left.j >= 1) {
     pixel_sum += image_sum[lower_left.i - 1][lower_left.j - 1];
   }
-  return pixel_sum == 0 ||  // totally white
-         pixel_sum == (upper_right.i - lower_left.i + 1) *  // totally black
+  return pixel_sum == 0 ||  // totally white.
+         pixel_sum == (upper_right.i - lower_left.i + 1) *  // totally black.
                       (upper_right.j - lower_left.j + 1);
 }
 
@@ -75,7 +75,7 @@ shared_ptr<TreeNode> calculate_optimal_2D_tree_helper(
     unordered_map<Point,
                   unordered_map<Point, shared_ptr<TreeNode>, HashPoint>,
                   HashPoint> &table) {
-  // Illegal rectangle region, returns empty node
+  // Illegal rectangle region, returns empty node.
   if (lower_left > upper_right) {
     return shared_ptr<TreeNode>(new TreeNode{0, lower_left, upper_right});
   }
@@ -92,27 +92,27 @@ shared_ptr<TreeNode> calculate_optimal_2D_tree_helper(
           if ((s != lower_left.i && s != upper_right.i + 1) ||
               (t != lower_left.j && t != upper_right.j + 1)) {
             vector<shared_ptr<TreeNode>> children = {
-              // SW rectangle
+              // SW rectangle.
               calculate_optimal_2D_tree_helper(image, image_sum, lower_left,
                                                Point{s - 1, t - 1}, table),
-              // NW rectangle
+              // NW rectangle.
               calculate_optimal_2D_tree_helper(image, image_sum,
                                                Point{lower_left.i, t},
                                                Point{s - 1, upper_right.j},
                                                table),
-              // NE rectangle
+              // NE rectangle.
               calculate_optimal_2D_tree_helper(image, image_sum, Point{s, t},
                                                upper_right, table),
-              // SE rectangle
+              // SE rectangle.
               calculate_optimal_2D_tree_helper(image, image_sum,
                                                Point{s, lower_left.j},
                                                Point{upper_right.i, t - 1},
                                                table)};
 
-            int node_num = 1;  // itself
+            int node_num = 1;  // itself.
             for (shared_ptr<TreeNode> &child : children) {
               node_num += child->node_num;
-              // Remove the child contains no node
+              // Remove the child contains no node.
               if (child->node_num == 0) {
                 child = nullptr;
               }

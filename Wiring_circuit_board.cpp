@@ -29,7 +29,7 @@ bool BFS(GraphVertex* s) {
 
   while (q.empty() == false) {
     for (GraphVertex* &t : q.front()->edges) {
-      if (t->d == -1) {  // unvisited vertex
+      if (t->d == -1) {  // unvisited vertex.
         t->d = q.front()->d + 1;
         q.emplace(t);
       } else if (t->d == q.front()->d) {
@@ -43,7 +43,7 @@ bool BFS(GraphVertex* s) {
 
 bool is_any_placement_feasible(vector<GraphVertex>* G) {
   for (GraphVertex& v : *G) {
-    if (v.d == -1) {  // unvisited vertex
+    if (v.d == -1) {  // unvisited vertex.
       v.d = 0;
       if (BFS(&v) == false) {
         return false;

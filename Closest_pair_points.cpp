@@ -37,9 +37,9 @@ double distance(const Point &a, const Point &b) {
   return sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
 }
 
-// Return the closest two points and the distance between them
-tuple<Point, Point, double> brute_force(const vector<Point> &P, const int &s,
-                                        const int &e) {
+// Return the closest two points and the distance between them.
+tuple<Point, Point, double> brute_force(const vector<Point> &P,
+                                        int s, int e) {
   tuple<Point, Point, double> ret;
   get<2>(ret) = numeric_limits<double>::max();
   for (int i = s; i < e; ++i) {
@@ -53,14 +53,14 @@ tuple<Point, Point, double> brute_force(const vector<Point> &P, const int &s,
   return ret;
 }
 
-// Return the closest two points and its distance as a tuple
+// Return the closest two points and its distance as a tuple.
 tuple<Point, Point, double> find_closest_pair_in_remain(vector<Point> *P,
-                                                        const double &d) {
+                                                        double d) {
   sort(P->begin(), P->end(), [](const Point &a, const Point &b) -> bool {
                                return a.y < b.y;
                              });
 
-  // At most six points in P
+  // At most six points in P.
   tuple<Point, Point, double> ret;
   get<2>(ret) = numeric_limits<double>::max();
   for (int i = 0; i < P->size(); ++i) {
@@ -74,10 +74,10 @@ tuple<Point, Point, double> find_closest_pair_in_remain(vector<Point> *P,
   return ret;
 }
 
-// Return the closest two points and its distance as a tuple
+// Return the closest two points and its distance as a tuple.
 tuple<Point, Point, double> find_closest_pair_points_helper(
-    const vector<Point> &P, const int &s, const int &e) {
-  if (e - s <= 3) {  // brute-force to find answer if there are <= 3 points
+    const vector<Point> &P, int s, int e) {
+  if (e - s <= 3) {  // brute-force to find answer if there are <= 3 points.
     return brute_force(P, s, e);
   }
 
@@ -85,7 +85,7 @@ tuple<Point, Point, double> find_closest_pair_points_helper(
   auto l_ret = find_closest_pair_points_helper(P, s, mid);
   auto r_ret = find_closest_pair_points_helper(P, mid, e);
   auto min_l_r = get<2>(l_ret) < get<2>(r_ret) ? l_ret : r_ret;
-  vector<Point> remain;  // stores the points whose x-dis < min_d
+  vector<Point> remain;  // stores the points whose x-dis < min_d.
   for (const Point &p : P) {
     if (abs(p.x - P[mid].x) < get<2>(min_l_r)) {
       remain.emplace_back(p);

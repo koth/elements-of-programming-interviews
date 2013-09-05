@@ -1,9 +1,17 @@
-#include <iostream>
-#include <vector>
-#include <ctime>
-#include <cstdlib>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <algorithm>
+#include <iostream>
+#include <random>
+#include <vector>
+
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::max;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
 template <typename T>
@@ -18,17 +26,19 @@ T maximize_fishing(vector<vector<T>> A) {
 // @exclude
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   int n, m;
   if (argc == 3) {
     n = atoi(argv[1]), m = atoi(argv[2]);
   } else {
-    n = 1 + rand() % 100, m = 1 + rand() % 100;
+    uniform_int_distribution<int> dis(1, 100);
+    n = dis(gen), m = dis(gen);
   }
   vector<vector<int>> A(n, vector<int>(m));
   for (size_t i = 0; i < n; ++i) {
     for (size_t j = 0; j < m; ++j) {
-      A[i][j] = rand() % 1000;
+      uniform_int_distribution<int> dis(0, 999);
+      A[i][j] = dis(gen);
     }
   }
   for (size_t i = 0; i < n; ++i) {

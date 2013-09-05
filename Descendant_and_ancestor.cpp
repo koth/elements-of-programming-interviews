@@ -20,8 +20,10 @@ bool is_r_s_descendant_ancestor_of_m(
     if (curr_r == m.get() || curr_s == m.get()) {
       return true;
     }
-    curr_r = curr_r->data > s->data ? curr_r->left.get() : curr_r->right.get();
-    curr_s = curr_s->data > r->data ? curr_s->left.get() : curr_s->right.get();
+    curr_r = curr_r->data > s->data ?
+             curr_r->left.get() : curr_r->right.get();
+    curr_s = curr_s->data > r->data ?
+             curr_s->left.get() : curr_s->right.get();
   }
 
   // Keep searching from r.

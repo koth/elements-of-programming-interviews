@@ -1,16 +1,20 @@
-#include <vector>
-#include <numeric>
-#include <ctime>
-#include <cstdlib>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
 #include <iostream>
 #include <numeric>
+#include <random>
+#include <vector>
 
-using namespace std;
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
-bool greedy_assignment(const vector<int> &user_file_size,
-                       const int &server_num, const int &limit,
-                       vector<int> &assign_res) {
+bool greedy_assignment(const vector<int> &user_file_size, int server_num,
+                       int limit, vector<int> &assign_res) {
   int server_idx = 0;
   for (const int &file : user_file_size) {
     while (server_idx < server_num && file + assign_res[server_idx] > limit) {
@@ -27,8 +31,8 @@ bool greedy_assignment(const vector<int> &user_file_size,
 }
 
 vector<int> decide_load_balancing(vector<int> user_file_size,
-                                  const int &server_num) {
-  // Uses binary search to find the assignment with minimized maximum load
+                                  int server_num) {
+  // Uses binary search to find the assignment with minimized maximum load.
   int l = 0,
       r = accumulate(user_file_size.cbegin(), user_file_size.cend(), 0);
   vector<int> feasible_assignment;
@@ -49,19 +53,22 @@ vector<int> decide_load_balancing(vector<int> user_file_size,
 // @exclude
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   int n, m;
   if (argc == 3) {
     n = atoi(argv[1]);
     m = atoi(argv[2]);
   } else {
-    n = 1 + rand() % 50000;
-    m = 1 + rand() % n;
+    uniform_int_distribution<int> n_dis(1, 50000);
+    n = n_dis(gen);
+    uniform_int_distribution<int> m_dis(1, n);
+    m = m_dis(gen);
   }
   cout << n << " " << m << endl;
-  vector<int> users;  // stores user i's data size
+  vector<int> users;  // stores user i's data size.
   for (int i = 0; i < n; ++i) {
-    users.emplace_back(1 + rand() % 100);
+    uniform_int_distribution<int> dis(1, 100);
+    users.emplace_back(dis(gen));
   }
   for (const int &u : users) {
     cout << u << " ";

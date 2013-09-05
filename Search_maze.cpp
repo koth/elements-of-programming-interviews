@@ -16,21 +16,21 @@ using std::vector;
 
 // @include
 struct Coordinate {
-  const bool operator==(const Coordinate& that) const {
+  bool operator==(const Coordinate& that) const {
     return (x == that.x && y == that.y);
   }
 
   int x, y;
 };
 
-// Check cur is within maze and is a white pixel
+// Check cur is within maze and is a white pixel.
 bool is_feasible(const Coordinate& cur, const vector<vector<int>>& maze) {
   return cur.x >= 0 && cur.x < maze.size() &&
          cur.y >= 0 && cur.y < maze[cur.x].size() && maze[cur.x][cur.y] == 0;
 }
 
-// Perform DFS to find a feasible path
-bool search_maze_helper(vector<vector<int>>& maze, const Coordinate& cur,
+// Perform DFS to find a feasible path.
+bool search_maze_helper(vector<vector<int>>* maze, const Coordinate& cur,
                         const Coordinate& e, vector<Coordinate>& path) {
   if (cur == e) {
     return true;
@@ -41,8 +41,8 @@ bool search_maze_helper(vector<vector<int>>& maze, const Coordinate& cur,
 
   for (const auto& s : shift) {
     Coordinate next{cur.x + s[0], cur.y + s[1]};
-    if (is_feasible(next, maze)) {
-      maze[next.x][next.y] = 1;
+    if (is_feasible(next, *maze)) {
+      (*maze)[next.x][next.y] = 1;
       path.emplace_back(next);
       if (search_maze_helper(maze, next, e, path)) {
         return true;
@@ -53,15 +53,15 @@ bool search_maze_helper(vector<vector<int>>& maze, const Coordinate& cur,
   return false;
 }
 
-vector<Coordinate> search_maze(vector<vector<int>> maze, const Coordinate& s,
-                               const Coordinate& e) {
+vector<Coordinate> search_maze(vector<vector<int>> maze,
+                               const Coordinate& s, const Coordinate& e) {
   vector<Coordinate> path;
   maze[s.x][s.y] = 1;
   path.emplace_back(s);
-  if (search_maze_helper(maze, s, e, path) == false) {
+  if (!search_maze_helper(&maze, s, e, path)) {
     path.pop_back();
   }
-  return path;  // empty path means no path between s and e
+  return path;  // empty path means no path between s and e.
 }
 // @exclude
 

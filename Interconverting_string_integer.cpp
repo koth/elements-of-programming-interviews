@@ -64,10 +64,16 @@ string intToString(int x) {
   return s;
 }
 
+// We define the valid strings for this function as those matching regexp
+// -?[0-9]+.
 int stringToInt(const string &s) {
+  // "-" starts as a valid integer, but has no digits.
+  if (s == "-") {
+    throw invalid_argument("illegal input");
+  }
+
   bool is_negative = s[0] == '-';
   int x = 0;
-
   for (int i = is_negative; i < s.size(); ++i) {
     if (isdigit(s[i])) {
       x = x * 10 + s[i] - '0';
@@ -81,23 +87,31 @@ int stringToInt(const string &s) {
 
 int main(int argc, char *argv[]) {
   default_random_engine gen((random_device())());
-  for (int times = 0; times < 10000; ++times) {
-    uniform_int_distribution<int> dis(numeric_limits<int>::min(),
-                                      numeric_limits<int>::max());
-    int x = dis(gen);
-    string str = intToString(x);
-    cout << x << " " << str << endl;
-    assert(x == stoi(str));
-    uniform_int_distribution<int> len_dis(0, 9);
-    str = rand_int_string(len_dis(gen));
-    x = stringToInt(str);
-    cout << str << " " << x << endl;
-    assert(x == stoi(str));
-  }
-  try {
-    stringToInt("123abc");
-  } catch(const exception &e) {
-    cout << e.what() << endl;
+  if (argc == 2) {
+    try {
+      cout << stringToInt(argv[1]) << endl;
+    } catch(const exception &e) {
+      cout << e.what() << endl;
+    }
+  } else {
+    for (int times = 0; times < 10000; ++times) {
+      uniform_int_distribution<int> dis(numeric_limits<int>::min(),
+        numeric_limits<int>::max());
+      int x = dis(gen);
+      string str = intToString(x);
+      cout << x << " " << str << endl;
+      assert(x == stoi(str));
+      uniform_int_distribution<int> len_dis(0, 9);
+      str = rand_int_string(len_dis(gen));
+      x = stringToInt(str);
+      cout << str << " " << x << endl;
+      assert(x == stoi(str));
+    }
+    try {
+      stringToInt("123abc");
+    } catch(const exception &e) {
+      cout << e.what() << endl;
+    }
   }
   return 0;
 }

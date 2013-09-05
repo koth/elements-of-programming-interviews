@@ -1,8 +1,6 @@
 // Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
 #include <algorithm>
-#include <cstdlib>
-#include <ctime>
 #include <iostream>
 #include <iterator>
 #include <random>
@@ -24,9 +22,11 @@ using std::unordered_set;
 using std::vector;
 
 void rand_matrix(vector<vector<int>>* matrix) {
+  default_random_engine gen((random_device())());
+  uniform_int_distribution<int> dis(0, matrix->size() - 1);
   for (int i = 0; i < matrix->size(); ++i) {
     for (int j = 0; j < (*matrix)[i].size(); ++j) {
-      (*matrix)[i][j] = rand() % matrix->size();
+      (*matrix)[i][j] = dis(gen);
     }
   }
 }
@@ -41,14 +41,14 @@ class HashTuple {
 };
 
 bool match_helper(const vector<vector<int>>& A, const vector<int>& S,
-                  unordered_set<tuple<int, int, int>, HashTuple> cache,
+                  unordered_set<tuple<int, int, int>, HashTuple>* cache,
                   int i, int j, int len) {
   if (S.size() == len) {
     return true;
   }
 
   if (i < 0 || i >= A.size() || j < 0 || j >= A[i].size() ||
-      cache.find({i, j, len}) != cache.cend()) {
+      cache->find({i, j, len}) != cache->cend()) {
     return false;
   }
 
@@ -59,7 +59,7 @@ bool match_helper(const vector<vector<int>>& A, const vector<int>& S,
        match_helper(A, S, cache, i, j + 1, len + 1))) {
     return true;
   }
-  cache.insert({i, j, len});
+  cache->emplace(i, j, len);
   return false;
 }
 
@@ -67,7 +67,7 @@ bool match(const vector<vector<int>>& A, const vector<int>& S) {
   unordered_set<tuple<int, int, int>, HashTuple> cache;
   for (int i = 0; i < A.size(); ++i) {
     for (int j = 0; j < A[i].size(); ++j) {
-      if (match_helper(A, S, cache, i, j, 0)) {
+      if (match_helper(A, S, &cache, i, j, 0)) {
         return true;
       }
     }

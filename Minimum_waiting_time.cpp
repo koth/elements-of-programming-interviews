@@ -1,15 +1,21 @@
-#include <iostream>
-#include <ctime>
-#include <cstdlib>
-#include <vector>
-#include <algorithm>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <algorithm>
+#include <iostream>
+#include <random>
+#include <vector>
+
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
 template <typename T>
 T minimum_waiting_time(vector<T> service_time) {
-  // Sort the query time in increasing order
+  // Sort the query time in increasing order.
   sort(service_time.begin(), service_time.end());
 
   T waiting = 0;
@@ -21,16 +27,18 @@ T minimum_waiting_time(vector<T> service_time) {
 // @exclude
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   int n;
   if (argc == 2) {
     n = atoi(argv[1]);
   } else {
-    n = 1 + rand() % 100;
+    uniform_int_distribution<int> dis(1, 100);
+    n = dis(gen);
   }
   vector<int> waiting_time;
   for (int i = 0; i < n; ++i) {
-    waiting_time.push_back(rand() % 1000);
+    uniform_int_distribution<int> dis(0, 999);
+    waiting_time.push_back(dis(gen));
   }
   for (int i = 0; i < n; ++i) {
     cout << waiting_time[i] << ' ';
