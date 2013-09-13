@@ -27,7 +27,7 @@ bool BFS(GraphVertex* s) {
   queue<GraphVertex*> q;
   q.emplace(s);
 
-  while (q.empty() == false) {
+  while (!q.empty()) {
     for (GraphVertex* &t : q.front()->edges) {
       if (t->d == -1) {  // unvisited vertex.
         t->d = q.front()->d + 1;
@@ -45,7 +45,7 @@ bool is_any_placement_feasible(vector<GraphVertex>* G) {
   for (GraphVertex& v : *G) {
     if (v.d == -1) {  // unvisited vertex.
       v.d = 0;
-      if (BFS(&v) == false) {
+      if (!BFS(&v)) {
         return false;
       }
     }
@@ -58,7 +58,7 @@ bool DFS(GraphVertex* s) {
   for (GraphVertex* &t : s->edges) {
     if (t->d == -1) {
       t->d = !s->d;
-      if (DFS(t) == false) {
+      if (!DFS(t)) {
         return false;
       }
     } else if (t->d == s->d) {
@@ -76,7 +76,7 @@ bool is_2_colorable(vector<GraphVertex>* G) {
   for (GraphVertex& v : *G) {
     if (v.d == -1) {
       v.d = 0;
-      if (DFS(&v) == false) {
+      if (!DFS(&v)) {
         return false;
       }
     }
@@ -118,7 +118,7 @@ int main(int argc, char *argv[]) {
       }
       cout << endl;
     }
-    //*/
+    */
     bool res = is_any_placement_feasible(&G);
     cout << boolalpha << res << endl;
     assert(res == is_2_colorable(&G));

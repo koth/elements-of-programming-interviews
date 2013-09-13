@@ -83,21 +83,21 @@ int main(int argc, char *argv[]) {
   root->left()->right() = make_shared<BinaryTree<int>>(BinaryTree<int>());
   root->left()->right()->parent() = root->left();
   // should output false
-  assert(root->isLock() == false);
+  assert(!root->isLock());
   cout << boolalpha << root->isLock() << endl;
   root->lock();
   // should output true
-  assert(root->isLock() == true);
+  assert(root->isLock());
   cout << boolalpha << root->isLock() << endl;
   root->unLock();
   root->left()->lock();
   root->lock();
   // should output false
-  assert(root->isLock() == false);
+  assert(!root->isLock());
   cout << boolalpha << root->isLock() << endl;
   root->right()->lock();
   // should output true
-  assert(root->right()->isLock() == true);
+  assert(root->right()->isLock());
   cout << boolalpha << root->isLock() << endl;
   return 0;
 }

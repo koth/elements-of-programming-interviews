@@ -23,9 +23,9 @@ using std::vector;
 
 void rand_matrix(vector<vector<int>>* matrix) {
   default_random_engine gen((random_device())());
-  uniform_int_distribution<int> dis(0, matrix->size() - 1);
   for (int i = 0; i < matrix->size(); ++i) {
     for (int j = 0; j < (*matrix)[i].size(); ++j) {
+      uniform_int_distribution<int> dis(0, matrix->size() - 1);
       (*matrix)[i][j] = dis(gen);
     }
   }

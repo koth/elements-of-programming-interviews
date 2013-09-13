@@ -36,7 +36,7 @@ class Queue {
     throw length_error("empty queue");
   }
 
-  const T& max(void) const {
+  const T& max() const {
     if (!D_.empty()) {
       return D_.front();
     }

@@ -64,7 +64,7 @@ int main(int argc, char *argv[]) {
   //  1    4 6
   root->data = 10;
   // should output false
-  assert(is_BST(root) == false);
+  assert(!is_BST(root));
   cout << boolalpha << is_BST(root) << endl;
   // empty tree, should output true
   assert(is_BST<int>(nullptr) == true);

@@ -1,8 +1,6 @@
 // Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
 #include <cassert>
-#include <cstdlib>
-#include <ctime>
 #include <iostream>
 #include <random>
 #include <unordered_set>
@@ -39,7 +37,7 @@ class HashPair {
   }
 };
 
-bool check_feasible_helper(const vector<Jug>& jugs, int L, int H, 
+bool check_feasible_helper(const vector<Jug>& jugs, int L, int H,
                            unordered_set<pair<int, int>,
                                          HashPair,
                                          PairEqual>* c) {

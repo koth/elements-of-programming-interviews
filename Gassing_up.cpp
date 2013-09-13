@@ -1,10 +1,19 @@
-#include <iostream>
-#include <cassert>
-#include <vector>
-#include <ctime>
-#include <cstdlib>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <algorithm>
+#include <cassert>
+#include <iostream>
+#include <random>
+#include <utility>
+#include <vector>
+
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::pair;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
 template <typename T>
@@ -33,18 +42,20 @@ void check_ans(const vector<T> &G, const vector<T> &D, int c) {
 }
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n;
     if (argc == 2) {
       n = atoi(argv[1]);
     } else {
-      n = 1 + rand() % 10000;
+      uniform_int_distribution<int> dis(1, 10000);
+      n = dis(gen);
     }
     vector<int> G, D;
     int sum = 0;
     for (int i = 0; i < n; ++i) {
-      int x = 1 + rand() % 200;
+      uniform_int_distribution<int> dis(1, 200);
+      int x = dis(gen);
       sum += x;
       G.emplace_back(x);
     }
@@ -52,7 +63,8 @@ int main(int argc, char *argv[]) {
     for (int i = 0; i < n; ++i) {
       int x = 0;
       if (sum) {
-        x = 1 + rand() % sum;
+        uniform_int_distribution<int> dis(1, sum);
+        x = dis(gen);
       }
       D.emplace_back(x + 1);
       sum -= x;

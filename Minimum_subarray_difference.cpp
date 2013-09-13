@@ -1,18 +1,18 @@
-#include <iostream>
-#include <vector>
-#include <numeric>
-#include <cstdlib>
-#include <ctime>
-#ifdef __clang__
-#include <unordered_set>
-#else
-#include <tr1/unordered_set>
-#endif
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
-#ifndef __clang__
-using namespace std::tr1;
-#endif
+#include <iostream>
+#include <numeric>
+#include <random>
+#include <unordered_set>
+#include <vector>
+
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::unordered_set;
+using std::vector;
 
 // @include
 int minimize_difference(const vector<int> &A) {
@@ -28,24 +28,25 @@ int minimize_difference(const vector<int> &A) {
     }
   }
 
-  // Find the first i from middle where is_Ok[i] == true
+  // Find the first i from middle where is_Ok[i] == true.
   for (int i = sum >> 1; i > 0; --i) {
     if (is_Ok.find(i) != is_Ok.cend()) {
       return (sum - i) - i;
     }
   }
-  return sum;   // one thief takes all
+  return sum;   // one thief takes all.
 }
 // @exclude
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   int n;
   vector<int> A;
   if (argc == 2) {
     n = atoi(argv[1]);
   } else if (argc == 1) {
-    n = 1 + rand() % 50;
+    uniform_int_distribution<int> dis(1, 50);
+    n = dis(gen);
   } else {
     for (int i = 1; i < argc; ++i) {
       A.emplace_back(atoi(argv[i]));
@@ -53,7 +54,8 @@ int main(int argc, char *argv[]) {
     n = 0;
   }
   for (size_t i = 0; i < n; ++i) {
-    A.emplace_back(rand() % 100);
+    uniform_int_distribution<int> dis(0, 99);
+    A.emplace_back(dis(gen));
     cout << A[i] << ' ';
   }
   cout << endl;

@@ -36,9 +36,9 @@ string normalized_path_names(const string &path) {
         }
         s.pop_back();
       }
-    } else if (token != "." && token != "") {  // name
+    } else if (token != "." && token != "") {  // name.
       for (const char &c : token) {
-        if (c != '.' && isalnum(c) == false) {
+        if (c != '.' && !isalnum(c)) {
           throw invalid_argument("Invalid directory name");
         }
       }
@@ -47,11 +47,11 @@ string normalized_path_names(const string &path) {
   }
 
   string normalized_path("");
-  if (s.empty() == false) {
+  if (!s.empty()) {
     auto it = s.cbegin();
     normalized_path += *it++;
     while (it != s.cend()) {
-      if (*(it - 1) != "/") {  // previous one is not an absolute path
+      if (*(it - 1) != "/") {  // previous one is not an absolute path.
         normalized_path += "/";
       }
       normalized_path += *it++;

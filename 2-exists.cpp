@@ -20,18 +20,18 @@ struct GraphVertex {
   enum Color {white, gray, black} color;
   vector<GraphVertex*> edges;
   // @exclude
-  GraphVertex(void) : color(white) {}
+  GraphVertex() : color(white) {}
   // @include
 };
 
 bool DFS(GraphVertex* cur, const GraphVertex* pre) {
-  // Visiting a gray vertex means a cycle
+  // Visiting a gray vertex means a cycle.
   if (cur->color == GraphVertex::gray) {
     return true;
   }
 
-  cur->color = GraphVertex::gray;  // marks current vertex as a gray one
-  // Traverse the neighbor vertices
+  cur->color = GraphVertex::gray;  // marks current vertex as a gray one.
+  // Traverse the neighbor vertices.
   for (GraphVertex* &next : cur->edges) {
     if (next != pre && next->color != GraphVertex::black) {
       if (DFS(next, cur)) {
@@ -39,7 +39,7 @@ bool DFS(GraphVertex* cur, const GraphVertex* pre) {
       }
     }
   }
-  cur->color = GraphVertex::black;  // marks current vertex as black
+  cur->color = GraphVertex::black;  // marks current vertex as black.
   return false;
 }
 
@@ -61,9 +61,9 @@ void DFS_exclusion(GraphVertex* cur, GraphVertex* a, GraphVertex* b) {
   }
 }
 
-// O(n^2) check answer
+// O(n^2) check answer.
 bool check_answer(vector<GraphVertex> *G) {
-  // marks all vertices as white
+  // marks all vertices as white.
   for (GraphVertex &n : *G) {
     n.color = GraphVertex::white;
   }
@@ -100,13 +100,13 @@ int main(int argc, char *argv[]) {
     uniform_int_distribution<int> dis(1, n * (n - 1) / 2);
     int m = dis(gen);
     vector<deque<bool>> is_edge_exist(n, deque<bool>(n, false));
-    // Make the graph become connected
+    // Make the graph become connected.
     for (int i = 1; i < n; ++i) {
       G[i - 1].edges.emplace_back(&G[i]);
       G[i].edges.emplace_back(&G[i - 1]);
       is_edge_exist[i - 1][i] = is_edge_exist[i][i - 1] = true;
     }
-    // Generate edges randomly
+    // Generate edges randomly.
     m -= (n - 1);
     while (m-- > 0) {
       int a, b;
@@ -127,7 +127,7 @@ int main(int argc, char *argv[]) {
       }
       cout << endl;
     }
-    //*/
+    */
     bool res = is_graph_2_exist(&G);
     cout << boolalpha << res << endl;
     assert(check_answer(&G) == res);

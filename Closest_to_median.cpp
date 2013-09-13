@@ -67,7 +67,7 @@ void check_ans(vector<T> &A, const vector<T> &res, int k) {
   }
 }
 
-void simple_test(void) {
+void simple_test() {
   vector<int> D = {3,2,3,5,7,3,1};
   vector<int> Dexpres = {2,3,3};
   vector<int> Dres = find_k_closest_to_median(D,3);

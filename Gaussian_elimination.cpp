@@ -18,12 +18,12 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-void Eliminate_rows(vector<deque<bool>> &B, const int &i, const int &j) {
-  // Use B[i] to eliminate other rows' entry j
-  for (int a = 0; a < B.size(); ++a) {
-    if (i != a && B[a][j]) {
-      for (int b = 0; b < B[i].size(); ++b) {
-        B[a][b] = B[a][b] ^ B[i][b];
+void Eliminate_rows(vector<deque<bool>> *B, int i, int j) {
+  // Use B[i] to eliminate other rows' entry j.
+  for (int a = 0; a < B->size(); ++a) {
+    if (i != a && (*B)[a][j]) {
+      for (int b = 0; b < (*B)[i].size(); ++b) {
+        (*B)[a][b] = (*B)[a][b] ^ (*B)[i][b];
       }
     }
   }
@@ -37,7 +37,7 @@ deque<bool> Gaussian_elimination(const vector<deque<bool>> &A,
   }
 
   for (int i = 0; i < B.size(); ++i) {
-    // Find the coefficient starting with 1
+    // Find the coefficient starting with 1.
     int idx = i;
     for (int j = i + 1; j < B.size(); ++j) {
       if (B[j][i]) {
@@ -47,9 +47,9 @@ deque<bool> Gaussian_elimination(const vector<deque<bool>> &A,
     }
     swap(B[i], B[idx]);
 
-    // Perform elimination except i-th row
+    // Perform elimination except i-th row.
     if (B[i][i]) {
-      Eliminate_rows(B, i, i);
+      Eliminate_rows(&B, i, i);
     }
   }
 
@@ -58,14 +58,14 @@ deque<bool> Gaussian_elimination(const vector<deque<bool>> &A,
       bool have_coefficient = false;
       for (int j = i + 1; j < A.size(); ++j) {
         if (B[i][j]) {
-          Eliminate_rows(B, i, j);
+          Eliminate_rows(&B, i, j);
           have_coefficient = true;
-          swap(B[i], B[j]);  // row permutation
+          swap(B[i], B[j]);  // row permutation.
           break;
         }
       }
 
-      if (have_coefficient == false && B[i].back() == true) {
+      if (!have_coefficient && B[i].back()) {
         cout << "No solution." << endl;
         return {};
       }
@@ -136,7 +136,7 @@ void rand_vec(deque<bool> *b) {
 
 int main(int argc, char *argv[]) {
   default_random_engine gen((random_device())());
-  // Predefined tests
+  // Predefined tests.
   vector<deque<bool>> A(4);
   A[0] = {false, false, false, true};
   A[1] = {false, false, false, true};

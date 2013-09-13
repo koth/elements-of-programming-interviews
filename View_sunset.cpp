@@ -20,12 +20,12 @@ using std::vector;
 // @include
 template <typename T>
 vector<pair<int, T>> examine_buildings_with_sunset(istringstream &sin) {
-  int idx = 0;  // building's index
+  int idx = 0;  // building's index.
   T height;
   // Stores (building_idx, building_height) pair with sunset views.
   vector<pair<int, T>> buildings_with_sunset;
   while (sin >> height) {
-    while (buildings_with_sunset.empty() == false &&
+    while (!buildings_with_sunset.empty() &&
            height >= buildings_with_sunset.back().second) {
       buildings_with_sunset.pop_back();
     }

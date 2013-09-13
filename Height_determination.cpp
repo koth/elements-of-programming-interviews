@@ -1,27 +1,31 @@
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
+#include <cassert>
 #include <iostream>
 #include <vector>
-#include <cassert>
 
-using namespace std;
+using std::cout;
+using std::endl;
+using std::vector;
 
 // @include
-int get_height_helper(vector<vector<int>> &F, const int &c, const int &d) {
+int get_height_helper(vector<vector<int>>* F, int c, int d) {
   if (d == 0) {
     return 0;
   } else if (c == 1) {
     return d;
   } else {
-    if (F[c][d] == -1) {
-      F[c][d] = get_height_helper(F, c, d - 1) +
-                get_height_helper(F, c - 1, d - 1) + 1;
+    if ((*F)[c][d] == -1) {
+      (*F)[c][d] = get_height_helper(F, c, d - 1) +
+                   get_height_helper(F, c - 1, d - 1) + 1;
     }
-    return F[c][d];
+    return (*F)[c][d];
   }
 }
 
-int getHeight(const int &c, const int &d) {
+int getHeight(int c, int d) {
   vector<vector<int>> F(c + 1, vector<int>(d + 1, -1));
-  return get_height_helper(F, c, d);
+  return get_height_helper(&F, c, d);
 }
 // @exclude
 

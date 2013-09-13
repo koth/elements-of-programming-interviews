@@ -31,7 +31,7 @@ void online_median(istringstream &sin) {
 
   T x;
   while (sin >> x) {
-    if (L.empty() == false && x > L.top()) {
+    if (!L.empty() && x > L.top()) {
       H.emplace(x);
     } else {
       L.emplace(x);

@@ -1,12 +1,19 @@
-#include <iostream>
-#include <numeric>
-#include <cassert>
-#include <limits>
-#include <vector>
-#include <cstdlib>
-#include <ctime>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <cassert>
+#include <iostream>
+#include <limits>
+#include <numeric>
+#include <random>
+#include <vector>
+
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::numeric_limits;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
 template <typename T>
@@ -25,7 +32,7 @@ T find_biggest_n_1_product(const vector<T> &A) {
       }
     } else if (A[i] == 0) {
       zero_idx = i, ++zero_count;
-    } else {  // A[i] > 0
+    } else {  // A[i] > 0.
       ++pos_count;
       if (s_pos_idx == -1 || A[i] < A[s_pos_idx]) {
         s_pos_idx = i;
@@ -35,7 +42,7 @@ T find_biggest_n_1_product(const vector<T> &A) {
 
   // Try to find a number whose elimination could maximize the product of
   // the remaining (n - 1) numbers.
-  int x;  // stores the idx of eliminated one
+  int x;  // stores the idx of eliminated one.
   if (zero_count >= 2) {
     return 0;
   } else if (zero_count == 1) {
@@ -45,9 +52,9 @@ T find_biggest_n_1_product(const vector<T> &A) {
       x = zero_idx;
     }
   } else {
-    if (neg_count & 1) {  // odd number negative
+    if (neg_count & 1) {  // odd number negative.
       x = b_neg_idx;
-    } else {  // even number negative
+    } else {  // even number negative.
       if (pos_count > 0) {
         x = s_pos_idx;
       } else {
@@ -87,17 +94,19 @@ T check_ans(const vector<T> &A) {
 }
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 100000; ++times) {
     int n;
     vector<int> A;
     if (argc == 2) {
       n = atoi(argv[1]);
     } else {
-      n = 2 + rand() % 10;
+      uniform_int_distribution<int> dis(2, 11);
+      n = dis(gen);
     }
     for (size_t i = 0; i < n; ++i) {
-      A.emplace_back(((rand() & 1) ? -1 : 1) * rand() % 10);
+      uniform_int_distribution<int> dis(-9, 9);
+      A.emplace_back(dis(gen));
       cout << A[i] << ' ';
     }
     cout << endl;

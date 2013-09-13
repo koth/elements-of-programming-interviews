@@ -1,22 +1,33 @@
-#include <iostream>
-#include <numeric>
-#include <cassert>
-#include <limits>
-#include <vector>
-#include <cstdlib>
-#include <ctime>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <algorithm>
+#include <cassert>
+#include <functional>
+#include <iostream>
+#include <limits>
+#include <numeric>
+#include <random>
+#include <vector>
+
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::max;
+using std::multiplies;
+using std::numeric_limits;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
 template <typename T>
 T find_biggest_n_1_product(const vector<T> &A) {
-  // Build forward product L, and backward product R
+  // Build forward product L, and backward product R.
   vector<T> L, R(A.size());
   partial_sum(A.cbegin(), A.cend(), back_inserter(L), multiplies<T>());
   partial_sum(A.crbegin(), A.crend(), R.rbegin(), multiplies<T>());
 
-  // Find the biggest product of (n - 1) numbers
+  // Find the biggest product of (n - 1) numbers.
   T max_product = numeric_limits<T>::min();
   for (int i = 0; i < A.size(); ++i) {
     T forward = i > 0 ? L[i - 1] : 1;
@@ -27,7 +38,7 @@ T find_biggest_n_1_product(const vector<T> &A) {
 }
 // @exclude
 
-// n^2 checking
+// n^2 checking.
 template <typename T>
 T check_ans(const vector<T> &A) {
   T max_product = numeric_limits<T>::min();
@@ -47,17 +58,19 @@ T check_ans(const vector<T> &A) {
 }
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   for (int times = 0; times < 10000; ++times) {
     int n;
     vector<int> A;
     if (argc == 2) {
       n = atoi(argv[1]);
     } else {
-      n = 2 + rand() % 10;
+      uniform_int_distribution<int> dis(2, 11);
+      n = dis(gen);
     }
     for (size_t i = 0; i < n; ++i) {
-      A.emplace_back(((rand() & 1) ? -1 : 1) * rand() % 10);
+      uniform_int_distribution<int> dis(-9, 9);
+      A.emplace_back(dis(gen));
       cout << A[i] << ' ';
     }
     cout << endl;

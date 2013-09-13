@@ -16,17 +16,17 @@ using std::vector;
 template <typename T>
 class Queue {
  public:
-  explicit Queue(const size_t &cap) : data_({cap}) {}
+  explicit Queue(size_t cap) : data_({cap}) {}
 
   void enqueue(const T& x) {
-    // Dynamically resize due to data_.size() limit
+    // Dynamically resize due to data_.size() limit.
     if (count_ == data_.size()) {
       // Rearrange elements.
       rotate(data_.begin(), data_.begin() + head_, data_.end());
-      head_ = 0, tail_ = count_;  // reset head and tail
+      head_ = 0, tail_ = count_;  // reset head and tail.
       data_.resize(data_.size() << 1);
     }
-    // Perform enqueue
+    // Perform enqueue.
     data_[tail_] = x;
     tail_ = (tail_ + 1) % data_.size(), ++count_;
   }
@@ -51,7 +51,7 @@ class Queue {
 };
 // @exclude
 
-void test(void) {
+void test() {
   Queue<int> q(8);
   q.enqueue(1);
   q.enqueue(2);

@@ -2,8 +2,6 @@
 
 #include <algorithm>
 #include <cassert>
-#include <cstdlib>
-#include <ctime>
 #include <limits>
 #include <stack>
 #include <vector>
@@ -14,7 +12,7 @@ using std::vector;
 
 template <typename HeightType>
 struct Player {
-  const bool operator<(const Player &that) const {
+  bool operator<(const Player &that) const {
     return height < that.height;
   }
 
@@ -30,11 +28,11 @@ class Team {
     }
   }
 
-  const bool operator<(const Team &that) const {
+  bool operator<(const Team &that) const {
     vector<Player<HeightType>> this_sorted(sortHeightMembers());
     vector<Player<HeightType>> that_sorted(that.sortHeightMembers());
     for (int i = 0; i < this_sorted.size() && i < that_sorted.size(); ++i) {
-      if (this_sorted[i] < that_sorted[i] == false) {
+      if (!(this_sorted[i] < that_sorted[i])) {
         return false;
       }
     }
@@ -42,7 +40,7 @@ class Team {
   }
 
  private:
-  vector<Player<HeightType>> sortHeightMembers(void) const {
+  vector<Player<HeightType>> sortHeightMembers() const {
     vector<Player<HeightType>> sorted_members(members_);
     sort(sorted_members.begin(), sorted_members.end());
     return sorted_members;
@@ -61,7 +59,7 @@ struct GraphVertex {
 void DFS(GraphVertex* cur, stack<GraphVertex*>* vertex_order) {
   cur->visited = true;
   for (const auto& next : cur->edges) {
-    if (next->visited == false) {
+    if (!next->visited) {
       DFS(next, vertex_order);
     }
   }
@@ -71,7 +69,7 @@ void DFS(GraphVertex* cur, stack<GraphVertex*>* vertex_order) {
 stack<GraphVertex*> build_topological_ordering(vector<GraphVertex>* G) {
   stack<GraphVertex*> vertex_order;
   for (auto& g : *G) {
-    if (g.visited == false) {
+    if (!g.visited) {
       DFS(&g, &vertex_order);
     }
   }
@@ -80,7 +78,7 @@ stack<GraphVertex*> build_topological_ordering(vector<GraphVertex>* G) {
 
 int find_longest_path(stack<GraphVertex*>* vertex_order) {
   int max_distance = 0;
-  while (vertex_order->empty() == false) {
+  while (!vertex_order->empty()) {
     GraphVertex* u = vertex_order->top();
     max_distance = max(max_distance, u->max_distance);
     for (GraphVertex*& v : u->edges) {

@@ -47,6 +47,7 @@ string rand_string(int len) {
   default_random_engine gen((random_device())());
   uniform_int_distribution<int> dis('a', 'z');
   string ret;
+  default_random_engine gen((random_device())());
   while (len--) {
     ret += dis(gen);
   }

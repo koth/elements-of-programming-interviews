@@ -178,7 +178,7 @@ int main(int argc, char *argv[]) {
       cout << a << " ";
     }
     cout << endl << "k = " << k << endl;
-    //*/
+    */
     pair<int, int> ans = find_pair_sum_k(A, k);
     if (ans.first != -1 && ans.second != -1) {
       assert(A[ans.first] + A[ans.second] == k);
@@ -199,7 +199,7 @@ int main(int argc, char *argv[]) {
         }
       }
       cout << "no answer" << endl;
-      assert(found == false);
+      assert(!found);
     }
   }
   return 0;

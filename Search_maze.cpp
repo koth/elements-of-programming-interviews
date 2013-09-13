@@ -17,7 +17,7 @@ using std::vector;
 // @include
 struct Coordinate {
   bool operator==(const Coordinate& that) const {
-    return (x == that.x && y == that.y);
+    return x == that.x && y == that.y;
   }
 
   int x, y;

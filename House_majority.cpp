@@ -19,9 +19,9 @@ using std::vector;
 double house_majority_helper(const vector<double> &prob, int r, int n,
                              vector<vector<double>> &P) {
   if (r > n) {
-    return 0.0;  // base case: not enough Republicans
+    return 0.0;  // base case: not enough Republicans.
   } else if (r == 0 && n == 0) {
-    return 1.0;  // base case
+    return 1.0;  // base case.
   } else if (r < 0) {
     return 0.0;
   }

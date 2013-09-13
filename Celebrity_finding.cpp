@@ -17,13 +17,13 @@ using std::vector;
 
 // @include
 int celebrity_finding(const vector<deque<bool>> &F) {
-  // Start checking the relation from F[0][1]
+  // Start checking the relation from F[0][1].
   int i = 0, j = 1;
   while (j < F.size()) {
     if (F[i][j] == true) {
-      i = j++;  // all candidates j' < j are not celebrity candidates
-    } else {  // F[i][j] == false
-      ++j;  // i is still a celebrity candidate but j is not
+      i = j++;  // all candidates j' < j are not celebrity candidates.
+    } else {  // F[i][j] == false.
+      ++j;  // i is still a celebrity candidate but j is not.
     }
   }
   return i;

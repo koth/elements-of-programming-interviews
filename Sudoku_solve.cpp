@@ -24,7 +24,7 @@ bool valid_to_add(const vector<vector<int>> &A, int i, int j, int val) {
     }
   }
 
-  // Check column constraints
+  // Check column constraints.
   for (int k = 0; k < A.size(); ++k) {
     if (val == A[i][k]) {
       return false;
@@ -76,7 +76,7 @@ bool solve_Sudoku_helper(vector<vector<int>> *A, int i, int j) {
 }
 
 bool solve_Sudoku(vector<vector<int>> *A) {
-  if (is_valid_Sudoku(*A) == false) {
+  if (!is_valid_Sudoku(*A)) {
     cout << "Initial configuration violates constraints." << endl;
     return false;
   }

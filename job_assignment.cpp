@@ -23,7 +23,7 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-const bool comp(const pair<int, int> &a, const pair<int, int> &b) {
+bool comp(const pair<int, int> &a, const pair<int, int> &b) {
   return a.second > b.second;
 }
 
@@ -119,7 +119,7 @@ int main(int argc, char *argv[]) {
     copy(S.cbegin(), S.cend(), ostream_iterator<int>(cout, " "));
     cout << endl;
     vector<deque<bool>> res = find_feasible_job_assignment(T, S);
-    if (res.empty() == false) {   // there is a feasible answer.
+    if (!res.empty()) {   // there is a feasible answer.
       cout << "found feasible assignment!" << endl;
       for (int i = 0; i < res.size(); ++i) {
         copy(res[i].cbegin(), res[i].cend(), ostream_iterator<int>(cout, " "));

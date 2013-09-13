@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
       unique_ptr<BinaryTree<int>>(new BinaryTree<int>());
   non_symm_root->right->right =
       unique_ptr<BinaryTree<int>>(new BinaryTree<int>());
-  assert(is_symmetric<int>(non_symm_root) == false);
+  assert(!is_symmetric<int>(non_symm_root));
   cout << boolalpha << is_symmetric<int>(non_symm_root) << endl;
   // symmetric tree test
   unique_ptr<BinaryTree<int>> symm_root =

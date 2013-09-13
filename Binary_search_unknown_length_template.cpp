@@ -56,7 +56,7 @@ int binary_search_unknown_len(const vector<T> &A, const T &k) {
 }
 // @exclude
 
-void small_test(void) {
+void small_test() {
   vector<int> A = {1, 2, 3};
   assert(binary_search_unknown_len(A, 3) == 2);
   assert(binary_search_unknown_len(A, 1) == 0);
@@ -91,7 +91,7 @@ int main(int argc, char *argv[]) {
     cout << n << ' ' << k << endl;
     int idx = binary_search_unknown_len(A, k);
     cout << idx << endl;
-    assert((idx == -1 && binary_search(A.cbegin(), A.cend(), k) == false) ||
+    assert((idx == -1 && !binary_search(A.cbegin(), A.cend(), k)) ||
            A[idx] == k);
   }
   return 0;

@@ -36,7 +36,7 @@ void flip_color(vector<deque<bool>> *A, int x, int y) {
 
   queue<pair<int, int>> q;
   q.emplace(x, y);
-  while (q.empty() == false) {
+  while (!q.empty()) {
     pair<int, int> curr(q.front());
     (*A)[curr.first][curr.second] = !(*A)[curr.first][curr.second];  // flip
     for (const auto &d : dir) {

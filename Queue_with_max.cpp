@@ -20,7 +20,7 @@ class Queue {
     A_.push(x);
   }
 
-  T dequeue(void) {
+  T dequeue() {
     if (B_.empty()) {
       while (!A_.empty()) {
         B_.push(A_.pop());
@@ -36,7 +36,7 @@ class Queue {
     if (!A_.empty()) {
       return B_.empty() ? A_.max() : std::max(A_.max(), B_.max());
     } else {  // A_.empty() == true
-      if (B_.empty() == false) {
+      if (!B_.empty()) {
         return B_.max();
       }
       throw length_error("empty queue");

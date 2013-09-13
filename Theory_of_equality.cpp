@@ -25,7 +25,7 @@ struct Constraint {
 };
 
 struct GraphVertex {
-  int group = -1;  // represents the connected component it belongs
+  int group = -1;  // represents the connected component it belongs.
   vector<GraphVertex*> edges;
 };
 
@@ -39,24 +39,24 @@ void DFS(const GraphVertex& u) {
 }
 
 bool are_constraints_satisfied(
-    const vector<Constraint>& E,    // Equality constraints
-    const vector<Constraint>& I) {  // Inequality constraints
+    const vector<Constraint>& E,    // Equality constraints.
+    const vector<Constraint>& I) {  // Inequality constraints.
   unordered_map<int, GraphVertex> G;
-  // Build graph G according to E
+  // Build graph G according to E.
   for (const auto& e : E) {
     G[e.a].edges.emplace_back(&G[e.b]), G[e.b].edges.emplace_back(&G[e.a]);
   }
 
-  // Assign group index for each connected component
+  // Assign group index for each connected component.
   int group_count = 0;
   for (pair<int, GraphVertex> vertex : G) {
-    if (vertex.second.group == -1) {  // is a unvisited vertex
-      vertex.second.group = group_count++;  // assigns a group index
+    if (vertex.second.group == -1) {  // is a unvisited vertex.
+      vertex.second.group = group_count++;  // assigns a group index.
       DFS(vertex.second);
     }
   }
 
-  // Examine each inequality constraint to see if there is a violation
+  // Examine each inequality constraint to see if there is a violation.
   for (const Constraint& i : I) {
     if (G[i.a].group != -1 && G[i.b].group != -1 &&
         G[i.a].group == G[i.b].group) {
@@ -67,7 +67,7 @@ bool are_constraints_satisfied(
 }
 // @exclude
 
-void small_test(void) {
+void small_test() {
   vector<Constraint> E, I;
   E.emplace_back(Constraint{0, 1});
   I.emplace_back(Constraint{2, 3});

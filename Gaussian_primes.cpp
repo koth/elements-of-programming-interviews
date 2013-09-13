@@ -1,14 +1,22 @@
-#include <iostream>
-#include <cassert>
-#include <algorithm>
-#include <vector>
-#include <complex>
-#include <set>
-#include <cmath>
-#include <ctime>
-#include <cstdlib>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <algorithm>
+#include <cassert>
+#include <cmath>
+#include <complex>
+#include <iostream>
+#include <random>
+#include <set>
+#include <vector>
+
+using std::complex;
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::random_device;
+using std::set;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
 bool is_unit(const complex<int>& z) {
@@ -31,35 +39,35 @@ struct ComplexCompare {
   }
 };
 
-vector<complex<int>> generate_Gaussian_primes(const int& n) {
+vector<complex<int>> generate_Gaussian_primes(int n) {
   set<complex<double>, ComplexCompare> candidates;
   vector<complex<int>> primes;
 
-  // Generate all possible Gaussian prime candidates
+  // Generate all possible Gaussian prime candidates.
   for (int i = -n; i <= n; ++i) {
     for (int j = -n; j <= n; ++j) {
-      if (is_unit({i, j}) == false && abs(complex<double>(i, j)) != 0) {
+      if (!is_unit({i, j}) && abs(complex<double>(i, j)) != 0) {
         candidates.emplace(i, j);
       }
     }
   }
 
-  while (candidates.empty() == false) {
+  while (!candidates.empty()) {
     complex<double> p = *(candidates.begin());
     candidates.erase(candidates.begin());
     primes.emplace_back(p);
     int max_multiplier = ceil(sqrt(2.0) * n / floor(sqrt(norm(p))));
 
-    // any Gaussian integer outside the range we're iterating
-    // over below has a modulus greater than max_multiplier
+    // Any Gaussian integer outside the range we're iterating
+    // over below has a modulus greater than max_multiplier.
     for (int i = max_multiplier; i >= -max_multiplier; --i) {
       for (int j = max_multiplier; j >= -max_multiplier; --j) {
         complex<double> x = {i, j};
         if (floor(sqrt(norm(x))) > max_multiplier) {
-          // skip multipliers whose modulus exceeds max_multiplier
+          // Skip multipliers whose modulus exceeds max_multiplier.
           continue;
         }
-        if (is_unit(x) == false) {
+        if (!is_unit(x)) {
           candidates.erase(x * p);
         }
       }
@@ -69,20 +77,20 @@ vector<complex<int>> generate_Gaussian_primes(const int& n) {
 }
 // @exclude
 
-vector<complex<int>> generate_Gaussian_primes_canary(const int& n) {
+vector<complex<int>> generate_Gaussian_primes_canary(int n) {
   set<complex<double>, ComplexCompare> candidates;
   vector<complex<int>> primes;
 
-  // Generate all possible Gaussian prime candidates
+  // Generate all possible Gaussian prime candidates.
   for (int i = -n; i <= n; ++i) {
     for (int j = -n; j <= n; ++j) {
-      if (is_unit({i, j}) == false && abs(complex<double>(i, j)) != 0) {
+      if (!is_unit({i, j}) && abs(complex<double>(i, j)) != 0) {
         candidates.emplace(i, j);
       }
     }
   }
 
-  while (candidates.empty() == false) {
+  while (!candidates.empty()) {
     complex<double> p = *(candidates.begin());
     candidates.erase(candidates.begin());
     primes.emplace_back(p);
@@ -91,7 +99,7 @@ vector<complex<int>> generate_Gaussian_primes_canary(const int& n) {
     for (int i = max_multiplier; i >= -max_multiplier; --i) {
       for (int j = max_multiplier; j >= -max_multiplier; --j) {
         complex<double> x = {i, j};
-        if (is_unit(x) == false) {
+        if (!is_unit(x)) {
           candidates.erase(x * p);
         }
       }
@@ -101,12 +109,13 @@ vector<complex<int>> generate_Gaussian_primes_canary(const int& n) {
 }
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   int n;
   if (argc == 2) {
     n = atoi(argv[1]);
   } else {
-    n = 1 + rand() % 100;
+    uniform_int_distribution<int> dis(1, 100);
+    n = dis(gen);
   }
 
   for (int i = 1; i <= 100; ++i) {
@@ -115,7 +124,8 @@ int main(int argc, char *argv[]) {
     vector<complex<int>> g_primes = generate_Gaussian_primes(i);
     cout << first.size() << " " << g_primes.size() << endl;
     for (int i = 0; i < first.size(); ++i) {
-      if (first[i].real() != g_primes[i].real() || first[i].imag() != g_primes[i].imag()) {
+      if (first[i].real() != g_primes[i].real() || 
+          first[i].imag() != g_primes[i].imag()) {
         cout << "(" << first[i].real() << "," << first[i].imag() << ") ";
         cout << "(" << g_primes[i].real() << "," << g_primes[i].imag() << ") ";
       }

@@ -1,7 +1,6 @@
 // Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
 #include <algorithm>
-#include <cstdlib>
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -19,8 +18,8 @@ string tail(const string &file_name, int tail_count) {
 
   file_ptr.seekg(0, ios::end);
   int file_size = file_ptr.tellg(), newline_count = 0;
-  string output;  // stores the last tail_count lines
-  // Reads file in reverse looking for '\n'
+  string output;  // stores the last tail_count lines.
+  // Reads file in reverse looking for '\n'.
   for (int i = 0; i < file_size; ++i) {
     file_ptr.seekg(-1 - i, ios::end);
     char c;

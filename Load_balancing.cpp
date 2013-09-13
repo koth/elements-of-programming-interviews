@@ -13,18 +13,19 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-bool greedy_assignment(const vector<int> &user_file_size, int server_num,
-                       int limit, vector<int> &assign_res) {
+bool greedy_assignment(const vector<int> &user_file_size, int server_num, 
+                       int limit, vector<int>* assign_res) {
   int server_idx = 0;
   for (const int &file : user_file_size) {
-    while (server_idx < server_num && file + assign_res[server_idx] > limit) {
+    while (server_idx < server_num && 
+           file + (*assign_res)[server_idx] > limit) {
       ++server_idx;
     }
 
     if (server_idx >= server_num) {
       return false;
     } else {
-      assign_res[server_idx] += file;
+      (*assign_res)[server_idx] += file;
     }
   }
   return true;
@@ -40,7 +41,7 @@ vector<int> decide_load_balancing(vector<int> user_file_size,
     int m = l + ((r - l) >> 1);
     vector<int> assign_res(server_num, 0);
     bool is_feasible = greedy_assignment(user_file_size, server_num, m,
-                                         assign_res);
+                                         &assign_res);
     if (is_feasible) {
       feasible_assignment = assign_res;
       r = m - 1;
@@ -67,7 +68,7 @@ int main(int argc, char *argv[]) {
   cout << n << " " << m << endl;
   vector<int> users;  // stores user i's data size.
   for (int i = 0; i < n; ++i) {
-    uniform_int_distribution<int> dis(1, 100);
+    uniform_int_distribution<int> dis(1, 1000);
     users.emplace_back(dis(gen));
   }
   for (const int &u : users) {

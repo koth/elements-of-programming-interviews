@@ -40,9 +40,9 @@ int main(int argc, char *argv[]) {
       unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{5});
   root->right->right =
       unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{7});
-  assert(search_min_first_BST(root, 1) == true);
-  assert(search_min_first_BST(root, 3) == true);
-  assert(search_min_first_BST(root, 5) == true);
-  assert(search_min_first_BST(root, 6) == false);
+  assert(search_min_first_BST(root, 1));
+  assert(search_min_first_BST(root, 3));
+  assert(search_min_first_BST(root, 5));
+  assert(!search_min_first_BST(root, 6));
   return 0;
 }

@@ -33,7 +33,7 @@ T distance(const vector<vector<T>>& arrs, const vector<int>& idx) {
 // @include
 template <typename T>
 struct ArrData {
-  const bool operator<(const ArrData& a) const {
+  bool operator<(const ArrData& a) const {
     if (val != a.val) {
       return val < a.val;
     } else {
@@ -47,12 +47,12 @@ struct ArrData {
 
 template <typename T>
 T find_min_distance_sorted_arrays(const vector<vector<T>>& arrs) {
-  // Pointers for each of arrs
+  // Pointers for each of arrs.
   vector<int> idx(arrs.size(), 0);
   T min_dis = numeric_limits<T>::max();
   set<ArrData<T>> current_heads;
 
-  // Each of arrs puts its minimum element into current_heads
+  // Each of arrs puts its minimum element into current_heads.
   for (int i = 0; i < arrs.size(); ++i) {
     if (idx[i] >= arrs[i].size()) {
       return min_dis;
@@ -64,7 +64,7 @@ T find_min_distance_sorted_arrays(const vector<vector<T>>& arrs) {
     min_dis = min(min_dis, current_heads.crbegin()->val -
                            current_heads.cbegin()->val);
     int tar = current_heads.cbegin()->idx;
-    // Return if there is no remaining element in one array
+    // Return if there is no remaining element in one array.
     if (++idx[tar] >= arrs[tar].size()) {
       return min_dis;
     }

@@ -24,7 +24,7 @@ using std::vector;
 // @include
 int find_set(vector<int>* set, int x) {
   if ((*set)[x] != x) {
-    (*set)[x] = find_set(set, (*set)[x]);  // path compression
+    (*set)[x] = find_set(set, (*set)[x]);  // path compression.
   }
   return (*set)[x];
 }
@@ -38,7 +38,7 @@ vector<int> offline_minimum(const vector<int> &A, const vector<int> &E) {
   vector<int> R(A.size(), E.size());
   int pre = 0;
 
-  // Initialize the collection of subsets
+  // Initialize the collection of subsets.
   for (int i = 0; i < E.size(); ++i) {
     for (int j = pre; j <= E[i]; ++j) {
       R[A[j]] = i;
@@ -67,7 +67,7 @@ vector<int> check_answer(const vector<int> &A, const vector<int> &E) {
   for (int i = 0; i < E.size(); ++i) {
     int min_val = numeric_limits<int>::max();
     for (int j = 0; j <= E[i]; ++j) {
-      if (A[j] < min_val && exist[A[j]] == false) {
+      if (A[j] < min_val && !exist[A[j]]) {
         min_val = min(A[j], min_val);
       }
     }

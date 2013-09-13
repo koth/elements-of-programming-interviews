@@ -25,11 +25,11 @@ using std::vector;
 // @include
 template <typename DistanceType>
 struct GraphVertex {
-  // distance stores (dis, #edges) pair
+  // distance stores (dis, #edges) pair.
   pair<DistanceType, int> distance = {numeric_limits<DistanceType>::max(), 0};
   vector<pair<GraphVertex<DistanceType>*, DistanceType>> edges;
-  int id;  // the id of this vertex
-  GraphVertex* pred = nullptr;  // the predecessor in the shortest path
+  int id;  // the id of this vertex.
+  GraphVertex* pred = nullptr;  // the predecessor in the shortest path.
 };
 
 template <typename DistanceType>
@@ -53,20 +53,20 @@ void output_shortest_path(GraphVertex<DistanceType>*& v) {
 template <typename DistanceType>
 void Dijkstra_shortest_path(GraphVertex<DistanceType>* s,
                             GraphVertex<DistanceType>* t) {
-  // Initialization the distance of starting point
+  // Initialization the distance of starting point.
   s->distance = {0, 0};
   set<GraphVertex<DistanceType>*, Comp<DistanceType>> node_set;
   node_set.emplace(s);
 
-  while (node_set.empty() == false) {
-    // Extract the minimum distance vertex from heap
+  while (!node_set.empty()) {
+    // Extract the minimum distance vertex from heap.
     GraphVertex<DistanceType>* u = *node_set.cbegin();
     if (u == t) {
       break;
     }
     node_set.erase(node_set.cbegin());
 
-    // Relax neighboring vertices of u
+    // Relax neighboring vertices of u.
     for (const auto &v : u->edges) {
       DistanceType v_distance = u->distance.first + v.second;
       int v_num_edges = u->distance.second + 1;
@@ -81,7 +81,7 @@ void Dijkstra_shortest_path(GraphVertex<DistanceType>* s,
     }
   }
 
-  // Output the shortest path with fewest edges
+  // Output the shortest path with fewest edges.
   output_shortest_path(t);
 }
 // @exclude
@@ -94,7 +94,7 @@ void test() {
     G[i].id = i;
   }
 
-  // G[0] is the source node that connects to 8 other nodes
+  // G[0] is the source node that connects to 8 other nodes.
   G[0].edges.push_back(pair<GraphVertex<int>*, int>(&G[1], 13));  // 0-1
   G[1].edges.push_back(pair<GraphVertex<int>*, int>(&G[0], 13));  // 1-0
 
@@ -128,8 +128,8 @@ void test() {
   G[7].edges.push_back(pair<GraphVertex<int>*, int>(&G[8], 16));  // 7-8
   G[8].edges.push_back(pair<GraphVertex<int>*, int>(&G[7], 16));  // 8-7
 
-  int s = 0;  // Source is G[0]
-  int t = 2;  // Destination is G[2]
+  int s = 0;  // Source is G[0].
+  int t = 2;  // Destination is G[2].
 
   // Minimum distance path should be:
   // G[0] => G[1] => G[8] => G[2],
@@ -158,7 +158,7 @@ int main(int argc, char *argv[]) {
   uniform_int_distribution<int> dis(1, n * (n - 1) >> 1);
   int m = dis(gen);
   vector<deque<bool>> is_edge_exist(n, deque<bool>(n, false));
-  // Make the graph become connected
+  // Make the graph as connected.
   for (int i = 1; i < n; ++i) {
     uniform_int_distribution<int> dis(1, 100);
     int len = dis(gen);
@@ -167,7 +167,7 @@ int main(int argc, char *argv[]) {
     is_edge_exist[i - 1][i] = is_edge_exist[i][i - 1] = true;
   }
 
-  // Generate edges randomly
+  // Generate edges randomly.
   m -= (n - 1);
   uniform_int_distribution<int> dis_n(0, n - 1);
   while (m-- > 0) {

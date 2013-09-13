@@ -18,7 +18,7 @@ using std::vector;
 // @include
 vector<int> online_sampling(int n, int k) {
   unordered_map<int, int> H;
-  default_random_engine gen((random_device())());  // random num generator
+  default_random_engine gen((random_device())());  // random num generator.
   for (int i = 0; i < k; ++i) {
     // Generate random int in [i, n - 1].
     uniform_int_distribution<int> dis(0, n - 1 - i);

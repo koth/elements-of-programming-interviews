@@ -1,28 +1,37 @@
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
+#include <cassert>
 #include <iostream>
 #include <random>
 #include <sstream>
-#include <cassert>
-#include <cstdlib>
-#include <ctime>
+#include <string>
 #include <vector>
 
-using namespace std;
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::istringstream;
+using std::random_device;
+using std::string;
+using std::stringstream;
+using std::uniform_int_distribution;
+using std::vector;
 
 // @include
 template <typename T>
-vector<T> reservoir_sampling(istringstream &sin, const int &k) {
+vector<T> reservoir_sampling(istringstream &sin, int k) {
   T x;
   vector<T> R;
-  // Store the first k elements
+  // Store the first k elements.
   for (int i = 0; i < k && sin >> x; ++i) {
     R.emplace_back(x);
   }
 
-  // After the first k elements
+  // After the first k elements.
   int element_num = k + 1;
   while (sin >> x) {
-    default_random_engine gen((random_device())());  // random num generator
-    // Generate random int in [0, element_num]
+    default_random_engine gen((random_device())());  // random num generator.
+    // Generate random int in [0, element_num].
     uniform_int_distribution<int> dis(0, element_num++);
     int tar = dis(gen);
     if (tar < k) {
@@ -35,16 +44,19 @@ vector<T> reservoir_sampling(istringstream &sin, const int &k) {
 
 int main(int argc, char *argv[]) {
   int n, k;
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   if (argc == 2) {
     n = atoi(argv[1]);
-    k = 1 + rand() % n;
+    uniform_int_distribution<int> dis(1, n);
+    k = dis(gen);
   } else if (argc == 3) {
     n = atoi(argv[1]);
     k = atoi(argv[2]);
   } else {
-    n = rand() % 100000;
-    k = 1 + rand() % n;
+    uniform_int_distribution<int> n_dis(0, 99999);
+    n = n_dis(gen);
+    uniform_int_distribution<int> k_dis(1, n);
+    k = k_dis(gen);
   }
   vector<int> A;
   for (int i = 0; i < n; ++i) {

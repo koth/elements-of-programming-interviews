@@ -35,10 +35,10 @@ vector<pair<int, int>> find_stable_assignment(
   // Records the current student choice for each professor.
   vector<int> professor_choice(professor_preference.size(), -1);
 
-  while (free_student.empty() == false) {
-    int i = free_student.front();  // free student
-    int j = student_preference[i][student_pref_idx[i]];  // target professor
-    if (professor_choice[j] == -1) {  // this professor is free
+  while (!free_student.empty()) {
+    int i = free_student.front();  // free student.
+    int j = student_preference[i][student_pref_idx[i]];  // target professor.
+    if (professor_choice[j] == -1) {  // this professor is free.
       professor_choice[j] = i;
       free_student.pop();
     } else {  // this professor has student now.
@@ -49,7 +49,7 @@ vector<pair<int, int>> find_stable_assignment(
       auto new_pref = distance(professor_preference[j].cbegin(),
                                find(professor_preference[j].cbegin(),
                                     professor_preference[j].cend(), i));
-      if (new_pref < original_pref) {  // this professor prefers the new one
+      if (new_pref < original_pref) {  // this professor prefers the new one.
         free_student.emplace(professor_choice[j]);
         professor_choice[j] = i;
         free_student.pop();
@@ -76,10 +76,10 @@ void check_ans(const vector<vector<int>> &professor_preference,
     student[p.first] = true;
     professor[p.second] = true;
   }
-  for (const bool &p : professor) {
+  for (auto p : professor) {
     assert(p);
   }
-  for (const bool &s : student) {
+  for (auto s : student) {
     assert(s);
   }
 

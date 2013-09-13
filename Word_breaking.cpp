@@ -19,9 +19,9 @@ using std::vector;
 
 string rand_string(int len) {
   default_random_engine gen((random_device())());
-  uniform_int_distribution<int> dis('a', 'z');
   string ret;
   while (len--) {
+    uniform_int_distribution<int> dis('a', 'z');
     ret += dis(gen);
   }
   return ret;

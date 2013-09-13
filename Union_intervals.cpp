@@ -89,7 +89,7 @@ int main(int argc, char *argv[]) {
       A.emplace_back(temp);
     }
     vector<Interval<int>> ret = Union_intervals(A);
-    if (ret.empty() == false) {
+    if (!ret.empty()) {
       check_intervals(ret);
     }
   }

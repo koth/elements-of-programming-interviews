@@ -46,7 +46,7 @@ void approximate_sort(istringstream &sin, int k) {
 // @exclude
 
 // It should print 1, 2, 3, 4, 5, 6, 7, ,8, 9.
-void simple_test(void) {
+void simple_test() {
   vector<int> A = {2, 1, 5, 4, 3, 9, 8, 7, 6};
   stringstream ss;
   for (const int &a : A) {

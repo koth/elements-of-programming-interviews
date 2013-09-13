@@ -75,12 +75,12 @@ void check_ans(const vector<Interval<TimeType>>& I,
     }
   }
 
-  for (const bool& b : is_visited) {
+  for (bool b : is_visited) {
     assert(b == true);
   }
 }
 
-void simple_test(void) {
+void simple_test() {
   vector<Interval<int>> I;
   I.emplace_back(Interval<int>{1, 4});
   I.emplace_back(Interval<int>{2, 8});

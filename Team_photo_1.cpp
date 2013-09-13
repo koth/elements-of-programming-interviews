@@ -29,7 +29,7 @@ class Team {
     vector<Player<HeightType>> this_sorted(SortHeightMembers());
     vector<Player<HeightType>> that_sorted(that.SortHeightMembers());
     for (int i = 0; i < this_sorted.size() && i < that_sorted.size(); ++i) {
-      if (this_sorted[i] < that_sorted[i] == false) {
+      if (!(this_sorted[i] < that_sorted[i])) {
         return false;
       }
     }
@@ -37,7 +37,7 @@ class Team {
   }
 
  private:
-  vector<Player<HeightType>> SortHeightMembers(void) const {
+  vector<Player<HeightType>> SortHeightMembers() const {
     vector<Player<HeightType>> sorted_members(members_);
     sort(sorted_members.begin(), sorted_members.end());
     return sorted_members;
@@ -53,9 +53,9 @@ int main(int argc, char *argv[]) {
   Team<int> t1(height);
   height[0] = 2, height[2] = 3, height[3] = 4;
   Team<int> t2(height);
-  assert((t1 < t2) == false && (t2 < t1) == false);
+  assert(!(t1 < t2) && !(t2 < t1));
   height[0] = 0, height[1] = 3, height[2] = 2;
   Team<int> t3(height);
-  assert(t3 < t1 && (t1 < t3) == false && t3 < t2 && (t1 < t2) == false);
+  assert(t3 < t1 && !(t1 < t3) && t3 < t2 && !(t1 < t2));
   return 0;
 }

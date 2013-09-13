@@ -18,7 +18,7 @@ using std::uniform_real_distribution;
 using std::vector;
 
 // @include
-bool Bellman_Ford(const vector<vector<double>> &G, const int &source) {
+bool Bellman_Ford(const vector<vector<double>> &G, int source) {
   vector<double> dis_to_source(G.size(), numeric_limits<double>::max());
   dis_to_source[source] = 0;
 
@@ -34,13 +34,13 @@ bool Bellman_Ford(const vector<vector<double>> &G, const int &source) {
       }
     }
 
-    // No update in this iteration means no negative cycle
+    // No update in this iteration means no negative cycle.
     if (have_update == false) {
       return false;
     }
   }
 
-  // Detect cycle if there is any further update
+  // Detect cycle if there is any further update.
   for (int i = 0; i < G.size(); ++i) {
     for (int j = 0; j < G[i].size(); ++j) {
       if (dis_to_source[i] != numeric_limits<double>::max() &&
@@ -53,14 +53,14 @@ bool Bellman_Ford(const vector<vector<double>> &G, const int &source) {
 }
 
 bool is_Arbitrage_exist(vector<vector<double>> G) {
-  // Transform each edge in G
+  // Transform each edge in G.
   for (vector<double> &edge_list : G) {
     for (double &edge : edge_list) {
       edge = -log10(edge);
     }
   }
 
-  // Use Bellman-Ford to find negative weight cycle
+  // Use Bellman-Ford to find negative weight cycle.
   return Bellman_Ford(G, 0);
 }
 // @exclude
@@ -82,7 +82,7 @@ int main(int argc, char *argv[]) {
     m = m_dis(gen);
   }
   vector<vector<double>> G(n, vector<double>(n));
-  // Assume the input is a complete graph
+  // Assume the input is a complete graph.
   for (int i = 0; i < G.size(); ++i) {
     G[i][i] = 1;
     for (int j = i + 1; j < G.size(); ++j) {

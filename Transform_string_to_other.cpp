@@ -9,10 +9,9 @@
 
 using std::cout;
 using std::default_random_engine;
-using std::deque;
 using std::endl;
-using std::queue;
 using std::pair;
+using std::queue;
 using std::random_device;
 using std::string;
 using std::uniform_int_distribution;
@@ -23,6 +22,7 @@ string rand_string(int len) {
   default_random_engine gen((random_device())());
   uniform_int_distribution<int> dis('a', 'z');
   string ret;
+  default_random_engine gen((random_device())());
   while (len--) {
     ret += dis(gen);
   }
@@ -85,7 +85,7 @@ int main(int argc, char *argv[]) {
   for (const string &s : D) {
     cout << s << endl;
   }
-  //*/
+  */
   cout << s << ' ' << t << ' ' << D.size() << endl;
   cout << transform_string(D, s, t) << endl;
   return 0;

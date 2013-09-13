@@ -1,21 +1,33 @@
-#include <iostream>
-#include <vector>
-#include <ctime>
-#include <cstdlib>
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-using namespace std;
+#include <algorithm>
+#include <iostream>
+#include <random>
+#include <utility>
+#include <vector>
+
+using std::cout;
+using std::default_random_engine;
+using std::endl;
+using std::max;
+using std::pair;
+using std::random_device;
+using std::uniform_int_distribution;
+using std::vector;
 
 vector<int> rand_vector(int len) {
   vector<int> ret;
+  default_random_engine gen((random_device())());
   while (len--) {
-    ret.emplace_back(rand() % 100);
+    uniform_int_distribution<int> dis(0, 99);
+    ret.emplace_back(dis(gen));
   }
   return ret;
 }
 
 // @include
 template <typename ValueType>
-ValueType knapsack(const int &w, const vector<pair<int, ValueType>> &items) {
+ValueType knapsack(int w, const vector<pair<int, ValueType>> &items) {
   vector<ValueType> V(w + 1, 0);
   for (int i = 0; i < items.size(); ++i) {
     for (int j = w; j >= items[i].first; --j) {
@@ -27,16 +39,19 @@ ValueType knapsack(const int &w, const vector<pair<int, ValueType>> &items) {
 // @exclude
 
 int main(int argc, char *argv[]) {
-  srand(time(nullptr));
+  default_random_engine gen((random_device())());
   vector<int> weight, value;
   int n, W;
   if (argc == 1) {
-    n = 1 + rand() % 100;
-    W = 1 + rand() % 1000;
+    uniform_int_distribution<int> n_dis(1, 100);
+    n = n_dis(gen);
+    uniform_int_distribution<int> W_dis(1, 1000);
+    W = W_dis(gen);
     weight = rand_vector(n), value = rand_vector(n);
   } else if (argc == 2) {
     n = atoi(argv[1]);
-    W = 1 + rand() % 1000;
+    uniform_int_distribution<int> W_dis(1, 1000);
+    W = W_dis(gen);
     weight = rand_vector(n), value = rand_vector(n);
   } else {
     n = atoi(argv[1]);

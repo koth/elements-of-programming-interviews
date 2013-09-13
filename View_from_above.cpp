@@ -2,15 +2,15 @@
 
 #include <algorithm>
 #include <iostream>
+#include <map>
 #include <memory>
 #include <unordered_set>
 #include <vector>
-#include <map>
 
 using std::cout;
 using std::endl;
 using std::map;
-using std::shared_ptr;
+using std::unique_ptr;
 using std::vector;
 using std::unordered_set;
 
@@ -29,7 +29,7 @@ class Endpoint {
     return val() < that.val();
   }
 
-  const XaxisType &val(void) const {
+  const XaxisType &val() const {
     return isLeft_ ? l_->left : l_->right;
   }
 
@@ -48,12 +48,12 @@ void calculate_view_from_above(
   sort(E.begin(), E.end());
 
   XaxisType prev_xaxis = E.front().val();  // the first left end point.
-  shared_ptr<LineSegment<XaxisType, ColorType, HeightType>> prev = nullptr;
+  unique_ptr<LineSegment<XaxisType, ColorType, HeightType>> prev = nullptr;
   map<HeightType, const LineSegment<XaxisType, ColorType, HeightType>*> T;
   for (const auto& e: E) {
-    if (T.empty() == false && prev_xaxis != e.val()) {
+    if (!T.empty() && prev_xaxis != e.val()) {
       if (prev == nullptr) {  // found first segment.
-        prev = shared_ptr<LineSegment<XaxisType, ColorType, HeightType>>(
+        prev = unique_ptr<LineSegment<XaxisType, ColorType, HeightType>>(
           new LineSegment<XaxisType, ColorType, HeightType>{
             prev_xaxis, e.val(), T.crbegin()->second->color,
             T.crbegin()->second->height});

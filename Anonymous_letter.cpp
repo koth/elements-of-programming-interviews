@@ -63,10 +63,10 @@ int main(int argc, char *argv[]) {
   }
   cout << L << endl;
   cout << M << endl;
-  assert(anonymous_letter("123", "456") == false);
-  assert(anonymous_letter("123", "12222222") == false);
-  assert(anonymous_letter("123", "1123") == true);
-  assert(anonymous_letter("123", "123") == true);
+  assert(!anonymous_letter("123", "456"));
+  assert(!anonymous_letter("123", "12222222"));
+  assert(anonymous_letter("123", "1123"));
+  assert(anonymous_letter("123", "123"));
   cout << boolalpha << anonymous_letter(L, M) << endl;
   return 0;
 }

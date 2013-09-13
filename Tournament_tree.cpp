@@ -23,7 +23,7 @@ class TournamentTree {
     insertHelper(0, item, item_cap);
   }
   // @exclude
-  void printLeaf(void) {
+  void printLeaf() {
     for (int i = 0; i < tree_.size(); ++i) {
       cout << "i = " << i << ", cap = " << tree_[i].cap << endl;
       for (const ItemType &item : tree_[i].items) {
@@ -59,7 +59,7 @@ class TournamentTree {
 // @exclude
 
 int main(int argc, char *argv[]) {
-  // following is the example in the book
+  // following is the example in the book.
   TournamentTree<int, double> t(6, 1.0);
   t.insert(0, 0.60);
   t.insert(1, 0.60);

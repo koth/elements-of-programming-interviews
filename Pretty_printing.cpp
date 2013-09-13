@@ -19,16 +19,16 @@ using std::vector;
 
 string rand_string(int len) {
   default_random_engine gen((random_device())());
-  uniform_int_distribution<int> dis('a', 'z');
   string ret;
   while (len--) {
+    uniform_int_distribution<int> dis('a', 'z');
     ret += dis(gen);
   }
   return ret;
 }
 
 // @include
-int find_pretty_printing(const vector<string> &W, const int &L) {
+int find_pretty_printing(const vector<string> &W, int L) {
   // Calculate M(i).
   vector<long> M(W.size(), numeric_limits<long>::max());
   for (int i = 0; i < W.size(); ++i) {

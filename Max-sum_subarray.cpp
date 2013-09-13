@@ -78,7 +78,7 @@ void check_max_sum(const vector<T> &A, const pair<int, int> &range) {
   }
 }
 
-void simple_test(void) {
+void simple_test() {
   vector<int> B = {1};
   pair<int, int> range = find_maximum_subarray(B);
   cout << range.first << " " << range.second << endl;
