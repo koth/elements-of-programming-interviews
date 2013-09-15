@@ -26,7 +26,7 @@ using std::vector;
 
 // @include
 struct Point {
-  // Equal function for hash
+  // Equal function for hash.
   bool operator==(const Point &that) const {
     return x == that.x && y == that.y;
   }
@@ -34,9 +34,8 @@ struct Point {
   int x, y;
 };
 
-// Hash function for Point
-class HashPoint {
- public:
+// Hash function for Point.
+struct HashPoint {
   size_t operator()(const Point &p) const {
     return hash<int>()(p.x) ^ hash<int>()(p.y);
   }
@@ -58,7 +57,7 @@ struct Line {
       get_canonical_fractional(b.x * a.y - a.x * b.y, b.x - a.x) :
       make_pair(a.x, 1)) {}
 
-  // Equal function for hash
+  // Equal function for Line.
   bool operator==(const Line &that) const {
     return slope == that.slope && intercept == that.intercept;
   }
@@ -72,8 +71,7 @@ struct Line {
 };
 
 // Hash function for Line.
-class HashLine {
- public:
+struct HashLine {
   size_t operator()(const Line &l) const {
     return hash<int>()(l.slope.first) ^ hash<int>()(l.slope.second) ^
            hash<int>()(l.intercept.first) ^ hash<int>()(l.intercept.second);

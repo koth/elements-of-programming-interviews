@@ -41,10 +41,9 @@ struct Person {
   string name;
 };
 
-// Hash function for Person
+// Hash function for Person.
 template <typename KeyType>
-class HashPerson {
- public:
+struct HashPerson {
   size_t operator()(const Person<KeyType> &n) const {
     return hash<int>()(n.key) ^ hash<string>()(n.name);
   }

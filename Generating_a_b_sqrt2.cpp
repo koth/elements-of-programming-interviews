@@ -35,8 +35,7 @@ struct Num {
 };
 
 // Hash function for Num.
-class HashNum {
- public:
+struct HashNum {
   size_t operator()(const Num &n) const {
     return hash<int>()(n.a) ^ hash<int>()(n.b);
   }

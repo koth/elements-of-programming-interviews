@@ -32,8 +32,7 @@ void rand_matrix(vector<vector<int>>* matrix) {
 }
 
 // @include
-class HashTuple {
- public:
+struct HashTuple {
   size_t operator()(const tuple<int, int, int>& t) const {
     return hash<int>()(get<0>(t)) ^ hash<int>()(get<1>(t)) ^
            hash<int>()(get<2>(t));

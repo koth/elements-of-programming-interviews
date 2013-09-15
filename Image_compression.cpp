@@ -36,8 +36,7 @@ struct Point {
 };
 
 // Hash function for Point.
-class HashPoint {
- public:
+struct HashPoint {
   size_t operator()(const Point &p) const {
     return hash<int>()(p.i) ^ hash<int>()(p.j);
   }

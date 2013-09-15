@@ -30,8 +30,7 @@ class PairEqual {
   }
 };
 
-class HashPair {
- public:
+struct HashPair {
   size_t operator()(const pair<int, int>& p) const {
     return hash<int>()(p.first) ^ hash<int>()(p.second);
   }
