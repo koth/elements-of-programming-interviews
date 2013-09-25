@@ -67,6 +67,6 @@ int main(int argc, char *argv[]) {
   preorder.emplace_back(4);
   preorder.emplace_back(6);
   unique_ptr<BinarySearchTree<int>> root(rebuild_BST_from_preorder(preorder));
-  check_ans<int>(root, numeric_limits<int>::min());
+  check_ans(root, numeric_limits<int>::min());
   return 0;
 }
