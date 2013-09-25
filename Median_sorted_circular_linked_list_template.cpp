@@ -39,14 +39,14 @@ double find_median_sorted_circular_linked_list(
   start = start->next;
 
   // Traverses to the middle of the list and return the median.
-  for (int i = 0; i < (count - 1) >> 1; ++i) {
+  for (int i = 0; i < ((count - 1) >> 1); ++i) {
     start = start->next;
   }
   return count & 1 ? start->data : 0.5 * (start->data + start->next->data);
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n;
@@ -67,22 +67,23 @@ int main(int argc, char *argv[]) {
       while (curr->next != shared_ptr<node_t<int>>(nullptr)) {
         curr = curr->next;
       }
-      curr->next = head;  // make the list as a circular list
+      curr->next = head;  // make the list as a circular list.
     }
     double res = find_median_sorted_circular_linked_list<int>(head->next);
     cout << res << endl;
     assert(res == 0.5 * n);
   }
 
-  // Test empty list
+  // Test empty list.
   shared_ptr<node_t<int>> head;
   try {
     find_median_sorted_circular_linked_list<int>(head);
-  } catch (exception& e){
+  }
+  catch (const exception& e) {
     cout << e.what() << endl;
   }
 
-  // Test identical list
+  // Test identical list.
   for (int i = 0; i < 10; ++i) {
     auto curr = make_shared<node_t<int>>(node_t<int>{5, nullptr});
     curr->next = head;
@@ -93,7 +94,7 @@ int main(int argc, char *argv[]) {
     while (curr->next != nullptr) {
       curr = curr->next;
     }
-    curr->next = head;  // make the list as a circular list
+    curr->next = head;  // make the list as a circular list.
   }
   assert(5 == find_median_sorted_circular_linked_list<int>(head));
   return 0;

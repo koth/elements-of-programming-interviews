@@ -9,15 +9,14 @@
 using std::vector;
 
 // @include
-template <typename T>
-void apply_permutation1(vector<int>* perm, vector<T>* A) {
+void apply_permutation1(vector<int>* perm, vector<int>* A) {
   for (int i = 0; i < A->size(); ++i) {
     if ((*perm)[i] >= 0) {
       int a = i;
-      T temp = (*A)[i];
+      int temp = (*A)[i];
       do {
         int next_a = (*perm)[a];
-        T next_temp = (*A)[next_a];
+        int next_temp = (*A)[next_a];
         (*A)[next_a] = temp;
         // Mark a as visited by using the sign bit.
         (*perm)[a] -= perm->size();
@@ -28,7 +27,7 @@ void apply_permutation1(vector<int>* perm, vector<T>* A) {
 
   // Restore perm back.
   size_t size = perm->size();
-  for_each(perm->begin(), perm->end(), [size](T &x) { x += size; });
+  for_each(perm->begin(), perm->end(), [size](int &x) { x += size; });
 }
 // @exclude
 #endif  // SOLUTIONS_PERMUTATION_ARRAY1_H_

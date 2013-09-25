@@ -15,8 +15,9 @@ using std::unique_ptr;
 
 // @include
 template <typename T>
-bool is_BST_helper(const unique_ptr<BinaryTree<T>> &r, const T &lower,
-                   const T &upper) {
+bool is_BST_helper(const unique_ptr<BinaryTree<T>>& r,
+                   const T& lower,
+                   const T& upper) {
   if (!r) {
     return true;
   } else if (r->data < lower || r->data > upper) {
@@ -28,7 +29,7 @@ bool is_BST_helper(const unique_ptr<BinaryTree<T>> &r, const T &lower,
 }
 
 template <typename T>
-bool is_BST(const unique_ptr<BinaryTree<T>> &r) {
+bool is_BST(const unique_ptr<BinaryTree<T>>& r) {
   return is_BST_helper(r, numeric_limits<T>::min(), numeric_limits<T>::max());
 }
 // @exclude
@@ -43,17 +44,17 @@ int main(int argc, char *argv[]) {
   root->right = unique_ptr<BinaryTree<int>>(new BinaryTree<int>{5});
   root->right->left = unique_ptr<BinaryTree<int>>(new BinaryTree<int>{4});
   root->right->right = unique_ptr<BinaryTree<int>>(new BinaryTree<int>{6});
-  // should output true
+  // should output true.
   assert(is_BST(root) == true);
   cout << boolalpha << is_BST(root) << endl;
   //      10
   //    2   5
   //  1    4 6
   root->data = 10;
-  // should output false
+  // should output false.
   assert(!is_BST(root));
   cout << boolalpha << is_BST(root) << endl;
-  // should output true
+  // should output true.
   assert(is_BST<int>(nullptr) == true);
   cout << boolalpha << is_BST<int>(nullptr) << endl;
   return 0;

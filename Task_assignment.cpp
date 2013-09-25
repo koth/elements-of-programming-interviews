@@ -17,10 +17,9 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-template <typename T>
-vector<pair<T, T>> task_assignment(vector<T> A) {
+vector<pair<int, int>> task_assignment(vector<int> A) {
   sort(A.begin(), A.end());
-  vector<pair<T, T>> P;
+  vector<pair<int, int>> P;
   for (int i = 0, j = A.size() - 1; i < j; ++i, --j) {
     P.emplace_back(A[i], A[j]);
   }

@@ -6,15 +6,17 @@
 #include <iostream>
 #include <random>
 #include <set>
+#include <unordered_set>
 #include <vector>
 
 using std::cout;
 using std::default_random_engine;
 using std::deque;
 using std::endl;
+using std::max;
 using std::random_device;
-using std::set;
 using std::uniform_int_distribution;
+using std::unordered_set;
 using std::vector;
 
 // @include
@@ -22,45 +24,52 @@ struct Interval {
   int left, right;
 };
 
-struct LeftComp {
-  bool operator()(const Interval* a, const Interval* b) const {
-    return a->left != b->left ? a->left < b->left : a->right < b->right;
+struct EndPoint {
+  bool operator<(const EndPoint& that) const {
+    const int a = is_left ? ptr->left : ptr->right,
+              b = that.is_left ? that.ptr->left : that.ptr->right;
+    return a < b;
   }
+
+  const Interval* ptr;
+  bool is_left;
 };
 
-struct RightComp {
-  bool operator()(const Interval* a, const Interval* b) const {
-    return a->right != b->right ? a->right < b->right : a->left < b->left;
-  }
-};
-
-vector<int> find_minimum_visits(const vector<Interval> &I) {
-  set<const Interval*, LeftComp> L;
-  set<const Interval*, RightComp> R;
-  for (const auto& i : I) {
-    L.emplace(&i), R.emplace(&i);
-  }
-
-  vector<int> S;
-  while (!L.empty() && !R.empty()) {
-    int b = (*R.cbegin())->right;
-    S.emplace_back(b);
-
-    // Remove the intervals which intersect with R.cbegin().
-    auto it = L.cbegin();
-    while (it != L.cend() && (*it)->left <= b) {
-      R.erase(*it);
-      L.erase(it++);
+vector<int> find_minimum_visits_helper(
+    const vector<EndPoint>& endpoints) {
+  vector<int> S;  // a minimum set of visit times.
+  unordered_set<const Interval*> covered;
+  vector<const Interval*> covering;
+  for (const auto& e : endpoints) {
+    if (e.is_left) {
+      covering.emplace_back(e.ptr);
+    } else if (covered.find(e.ptr) == covered.end()) {
+      // e's interval has not been covered.
+      S.emplace_back(e.ptr->right);
+      // Add all intervals in covering to covered.
+      covered.insert(covering.cbegin(), covering.cend());
+      covering.clear();  // e is contained in all intervals in covering.
     }
   }
   return S;
 }
+
+vector<int> find_minimum_visits(const vector<Interval>& I) {
+  vector<EndPoint> endpoints;
+  for (int i = 0; i < I.size(); ++i) {
+    endpoints.emplace_back(EndPoint{&I[i], true});
+    endpoints.emplace_back(EndPoint{&I[i], false});
+  }
+  sort(endpoints.begin(), endpoints.end());
+
+  return find_minimum_visits_helper(endpoints);
+}
 // @exclude
 
 // O(n^2) checking solution
-void check_ans(const vector<Interval>& I, const vector<int>& ans) {
+void check_ans(const vector<Interval> &I, const vector<int> &ans) {
   deque<bool> is_visited(I.size(), false);
-  for (const int &a : ans) {
+  for (const int& a : ans) {
     for (int i = 0; i < I.size(); ++i) {
       if (a >= I[i].left && a <= I[i].right) {
         is_visited[i] = true;
@@ -68,7 +77,7 @@ void check_ans(const vector<Interval>& I, const vector<int>& ans) {
     }
   }
 
-  for (bool b : is_visited) {
+  for (const bool &b : is_visited) {
     assert(b == true);
   }
 }
@@ -86,7 +95,6 @@ void simple_test() {
 }
 
 int main(int argc, char *argv[]) {
-  simple_test();
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     cout << "Test " << times << endl;
@@ -99,10 +107,10 @@ int main(int argc, char *argv[]) {
     }
     vector<Interval> A;
     for (int i = 0; i < n; ++i) {
-      uniform_int_distribution<int> dis1(0, 9999);
-      int left = dis1(gen);
-      uniform_int_distribution<int> dis2(left + 1, left + 100);
-      int right = dis2(gen);
+      uniform_int_distribution<int> left_dis(0, 9999);
+      int left = left_dis(gen);
+      uniform_int_distribution<int> right_dis(left, left + 100);
+      int right = right_dis(gen);
       A.emplace_back(Interval{left, right});
     }
     vector<int> ans(find_minimum_visits(A));

@@ -118,7 +118,7 @@ int main(int argc, char *argv[]) {
     }
     assert(dict.empty() == true);
     istringstream sin(s);
-    pair<int, int> res2(find_smallest_subarray_covering_subset(sin, Q));
+    pair<int, int> res2(find_smallest_subarray_covering_subset(&sin, Q));
     cout << res2.first << ", " << res2.second << endl;
     dict.clear();
     for (int i = 0; i < Q.size(); ++i) {

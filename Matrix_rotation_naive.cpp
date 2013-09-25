@@ -14,8 +14,7 @@ using std::random_device;
 using std::uniform_int_distribution;
 using std::vector;
 
-template <typename T>
-void print_matrix(const vector<vector<T>> &A) {
+void print_matrix(const vector<vector<int>> &A) {
   for (int i = 0; i < A.size(); ++i) {
     // copy(A[i].begin(), A[i].end(), ostream_iterator<int>(cout, " "));
     for (int j = 0 ; j < A.size(); ++j) {
@@ -25,8 +24,7 @@ void print_matrix(const vector<vector<T>> &A) {
   }
 }
 
-template <typename T>
-void check_answer(const vector<vector<T>> &A) {
+void check_answer(const vector<vector<int>> &A) {
   int k = 1;
   for (int j = A.size() - 1; j >= 0; --j) {
     for (int i = 0; i < A.size(); ++i) {
@@ -36,11 +34,10 @@ void check_answer(const vector<vector<T>> &A) {
 }
 
 // @include
-template <typename T>
-void rotate_matrix(vector<vector<T>>* A) {
+void rotate_matrix(vector<vector<int>>* A) {
   for (int i = 0; i < (A->size() >> 1); ++i) {
     for (int j = i; j < A->size() - i - 1; ++j) {
-      T temp = (*A)[i][j];
+      int temp = (*A)[i][j];
       (*A)[i][j] = (*A)[A->size() - 1 - j][i];
       (*A)[A->size() - 1 - j][i] = (*A)[A->size() - 1 - i][A->size() - 1 - j];
       (*A)[A->size() - 1 - i][A->size() - 1 - j] = (*A)[j][A->size() - 1 - i];

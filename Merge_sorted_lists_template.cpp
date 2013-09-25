@@ -17,7 +17,7 @@ using std::numeric_limits;
 using std::random_device;
 using std::uniform_int_distribution;
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 10000; ++times) {
     shared_ptr<node_t<int>> F = nullptr, L = nullptr;

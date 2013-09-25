@@ -8,9 +8,8 @@
 using std::vector;
 
 // @include
-template <typename T>
-vector<T> intersect_arrs1(const vector<T> &A, const vector<T> &B) {
-  vector<T> intersect;
+vector<int> intersect_arrs1(const vector<int> &A, const vector<int> &B) {
+  vector<int> intersect;
   for (int i = 0; i < A.size(); ++i) {
     if (i == 0 || A[i] != A[i - 1]) {
       for (int j = 0; j < B.size(); ++j) {

@@ -15,8 +15,7 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-template <typename T>
-vector<T> offline_sampling(vector<T> A, int k) {
+vector<int> offline_sampling(vector<int> A, int k) {
   for (int i = 0; i < k; ++i) {
     default_random_engine gen((random_device())());  // random num generator.
     // Generate random int in [i, A.size() - 1].

@@ -17,8 +17,8 @@ using std::random_device;
 using std::uniform_int_distribution;
 using std::vector;
 
-template <typename T>
-void check_ans(const vector<T> &a, const vector<T> &b, const vector<T> &c) {
+void check_ans(const vector<int> &a, const vector<int> &b,
+               const vector<int> &c) {
   cout << a.size() << ' ' << b.size() << ' ' << c.size() << endl;
   assert(a.size() == b.size());
   assert(b.size() == c.size());

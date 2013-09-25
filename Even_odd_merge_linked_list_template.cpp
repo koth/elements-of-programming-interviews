@@ -12,11 +12,12 @@ using std::default_random_engine;
 using std::endl;
 using std::make_shared;
 using std::random_device;
+using std::shared_ptr;
 using std::uniform_int_distribution;
 
 // @include
 template <typename T>
-shared_ptr<node_t<T>> even_odd_merge(const shared_ptr<node_t<T>> &L) {
+shared_ptr<node_t<T>> even_odd_merge(const shared_ptr<node_t<T>>& L) {
   shared_ptr<node_t<T>> odd = L ? L->next : nullptr;
   shared_ptr<node_t<T>> odd_curr = odd;
   shared_ptr<node_t<T>> pre_even_curr = nullptr, even_curr = L;
@@ -43,14 +44,15 @@ shared_ptr<node_t<T>> even_odd_merge(const shared_ptr<node_t<T>> &L) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   // input a list in reverse order.
   default_random_engine gen((random_device())());
   shared_ptr<node_t<int>> head = nullptr;
   int n;
   if (argc > 2) {
     for (size_t i = 1; i < argc; ++i) {
-      auto curr = make_shared<node_t<int>>(node_t<int>{atoi(argv[i]), nullptr});
+      auto curr =
+          make_shared<node_t<int>>(node_t<int>{atoi(argv[i]), nullptr});
       curr->next = head;
       head = curr;
     }

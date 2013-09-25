@@ -10,7 +10,8 @@ using std::unique_ptr;
 // @include
 template <typename T>
 BinarySearchTree<T>* find_first_equal_k(
-    const unique_ptr<BinarySearchTree<T>> &r, const T &k) {
+    const unique_ptr<BinarySearchTree<T>>& r,
+    const T& k) {
   if (!r) {
     return nullptr;  // no match.
   } else if (r->data == k) {

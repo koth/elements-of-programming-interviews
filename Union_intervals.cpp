@@ -11,12 +11,11 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-template <typename TimeType>
 struct Interval {
  private:
   struct Endpoint {
     bool isClose;
-    TimeType val;
+    int val;
   };
 
  public:
@@ -28,8 +27,7 @@ struct Interval {
   Endpoint left, right;
 };
 
-template <typename TimeType>
-vector<Interval<TimeType>> Union_intervals(vector<Interval<TimeType>> I) {
+vector<Interval> Union_intervals(vector<Interval> I) {
   // Empty input.
   if (I.empty()) {
     return {};
@@ -37,8 +35,8 @@ vector<Interval<TimeType>> Union_intervals(vector<Interval<TimeType>> I) {
 
   // Sort intervals according to their left endpoints.
   sort(I.begin(), I.end());
-  Interval<TimeType> curr(I.front());
-  vector<Interval<TimeType>> uni;
+  Interval curr(I.front());
+  vector<Interval> uni;
   for (int i = 1; i < I.size(); ++i) {
     if (I[i].left.val < curr.right.val ||
         (I[i].left.val == curr.right.val &&
@@ -57,8 +55,7 @@ vector<Interval<TimeType>> Union_intervals(vector<Interval<TimeType>> I) {
 }
 // @exclude
 
-template <typename TimeType>
-void check_intervals(const vector<Interval<TimeType>> &A) {
+void check_intervals(const vector<Interval> &A) {
   // only check the intervals do not overlap with each other.
   for (size_t i = 1; i < A.size(); ++i) {
     assert(A[i - 1].right.val < A[i].left.val ||
@@ -77,9 +74,9 @@ int main(int argc, char *argv[]) {
       uniform_int_distribution<int> dis(1, 1000);
       n = dis(gen);
     }
-    vector<Interval<int>> A;
+    vector<Interval> A;
     for (int i = 0; i < n; ++i) {
-      Interval<int> temp;
+      Interval temp;
       uniform_int_distribution<int> zero_or_one(0, 1);
       uniform_int_distribution<int> dis1(0, 9999);
       temp.left.isClose = zero_or_one(gen), temp.left.val = dis1(gen);
@@ -88,7 +85,7 @@ int main(int argc, char *argv[]) {
       temp.right.isClose = zero_or_one(gen), temp.right.val = dis2(gen);
       A.emplace_back(temp);
     }
-    vector<Interval<int>> ret = Union_intervals(A);
+    vector<Interval> ret = Union_intervals(A);
     if (!ret.empty()) {
       check_intervals(ret);
     }

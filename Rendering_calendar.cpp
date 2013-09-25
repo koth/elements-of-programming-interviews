@@ -15,35 +15,32 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-template <typename TimeType>
 struct Interval {
-  TimeType start, finish;
+  int start, finish;
 };
 
-template <typename TimeType>
 struct Endpoint {
   bool operator<(const Endpoint &e) const {
     return time != e.time ? time < e.time : (isStart && !e.isStart);
   }
 
-  TimeType time;
+  int time;
   bool isStart;
 };
 
-template <typename TimeType>
-int find_max_concurrent_events(const vector<Interval<TimeType>>& A) {
+int find_max_concurrent_events(const vector<Interval>& A) {
   // Build the endpoint array.
-  vector<Endpoint<TimeType>> E;
-  for (const Interval<TimeType>& i : A) {
-    E.emplace_back(Endpoint<TimeType>{i.start, true});
-    E.emplace_back(Endpoint<TimeType>{i.finish, false});
+  vector<Endpoint> E;
+  for (const Interval& i : A) {
+    E.emplace_back(Endpoint{i.start, true});
+    E.emplace_back(Endpoint{i.finish, false});
   }
   // Sort the endpoint array according to the time.
   sort(E.begin(), E.end());
 
   // Find the maximum number of events overlapped.
   int max_count = 0, count = 0;
-  for (const Endpoint<TimeType>& e : E) {
+  for (const Endpoint& e : E) {
     if (e.isStart) {
       max_count = max(++count, max_count);
     } else {
@@ -63,9 +60,9 @@ int main(int argc, char *argv[]) {
     uniform_int_distribution<int> dis(1, 100000);
     n = dis(gen);
   }
-  vector<Interval<int>> A;
+  vector<Interval> A;
   for (int i = 0; i < n; ++i) {
-    Interval<int> temp;
+    Interval temp;
     uniform_int_distribution<int> dis1(0, 99999);
     temp.start = dis1(gen);
     uniform_int_distribution<int> dis2(temp.start + 1, temp.start + 10000);

@@ -20,18 +20,17 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-template <typename T>
-void find_k_th_largest_stream(istringstream &sin, int k) {
-  priority_queue<T, vector<T>, greater<T>> min_heap;
+void find_kth_largest_stream(istringstream* sin, int k) {
+  priority_queue<int, vector<int>, greater<int>> min_heap;
   // The first k elements, output the minimum element.
-  T x;
-  for (int i = 0; i < k && sin >> x; ++i) {
+  int x;
+  for (int i = 0; i < k && *sin >> x; ++i) {
     min_heap.emplace(x);
     cout << min_heap.top() << endl;
   }
 
   // After the first k elements, output the k-th largest one.
-  while (sin >> x) {
+  while (*sin >> x) {
     if (min_heap.top() < x) {
       min_heap.pop();
       min_heap.emplace(x);
@@ -70,7 +69,7 @@ int main(int argc, char *argv[]) {
   }
   cout << endl;
   istringstream sin(ss.str());
-  find_k_th_largest_stream<int>(sin, k);
+  find_kth_largest_stream(&sin, k);
   cout << "n = " << num << ", k = " << k << endl;
   return 0;
 }

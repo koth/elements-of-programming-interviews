@@ -15,9 +15,7 @@ using std::stack;
 template <typename T>
 class Queue {
  public:
-  void enqueue(const T& x) {
-    A_.emplace(x);
-  }
+  void enqueue(const T& x) { A_.emplace(x); }
 
   T dequeue() {
     if (B_.empty()) {
@@ -39,7 +37,7 @@ class Queue {
 };
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   Queue<int> Q;
   Q.enqueue(1);
   Q.enqueue(2);
@@ -49,7 +47,8 @@ int main(int argc, char *argv[]) {
   assert(3 == Q.dequeue());  // 3
   try {
     Q.dequeue();
-  } catch(const exception& e) {
+  }
+  catch (const exception& e) {
     cout << e.what() << endl;  // throw
   }
   return 0;

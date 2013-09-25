@@ -32,16 +32,16 @@ string rand_string(int len) {
 
 // @include
 void reverse_words(string* input) {
-  // Reverse the whole string first
+  // Reverse the whole string first.
   reverse(input->begin(), input->end());
 
   size_t start = 0, end;
   while ((end = input->find(" ", start)) != string::npos) {
-    // Reverse each word in the string
+    // Reverse each word in the string.
     reverse(input->begin() + start, input->begin() + end);
     start = end + 1;
   }
-  // Reverse the last word
+  // Reverse the last word.
   reverse(input->begin() + start, input->end());
 }
 // @exclude

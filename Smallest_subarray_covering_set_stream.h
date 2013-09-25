@@ -17,7 +17,7 @@ using std::unordered_map;
 
 // @include
 pair<int, int> find_smallest_subarray_covering_subset(
-    istringstream &sin, const vector<string> &Q) {
+    istringstream* sin, const vector<string> &Q) {
   list<int> loc;  // tracks the last occurrence (index) of each string in Q.
   unordered_map<string, list<int>::iterator> dict;
   for (const string &s : Q) {
@@ -27,7 +27,7 @@ pair<int, int> find_smallest_subarray_covering_subset(
   pair<int, int> res(-1, -1);
   int idx = 0;
   string s;
-  while (sin >> s) {
+  while (*sin >> s) {
     auto it = dict.find(s);
     if (it != dict.end()) {  // s is in Q.
       if (it->second != loc.end()) {

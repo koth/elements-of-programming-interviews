@@ -23,10 +23,10 @@ using std::unordered_set;
 using std::vector;
 
 // @include
-int find_missing_element(ifstream &ifs) {
+int find_missing_element(ifstream* ifs) {
   vector<size_t> counter(1 << 16, 0);
   unsigned int x;
-  while (ifs >> x) {
+  while (*ifs >> x) {
     ++counter[x >> 16];
   }
 
@@ -34,14 +34,14 @@ int find_missing_element(ifstream &ifs) {
     // Find one bucket contains less than (1 << 16) elements.
     if (counter[i] < (1 << 16)) {
       bitset<(1 << 16)> bit_vec;
-      ifs.clear();
-      ifs.seekg(0, ios::beg);
-      while (ifs >> x) {
+      ifs->clear();
+      ifs->seekg(0, ios::beg);
+      while (*ifs >> x) {
         if (i == (x >> 16)) {
           bit_vec.set(((1 << 16) - 1) & x);  // gets the lower 16 bits of x.
         }
       }
-      ifs.close();
+      ifs->close();
 
       for (int j = 0; j < (1 << 16); ++j) {
         if (bit_vec.test(j) == 0) {
@@ -74,7 +74,7 @@ int main(int argc, char *argv[]) {
   }
   ofs.close();
   ifstream ifs("missing.txt");
-  int missing = find_missing_element(ifs);
+  int missing = find_missing_element(&ifs);
   assert(hash.find(missing) == hash.cend());
   // Remove file after the execution
   remove("missing.txt");

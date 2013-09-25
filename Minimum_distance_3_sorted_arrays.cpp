@@ -61,8 +61,8 @@ T find_min_distance_sorted_arrays(const vector<vector<T>>& arrs) {
   }
 
   while (true) {
-    min_dis = min(min_dis, current_heads.crbegin()->val -
-                           current_heads.cbegin()->val);
+    min_dis = min(min_dis,
+                  current_heads.crbegin()->val - current_heads.cbegin()->val);
     int tar = current_heads.cbegin()->idx;
     // Return if there is no remaining element in one array.
     if (++idx[tar] >= arrs[tar].size()) {
@@ -75,7 +75,9 @@ T find_min_distance_sorted_arrays(const vector<vector<T>>& arrs) {
 // @exclude
 
 template <typename T>
-void rec_gen_answer(const vector<vector<T>>& arrs, vector<int>& idx, int level,
+void rec_gen_answer(const vector<vector<T>>& arrs,
+                    vector<int>& idx,
+                    int level,
                     T& ans) {
   if (level == arrs.size()) {
     ans = min(distance(arrs, idx), ans);
@@ -96,7 +98,7 @@ T brute_force_gen_answer(const vector<vector<T>>& arrs) {
   return ans;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n;

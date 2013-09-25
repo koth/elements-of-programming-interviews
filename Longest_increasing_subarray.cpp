@@ -16,8 +16,7 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-template <typename T>
-pair<int, int> find_longest_increasing_subarray(const vector<T> &A) {
+pair<int, int> find_longest_increasing_subarray(const vector<int> &A) {
   int max_len = 1;
   pair<int, int> ans(0, 0);
   int i = 0;
@@ -46,9 +45,9 @@ pair<int, int> find_longest_increasing_subarray(const vector<T> &A) {
 // @exclude
 
 void simple_test() {
-  auto ans = find_longest_increasing_subarray<int>({-1, -1});
+  auto ans = find_longest_increasing_subarray({-1, -1});
   assert(ans.first == 0 && ans.second == 0);
-  ans = find_longest_increasing_subarray<int>({1, 2});
+  ans = find_longest_increasing_subarray({1, 2});
   assert(ans.first == 0 && ans.second == 1);
 }
 

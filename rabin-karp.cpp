@@ -20,11 +20,11 @@ const int base = 26, mod = 997;
 
 int rabin_karp(const string &t, const string &s) {
   if (s.size() > t.size()) {
-    return -1;  // s is not a substring of t
+    return -1;  // s is not a substring of t.
   }
 
-  int t_hash = 0, s_hash = 0;  // hash codes for the substring of t and s
-  int power_s = 1;  // the modulo result of base^|s|
+  int t_hash = 0, s_hash = 0;  // hash codes for the substring of t and s.
+  int power_s = 1;  // the modulo result of base^|s|.
   for (int i = 0; i < s.size(); ++i) {
     power_s = i ? power_s * base % mod : 1;
     t_hash = (t_hash * base + t[i]) % mod;
@@ -33,12 +33,12 @@ int rabin_karp(const string &t, const string &s) {
 
   for(int i = s.size(); i < t.size(); ++i) {
     // In case of hash collision but two strings are not equal, check the
-    // two substrings are actually equal or not
+    // two substrings are actually equal or not.
     if (t_hash == s_hash && !t.compare(i - s.size(), s.size(), s)) {
-      return i - s.size();  // find a match
+      return i - s.size();  // find a match.
     }
 
-    // Use rolling hash to compute the new hash code
+    // Use rolling hash to compute the new hash code.
     t_hash -= (t[i - s.size()] * power_s) % mod;
     if (t_hash < 0) {
       t_hash += mod;
@@ -50,7 +50,7 @@ int rabin_karp(const string &t, const string &s) {
   if (t_hash == s_hash && t.compare(t.size() - s.size(), s.size(), s) == 0) {
     return t.size() - s.size();
   }
-  return -1;  // s is not a substring of t
+  return -1;  // s is not a substring of t.
 }
 // @exclude
 
@@ -67,7 +67,7 @@ int check_answer(const string &t, const string &s) {
       return i;
     }
   }
-  return -1;  // find no matching
+  return -1;  // find no matching.
 }
 
 string rand_string(int len) {

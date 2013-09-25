@@ -14,8 +14,7 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-template <typename T>
-void eliminate_duplicate(vector<T> *A) {
+void eliminate_duplicate(vector<int> *A) {
   sort(A->begin(), A->end());  // makes identical elements become neighbors.
   // unique() removes adjacent duplicates and returns an iterator to the
   // element the follows the last element not removed. The effect of resize()
@@ -24,8 +23,7 @@ void eliminate_duplicate(vector<T> *A) {
 }
 // @exclude
 
-template <typename T>
-void check_ans(const vector<T> &A) {
+void check_ans(const vector<int> &A) {
   for (int i = 1; i < A.size(); ++i) {
     assert(A[i] != A[i - 1]);
   }

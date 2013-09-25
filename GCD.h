@@ -9,16 +9,16 @@ long long GCD(long long x, long long y) {
     return y;
   } else if (y == 0) {
     return x;
-  } else if (!(x & 1) && !(y & 1)) {  // x and y are even integers
+  } else if (!(x & 1) && !(y & 1)) {  // x and y are even.
     return GCD(x >> 1, y >> 1) << 1;
-  } else if (!(x & 1) && y & 1) {  // x is even integer, and y is odd integer
+  } else if (!(x & 1) && y & 1) {  // x is even, and y is odd.
     return GCD(x >> 1, y);
-  } else if (x & 1 && !(y & 1)) {  // x is odd integer, and y is even integer
+  } else if (x & 1 && !(y & 1)) {  // x is odd, and y is even.
     return GCD(x, y >> 1);
-  } else if (x > y) {  // both x and y are odd integers, and x > y
+  } else if (x > y) {  // both x and y are odd, and x > y.
     return GCD(x - y, y);
   }
-  return GCD(x, y - x);  // both x and y are odd integers, and x <= y
+  return GCD(x, y - x);  // both x and y are odd, and x <= y.
 }
 // @exclude
 

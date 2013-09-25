@@ -17,7 +17,7 @@ using std::string;
 using std::vector;
 
 // @include
-string normalized_path_names(const string &path) {
+string normalized_path_names(const string& path) {
   vector<string> s;  // Use vector as a stack.
   // Special case: starts with "/", which is an absolute path.
   if (path.front() == '/') {
@@ -37,7 +37,7 @@ string normalized_path_names(const string &path) {
         s.pop_back();
       }
     } else if (token != "." && token != "") {  // name.
-      for (const char &c : token) {
+      for (const char& c : token) {
         if (c != '.' && !isalnum(c)) {
           throw invalid_argument("Invalid directory name");
         }
@@ -61,7 +61,7 @@ string normalized_path_names(const string &path) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   assert(normalized_path_names("123/456") == string("123/456"));
   assert(normalized_path_names("/123/456") == string("/123/456"));
   assert(normalized_path_names("usr/lib/../bin/gcc") == string("usr/bin/gcc"));
@@ -70,12 +70,14 @@ int main(int argc, char *argv[]) {
   assert(normalized_path_names("./.././../local") == string("../../local"));
   try {
     normalized_path_names("/..");
-  } catch(const exception &e) {
+  }
+  catch (const exception& e) {
     cout << e.what() << endl;
   }
   try {
     normalized_path_names("/cpp_name/bin/");
-  } catch(const exception &e) {
+  }
+  catch (const exception& e) {
     cout << e.what() << endl;
   }
   assert(normalized_path_names("scripts//./../scripts/awkscripts/././") ==

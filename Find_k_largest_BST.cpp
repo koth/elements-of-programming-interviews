@@ -18,8 +18,9 @@ using std::vector;
 
 // @include
 template <typename T>
-void find_k_largest_in_BST_helper(const unique_ptr<BinarySearchTree<T>> &r,
-                                  int k, vector<T>* k_elements) {
+void find_k_largest_in_BST_helper(const unique_ptr<BinarySearchTree<T>>& r,
+                                  int k,
+                                  vector<T>* k_elements) {
   // Performs reverse inorder traversal.
   if (r && k_elements->size() < k) {
     find_k_largest_in_BST_helper(r->right, k, k_elements);
@@ -31,7 +32,7 @@ void find_k_largest_in_BST_helper(const unique_ptr<BinarySearchTree<T>> &r,
 }
 
 template <typename T>
-vector<T> find_k_largest_in_BST(const unique_ptr<BinarySearchTree<T>> &root,
+vector<T> find_k_largest_in_BST(const unique_ptr<BinarySearchTree<T>>& root,
                                 int k) {
   vector<T> k_elements;
   find_k_largest_in_BST_helper(root, k, &k_elements);
@@ -39,16 +40,17 @@ vector<T> find_k_largest_in_BST(const unique_ptr<BinarySearchTree<T>> &root,
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   //    3
   //  2   5
   // 1   4 6
-  unique_ptr<BinarySearchTree<int>>
-      root = unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{3});
+  unique_ptr<BinarySearchTree<int>> root =
+      unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{3});
   root->left = unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{2});
   root->left->left =
       unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{1});
-  root->right = unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{5});
+  root->right =
+      unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{5});
   root->right->left =
       unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{4});
   root->right->right =

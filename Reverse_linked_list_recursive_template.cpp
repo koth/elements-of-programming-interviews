@@ -8,10 +8,11 @@
 using std::cout;
 using std::endl;
 using std::make_shared;
+using std::shared_ptr;
 
 // @include
 template <typename T>
-shared_ptr<node_t<T>> reverse_linked_list(const shared_ptr<node_t<T>> &head) {
+shared_ptr<node_t<T>> reverse_linked_list(const shared_ptr<node_t<T>>& head) {
   if (!head || !head->next) {
     return head;
   }
@@ -31,7 +32,7 @@ void print(shared_ptr<node_t<T>> head) {
   }
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   shared_ptr<node_t<int>> L1 =
       make_shared<node_t<int>>(node_t<int>{1, nullptr});
   shared_ptr<node_t<int>> L2 =

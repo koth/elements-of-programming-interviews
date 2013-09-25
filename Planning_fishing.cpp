@@ -14,8 +14,7 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-template <typename T>
-T maximize_fishing(vector<vector<T>> A) {
+int maximize_fishing(vector<vector<int>> A) {
   for (int i = 0; i < A.size(); ++i) {
     for (int j = 0; j < A[i].size(); ++j) {
       A[i][j] += max(i < 1 ? 0 : A[i - 1][j], j < 1 ? 0 : A[i][j - 1]);

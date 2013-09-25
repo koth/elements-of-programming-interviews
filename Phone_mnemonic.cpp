@@ -18,10 +18,10 @@ const array<string, 10> M = {{"0", "1", "ABC", "DEF", "GHI", "JKL", "MNO",
                               "PQRS", "TUV", "WXYZ"}};
 
 void phone_mnemonic_helper(const string &num, int d, string* ans) {
-  if (d == num.size()) {
+  if (d == num.size()) {  // get enough characters and output answer.
     cout << *ans << endl;
   } else {
-    for (const char &c : M[num[d] - '0']) {
+    for (const char &c : M[num[d] - '0']) {  // try all combinations.
       (*ans)[d] = c;
       phone_mnemonic_helper(num, d + 1, ans);
     }

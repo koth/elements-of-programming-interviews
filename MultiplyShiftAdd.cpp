@@ -17,7 +17,7 @@ unsigned add_no_operator(unsigned a, unsigned b) {
   unsigned sum = 0, carryin = 0, k = 1, temp_a = a, temp_b = b;
   while (temp_a || temp_b) {
     unsigned ak = a & k, bk = b & k;
-    unsigned carryout =  (ak & bk) | (ak & carryin) | (bk & carryin);
+    unsigned carryout = (ak & bk) | (ak & carryin) | (bk & carryin);
     sum |= (ak ^ bk ^ carryin);
     carryin = carryout << 1, k <<= 1, temp_a >>= 1, temp_b >>= 1;
   }
@@ -37,7 +37,7 @@ unsigned multiply_no_operator(unsigned x, unsigned y) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   if (argc == 3) {
     unsigned int x = atoi(argv[1]), y = atoi(argv[2]);
     unsigned int res = multiply_no_operator(x, y);
@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
     cout << "PASS: x = " << x << ", y = " << y << "; prod = " << res << endl;
   } else {
     default_random_engine gen((random_device())());
-    // random test, only works if the product is not greater than 2^32 - 1.
+    // Random test, only works if the product is not greater than 2^32 - 1.
     for (int i = 0; i < 100000; ++i) {
       uniform_int_distribution<int> dis(0, 65534);
       unsigned int x = dis(gen), y = dis(gen);

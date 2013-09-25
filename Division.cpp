@@ -23,12 +23,12 @@ unsigned divide_x_y_bsearch(unsigned x, unsigned y) {
   while (power_left < power_right) {
     int tmp = power_mid;
     power_mid = power_left + ((power_right - power_left) >> 1);
-    if ( tmp == power_mid ) {
+    if (tmp == power_mid) {
       break;
     }
     unsigned yshift = y << power_mid;
-    if ( (yshift >> power_mid) != y ) {
-      // yshift overflowed, use a smaller shift
+    if ((yshift >> power_mid) != y) {
+      // yshift overflowed, use a smaller shift.
       power_right = power_mid;
       continue;
     }
@@ -78,7 +78,7 @@ void simple_test() {
   assert(divide_x_y_bsearch(8186, 19) == 430);
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   simple_test();
   if (argc == 3) {
     unsigned x = atoi(argv[1]), y = atoi(argv[2]);
@@ -89,7 +89,7 @@ int main(int argc, char *argv[]) {
     uniform_int_distribution<unsigned> dis(0, numeric_limits<int>::max());
     for (int times = 0; times < 100000; ++times) {
       unsigned x = dis(gen), y = dis(gen);
-      y = (y == 0) ? 1 : y;  // ensure no divide by 0
+      y = (y == 0) ? 1 : y;  // ensure no divide by 0.
       cout << "times = " << times << ", x = " << x << ", y = " << y << endl;
       cout << "first = " << x / y << ", second = " << divide_x_y(x, y) << endl;
       assert(x / y == divide_x_y(x, y));

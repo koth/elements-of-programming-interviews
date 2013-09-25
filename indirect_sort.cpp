@@ -20,30 +20,29 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-template <typename T>
 void indirect_sort(const string &file_name) {
   // Store file records into A.
   ifstream ifs(file_name.c_str());
-  vector<T> A;
-  T x;
+  vector<int> A;
+  int x;
   while (ifs >> x) {
     A.emplace_back(x);
   }
 
   // Initialize P.
-  vector<const T*> P;
-  for (T &a : A) {
+  vector<const int*> P;
+  for (int &a : A) {
     P.emplace_back(&a);
   }
 
   // Indirectly sort file.
-  sort(P.begin(), P.end(), [](const T* a, const T* b) -> bool {
+  sort(P.begin(), P.end(), [](const int* a, const int* b) -> bool {
                              return *a < *b;
                            });
 
   // Output file.
   ofstream ofs(file_name.c_str());
-  for (const T* p : P) {
+  for (const int* p : P) {
     ofs << *p << endl;
   }
 }
@@ -72,7 +71,7 @@ int main(int argc, char *argv[]) {
       ofs << a << endl;
     }
 
-    indirect_sort<int>("input.txt");
+    indirect_sort("input.txt");
     ifstream ifs("input.txt");
     A.clear();
     int x;

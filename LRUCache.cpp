@@ -13,10 +13,10 @@ using std::pair;
 using std::unordered_map;
 
 // @include
-template <typename ISBNType, typename PriceType, size_t capacity>
+template <size_t capacity>
 class LRUCache {
  public:
-  bool lookup(const ISBNType &isbn, PriceType* price) {
+  bool lookup(int isbn, int* price) {
     auto it = cache_.find(isbn);
     if (it == cache_.end()) {
       return false;
@@ -27,7 +27,7 @@ class LRUCache {
     return true;
   }
 
-  void insert(const ISBNType &isbn, const PriceType &price) {
+  void insert(int isbn, int price) {
     auto it = cache_.find(isbn);
     if (it != cache_.end()) {
       moveToFront(isbn, it);
@@ -43,7 +43,7 @@ class LRUCache {
     }
   }
 
-  bool erase(const ISBNType &isbn) {
+  bool erase(int isbn) {
     auto it = cache_.find(isbn);
     if (it == cache_.end()) {
       return false;
@@ -55,24 +55,22 @@ class LRUCache {
   }
 
  private:
-  typedef unordered_map<ISBNType,
-                        pair<typename list<ISBNType>::iterator,
-                             PriceType>> Table;
+  typedef unordered_map<int, pair<typename list<int>::iterator, int>> Table;
 
   // Move the most recent accessed item to the front.
-  void moveToFront(const ISBNType &isbn, const typename Table::iterator &it) {
+  void moveToFront(int isbn, const typename Table::iterator &it) {
     data_.erase(it->second.first);
     data_.emplace_front(isbn);
     it->second.first = data_.begin();
   }
 
   Table cache_;
-  list<ISBNType> data_;
+  list<int> data_;
 };
 // @exclude
 
 int main(int argc, char *argv[]) {
-  LRUCache<int, int, 3> c;
+  LRUCache<3> c;
   cout << "c.insert(1, 1)" << endl;
   c.insert(1, 1);
   cout << "c.insert(1, 10)" << endl;

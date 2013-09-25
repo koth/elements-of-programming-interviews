@@ -16,9 +16,7 @@ using std::length_error;
 template <typename T>
 class Queue {
  public:
-  void enqueue(const T& x) {
-    A_.push(x);
-  }
+  void enqueue(const T& x) { A_.push(x); }
 
   T dequeue() {
     if (B_.empty()) {
@@ -35,7 +33,7 @@ class Queue {
   const T& max() const {
     if (!A_.empty()) {
       return B_.empty() ? A_.max() : std::max(A_.max(), B_.max());
-    } else {  // A_.empty() == true
+    } else {  // A_.empty() == true.
       if (!B_.empty()) {
         return B_.max();
       }
@@ -48,7 +46,7 @@ class Queue {
 };
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   Queue<int> Q;
   Q.enqueue(1);
   Q.enqueue(2);
@@ -61,12 +59,14 @@ int main(int argc, char *argv[]) {
   assert(3 == Q.dequeue());  // 3
   try {
     Q.max();
-  } catch(const exception &e) {
+  }
+  catch (const exception& e) {
     cout << e.what() << endl;  // throw
   }
   try {
     Q.dequeue();
-  } catch(const exception &e) {
+  }
+  catch (const exception& e) {
     cout << e.what() << endl;  // throw
   }
   return 0;

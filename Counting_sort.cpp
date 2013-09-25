@@ -23,7 +23,7 @@ using std::unordered_map;
 using std::unordered_set;
 using std::vector;
 
-template <typename KeyType>
+// @include
 struct Person {
   bool operator<(const Person &that) const {
     return key < that.key;
@@ -37,26 +37,23 @@ struct Person {
     return key != that.key;
   }
 
-  KeyType key;
+  int key;
   string name;
 };
 
 // Hash function for Person.
-template <typename KeyType>
 struct HashPerson {
-  size_t operator()(const Person<KeyType> &n) const {
+  size_t operator()(const Person& n) const {
     return hash<int>()(n.key) ^ hash<string>()(n.name);
   }
 };
 
-// @include
-template <typename KeyType>
-void counting_sort(vector<Person<KeyType>> *people) {
-  unordered_map<KeyType, int> key_to_count;
-  for (const Person<KeyType> &p : *people) {
+void counting_sort(vector<Person> *people) {
+  unordered_map<int, int> key_to_count;
+  for (const Person &p : *people) {
     ++key_to_count[p.key];
   }
-  unordered_map<KeyType, int> key_to_offset;
+  unordered_map<int, int> key_to_offset;
   int offset = 0;
   for (const auto &p : key_to_count) {
     key_to_offset[p.first] = offset;
@@ -104,20 +101,20 @@ int main(int argc, char *argv[]) {
       uniform_int_distribution<int> dis(1, size);
       k = dis(gen);
     }
-    vector<Person<int>> people;
+    vector<Person> people;
     uniform_int_distribution<int> k_dis(0, k - 1);
     uniform_int_distribution<int> len_dis(1, 10);
     for (int i = 0; i < size; ++i) {
-      people.emplace_back(Person<int>{k_dis(gen), rand_string(len_dis(gen))});
+      people.emplace_back(Person{k_dis(gen), rand_string(len_dis(gen))});
     }
     unordered_set<int> key_set;
-    for (const Person<int> &p : people) {
+    for (const Person& p : people) {
       key_set.emplace(p.key);
     }
 
     counting_sort(&people);
 
-    // Check the correctness of sorting
+    // Check the correctness of sorting.
     int diff_count = 1;
     for (int i = 1; i < people.size(); ++i) {
       if (people[i] != people[i - 1]) {

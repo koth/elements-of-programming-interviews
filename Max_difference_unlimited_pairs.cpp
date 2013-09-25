@@ -15,15 +15,14 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-template <typename T>
-T max_profit_unlimited_pairs(const vector<T>& A) {
+int max_profit_unlimited_pairs(const vector<int>& A) {
   if (A.size() <= 1) {
     return 0;
   }
 
-  T profit = 0, buy = A.front();
+  int profit = 0, buy = A.front();
   for (int i = 1; i < A.size() - 1; ++i) {
-    if (A[i + 1] < A[i] && A[i - 1] <= A[i]) {  // sell at local maximum
+    if (A[i + 1] < A[i] && A[i - 1] <= A[i]) {  // sell at local maximum.
       profit += A[i] - buy;
       buy = A[i + 1];
     } else if (A[i + 1] >= A[i] && A[i - 1] > A[i]) {  // buy at local minimum
@@ -38,9 +37,8 @@ T max_profit_unlimited_pairs(const vector<T>& A) {
 }
 // @exclude
 
-template <typename T>
-T check_ans(const vector<T> &A) {
-  T profit = 0;
+int check_ans(const vector<int> &A) {
+  int profit = 0;
 
   for (int i = 1; i < A.size(); ++i) {
     if (A[i] > A[i - 1]) {

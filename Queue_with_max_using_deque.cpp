@@ -10,7 +10,7 @@ using std::endl;
 using std::exception;
 
 // Just for testing.
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   Queue<int> Q;
   Q.enqueue(1);
   Q.enqueue(2);
@@ -23,12 +23,14 @@ int main(int argc, char *argv[]) {
   assert(3 == Q.dequeue());  // 3
   try {
     Q.max();
-  } catch(const exception& e) {
+  }
+  catch (const exception& e) {
     cout << e.what() << endl;  // throw
   }
   try {
     Q.dequeue();
-  } catch(const exception& e) {
+  }
+  catch (const exception& e) {
     cout << e.what() << endl;  // throw
   }
   return 0;

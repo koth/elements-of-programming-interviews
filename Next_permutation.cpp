@@ -21,7 +21,7 @@ vector<int> next_permutation(vector<int> p) {
     --k;
   }
   if (k == -1) {
-    return {};  // p is the last permutation
+    return {};  // p is the last permutation.
   }
 
   int l;
@@ -34,7 +34,7 @@ vector<int> next_permutation(vector<int> p) {
   }
   swap(p[k], p[l]);
 
-  // Produce the lexicographically minimal permutation
+  // Produce the lexicographically minimal permutation.
   reverse(p.begin() + k + 1, p.end());
   return p;
 }

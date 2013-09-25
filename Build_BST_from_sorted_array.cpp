@@ -15,24 +15,22 @@ using std::vector;
 // @include
 // Build BST based on subarray A[start : end - 1].
 template <typename T>
-BinarySearchTree<T>* build_BST_from_sorted_array_helper(
-    const vector<T> &A, int start, int end) {
+BinarySearchTree<T>* build_BST_from_sorted_array_helper(const vector<T>& A,
+                                                        int start,
+                                                        int end) {
   if (start < end) {
     int mid = start + ((end - start) >> 1);
     return new BinarySearchTree<T>{
-        A[mid],
+        A[mid], unique_ptr<BinarySearchTree<T>>(
+                    build_BST_from_sorted_array_helper(A, start, mid)),
         unique_ptr<BinarySearchTree<T>>(
-            build_BST_from_sorted_array_helper(A, start, mid)),
-        unique_ptr<BinarySearchTree<T>>(
-            build_BST_from_sorted_array_helper(A, mid + 1, end))
-    };
+            build_BST_from_sorted_array_helper(A, mid + 1, end))};
   }
   return nullptr;
 }
 
 template <typename T>
-BinarySearchTree<T>* build_BST_from_sorted_array(
-    const vector<T> &A) {
+BinarySearchTree<T>* build_BST_from_sorted_array(const vector<T>& A) {
   return build_BST_from_sorted_array_helper(A, 0, A.size());
 }
 // @exclude

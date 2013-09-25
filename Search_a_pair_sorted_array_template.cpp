@@ -18,78 +18,9 @@ using std::random_device;
 using std::uniform_int_distribution;
 using std::vector;
 
-/*
-template <typename T>
-pair<int, int> find_positive_pair(const vector<T> &A, const T &k) {
-  if (k < 0) {
-    return make_pair(-1, -1);  // no pair for negative k
-  }
-
-  pair<int, int> ret(0, A.size() - 1);
-  // Find the first positive or zero
-  while (ret.first < ret.second && A[ret.first] < 0) {
-    ++ret.first;
-  }
-
-  // Find the last positive or zero
-  while (ret.first < ret.second && A[ret.second] < 0) {
-    --ret.second;
-  }
-
-  while (ret.first < ret.second) {
-    if (A[ret.first] + A[ret.second] == k) {
-      return ret;
-    } else if (A[ret.first] + A[ret.second] < k) {
-      do {
-        ++ret.first;
-      } while (ret.first < ret.second && A[ret.first] < 0);
-    } else {  // A[ret.first] + A[ret.second] > k
-      do {
-        --ret.second;
-      } while (ret.first < ret.second && A[ret.second] < 0);
-    }
-  }
-  return make_pair(-1, -1);  // no answer
-}
-
-template <typename T>
-pair<int, int> find_negative_pair(const vector<T> &A, const T &k) {
-  if (k >= 0) {
-    return make_pair(-1, -1);  // no pair for positive k
-  }
-
-  pair<int, int> ret(0, A.size() - 1);
-  // Find the first negative
-  while (ret.first < ret.second && A[ret.first] >= 0) {
-    ++ret.first;
-  }
-
-  // Find the last negative
-  while (ret.first < ret.second && A[ret.second] >= 0) {
-    --ret.second;
-  }
-
-  while (ret.first < ret.second) {
-    if (A[ret.first] + A[ret.second] == k) {
-      return ret;
-    } else if (A[ret.first] + A[ret.second] < k) {
-      do {
-        --ret.second;
-      } while (ret.first < ret.second && A[ret.second] >= 0);
-    } else {  // A[ret.first] + A[ret.second] > k
-      do {
-        ++ret.first;
-      } while (ret.first < ret.second && A[ret.first] >= 0);
-    }
-  }
-  return make_pair(-1, -1);  // no answer
-}
-//*/
-
 // @include
-template <typename T, typename Comp>
-pair<int, int> find_pair_using_comp(const vector<T> &A, const T &k,
-                                    Comp comp) {
+template <typename Comp>
+pair<int, int> find_pair_using_comp(const vector<int> &A, int k, Comp comp) {
   pair<int, int> ret(0, A.size() - 1);
   while (ret.first < ret.second && comp(A[ret.first], 0)) {
     ++ret.first;
@@ -114,8 +45,7 @@ pair<int, int> find_pair_using_comp(const vector<T> &A, const T &k,
   return {-1, -1};  // no answer.
 }
 
-template <typename T>
-pair<int, int> find_pos_neg_pair(const vector<T> &A, const T &k) {
+pair<int, int> find_pos_neg_pair(const vector<int> &A, int k) {
   // ret.first for positive, and ret.second for negative.
   pair<int, int> ret(A.size() - 1, A.size() - 1);
   // Find the last positive or zero.
@@ -144,12 +74,11 @@ pair<int, int> find_pos_neg_pair(const vector<T> &A, const T &k) {
   return {-1, -1};  // no answer.
 }
 
-template <typename T>
-pair<int, int> find_pair_sum_k(const vector<T> &A, const T &k) {
+pair<int, int> find_pair_sum_k(const vector<int> &A, int k) {
   pair<int, int> ret = find_pos_neg_pair(A, k);
   if (ret.first == -1 && ret.second == -1) {
-    return k >= 0 ? find_pair_using_comp(A, k, less<T>()) :
-           find_pair_using_comp(A, k, greater_equal<T>());
+    return k >= 0 ? find_pair_using_comp(A, k, less<int>()) :
+           find_pair_using_comp(A, k, greater_equal<int>());
   }
   return ret;
 }
@@ -174,7 +103,7 @@ int main(int argc, char *argv[]) {
     sort(A.begin(), A.end(), [](int x, int y) {return abs(x) < abs(y);});
     int k = ((pos_or_neg(gen)) ? 1 : -1) * (dis(gen));
     /*
-    for (const int & a : A) {
+    for (const int& a : A) {
       cout << a << " ";
     }
     cout << endl << "k = " << k << endl;

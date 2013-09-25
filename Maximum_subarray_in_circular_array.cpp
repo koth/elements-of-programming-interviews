@@ -9,17 +9,16 @@
 using std::cout;
 using std::default_random_engine;
 using std::endl;
-using std::maxa
+using std::max;
 using std::random_device;
 using std::uniform_int_distribution;
 using std::vector;
 
 // @include
 // Calculate the non-circular solution.
-template <typename T>
-T find_max_subarray(const vector<T> &A) {
-  T maximum_till = 0, maximum = 0;
-  for (const T &a : A) {
+int find_max_subarray(const vector<int> &A) {
+  int maximum_till = 0, maximum = 0;
+  for (const int &a : A) {
     maximum_till = max(a, a + maximum_till);
     maximum = max(maximum, maximum_till);
   }
@@ -27,11 +26,10 @@ T find_max_subarray(const vector<T> &A) {
 }
 
 // Calculate the solution which is circular.
-template <typename T>
-T find_circular_max_subarray(const vector<T> &A) {
+int find_circular_max_subarray(const vector<int> &A) {
   // Maximum subarray sum starts at index 0 and ends at or before index i.
-  vector<T> maximum_begin;
-  T sum = A.front();
+  vector<int> maximum_begin;
+  int sum = A.front();
   maximum_begin.emplace_back(sum);
   for (int i = 1; i < A.size(); ++i) {
     sum += A[i];
@@ -39,7 +37,7 @@ T find_circular_max_subarray(const vector<T> &A) {
   }
 
   // Maximum subarray sum starts at index i + 1 and ends at the last element.
-  vector<T> maximum_end(A.size());
+  vector<int> maximum_end(A.size());
   maximum_end.back() = 0;
   sum = 0;
   for (int i = A.size() - 2; i >= 0; --i) {
@@ -48,25 +46,23 @@ T find_circular_max_subarray(const vector<T> &A) {
   }
 
   // Calculate the maximum subarray which is circular.
-  T circular_max = 0;
+  int circular_max = 0;
   for (int i = 0; i < A.size(); ++i) {
     circular_max = max(circular_max, maximum_begin[i] + maximum_end[i]);
   }
   return circular_max;
 }
 
-template <typename T>
-T max_subarray_sum_in_circular(const vector<T> &A) {
+int max_subarray_sum_in_circular(const vector<int> &A) {
   return max(find_max_subarray(A), find_circular_max_subarray(A));
 }
 // @exclude
 
 // O(n^2) solution
-template <typename T>
-T check_ans(const vector<T> &A) {
-  T ans = 0;
+int check_ans(const vector<int> &A) {
+  int ans = 0;
   for (int i = 0; i < A.size(); ++i) {
-    T sum = 0;
+    int sum = 0;
     for (int j = 0; j < A.size(); ++j) {
       sum += A[(i + j) % A.size()];
       ans = max(ans, sum);

@@ -21,16 +21,15 @@ using std::vector;
 
 // @include
 // Return (min, max) pair of elements in A.
-template <typename T>
-pair<T, T> find_min_max(const vector<T> &A) {
+pair<int, int> find_min_max(const vector<int> &A) {
   if (A.size() <= 1) {
     return {A.front(), A.front()};
   }
 
   // Initialize the min and max pair.
-  pair<T, T> min_max_pair = minmax(A[0], A[1]);
+  pair<int, int> min_max_pair = minmax(A[0], A[1]);
   for (int i = 2; i + 1 < A.size(); i += 2) {
-    pair<T, T> local_pair = minmax(A[i], A[i + 1]);
+    pair<int, int> local_pair = minmax(A[i], A[i + 1]);
     min_max_pair = {min(min_max_pair.first, local_pair.first),
                     max(min_max_pair.second, local_pair.second)};
   }

@@ -14,7 +14,7 @@ using std::string;
 using std::uniform_int_distribution;
 
 // @include
-string convert_base(const string &s, int b1, int b2) {
+string convert_base(const string& s, int b1, int b2) {
   bool neg = s.front() == '-';
   int x = 0;
   for (int i = (neg == true ? 1 : 0); i < s.size(); ++i) {
@@ -25,7 +25,7 @@ string convert_base(const string &s, int b1, int b2) {
   string ans;
   while (x) {
     int r = x % b2;
-    ans.push_back(r >= 10 ? 'A' + r - 10: '0' + r);
+    ans.push_back(r >= 10 ? 'A' + r - 10 : '0' + r);
     x /= b2;
   }
 
@@ -59,21 +59,23 @@ string rand_int_string(int len) {
   return ret;
 }
 
-int main(int argc, char *argv[]) {
-  default_random_engine gen((random_device())());
+int main(int argc, char* argv[]) {
   if (argc == 4) {
     string input(argv[1]);
     cout << convert_base(input, atoi(argv[2]), atoi(argv[3])) << endl;
-    assert(input == convert_base(convert_base(input, atoi(argv[2]),
-                                 atoi(argv[3])), atoi(argv[3]), atoi(argv[2])));
+    assert(input ==
+           convert_base(convert_base(input, atoi(argv[2]), atoi(argv[3])),
+                        atoi(argv[3]),
+                        atoi(argv[2])));
   } else {
+    default_random_engine gen((random_device())());
     for (int times = 0; times < 100000; ++times) {
       uniform_int_distribution<int> len_dis(1, 9);
       string input = rand_int_string(len_dis(gen));
       uniform_int_distribution<int> base_dis(2, 16);
       int base = base_dis(gen);
-      cout << "input is " << input << ", base1 = 10, base2 = "
-           << base << ", ans = " << convert_base(input, 10, base) << endl;
+      cout << "input is " << input << ", base1 = 10, base2 = " << base
+           << ", ans = " << convert_base(input, 10, base) << endl;
       assert(input == convert_base(convert_base(input, 10, base), base, 10));
     }
   }

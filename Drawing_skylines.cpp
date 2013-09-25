@@ -14,16 +14,13 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-template <typename CoordType, typename HeightType>
 struct Skyline {
-  CoordType left, right;
-  HeightType height;
+  int left, right, height;
 };
 
-template <typename SkylineType>
-void merge_intersect_skylines(vector<SkylineType> *merged,
-                              SkylineType *a, int *a_idx,
-                              SkylineType *b, int *b_idx) {
+void merge_intersect_skylines(vector<Skyline> *merged,
+                              Skyline*a, int *a_idx,
+                              Skyline*b, int *b_idx) {
   if (a->right <= b->right) {
     if (a->height > b->height) {
       if (b->right != a->right) {
@@ -36,7 +33,7 @@ void merge_intersect_skylines(vector<SkylineType> *merged,
       b->left = a->left, ++*a_idx;
     } else {  // a->height < b->height.
       if (a->left != b->left) {
-        merged->emplace_back(SkylineType{a->left, b->left, a->height});
+        merged->emplace_back(Skyline{a->left, b->left, a->height});
       }
       ++*a_idx;
     }
@@ -45,7 +42,7 @@ void merge_intersect_skylines(vector<SkylineType> *merged,
       ++*b_idx;
     } else {
       if (a->left != b->left) {
-        merged->emplace_back(SkylineType{a->left, b->left, a->height});
+        merged->emplace_back(Skyline{a->left, b->left, a->height});
       }
       a->left = b->right;
       merged->emplace_back(*b), ++*b_idx;
@@ -53,11 +50,9 @@ void merge_intersect_skylines(vector<SkylineType> *merged,
   }
 }
 
-template <typename SkylineType>
-vector<SkylineType> merge_skylines(vector<SkylineType> *L,
-                                   vector<SkylineType> *R) {
+vector<Skyline> merge_skylines(vector<Skyline> *L, vector<Skyline> *R) {
   int i = 0, j = 0;
-  vector<SkylineType> merged;
+  vector<Skyline> merged;
 
   while (i < L->size() && j < R->size()) {
     if ((*L)[i].right < (*R)[j].left) {
@@ -76,9 +71,8 @@ vector<SkylineType> merge_skylines(vector<SkylineType> *L,
   return merged;
 }
 
-template <typename SkylineType>
-vector<SkylineType> drawing_skylines_helper(
-    const vector<SkylineType> &skylines, int start, int end) {
+vector<Skyline> drawing_skylines_helper(
+    const vector<Skyline> &skylines, int start, int end) {
   if (end - start <= 1) {  // 0 or 1 skyline, just copy it.
     return {skylines.cbegin() + start, skylines.cbegin() + end};
   }
@@ -88,8 +82,7 @@ vector<SkylineType> drawing_skylines_helper(
   return merge_skylines(&L, &R);
 }
 
-template <typename SkylineType>
-vector<SkylineType> drawing_skylines(vector<SkylineType> skylines) {
+vector<Skyline> drawing_skylines(vector<Skyline> skylines) {
   return drawing_skylines_helper(skylines, 0, skylines.size());
 }
 // @exclude
@@ -105,7 +98,7 @@ int main(int argc, char *argv[]) {
       uniform_int_distribution<int> dis(1, 5000);
       n = dis(gen);
     }
-    vector<Skyline<int, int>> A;
+    vector<Skyline> A;
     for (int i = 0; i < n; ++i) {
       uniform_int_distribution<int> left_dis(0, 999);
       int left = left_dis(gen);
@@ -113,9 +106,9 @@ int main(int argc, char *argv[]) {
       int right = right_dis(gen);
       uniform_int_distribution<int> height_dis(0, 99);
       int height = height_dis(gen);
-      A.emplace_back(Skyline<int, int>{left, right, height});
+      A.emplace_back(Skyline{left, right, height});
     }
-    vector<Skyline<int, int>> ans = drawing_skylines(A);
+    vector<Skyline> ans = drawing_skylines(A);
     cout << "n = " << n << endl;
     // just check there is no overlap.
     for (int i = 0; i < ans.size(); ++i) {

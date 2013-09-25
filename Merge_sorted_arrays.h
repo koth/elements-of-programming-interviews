@@ -13,16 +13,15 @@ using std::priority_queue;
 using std::vector;
 
 // @include
-template <typename T>
 struct Compare {
-  bool operator()(const pair<T, int>& lhs, const pair<T, int>& rhs) const {
+  bool operator()(const pair<int, int>& lhs,
+                  const pair<int, int>& rhs) const {
     return lhs.first > rhs.first;
   }
 };
 
-template <typename T>
-vector<T> merge_arrays(const vector<vector<T>>& S) {
-  priority_queue<pair<T, int>, vector<pair<T, int>>, Compare<T>> min_heap;
+vector<int> merge_arrays(const vector<vector<int>>& S) {
+  priority_queue<pair<int, int>, vector<pair<int, int>>, Compare> min_heap;
   vector<int> S_idx(S.size(), 0);
 
   // Every array in S puts its smallest element in heap.
@@ -33,9 +32,9 @@ vector<T> merge_arrays(const vector<vector<T>>& S) {
     }
   }
 
-  vector<T> ret;
+  vector<int> ret;
   while (!min_heap.empty()) {
-    pair<T, int> p = min_heap.top();
+    pair<int, int> p = min_heap.top();
     ret.emplace_back(p.first);
     // Add the smallest element into heap if possible.
     if (S_idx[p.second] < S[p.second].size()) {

@@ -11,7 +11,7 @@ using std::vector;
 
 // @include
 // Check if a partially filled matrix has any conflicts.
-bool is_valid_Sudoku(const vector<vector<int>> &A) {
+bool is_valid_Sudoku(const vector<vector<int>>& A) {
   // Check row constraints.
   for (int i = 0; i < A.size(); ++i) {
     deque<bool> is_present(A.size() + 1, false);

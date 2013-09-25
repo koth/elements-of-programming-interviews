@@ -16,10 +16,9 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-template <typename T>
-int find_start_city(const vector<T> &G, const vector<T> &D) {
-  T carry = 0;
-  pair<int, T> min(0, 0);
+int find_start_city(const vector<int> &G, const vector<int> &D) {
+  int carry = 0;
+  pair<int, int> min(0, 0);
   for (int i = 1; i < G.size(); ++i) {
     carry += G[i - 1] - D[i - 1];
     if (carry < min.second) {
@@ -30,10 +29,9 @@ int find_start_city(const vector<T> &G, const vector<T> &D) {
 }
 // @exclude
 
-template <typename T>
-void check_ans(const vector<T> &G, const vector<T> &D, int c) {
+void check_ans(const vector<int> &G, const vector<int> &D, int c) {
   int s = c;
-  T gas = 0;
+  int gas = 0;
   do {
     gas += G[s] - D[s];
     assert(gas >= 0);

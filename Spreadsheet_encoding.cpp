@@ -23,9 +23,9 @@ string rand_string(int len) {
 }
 
 // @include
-int ssDecodeColID(const string &col) {
+int ssDecodeColID(const string& col) {
   int ret = 0;
-  for (const char &c : col) {
+  for (const char& c : col) {
     ret = ret * 26 + c - 'A' + 1;
   }
   return ret;
@@ -37,7 +37,7 @@ void simple_test() {
   assert(27 == ssDecodeColID("AA"));
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   if (argc == 2) {
     cout << argv[1] << " " << ssDecodeColID(argv[1]) << endl;

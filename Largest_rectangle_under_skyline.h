@@ -12,8 +12,7 @@ using std::stack;
 using std::vector;
 
 // @include
-template <typename T>
-T calculate_largest_rectangle(const vector<T> &A) {
+int calculate_largest_rectangle(const vector<int> &A) {
   // Calculate L.
   stack<int> s;
   vector<int> L;
@@ -39,7 +38,7 @@ T calculate_largest_rectangle(const vector<T> &A) {
   }
 
   // For each A[i], find its maximum area include it.
-  T max_area = 0;
+  int max_area = 0;
   for (int i = 0; i < A.size(); ++i) {
     max_area = max(max_area, A[i] * (R[i] - L[i] - 1));
   }

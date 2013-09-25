@@ -11,7 +11,7 @@ using std::cout;
 using std::endl;
 using std::make_shared;
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   shared_ptr<node_t<int>> L3 =
       make_shared<node_t<int>>(node_t<int>{3, nullptr});
   shared_ptr<node_t<int>> L2 = make_shared<node_t<int>>(node_t<int>{2, L3});
@@ -19,8 +19,8 @@ int main(int argc, char *argv[]) {
 
   // should output "L1 does not have cycle."
   assert(has_cycle(L1) == nullptr);
-  cout << "L1 " << (has_cycle(L1) ? "has" : "does not have")
-       << " cycle." << endl;
+  cout << "L1 " << (has_cycle(L1) ? "has" : "does not have") << " cycle."
+       << endl;
 
   // make it a cycle
   L3->next = L2;

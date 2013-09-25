@@ -16,14 +16,13 @@ using std::unordered_set;
 using std::vector;
 
 // @include
-template <typename T>
-int search_smallest(const vector<T> &A) {
+int search_smallest(const vector<int> &A) {
   int l = 0, r = A.size() - 1;
   while (l < r) {
     int m = l + ((r - l) >> 1);
     if (A[m] > A[r]) {
       l = m + 1;
-    } else {  // A[m] <= A[r]
+    } else {  // A[m] <= A[r].
       r = m;
     }
   }
@@ -67,7 +66,7 @@ int main(int argc, char *argv[]) {
      */
     assert((shift + 1) % n == search_smallest(A));
   }
-  // hand-made tests
+  // hand-made tests.
   vector<int> A;
   A.emplace_back(2);
   A.emplace_back(3);

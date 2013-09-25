@@ -19,14 +19,13 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-template <typename T>
-pair<int, int> find_longest_subarray_less_equal_k(const vector<T> &A,
-                                                  const T &k) {
+pair<int, int> find_longest_subarray_less_equal_k(const vector<int> &A,
+                                                  int k) {
   // Build the prefix sum according to A.
-  vector<T> prefix_sum;
+  vector<int> prefix_sum;
   partial_sum(A.cbegin(), A.cend(), back_inserter(prefix_sum));
 
-  vector<T> min_prefix_sum(prefix_sum);
+  vector<int> min_prefix_sum(prefix_sum);
   for (int i = min_prefix_sum.size() - 2; i >= 0; --i) {
     min_prefix_sum[i] = min(min_prefix_sum[i], min_prefix_sum[i + 1]);
   }
@@ -49,15 +48,14 @@ pair<int, int> find_longest_subarray_less_equal_k(const vector<T> &A,
 // @exclude
 
 // O(n^2) checking answer
-template <typename T>
-void check_answer(const vector<T> &A, const pair<int, int> &ans, const T &k) {
-  vector<T> sum(A.size() + 1, 0);
+void check_answer(const vector<int> &A, const pair<int, int> &ans, int k) {
+  vector<int> sum(A.size() + 1, 0);
   sum[0] = 0;
   for (size_t i = 0; i < A.size(); ++i) {
     sum[i + 1] = sum[i] + A[i];
   }
   if (ans.first != -1 && ans.second != -1) {
-    T s = 0;
+    int s = 0;
     for (size_t i = ans.first; i <= ans.second; ++i) {
       s += A[i];
     }

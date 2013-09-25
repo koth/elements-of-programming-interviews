@@ -22,15 +22,14 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-template <typename T>
-void online_median(istringstream &sin) {
+void online_median(istringstream* sin) {
   // Min-heap stores the bigger part of the stream.
-  priority_queue<T, vector<T>, greater<T>> H;
+  priority_queue<int, vector<int>, greater<int>> H;
   // Max-heap stores the smaller part of the stream.
-  priority_queue<T, vector<T>, less<T>> L;
+  priority_queue<int, vector<int>, less<int>> L;
 
-  T x;
-  while (sin >> x) {
+  int x;
+  while (*sin >> x) {
     if (!L.empty() && x > L.top()) {
       H.emplace(x);
     } else {
@@ -77,6 +76,6 @@ int main(int argc, char *argv[]) {
   }
   cout << endl;
   istringstream sin(s);
-  online_median<int>(sin);
+  online_median(&sin);
   return 0;
 }

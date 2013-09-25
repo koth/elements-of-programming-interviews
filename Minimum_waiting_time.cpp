@@ -13,12 +13,11 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-template <typename T>
-T minimum_waiting_time(vector<T> service_time) {
+int minimum_waiting_time(vector<int> service_time) {
   // Sort the query time in increasing order.
   sort(service_time.begin(), service_time.end());
 
-  T waiting = 0;
+  int waiting = 0;
   for (int i = 0; i < service_time.size(); ++i) {
     waiting += service_time[i] * (service_time.size() - (i + 1));
   }

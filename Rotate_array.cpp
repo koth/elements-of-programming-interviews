@@ -26,8 +26,7 @@ vector<int> rand_vector(int len) {
   return ret;
 }
 
-template <typename T>
-void check_answer(const vector<T> &A, int i, const vector<T> &rotated) {
+void check_answer(const vector<int> &A, int i, const vector<int> &rotated) {
   assert(A.size() == rotated.size());
   for (size_t idx = 0; idx < A.size(); ++idx) {
     assert(rotated[(idx + i) % rotated.size()] == A[idx]);

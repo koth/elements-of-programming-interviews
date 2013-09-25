@@ -15,11 +15,11 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-template <typename T>
-void generate_power_set_helper(const vector<T> &S, int idx, vector<T>* res) {
+void generate_power_set_helper(const vector<int>& S, int idx,
+                               vector<int>* res) {
   if (!res->empty()) {
     // Print the subset.
-    copy(res->cbegin(), res->cend() - 1, ostream_iterator<T>(cout, ","));
+    copy(res->cbegin(), res->cend() - 1, ostream_iterator<int>(cout, ","));
     cout << res->back();
   }
   cout << endl;
@@ -31,14 +31,13 @@ void generate_power_set_helper(const vector<T> &S, int idx, vector<T>* res) {
   }
 }
 
-template <typename T>
-void generate_power_set(const vector<T> &S) {
-  vector<T> res;
+void generate_power_set(const vector<int>& S) {
+  vector<int> res;
   generate_power_set_helper(S, 0, &res);
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   vector<int> S;
   if (argc >= 2) {
     for (int i = 1; i < argc; ++i) {

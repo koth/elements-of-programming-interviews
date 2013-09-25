@@ -54,7 +54,7 @@ string intToString(int x) {
     x /= 10;
   }
   if (s.empty()) {
-    return {"0"};  // x is 0
+    return {"0"};  // x is 0.
   }
 
   if (is_negative) {
@@ -66,7 +66,7 @@ string intToString(int x) {
 
 // We define the valid strings for this function as those matching regexp
 // -?[0-9]+.
-int stringToInt(const string &s) {
+int stringToInt(const string& s) {
   // "-" starts as a valid integer, but has no digits.
   if (s == "-") {
     throw invalid_argument("illegal input");
@@ -85,18 +85,19 @@ int stringToInt(const string &s) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   if (argc == 2) {
     try {
       cout << stringToInt(argv[1]) << endl;
-    } catch(const exception &e) {
+    }
+    catch (const exception& e) {
       cout << e.what() << endl;
     }
   } else {
     for (int times = 0; times < 10000; ++times) {
       uniform_int_distribution<int> dis(numeric_limits<int>::min(),
-        numeric_limits<int>::max());
+                                        numeric_limits<int>::max());
       int x = dis(gen);
       string str = intToString(x);
       cout << x << " " << str << endl;
@@ -109,7 +110,8 @@ int main(int argc, char *argv[]) {
     }
     try {
       stringToInt("123abc");
-    } catch(const exception &e) {
+    }
+    catch (const exception& e) {
       cout << e.what() << endl;
     }
   }

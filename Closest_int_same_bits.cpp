@@ -46,7 +46,8 @@ int search(int x, int set_value, int default_value) {
 
 /*
 int closest_int_same_bits(int x) {
-  int prev = search(x, 0, INT_MIN), next = search(x, 1, numeric_limits<int>::max());
+  int prev = search(x, 0, INT_MIN);
+  int next = search(x, 1, numeric_limits<int>::max());
   return abs(x - prev) < abs(x - next) ? prev : next;
 }
 */
@@ -74,7 +75,7 @@ int count_bits_set_to_1(int x) {
   return count;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   unsigned long x;
   if (argc == 2) {
@@ -87,7 +88,8 @@ int main(int argc, char *argv[]) {
     unsigned long res = closest_int_same_bits(x);
     cout << x << ' ' << res << endl;
     assert(count_bits_set_to_1(x) == count_bits_set_to_1(res));
-  } catch(const exception &e) {
+  }
+  catch (const exception& e) {
     cout << x << ' ' << e.what() << endl;
   }
   return 0;

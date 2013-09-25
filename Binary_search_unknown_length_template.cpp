@@ -15,20 +15,19 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-template <typename T>
-int binary_search_unknown_len(const vector<T> &A, const T &k) {
+int binary_search_unknown_len(const vector<int> &A, int k) {
   // Find the possible range where k exists.
   int p = 0;
   while (true) {
     try {
-      T val = A.at((1 << p) - 1);
+      int val = A.at((1 << p) - 1);
       if (val == k) {
         return (1 << p) - 1;
       } else if (val > k) {
         break;
       }
     }
-    catch(const exception& e) {
+    catch (const exception& e) {
       break;
     }
     ++p;
@@ -39,7 +38,7 @@ int binary_search_unknown_len(const vector<T> &A, const T &k) {
   while (l <= r) {
     int m = l + ((r - l) >> 1);
     try {
-      T val = A.at(m);
+      int val = A.at(m);
       if (val == k) {
         return m;
       } else if (val > k) {
@@ -48,7 +47,7 @@ int binary_search_unknown_len(const vector<T> &A, const T &k) {
         l = m + 1;
       }
     }
-    catch(const exception& e) {
+    catch (const exception& e) {
       r = m - 1;  // search the left part if out of boundary.
     }
   }

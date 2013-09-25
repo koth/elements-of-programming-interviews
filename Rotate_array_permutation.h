@@ -14,14 +14,13 @@ using std::vector;
 namespace rotate_array1 {
 
 // @include
-template <typename T>
-void rotate_array(vector<T>* A, int i) {
+void rotate_array(vector<int>* A, int i) {
   i %= A->size();
   int cycles = GCD(A->size(), i);  // number of cycles in this rotation.
   int hops = A->size() / cycles;  // number of elements in a cycle.
 
   for (int c = 0; c < cycles; ++c) {
-    T temp = (*A)[c];
+    int temp = (*A)[c];
     for (int j = 1; j < hops; ++j) {
       swap((*A)[(c + j * i) % A->size()], temp);
     }

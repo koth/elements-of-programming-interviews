@@ -17,19 +17,17 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-template <typename T>
-T find_optimum_subarray_using_comp(const vector<T> &A,
-                                   const T&(*comp)(const T&, const T&)) {
-  T till = 0, overall = 0;
-  for (const T &a : A) {
+int find_optimum_subarray_using_comp(
+    const vector<int> &A, const int&(*comp)(const int&, const int&)) {
+  int till = 0, overall = 0;
+  for (const int &a : A) {
     till = comp(a, a + till);
     overall = comp(overall, till);
   }
   return overall;
 }
 
-template <typename T>
-T max_subarray_sum_in_circular(const vector<T> &A) {
+int max_subarray_sum_in_circular(const vector<int> &A) {
   // Find the max in non-circular case and circular case.
   return max(find_optimum_subarray_using_comp(A, max),  // non-circular case.
              accumulate(A.cbegin(), A.cend(), 0) -
@@ -38,11 +36,10 @@ T max_subarray_sum_in_circular(const vector<T> &A) {
 // @exclude
 
 // O(n^2) solution
-template <typename T>
-T check_ans(const vector<T> &A) {
-  T ans = 0;
+int check_ans(const vector<int> &A) {
+  int ans = 0;
   for (int i = 0; i < A.size(); ++i) {
-    T sum = 0;
+    int sum = 0;
     for (int j = 0; j < A.size(); ++j) {
       sum += A[(i + j) % A.size()];
       ans = max(ans, sum);

@@ -15,9 +15,8 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // O(n^2) implementation checks answer
-template <typename T>
-T check_answer(const vector<T> &A) {
-  T max = -1;
+int check_answer(const vector<int> &A) {
+  int max = -1;
   for (int i = 0; i < A.size(); ++i) {
     int left = i - 1, right = i + 1;
     while (left >= 0 && A[left] >= A[i]) {
@@ -26,7 +25,7 @@ T check_answer(const vector<T> &A) {
     while (right < A.size() && A[right] >= A[i]) {
       ++right;
     }
-    T area = (right - left - 1) * A[i];
+    int area = (right - left - 1) * A[i];
     if (area > max) {
       max = area;
     }
@@ -37,7 +36,7 @@ T check_answer(const vector<T> &A) {
 
 int main(int argc, char *argv[]) {
   default_random_engine gen((random_device())());
-  for (int times = 0; times < 1000; ++times) {
+  for (int times = 0; times < 3000; ++times) {
     vector<int> A;
     int n;
     if (argc == 2) {

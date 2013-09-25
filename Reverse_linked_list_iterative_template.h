@@ -3,11 +3,15 @@
 #ifndef SOLUTIONS_REVERSE_LINKED_LIST_ITERATIVE_TEMPLATE_H_
 #define SOLUTIONS_REVERSE_LINKED_LIST_ITERATIVE_TEMPLATE_H_
 
+#include <memory>
+
 #include "./Linked_list_prototype_template.h"
+
+using std::shared_ptr;
 
 // @include
 template <typename T>
-shared_ptr<node_t<T>> reverse_linked_list(const shared_ptr<node_t<T>> &head) {
+shared_ptr<node_t<T>> reverse_linked_list(const shared_ptr<node_t<T>>& head) {
   shared_ptr<node_t<T>> prev = nullptr, curr = head;
   while (curr) {
     shared_ptr<node_t<T>> temp = curr->next;

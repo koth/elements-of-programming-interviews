@@ -13,19 +13,20 @@ using std::default_random_engine;
 using std::endl;
 using std::make_shared;
 using std::random_device;
+using std::shared_ptr;
 using std::uniform_int_distribution;
 
 // @include
 template <typename T>
 void connect_a_next_to_b_advance_a(shared_ptr<node_t<T>>* a,
-                                   const shared_ptr<node_t<T>> &b) {
+                                   const shared_ptr<node_t<T>>& b) {
   shared_ptr<node_t<T>> temp = (*a)->next;
   (*a)->next = b;
   (*a) = temp;
 }
 
 template <typename T>
-shared_ptr<node_t<T>> zipping_linked_list(const shared_ptr<node_t<T>> &L) {
+shared_ptr<node_t<T>> zipping_linked_list(const shared_ptr<node_t<T>>& L) {
   shared_ptr<node_t<T>> slow = L, fast = L, pre_slow = nullptr;
 
   // Find the middle point of L.
@@ -56,13 +57,14 @@ shared_ptr<node_t<T>> zipping_linked_list(const shared_ptr<node_t<T>> &L) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   shared_ptr<node_t<int>> head = nullptr;
   int n;
   if (argc > 2) {
     for (size_t i = 1; i < argc; ++i) {
-      auto curr = make_shared<node_t<int>>(node_t<int>{atoi(argv[i]), nullptr});
+      auto curr =
+          make_shared<node_t<int>>(node_t<int>{atoi(argv[i]), nullptr});
       curr->next = head;
       head = curr;
     }

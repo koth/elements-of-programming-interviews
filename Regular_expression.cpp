@@ -15,7 +15,7 @@ bool is_match_here(const string &r, const string &s) {
     return true;
   }
 
-  // Case (2) : ends with '$'
+  // Case (2) : ends with '$'.
   if (r == "$") {
     return s.empty();
   }
@@ -38,7 +38,7 @@ bool is_match_here(const string &r, const string &s) {
 }
 
 bool is_match(const string &r, const string &s) {
-  // Case (2.) : starts with '^'
+  // Case (2.) : starts with '^'.
   if (r.front() == '^') {
     return is_match_here(r.substr(1), s);
   }

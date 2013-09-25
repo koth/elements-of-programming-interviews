@@ -10,14 +10,15 @@ using std::unique_ptr;
 // @include
 template <typename T>
 BinarySearchTree<T>* find_first_equal_k(
-    const unique_ptr<BinarySearchTree<T>>& r, const T &k) {
-  BinarySearchTree<T> *first = nullptr, *curr = r.get();
+    const unique_ptr<BinarySearchTree<T>>& r,
+    const T& k) {
+  BinarySearchTree<T>* first = nullptr, *curr = r.get();
   while (curr) {
     if (curr->data < k) {
       curr = curr->right.get();
     } else if (curr->data > k) {
       curr = curr->left.get();
-    } else {  // curr->data == k
+    } else {  // curr->data == k.
       // Search for the leftmost in the left subtree.
       first = curr;
       curr = curr->left.get();

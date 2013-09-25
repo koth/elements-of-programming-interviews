@@ -43,13 +43,9 @@ class Queue {
     throw length_error("empty queue");
   }
   // @exclude
-  T& head() {
-    return Q_.front();
-  }
+  T& head() { return Q_.front(); }
 
-  const T& head() const {
-    return Q_.front();
-  }
+  const T& head() const { return Q_.front(); }
   // @include
 
  private:

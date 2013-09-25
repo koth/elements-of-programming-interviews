@@ -25,8 +25,8 @@ struct QNode {
 template <typename T>
 bool is_BST(const unique_ptr<BinaryTree<T>> &n) {
   queue<QNode<T>> q;
-  q.emplace(QNode<T>{n.get(), numeric_limits<T>::min(),
-                     numeric_limits<T>::max()});
+  q.emplace(
+      QNode<T>{n.get(), numeric_limits<T>::min(), numeric_limits<T>::max()});
 
   while (!q.empty()) {
     if (q.front().node) {

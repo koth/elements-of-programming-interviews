@@ -10,6 +10,7 @@
 using std::cout;
 using std::endl;
 using std::make_shared;
+using std::shared_ptr;
 
 // @include
 template <typename T>
@@ -45,7 +46,7 @@ void print_list(shared_ptr<node_t<T>> L) {
   cout << endl;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   shared_ptr<node_t<int>> head = nullptr;
   if (argc > 2) {
     // Input the node's value in reverse order.
@@ -56,14 +57,14 @@ int main(int argc, char *argv[]) {
     }
     cout << ((is_linked_list_a_palindrome<int>(head)) ? "Yes" : "No") << endl;
   } else {
-    // a link list is a palindrome
+    // A link list is a palindrome.
     for (int i = 6; i >= 1; --i) {
       shared_ptr<node_t<int>> curr =
           make_shared<node_t<int>>(node_t<int>{1, head});
       head = curr;
     }
     assert(is_linked_list_a_palindrome<int>(head) == true);
-    // Still a palindrome linked list
+    // Still a palindrome linked list.
     head = shared_ptr<node_t<int>>(nullptr);
     for (int i = 5; i >= 1; --i) {
       shared_ptr<node_t<int>> curr =
@@ -72,7 +73,7 @@ int main(int argc, char *argv[]) {
     }
     head->next->next->data = 3;
     assert(is_linked_list_a_palindrome<int>(head) == true);
-    // Not a palindrome linked list
+    // Not a palindrome linked list.
     head = nullptr;
     for (int i = 5; i >= 1; --i) {
       shared_ptr<node_t<int>> curr =

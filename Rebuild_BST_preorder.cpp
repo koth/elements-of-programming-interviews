@@ -38,13 +38,13 @@ BinarySearchTree<T>* rebuild_BST_from_preorder_helper(
 
 // Given a preorder traversal of a BST, return its root.
 template <typename T>
-BinarySearchTree<T>* rebuild_BST_from_preorder(const vector<T> &preorder) {
+BinarySearchTree<T>* rebuild_BST_from_preorder(const vector<T>& preorder) {
   return rebuild_BST_from_preorder_helper(preorder, 0, preorder.size());
 }
 // @exclude
 
 template <typename T>
-void check_ans(const unique_ptr<BinarySearchTree<T>> &n, const T &pre) {
+void check_ans(const unique_ptr<BinarySearchTree<T>>& n, const T& pre) {
   if (n) {
     check_ans(n->left, pre);
     assert(pre <= n->data);

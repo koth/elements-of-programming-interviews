@@ -15,9 +15,8 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-template <typename CoinType>
-CoinType pick_up_coins_helper(const vector<CoinType> &C, int a,
-                              int b, vector<vector<CoinType>>* T) {
+int pick_up_coins_helper(const vector<int> &C, int a, int b,
+                         vector<vector<int>>* T) {
   if (a > b) {
     return 0;  // base condition.
   }
@@ -31,9 +30,8 @@ CoinType pick_up_coins_helper(const vector<CoinType> &C, int a,
   return (*T)[a][b];
 }
 
-template <typename CoinType>
-CoinType pick_up_coins(const vector<CoinType> &C) {
-  vector<vector<CoinType>> T(C.size(), vector<int>(C.size(), -1));
+int pick_up_coins(const vector<int> &C) {
+  vector<vector<int>> T(C.size(), vector<int>(C.size(), -1));
   return pick_up_coins_helper(C, 0, C.size() - 1, &T);
 }
 // @exclude

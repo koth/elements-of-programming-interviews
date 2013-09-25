@@ -15,10 +15,9 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-template <typename T>
-void rearrange(vector<T> *A) {
+void rearrange(vector<int>* A) {
   for (int i = 0; i < A->size() - 1; ++i) {
-    if ((i & 1 && (*A)[i] < (*A)[i + 1]) ||
+    if (((i & 1) == 1 && (*A)[i] < (*A)[i + 1]) ||
         ((i & 1) == 0 && (*A)[i] > (*A)[i + 1])) {
       swap((*A)[i], (*A)[i + 1]);
     }
@@ -26,8 +25,7 @@ void rearrange(vector<T> *A) {
 }
 // @exclude
 
-template <typename T>
-void check_answer(const vector<T> &A) {
+void check_answer(const vector<int>& A) {
   for (int i = 0; i < A.size(); ++i) {
     if (i & 1) {
       assert(A[i] >= A[i - 1]);
@@ -45,7 +43,7 @@ void check_answer(const vector<T> &A) {
   }
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 10000; ++times) {
     int n;

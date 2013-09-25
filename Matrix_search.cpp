@@ -15,15 +15,14 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-template <typename T>
-bool matrix_search(const vector<vector<T>> &A, const T &x) {
+bool matrix_search(const vector<vector<int>> &A, int x) {
   int r = 0, c = A[0].size() - 1;
   while (r < A.size() && c >= 0) {
     if (A[r][c] == x) {
       return true;
     } else if (A[r][c] < x) {
       ++r;
-    } else {  // A[r][c] > x
+    } else {  // A[r][c] > x.
       --c;
     }
   }
@@ -32,8 +31,7 @@ bool matrix_search(const vector<vector<T>> &A, const T &x) {
 // @exclude
 
 // O(n^2) solution for verifying answer.
-template <typename T>
-bool brute_force_search(const vector<vector<T>> &A, const T &x) {
+bool brute_force_search(const vector<vector<int>> &A, int x) {
   for (int i = 0; i < A.size(); ++i) {
     for (int j = 0; j < A[i].size(); ++j) {
       if (A[i][j] == x) {

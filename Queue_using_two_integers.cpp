@@ -42,7 +42,7 @@ class Queue {
 };
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   Queue q;
   q.enqueue(0);
   q.enqueue(5);
@@ -58,12 +58,14 @@ int main(int argc, char *argv[]) {
   q.enqueue(0);
   assert(0 == q.dequeue());
   assert(0 == q.dequeue());
-  // empty queue, it should throw.
+  // Empty queue, it should throw.
   try {
     q.dequeue();
-  } catch(const exception& e) {
+  }
+  catch (const exception& e) {
     cout << e.what() << endl;
-  };
+  }
+  ;
   q.enqueue(0);
   q.enqueue(0);
   q.enqueue(0);
@@ -73,11 +75,13 @@ int main(int argc, char *argv[]) {
   q.enqueue(2);
   q.enqueue(5);
   q.enqueue(0);
-  // queue overflow, it should throw.
+  // Queue overflow, it should throw.
   try {
     q.enqueue(2);
-  } catch(const exception& e) {
+  }
+  catch (const exception& e) {
     cout << e.what() << endl;
-  };
+  }
+  ;
   return 0;
 }

@@ -19,20 +19,19 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-template <typename T>
-T find_k_th_largest_unknown_length(istringstream &sin, int k) {
-  vector<T> M;
-  T x;
-  while (sin >> x) {
+int find_kth_largest_unknown_length(istringstream *sin, int k) {
+  vector<int> M;
+  int x;
+  while (*sin >> x) {
     M.emplace_back(x);
     if (M.size() == (k << 1) - 1) {
       // Keep the k largest elements and discard the small ones.
-      nth_element(M.begin(), M.begin() + k - 1, M.end(), greater<T>());
+      nth_element(M.begin(), M.begin() + k - 1, M.end(), greater<int>());
       M.resize(k);
     }
   }
-  nth_element(M.begin(), M.begin() + k - 1, M.end(), greater<T>());
-  return M[k - 1];  // return the k-th largest one
+  nth_element(M.begin(), M.begin() + k - 1, M.end(), greater<int>());
+  return M[k - 1];  // return the k-th largest one.
 }
 // @exclude
 
@@ -66,7 +65,7 @@ int main(int argc, char *argv[]) {
     cout << ss.str() << endl;
     //*/
     istringstream sin(ss.str());
-    int res = find_k_th_largest_unknown_length<int>(sin, k);
+    int res = find_kth_largest_unknown_length(&sin, k);
     nth_element(A.begin(), A.begin() + A.size() - k, A.end());
     cout << res << endl << A[A.size() - k] << endl;
     assert(res == A[A.size() - k]);

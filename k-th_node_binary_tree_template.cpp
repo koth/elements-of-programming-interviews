@@ -38,7 +38,7 @@ BinaryTree<T>* find_kth_node_binary_tree(
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   //  size field
   //      6
   //    2   3
@@ -69,9 +69,10 @@ int main(int argc, char *argv[]) {
   // should throw
   try {
     find_kth_node_binary_tree<int>(root, 0);
-  } catch(const exception &e) {
+  }
+  catch (const exception& e) {
     cout << e.what() << endl;
-  };
+  }
   // should output 1
   assert(find_kth_node_binary_tree<int>(root, 1)->data == 1);
   cout << (find_kth_node_binary_tree<int>(root, 1))->data << endl;
@@ -93,8 +94,9 @@ int main(int argc, char *argv[]) {
   // should throw
   try {
     find_kth_node_binary_tree<int>(root, 7);
-  } catch(const exception &e) {
+  }
+  catch (const exception& e) {
     cout << e.what() << endl;
-  };
+  }
   return 0;
 }

@@ -20,14 +20,14 @@ using std::vector;
 
 // @include
 bool is_unit(const complex<int>& z) {
-  return (z.real() == 1 && z.imag() == 0) || 
+  return (z.real() == 1 && z.imag() == 0) ||
          (z.real() == -1 && z.imag() == 0) ||
          (z.real() == 0 && z.imag() == 1) ||
          (z.real() == 0 && z.imag() == -1);
 }
 
 struct ComplexCompare {
-  bool operator()(const complex<double>& lhs, 
+  bool operator()(const complex<double>& lhs,
                   const complex<double>& rhs) const {
     if (norm(lhs) != norm(rhs)) {
       return norm(lhs) < norm(rhs);
@@ -124,7 +124,7 @@ int main(int argc, char *argv[]) {
     vector<complex<int>> g_primes = generate_Gaussian_primes(i);
     cout << first.size() << " " << g_primes.size() << endl;
     for (int i = 0; i < first.size(); ++i) {
-      if (first[i].real() != g_primes[i].real() || 
+      if (first[i].real() != g_primes[i].real() ||
           first[i].imag() != g_primes[i].imag()) {
         cout << "(" << first[i].real() << "," << first[i].imag() << ") ";
         cout << "(" << g_primes[i].real() << "," << g_primes[i].imag() << ") ";

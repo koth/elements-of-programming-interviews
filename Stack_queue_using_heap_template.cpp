@@ -25,9 +25,7 @@ struct Compare {
 template <typename T>
 class Stack {
  public:
-  void push(const T& x) {
-    H.emplace(order_++, x);
-  }
+  void push(const T& x) { H.emplace(order_++, x); }
 
   T pop() {
     T ret = H.top().second;
@@ -35,9 +33,7 @@ class Stack {
     return ret;
   }
 
-  const T& peek() const {
-    return H.top().second;
-  }
+  const T& peek() const { return H.top().second; }
 
  private:
   int order_ = 0;
@@ -48,9 +44,7 @@ class Stack {
 template <typename T>
 class Queue {
  public:
-  void enqueue(const T& x) {
-    H.emplace(order_--, x);
-  }
+  void enqueue(const T& x) { H.emplace(order_--, x); }
 
   T dequeue() {
     T ret = H.top().second;
@@ -58,9 +52,7 @@ class Queue {
     return ret;
   }
 
-  const T& head() const {
-    return H.top().second;
-  }
+  const T& head() const { return H.top().second; }
 
  private:
   int order_ = 0;
@@ -69,7 +61,7 @@ class Queue {
 };
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   Stack<int> s;
   s.push(1);
   s.push(2);
@@ -84,7 +76,8 @@ int main(int argc, char *argv[]) {
   s.pop();
   try {
     s.pop();
-  } catch(const exception& e) {
+  }
+  catch (const exception& e) {
     cout << "empty stack" << endl;
     cout << e.what() << endl;
   }
@@ -98,7 +91,8 @@ int main(int argc, char *argv[]) {
   q.dequeue();
   try {
     q.dequeue();
-  } catch(const exception& e) {
+  }
+  catch (const exception& e) {
     cout << "empty queue" << endl;
     cout << e.what() << endl;
   }

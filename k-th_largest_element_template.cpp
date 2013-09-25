@@ -18,9 +18,8 @@ using std::vector;
 
 // @include
 // Partition A according pivot, return its index after partition.
-template <typename T>
-int partition(vector<T>* A, int l, int r, int pivot) {
-  T pivot_value = (*A)[pivot];
+int partition(vector<int>* A, int l, int r, int pivot) {
+  int pivot_value = (*A)[pivot];
   int larger_index = l;
 
   swap((*A)[pivot], (*A)[r]);
@@ -33,8 +32,7 @@ int partition(vector<T>* A, int l, int r, int pivot) {
   return larger_index;
 }
 
-template <typename T>
-T find_k_th_largest(vector<T> A, int k) {
+int find_k_th_largest(vector<int> A, int k) {
   int l = 0, r = A.size() - 1;
 
   while (l <= r) {

@@ -12,23 +12,17 @@ using std::unique_ptr;
 template <typename T>
 class BinarySearchTree {
  public:
-  virtual ~BinarySearchTree() {
-    clear();
-  }
+  virtual ~BinarySearchTree() { clear(); }
 
-  bool empty() const {
-    return !root_.get();
-  }
+  bool empty() const { return !root_.get(); }
 
-  void clear() {
-    clear(&root_);
-  }
+  void clear() { clear(&root_); }
 
   bool insert(const T& key) {
     if (empty()) {
       root_ = unique_ptr<TreeNode>(new TreeNode{key, nullptr, nullptr});
     } else {
-      TreeNode *curr = root_.get(), *par;
+      TreeNode* curr = root_.get(), *par;
       while (curr) {
         par = curr;
         if (key == curr->data) {
@@ -52,7 +46,7 @@ class BinarySearchTree {
 
   bool erase(const T& key) {
     // Find the node with key.
-    TreeNode *curr = root_.get(), *par = nullptr;
+    TreeNode* curr = root_.get(), *par = nullptr;
     while (curr && curr->data != key) {
       par = curr;
       curr = key < curr->data ? curr->left.get() : curr->right.get();
@@ -65,14 +59,14 @@ class BinarySearchTree {
 
     if (curr->right) {
       // Find the minimum of the right subtree.
-      TreeNode *r_curr = curr->right.get(), *r_par = curr;
+      TreeNode* r_curr = curr->right.get(), *r_par = curr;
       while (r_curr->left) {
         r_par = r_curr;
         r_curr = r_curr->left.get();
       }
       // Move links to erase the node.
       r_curr->left.reset(curr->left.release());
-      TreeNode *r_curr_right = r_curr->right.release();
+      TreeNode* r_curr_right = r_curr->right.release();
       if (curr->right.get() != r_curr) {
         r_curr->right.reset(curr->right.release());
       }
@@ -99,9 +93,7 @@ class BinarySearchTree {
     return true;
   }
   // @exclude
-  T GetRootVal() const {
-    return root_->data;
-  }
+  T GetRootVal() const { return root_->data; }
   // @include
 
  private:

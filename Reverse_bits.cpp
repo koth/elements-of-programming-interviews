@@ -39,7 +39,7 @@ long reverse_bits(long x) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   create_precomputed_table();
   if (argc == 2) {
     long x = atoi(argv[1]);

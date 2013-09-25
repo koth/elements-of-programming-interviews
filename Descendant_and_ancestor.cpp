@@ -13,7 +13,7 @@ bool is_r_s_descendant_ancestor_of_m(
     const unique_ptr<BinarySearchTree<T>> &r,
     const unique_ptr<BinarySearchTree<T>> &s,
     const unique_ptr<BinarySearchTree<T>> &m) {
-  auto *curr_r = r.get(), *curr_s = s.get();
+  auto* curr_r = r.get(), *curr_s = s.get();
 
   // Interleaving searches from r and s.
   while (curr_r && curr_r != s.get() && curr_s && curr_s != r.get()) {

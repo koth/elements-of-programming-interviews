@@ -18,18 +18,17 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-template <typename T>
-vector<T> reservoir_sampling(istringstream &sin, int k) {
-  T x;
-  vector<T> R;
+vector<int> reservoir_sampling(istringstream* sin, int k) {
+  int x;
+  vector<int> R;
   // Store the first k elements.
-  for (int i = 0; i < k && sin >> x; ++i) {
+  for (int i = 0; i < k && *sin >> x; ++i) {
     R.emplace_back(x);
   }
 
   // After the first k elements.
   int element_num = k + 1;
-  while (sin >> x) {
+  while (*sin >> x) {
     default_random_engine gen((random_device())());  // random num generator.
     // Generate random int in [0, element_num].
     uniform_int_distribution<int> dis(0, element_num++);
@@ -71,7 +70,7 @@ int main(int argc, char *argv[]) {
   }
   cout << n << ' ' << k << endl;
   istringstream sin(s);
-  vector<int> ans = reservoir_sampling<int>(sin, k);
+  vector<int> ans = reservoir_sampling(&sin, k);
   assert(ans.size() == k);
   /*
   copy(ans.begin(), ans.end(), ostream_iterator<int>(cout, " "));

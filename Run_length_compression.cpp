@@ -19,7 +19,7 @@ string decoding(const string &s) {
   for (const char &c : s) {
     if (isdigit(c)) {
       count = count * 10 + c - '0';
-    } else {  // isalpha
+    } else {  // isalpha.
       ret.append(count, c);
       count = 0;
     }

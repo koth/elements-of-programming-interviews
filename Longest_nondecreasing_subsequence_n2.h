@@ -9,8 +9,7 @@ using std::vector;
 
 namespace LNS_n2 {
 // @include
-template <typename T>
-vector<T> longest_nondecreasing_subsequence(const vector<T> &A) {
+vector<int> longest_nondecreasing_subsequence(const vector<int> &A) {
   // Empty array.
   if (A.empty() == true) {
     return A;
@@ -33,7 +32,7 @@ vector<T> longest_nondecreasing_subsequence(const vector<T> &A) {
 
   // Build the longest nondecreasing subsequence.
   int max_length = longest_length[max_length_idx];
-  vector<T> ret(max_length);
+  vector<int> ret(max_length);
   while (max_length > 0) {
     ret[--max_length] = A[max_length_idx];
     max_length_idx = previous_index[max_length_idx];

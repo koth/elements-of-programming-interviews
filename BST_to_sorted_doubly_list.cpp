@@ -18,7 +18,7 @@ using std::shared_ptr;
 // return the head of the list.
 template <typename T>
 shared_ptr<BinarySearchTree<T>> BST_to_doubly_list(
-    const shared_ptr<BinarySearchTree<T>> &n) {
+    const shared_ptr<BinarySearchTree<T>>& n) {
   // Empty subtree.
   if (!n) {
     return nullptr;

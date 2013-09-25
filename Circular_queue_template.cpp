@@ -16,7 +16,7 @@ using std::vector;
 template <typename T>
 class Queue {
  public:
-  explicit Queue(size_t cap) : data_({cap}) {}
+  explicit Queue(size_t cap) : data_(cap) {}
 
   void enqueue(const T& x) {
     // Dynamically resize due to data_.size() limit.
@@ -41,9 +41,7 @@ class Queue {
     throw length_error("empty queue");
   }
 
-  size_t size() const {
-    return count_;
-  }
+  size_t size() const { return count_; }
 
  private:
   size_t head_ = 0, tail_ = 0, count_ = 0;
@@ -73,8 +71,8 @@ void test() {
   q.enqueue(13);
   // Ok till here. Now head = 3 and tail = 3
 
-  q.enqueue(14); // now the vector (data) is resized; but the head and tail
-                 // (or elements) does not change accordingly.
+  q.enqueue(14);  // now the vector (data) is resized; but the head and tail.
+                  // (or elements) does not change accordingly.
   q.enqueue(15);
   q.enqueue(16);
   q.enqueue(17);
@@ -90,7 +88,7 @@ void test() {
   assert(12 == q.dequeue());
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   test();
   Queue<int> q(8);
   q.enqueue(1);
@@ -103,10 +101,11 @@ int main(int argc, char *argv[]) {
   assert(4 == q.dequeue());
   try {
     q.dequeue();
-  } catch(const exception &e) {
+  }
+  catch (const exception& e) {
     cout << e.what() << endl;
-  };
-  // test resize()
+  }
+  // test resize().
   q.enqueue(4);
   q.enqueue(4);
   q.enqueue(4);

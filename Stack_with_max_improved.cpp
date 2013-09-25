@@ -19,9 +19,7 @@ using std::pair;
 template <typename T>
 class Stack {
  public:
-  bool empty() const {
-    return s_.empty();
-  }
+  bool empty() const { return s_.empty(); }
 
   const T& max() const {
     if (!empty()) {
@@ -64,7 +62,7 @@ class Stack {
 };
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   Stack<int> s;
   s.push(1);
   s.push(2);
@@ -90,7 +88,8 @@ int main(int argc, char *argv[]) {
     s.pop();
     s.pop();
     s.pop();
-  } catch(const exception& e) {
+  }
+  catch (const exception& e) {
     cout << e.what() << endl;
   }
   return 0;

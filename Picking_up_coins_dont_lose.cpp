@@ -16,13 +16,12 @@ using std::vector;
 // @include
 // Return 0 means choosing F (even numbered coins),
 // and return 1 means choosing S (odd numbered coins).
-template <typename CoinType>
-int pick_up_coins(const vector<CoinType> &C) {
+int pick_up_coins(const vector<int> &C) {
   int even_sum = 0, odd_sum = 0;
   for (int i = 0; i < C.size(); ++i) {
-    if (i & 1) {  // odd
+    if (i & 1) {  // odd.
       odd_sum += C[i];
-    } else {  // even
+    } else {  // even.
       even_sum += C[i];
     }
   }
@@ -30,8 +29,7 @@ int pick_up_coins(const vector<CoinType> &C) {
 }
 // @exclude
 
-template <typename CoinType>
-void check(const vector<CoinType> &C, int choose) {
+void check(const vector<int> &C, int choose) {
   int even = 0, odd = 0;
   for (int i = 0; i < C.size(); ++i) {
     if (i & 1) {

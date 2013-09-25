@@ -37,8 +37,7 @@ vector<int> generate_primes_from_1_to_n(int n) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
-  default_random_engine gen((random_device())());
+int main(int argc, char* argv[]) {
   if (argc == 2) {
     int n = atoi(argv[1]);
     cout << "n = " << n << endl;
@@ -49,6 +48,7 @@ int main(int argc, char *argv[]) {
       }
     }
   } else {
+    default_random_engine gen((random_device())());
     for (int times = 0; times < 100; ++times) {
       uniform_int_distribution<int> dis(2, 100000);
       int n = dis(gen);

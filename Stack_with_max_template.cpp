@@ -1,17 +1,16 @@
 // Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-#include "./Stack_with_max_template.h"
-
 #include <cassert>
 #include <iostream>
 #include <stdexcept>
+
+#include "./Stack_with_max_template.h"
 
 using std::cout;
 using std::endl;
 using std::exception;
 
-// Just for testing.
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   Stack<int> s;
   s.push(1);
   s.push(2);
@@ -37,7 +36,8 @@ int main(int argc, char *argv[]) {
     s.pop();
     s.pop();
     s.pop();
-  } catch(const exception& e) {
+  }
+  catch (const exception& e) {
     cout << e.what() << endl;
   }
   return 0;

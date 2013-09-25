@@ -15,13 +15,15 @@ using std::shared_ptr;
 // Node numbering is from 1 to n.
 template <typename T>
 shared_ptr<node_t<T>> build_BST_from_sorted_doubly_list_helper(
-    shared_ptr<node_t<T>> *L, int s, int e) {
+    shared_ptr<node_t<T>>* L,
+    int s,
+    int e) {
   shared_ptr<node_t<T>> curr = nullptr;
   if (s < e) {
     int m = s + ((e - s) >> 1);
     auto temp_left = build_BST_from_sorted_doubly_list_helper(L, s, m);
-    curr = *L; // the last function call sets L to the successor of the
-               // maximum node in the tree rooted at temp_left.
+    curr = *L;  // the last function call sets L to the successor of the
+                // maximum node in the tree rooted at temp_left.
     *L = (*L)->next;
     curr->prev = temp_left;
     curr->next = build_BST_from_sorted_doubly_list_helper(L, m + 1, e);
@@ -31,7 +33,8 @@ shared_ptr<node_t<T>> build_BST_from_sorted_doubly_list_helper(
 
 template <typename T>
 shared_ptr<node_t<T>> build_BST_from_sorted_doubly_list(
-    shared_ptr<node_t<T>> L, int n) {
+    shared_ptr<node_t<T>> L,
+    int n) {
   return build_BST_from_sorted_doubly_list_helper(&L, 0, n);
 }
 // @exclude
@@ -52,27 +55,6 @@ void inorder_traversal(const shared_ptr<node_t<T>>& node, const T &pre) {
 }
 
 int main(int argc, char *argv[]) {
-  /*
-  srand(time(nullptr));
-  for (int times = 0; times < 1000; ++times) {
-    shared_ptr<node_t<int>> L = nullptr;
-    int n;
-    if (argc == 2) {
-      n = atoi(argv[1]);
-    } else {
-      n = 1 + rand() % 1000;
-    }
-    for (int i = n; i >= 1; --i) {
-      shared_ptr<node_t<int>> temp = shared_ptr<node_t<int>>(new node_t<int>{i});
-      temp->next = L;
-      L = temp;
-    }
-    auto root = build_BST_from_sorted_doubly_list(L, n);
-    inorder_traversal(root, numeric_limits<int>::min());
-    //cout << endl;
-  }
-  */
-
   shared_ptr<node_t<int>> A[1000];
 
   for ( int i = 0 ; i < 1000; i++ ) {

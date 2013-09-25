@@ -38,7 +38,7 @@ string rand_string(int len) {
 
 // @include
 pair<int, int> find_smallest_sequentially_covering_subset(
-  const vector<string> &A, const vector<string> &Q) {
+    const vector<string> &A, const vector<string> &Q) {
   unordered_map<string, int> K;  // stores the order of each Q[i].
   vector<int> L(Q.size(), -1), D(Q.size(), numeric_limits<int>::max());
 

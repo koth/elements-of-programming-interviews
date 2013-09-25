@@ -16,9 +16,7 @@ using std::stack;
 template <typename T>
 class Stack {
  public:
-  bool empty() const {
-    return s_.empty();
-  }
+  bool empty() const { return s_.empty(); }
 
   const T& max() const {
     if (!empty()) {

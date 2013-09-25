@@ -33,13 +33,13 @@ string rand_string(int len) {
 }
 
 // @include
-vector<string> Search_frequent_items(istringstream &sin, int k) {
+vector<string> Search_frequent_items(istringstream* sin, int k) {
   // Find the candidates which may occur >= n / k times.
   string buf;
   unordered_map<string, int> hash;
   int n = 0;  // count the number of strings.
 
-  while (sin >> buf) {
+  while (*sin >> buf) {
     ++hash[buf], ++n;
     // Detecting k + 1 items in hash, at least one of them must have exactly 1
     // in it. We will discard those k + 1 items by 1 for each.
@@ -61,10 +61,10 @@ vector<string> Search_frequent_items(istringstream &sin, int k) {
   }
 
   // Reset the stream and read it again.
-  sin.clear();
-  sin.seekg(0, ios::beg);
+  sin->clear();
+  sin->seekg(0, ios::beg);
   // Count the occurrence of each candidate word.
-  while (sin >> buf) {
+  while (*sin >> buf) {
     auto it = hash.find(buf);
     if (it != hash.end()) {
       ++it->second;
@@ -132,7 +132,7 @@ int main(int argc, char *argv[]) {
       s += ' ';
     }
     istringstream sin(s);
-    vector<string> items = Search_frequent_items(sin, k);
+    vector<string> items = Search_frequent_items(&sin, k);
     check_ans(&stream, k, &items);
   }
   return 0;

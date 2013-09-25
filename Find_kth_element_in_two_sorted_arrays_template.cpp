@@ -56,9 +56,8 @@ T find_kth_in_two_sorted_arrays(
 }
 */
 // @include
-template <typename T>
-T find_kth_in_two_sorted_arrays(const vector<T> &A, const vector<T> &B,
-                                int k) {
+int find_kth_in_two_sorted_arrays(const vector<int> &A, const vector<int> &B,
+                                  int k) {
   // Lower bound of elements we will choose in A.
   int l = max(0, static_cast<int>(k - B.size()));
   // Upper bound of elements we will choose in A.
@@ -66,10 +65,10 @@ T find_kth_in_two_sorted_arrays(const vector<T> &A, const vector<T> &B,
 
   while (l < u) {
     int x = l + ((u - l) >> 1);
-    T A_x_1 = (x <= 0 ? numeric_limits<T>::min() : A[x - 1]);
-    T A_x = (x >= A.size() ? numeric_limits<T>::max() : A[x]);
-    T B_k_x_1 = (k - x <= 0 ? numeric_limits<T>::min() : B[k - x - 1]);
-    T B_k_x = (k - x >= B.size() ? numeric_limits<T>::max() : B[k - x]);
+    int A_x_1 = (x <= 0 ? numeric_limits<int>::min() : A[x - 1]);
+    int A_x = (x >= A.size() ? numeric_limits<int>::max() : A[x]);
+    int B_k_x_1 = (k - x <= 0 ? numeric_limits<int>::min() : B[k - x - 1]);
+    int B_k_x = (k - x >= B.size() ? numeric_limits<int>::max() : B[k - x]);
 
     if (A_x < B_k_x_1) {
       l = x + 1;
@@ -81,8 +80,8 @@ T find_kth_in_two_sorted_arrays(const vector<T> &A, const vector<T> &B,
     }
   }
 
-  T A_l_1 = l <= 0 ? numeric_limits<T>::min() : A[l - 1];
-  T B_k_l_1 = k - l - 1 < 0 ? numeric_limits<T>::min() : B[k - l - 1];
+  int A_l_1 = l <= 0 ? numeric_limits<int>::min() : A[l - 1];
+  int B_k_l_1 = k - l - 1 < 0 ? numeric_limits<int>::min() : B[k - l - 1];
   return max(A_l_1, B_k_l_1);
 }
 // @exclude

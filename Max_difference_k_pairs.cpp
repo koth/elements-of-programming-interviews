@@ -17,13 +17,12 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-template <typename T>
-T max_k_pairs_profits(const vector<T>& A, int k) {
-  vector<T> k_sum(k << 1, numeric_limits<T>::min());
+int max_k_pairs_profits(const vector<int>& A, int k) {
+  vector<int> k_sum(k << 1, numeric_limits<int>::min());
   for (int i = 0; i < A.size(); ++i) {
-    vector<T> pre_k_sum(k_sum);
+    vector<int> pre_k_sum(k_sum);
     for (int j = 0, sign = -1; j < k_sum.size() && j <= i; ++j, sign *= -1) {
-      T diff = sign * A[i] + (j == 0 ? 0 : pre_k_sum[j - 1]);
+      int diff = sign * A[i] + (j == 0 ? 0 : pre_k_sum[j - 1]);
       k_sum[j] = max(diff, pre_k_sum[j]);
     }
   }
@@ -31,10 +30,9 @@ T max_k_pairs_profits(const vector<T>& A, int k) {
 }
 // @exclude
 
-// O(n^k) checking answer
-template <typename T>
-void check_ans_helper(const vector<T> &A, int l, int k,
-                      int pre, T ans, T* max_ans) {
+// O(n^k) checking answer.
+void check_ans_helper(const vector<int> &A, int l, int k,
+                      int pre, int ans, int* max_ans) {
   if (l == k) {
     *max_ans = max(*max_ans, ans);
   } else {
@@ -45,9 +43,8 @@ void check_ans_helper(const vector<T> &A, int l, int k,
   }
 }
 
-template <typename T>
-T check_ans(const vector<T> &A, int k) {
-  T ans = 0, max_ans = numeric_limits<T>::min();
+int check_ans(const vector<int> &A, int k) {
+  int ans = 0, max_ans = numeric_limits<int>::min();
 
   check_ans_helper(A, 0, k << 1, 0, ans, &max_ans);
   cout << "max_ans = " << max_ans << endl;
@@ -57,7 +54,7 @@ T check_ans(const vector<T> &A, int k) {
 int main(int argc, char *argv[]) {
   default_random_engine gen((random_device())());
   int n = 40, k = 4;
-  // random tests for n = 40, k = 4 for 100 times
+  // random tests for n = 40, k = 4 for 100 times/
   for (int times = 0; times < 100; ++times) {
     vector<int> A;
     uniform_int_distribution<int> dis(0, 99);

@@ -9,9 +9,10 @@ using std::unique_ptr;
 // @include
 template <typename T>
 BinarySearchTree<T>* find_first_larger_k_with_k_exist(
-    const unique_ptr<BinarySearchTree<T>>& r, const T &k) {
+    const unique_ptr<BinarySearchTree<T>>& r,
+    const T& k) {
   bool found_k = false;
-  BinarySearchTree<T> *curr = r.get(), *first = nullptr;
+  BinarySearchTree<T>* curr = r.get(), *first = nullptr;
 
   while (curr) {
     if (curr->data == k) {
@@ -20,7 +21,7 @@ BinarySearchTree<T>* find_first_larger_k_with_k_exist(
     } else if (curr->data > k) {
       first = curr;
       curr = curr->left.get();
-    } else {  // curr->data < k
+    } else {  // curr->data < k.
       curr = curr->right.get();
     }
   }

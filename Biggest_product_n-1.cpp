@@ -20,18 +20,17 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-template <typename T>
-T find_biggest_n_1_product(const vector<T> &A) {
+int find_biggest_n_1_product(const vector<int> &A) {
   // Build forward product L, and backward product R.
-  vector<T> L, R(A.size());
-  partial_sum(A.cbegin(), A.cend(), back_inserter(L), multiplies<T>());
-  partial_sum(A.crbegin(), A.crend(), R.rbegin(), multiplies<T>());
+  vector<int> L, R(A.size());
+  partial_sum(A.cbegin(), A.cend(), back_inserter(L), multiplies<int>());
+  partial_sum(A.crbegin(), A.crend(), R.rbegin(), multiplies<int>());
 
   // Find the biggest product of (n - 1) numbers.
-  T max_product = numeric_limits<T>::min();
+  int max_product = numeric_limits<int>::min();
   for (int i = 0; i < A.size(); ++i) {
-    T forward = i > 0 ? L[i - 1] : 1;
-    T backward = i + 1 < A.size() ? R[i + 1] : 1;
+    int forward = i > 0 ? L[i - 1] : 1;
+    int backward = i + 1 < A.size() ? R[i + 1] : 1;
     max_product = max(max_product, forward * backward);
   }
   return max_product;
@@ -39,11 +38,10 @@ T find_biggest_n_1_product(const vector<T> &A) {
 // @exclude
 
 // n^2 checking.
-template <typename T>
-T check_ans(const vector<T> &A) {
-  T max_product = numeric_limits<T>::min();
+int check_ans(const vector<int> &A) {
+  int max_product = numeric_limits<int>::min();
   for (int i = 0; i < A.size(); ++i) {
-    T product = 1;
+    int product = 1;
     for (int j = 0; j < i; ++j) {
       product *= A[j];
     }

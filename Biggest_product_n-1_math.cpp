@@ -16,8 +16,7 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-template <typename T>
-T find_biggest_n_1_product(const vector<T> &A) {
+int find_biggest_n_1_product(const vector<int> &A) {
   int zero_count = 0, pos_count = 0, neg_count = 0;
   int zero_idx = -1, s_neg_idx = -1, b_neg_idx = -1, s_pos_idx = -1;
 
@@ -63,7 +62,7 @@ T find_biggest_n_1_product(const vector<T> &A) {
     }
   }
 
-  T product = 1;
+  int product = 1;
   for (int i = 0; i < A.size(); ++i) {
     if (i != x) {
       product *= A[i];
@@ -74,11 +73,10 @@ T find_biggest_n_1_product(const vector<T> &A) {
 // @exclude
 
 // n^2 checking
-template <typename T>
-T check_ans(const vector<T> &A) {
-  T max_product = numeric_limits<T>::min();
+int check_ans(const vector<int> &A) {
+  int max_product = numeric_limits<int>::min();
   for (int i = 0; i < A.size(); ++i) {
-    T product = 1;
+    int product = 1;
     for (int j = 0; j < i; ++j) {
       product *= A[j];
     }

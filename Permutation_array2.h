@@ -8,8 +8,7 @@
 using std::vector;
 
 // @include
-template <typename T>
-void apply_permutation2(vector<int>* perm, vector<T>* A) {
+void apply_permutation2(vector<int>* perm, vector<int>* A) {
   for (int i = 0; i < A->size(); ++i) {
     // Traverse the cycle to see if i is the min element.
     bool is_min = true;
@@ -24,10 +23,10 @@ void apply_permutation2(vector<int>* perm, vector<T>* A) {
 
     if (is_min) {
       int a = i;
-      T temp = (*A)[i];
+      int temp = (*A)[i];
       do {
         int next_a = (*perm)[a];
-        T next_temp = (*A)[next_a];
+        int next_temp = (*A)[next_a];
         (*A)[next_a] = temp;
         a = next_a, temp = next_temp;
       } while (a != i);

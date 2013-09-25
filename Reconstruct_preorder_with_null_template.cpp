@@ -21,13 +21,12 @@ using std::vector;
 
 // @include
 template <typename T>
-BinaryTree<T>* reconstruct_preorder(
-    const vector<T*>& preorder) {
+BinaryTree<T>* reconstruct_preorder(const vector<T*>& preorder) {
   stack<BinaryTree<T>*> s;
   for (auto it = preorder.crbegin(); it != preorder.crend(); ++it) {
     if (!*it) {
       s.emplace(nullptr);
-    } else {  // non-nullptr
+    } else {  // non-nullptr.
       auto* l = s.top();
       s.pop();
       auto* r = s.top();

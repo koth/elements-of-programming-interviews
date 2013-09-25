@@ -23,44 +23,38 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-template <typename DistanceType>
 struct GraphVertex {
   // distance stores (dis, #edges) pair.
-  pair<DistanceType, int> distance = {numeric_limits<DistanceType>::max(), 0};
-  vector<pair<GraphVertex<DistanceType>*, DistanceType>> edges;
+  pair<int, int> distance = {numeric_limits<int>::max(), 0};
+  vector<pair<GraphVertex*, int>> edges;
   int id;  // the id of this vertex.
   GraphVertex* pred = nullptr;  // the predecessor in the shortest path.
 };
 
-template <typename DistanceType>
 struct Comp {
-  bool operator()(const GraphVertex<DistanceType>* lhs,
-                  const GraphVertex<DistanceType>* rhs) const {
+  bool operator()(const GraphVertex* lhs, const GraphVertex* rhs) const {
     return lhs->distance.first < rhs->distance.first ||
            (lhs->distance.first == rhs->distance.first &&
             lhs->distance.second < rhs->distance.second);
   }
 };
 
-template <typename DistanceType>
-void output_shortest_path(GraphVertex<DistanceType>*& v) {
+void output_shortest_path(GraphVertex*& v) {
   if (v) {
     output_shortest_path(v->pred);
     cout << v->id << " ";
   }
 }
 
-template <typename DistanceType>
-void Dijkstra_shortest_path(GraphVertex<DistanceType>* s,
-                            GraphVertex<DistanceType>* t) {
+void Dijkstra_shortest_path(GraphVertex* s, GraphVertex* t) {
   // Initialization the distance of starting point.
   s->distance = {0, 0};
-  set<GraphVertex<DistanceType>*, Comp<DistanceType>> node_set;
+  set<GraphVertex*, Comp> node_set;
   node_set.emplace(s);
 
   while (!node_set.empty()) {
     // Extract the minimum distance vertex from heap.
-    GraphVertex<DistanceType>* u = *node_set.cbegin();
+    GraphVertex* u = *node_set.cbegin();
     if (u == t) {
       break;
     }
@@ -68,7 +62,7 @@ void Dijkstra_shortest_path(GraphVertex<DistanceType>* s,
 
     // Relax neighboring vertices of u.
     for (const auto &v : u->edges) {
-      DistanceType v_distance = u->distance.first + v.second;
+      int v_distance = u->distance.first + v.second;
       int v_num_edges = u->distance.second + 1;
       if (v.first->distance.first > v_distance ||
           (v.first->distance.first == v_distance &&
@@ -88,45 +82,45 @@ void Dijkstra_shortest_path(GraphVertex<DistanceType>* s,
 
 // DBH test
 void test() {
-  vector<GraphVertex<int>> G;
+  vector<GraphVertex> G;
   for (int i = 0; i < 9; ++i) {
-    G.emplace_back(GraphVertex<int>());
+    G.emplace_back(GraphVertex());
     G[i].id = i;
   }
 
   // G[0] is the source node that connects to 8 other nodes.
-  G[0].edges.push_back(pair<GraphVertex<int>*, int>(&G[1], 13));  // 0-1
-  G[1].edges.push_back(pair<GraphVertex<int>*, int>(&G[0], 13));  // 1-0
+  G[0].edges.push_back(pair<GraphVertex*, int>(&G[1], 13));  // 0-1
+  G[1].edges.push_back(pair<GraphVertex*, int>(&G[0], 13));  // 1-0
 
-  G[0].edges.push_back(pair<GraphVertex<int>*, int>(&G[2], 24));  // 0-2
-  G[2].edges.push_back(pair<GraphVertex<int>*, int>(&G[0], 24));  // 2-0
+  G[0].edges.push_back(pair<GraphVertex*, int>(&G[2], 24));  // 0-2
+  G[2].edges.push_back(pair<GraphVertex*, int>(&G[0], 24));  // 2-0
 
-  G[0].edges.push_back(pair<GraphVertex<int>*, int>(&G[3], 28));  // 0-3
-  G[3].edges.push_back(pair<GraphVertex<int>*, int>(&G[0], 28));  // 3-0
+  G[0].edges.push_back(pair<GraphVertex*, int>(&G[3], 28));  // 0-3
+  G[3].edges.push_back(pair<GraphVertex*, int>(&G[0], 28));  // 3-0
 
-  G[0].edges.push_back(pair<GraphVertex<int>*, int>(&G[4], 25));  // 0-4
-  G[4].edges.push_back(pair<GraphVertex<int>*, int>(&G[0], 25));  // 4-0
+  G[0].edges.push_back(pair<GraphVertex*, int>(&G[4], 25));  // 0-4
+  G[4].edges.push_back(pair<GraphVertex*, int>(&G[0], 25));  // 4-0
 
-  G[0].edges.push_back(pair<GraphVertex<int>*, int>(&G[5], 30));  // 0-5
-  G[5].edges.push_back(pair<GraphVertex<int>*, int>(&G[0], 30));  // 5-0
+  G[0].edges.push_back(pair<GraphVertex*, int>(&G[5], 30));  // 0-5
+  G[5].edges.push_back(pair<GraphVertex*, int>(&G[0], 30));  // 5-0
 
-  G[0].edges.push_back(pair<GraphVertex<int>*, int>(&G[6], 31));  // 0-6
-  G[6].edges.push_back(pair<GraphVertex<int>*, int>(&G[0], 31));  // 6-0
+  G[0].edges.push_back(pair<GraphVertex*, int>(&G[6], 31));  // 0-6
+  G[6].edges.push_back(pair<GraphVertex*, int>(&G[0], 31));  // 6-0
 
-  G[0].edges.push_back(pair<GraphVertex<int>*, int>(&G[7], 10));  // 0-7
-  G[7].edges.push_back(pair<GraphVertex<int>*, int>(&G[0], 10));  // 7-0
+  G[0].edges.push_back(pair<GraphVertex*, int>(&G[7], 10));  // 0-7
+  G[7].edges.push_back(pair<GraphVertex*, int>(&G[0], 10));  // 7-0
 
-  G[0].edges.push_back(pair<GraphVertex<int>*, int>(&G[8], 29));  // 0-8
-  G[8].edges.push_back(pair<GraphVertex<int>*, int>(&G[0], 29));  // 8-0
+  G[0].edges.push_back(pair<GraphVertex*, int>(&G[8], 29));  // 0-8
+  G[8].edges.push_back(pair<GraphVertex*, int>(&G[0], 29));  // 8-0
 
-  G[1].edges.push_back(pair<GraphVertex<int>*, int>(&G[8], 7));  // 1-8
-  G[8].edges.push_back(pair<GraphVertex<int>*, int>(&G[1], 7));  // 8-1
+  G[1].edges.push_back(pair<GraphVertex*, int>(&G[8], 7));  // 1-8
+  G[8].edges.push_back(pair<GraphVertex*, int>(&G[1], 7));  // 8-1
 
-  G[2].edges.push_back(pair<GraphVertex<int>*, int>(&G[8], 1));  // 2-8
-  G[8].edges.push_back(pair<GraphVertex<int>*, int>(&G[2], 1));  // 8-2
+  G[2].edges.push_back(pair<GraphVertex*, int>(&G[8], 1));  // 2-8
+  G[8].edges.push_back(pair<GraphVertex*, int>(&G[2], 1));  // 8-2
 
-  G[7].edges.push_back(pair<GraphVertex<int>*, int>(&G[8], 16));  // 7-8
-  G[8].edges.push_back(pair<GraphVertex<int>*, int>(&G[7], 16));  // 8-7
+  G[7].edges.push_back(pair<GraphVertex*, int>(&G[8], 16));  // 7-8
+  G[8].edges.push_back(pair<GraphVertex*, int>(&G[7], 16));  // 8-7
 
   int s = 0;  // Source is G[0].
   int t = 2;  // Destination is G[2].
@@ -151,9 +145,9 @@ int main(int argc, char *argv[]) {
     uniform_int_distribution<int> dis(2, 1000);
     n = dis(gen);
   }
-  vector<GraphVertex<int>> G;
+  vector<GraphVertex> G;
   for (int i = 0; i < n; ++i) {
-    G.emplace_back(GraphVertex<int>());
+    G.emplace_back(GraphVertex());
   }
   uniform_int_distribution<int> dis(1, n * (n - 1) >> 1);
   int m = dis(gen);
@@ -184,7 +178,7 @@ int main(int argc, char *argv[]) {
   int s = dis_n(gen), t = dis_n(gen);
   for (int i = 0; i < G.size(); ++i) {
     G[i].id = i;
-    for (const pair<GraphVertex<int>*, int> e : G[i].edges) {
+    for (const pair<GraphVertex*, int> e : G[i].edges) {
       cout << (e.first - &G[0]) << ' ' << e.second << ',';
     }
     cout << endl;

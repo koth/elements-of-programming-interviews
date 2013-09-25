@@ -21,17 +21,16 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-template <typename T>
-void approximate_sort(istringstream &sin, int k) {
-  priority_queue<T, vector<T>, greater<T>> min_heap;
+void approximate_sort(istringstream* sin, int k) {
+  priority_queue<int, vector<int>, greater<int>> min_heap;
   // Firstly push k elements into min_heap.
-  T x;
-  for (int i = 0; i < k && sin >> x; ++i) {
+  int x;
+  for (int i = 0; i < k && *sin >> x; ++i) {
     min_heap.push(x);
   }
 
   // Extract the minimum one for every incoming element.
-  while (sin >> x) {
+  while (*sin >> x) {
     min_heap.push(x);
     cout << min_heap.top() << endl;
     min_heap.pop();
@@ -53,7 +52,7 @@ void simple_test() {
     ss << a << ' ';
   }
   istringstream sin(ss.str());
-  approximate_sort<int>(sin, 3);
+  approximate_sort(&sin, 3);
 }
 
 int main(int argc, char *argv[]) {
@@ -84,6 +83,6 @@ int main(int argc, char *argv[]) {
     ss << a << ' ';
   }
   istringstream sin(ss.str());
-  approximate_sort<int>(sin, n - 1);
+  approximate_sort(&sin, n - 1);
   return 0;
 }

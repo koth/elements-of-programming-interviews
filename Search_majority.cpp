@@ -18,10 +18,10 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-string majority_search(istringstream &sin) {
+string majority_search(istringstream* sin) {
   string candidate, buf;
   int count = 0;
-  while (sin >> buf) {
+  while (*sin >> buf) {
     if (count == 0) {
       candidate = buf;
       count = 1;
@@ -92,7 +92,7 @@ int main(int argc, char *argv[]) {
       s += ' ';
     }
     istringstream sin(s);
-    string ret(majority_search(sin));
+    string ret(majority_search(&sin));
     cout << ret << endl;
     check_ans(stream, ret);
   }

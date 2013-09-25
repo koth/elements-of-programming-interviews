@@ -18,10 +18,9 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-template <typename HeightType>
-HeightType find_battery_capacity(const vector<HeightType>& h) {
-  HeightType min_height = numeric_limits<HeightType>::max(), capacity = 0;
-  for (const HeightType &height : h) {
+int find_battery_capacity(const vector<int>& h) {
+  int min_height = numeric_limits<int>::max(), capacity = 0;
+  for (const int &height : h) {
     capacity = max(capacity, height - min_height);
     min_height = min(min_height, height);
   }
@@ -29,11 +28,9 @@ HeightType find_battery_capacity(const vector<HeightType>& h) {
 }
 // @exclude
 
-// O(n^2) checking answer
-template <typename HeightType>
-HeightType check_ans(const vector<HeightType>& h) {
-  HeightType cap = 0;
-
+// O(n^2) checking answer.
+int check_ans(const vector<int>& h) {
+  int cap = 0;
   for (int i = 1; i < h.size(); ++i) {
     for (int j = 0; j < i; ++j) {
       cap = max(cap, h[i] - h[j]);
