@@ -18,7 +18,7 @@ using std::unordered_set;
 template <typename T>
 BinaryTree<T>* LCA(const unique_ptr<BinaryTree<T>>& a,
                    const unique_ptr<BinaryTree<T>>& b) {
-  auto *i = a.get(), *j = b.get();
+  auto* i = a.get(), *j = b.get();
   unordered_set<const BinaryTree<T>*> hash;
   while (i || j) {
     if (i) {
@@ -39,7 +39,7 @@ BinaryTree<T>* LCA(const unique_ptr<BinaryTree<T>>& a,
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   //      3
   //    2   5
   //  1    4 6

@@ -13,7 +13,7 @@ using std::unique_ptr;
 
 // @include
 template <typename T>
-void print_BST_in_sorted_order(const unique_ptr<BinarySearchTree<T>> &n) {
+void print_BST_in_sorted_order(const unique_ptr<BinarySearchTree<T>>& n) {
   stack<const BinarySearchTree<T>*> s;
   const BinarySearchTree<T>* curr = n.get();
 
@@ -31,7 +31,7 @@ void print_BST_in_sorted_order(const unique_ptr<BinarySearchTree<T>> &n) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   //      3
   //    2   5
   //  1    4 6

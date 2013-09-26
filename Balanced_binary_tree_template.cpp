@@ -15,7 +15,7 @@ using std::unique_ptr;
 
 // @include
 template <typename T>
-int get_height(const unique_ptr<BinaryTree<T>> &n) {
+int get_height(const unique_ptr<BinaryTree<T>>& n) {
   if (!n) {
     return -1;  // base case.
   }
@@ -36,12 +36,12 @@ int get_height(const unique_ptr<BinaryTree<T>> &n) {
 }
 
 template <typename T>
-bool is_balanced_binary_tree(const unique_ptr<BinaryTree<T>> &n) {
+bool is_balanced_binary_tree(const unique_ptr<BinaryTree<T>>& n) {
   return get_height(n) != -2;
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   //  balanced binary tree test
   //      3
   //    2   5
@@ -55,7 +55,7 @@ int main(int argc, char *argv[]) {
   root->right->right = unique_ptr<BinaryTree<int>>(new BinaryTree<int>());
   assert(is_balanced_binary_tree<int>(root) == true);
   cout << boolalpha << is_balanced_binary_tree<int>(root) << endl;
-  // non-balanced binary tree test
+  // Non-balanced binary tree test.
   root = unique_ptr<BinaryTree<int>>(new BinaryTree<int>());
   root->left = unique_ptr<BinaryTree<int>>(new BinaryTree<int>());
   root->left->left = unique_ptr<BinaryTree<int>>(new BinaryTree<int>());

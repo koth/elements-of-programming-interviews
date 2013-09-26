@@ -33,9 +33,7 @@ string rand_string(int len) {
 class Trie {
  public:
   // @exclude
-  virtual ~Trie() {
-    clear();
-  }
+  virtual ~Trie() { clear(); }
   // @include
   bool insert(const string& s) {
     auto* p = root_.get();
@@ -49,7 +47,7 @@ class Trie {
     // s already existed in this trie.
     if (p->isString) {
       return false;
-    } else {  // p->isString == false.
+    } else {               // p->isString == false.
       p->isString = true;  // inserts s into this trie.
       return true;
     }
@@ -68,9 +66,7 @@ class Trie {
     return {};
   }
   // @exclude
-  void clear() {
-    clear(&root_);
-  }
+  void clear() { clear(&root_); }
   // @include
 
  private:
@@ -82,7 +78,7 @@ class Trie {
   unique_ptr<TrieNode> root_ = unique_ptr<TrieNode>(new TrieNode);
   // @exclude
   void clear(unique_ptr<TrieNode>* p) {
-    for (auto &e : (*p)->leaves) {
+    for (auto& e : (*p)->leaves) {
       if (e.second) {
         clear(&(e.second));
       }
@@ -102,7 +98,7 @@ string find_shortest_prefix(const string& s, const unordered_set<string>& D) {
 }
 // @exclude
 
-string check_ans(const string &s, unordered_set<string> &D) {
+string check_ans(const string& s, unordered_set<string>& D) {
   int len = 0;
   for (auto iter = D.cbegin(); iter != D.cend(); ++iter) {
     int i;
@@ -122,7 +118,7 @@ string check_ans(const string &s, unordered_set<string> &D) {
   }
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 100; ++times) {
     unordered_set<string> D;
@@ -139,7 +135,7 @@ int main(int argc, char *argv[]) {
       uniform_int_distribution<int> dis(1, 10);
       D.emplace(rand_string(dis(gen)));
     }
-    cout << s << ' '  << "shortest prefix = " << find_shortest_prefix(s, D)
+    cout << s << ' ' << "shortest prefix = " << find_shortest_prefix(s, D)
          << endl;
     assert(find_shortest_prefix(s, D) == check_ans(s, D));
   }

@@ -13,7 +13,7 @@ using std::unique_ptr;
 
 // @include
 template <typename T>
-void print_binary_tree_level_order(const unique_ptr<BinaryTree<T>> &n) {
+void print_binary_tree_level_order(const unique_ptr<BinaryTree<T>>& n) {
   // Prevent empty tree.
   if (!n) {
     return;
@@ -39,7 +39,7 @@ void print_binary_tree_level_order(const unique_ptr<BinaryTree<T>> &n) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   //      3
   //    2   5
   //  1    4 6

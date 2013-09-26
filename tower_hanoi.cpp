@@ -26,7 +26,7 @@ void transfer(int n, array<stack<int>, 3>& pegs, int from, int to, int use) {
 
 void move_tower_hanoi(int n) {
   array<stack<int>, 3> pegs;
-  // Initialize pegs
+  // Initialize pegs.
   for (int i = n; i >= 1; --i) {
     pegs[0].push(i);
   }
@@ -35,7 +35,7 @@ void move_tower_hanoi(int n) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   int n;
   if (argc == 2) {
     n = atoi(argv[1]);

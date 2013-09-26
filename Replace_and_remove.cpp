@@ -32,7 +32,8 @@ string replace_and_remove(string s) {
   write_idx = s.size() - 1;
   while (cur_idx >= 0) {
     if (s[cur_idx] == 'a') {
-      s[write_idx--] = s[write_idx--] = 'd';
+      s[write_idx--] = 'd';
+      s[write_idx--] = 'd';
     } else {
       s[write_idx--] = s[cur_idx];
     }

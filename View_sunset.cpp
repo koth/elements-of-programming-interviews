@@ -19,12 +19,12 @@ using std::vector;
 
 // @include
 template <typename T>
-vector<pair<int, T>> examine_buildings_with_sunset(istringstream &sin) {
+vector<pair<int, T>> examine_buildings_with_sunset(istringstream* sin) {
   int idx = 0;  // building's index.
   T height;
   // Stores (building_idx, building_height) pair with sunset views.
   vector<pair<int, T>> buildings_with_sunset;
-  while (sin >> height) {
+  while (*sin >> height) {
     while (!buildings_with_sunset.empty() &&
            height >= buildings_with_sunset.back().second) {
       buildings_with_sunset.pop_back();
@@ -37,7 +37,7 @@ vector<pair<int, T>> examine_buildings_with_sunset(istringstream &sin) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n;
@@ -54,7 +54,7 @@ int main(int argc, char *argv[]) {
       ss << height << ' ';
     }
     istringstream sin(ss.str());
-    vector<pair<int, int>> res = examine_buildings_with_sunset<int>(sin);
+    vector<pair<int, int>> res = examine_buildings_with_sunset<int>(&sin);
     cout << res[0].first << ' ' << res[0].second << endl;
     for (int i = 1; i < res.size(); ++i) {
       cout << res[i].first << ' ' << res[i].second << endl;

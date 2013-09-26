@@ -20,9 +20,9 @@ struct BinaryTree {
 
 // @include
 template <typename T>
-BinaryTree<T>* find_kth_node_binary_tree(
+const BinaryTree<T>* find_kth_node_binary_tree(
     const unique_ptr<BinaryTree<T>>& root, int k) {
-  auto* n = root.get();
+  const auto* n = root.get();
   while (n) {
     int left_size = n->left ? n->left->size : 0;
     if (left_size < k - 1) {
@@ -30,7 +30,7 @@ BinaryTree<T>* find_kth_node_binary_tree(
       n = n->right.get();
     } else if (left_size == k - 1) {
       return n;
-    } else {  // left_size > k - 1
+    } else {  // left_size > k - 1.
       n = n->left.get();
     }
   }

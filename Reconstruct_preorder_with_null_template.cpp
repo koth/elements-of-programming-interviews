@@ -52,7 +52,7 @@ void gen_preorder_with_null(const unique_ptr<BinaryTree<T>>& n,
   gen_preorder_with_null(n->right, p);
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   // Random test 1000 times.
   for (int times = 0; times < 1000; ++times) {
@@ -67,8 +67,7 @@ int main(int argc, char *argv[]) {
     unique_ptr<BinaryTree<int>> root = generate_rand_binary_tree<int>(n);
     vector<int*> p;
     gen_preorder_with_null(root, &p);
-    auto x =
-        unique_ptr<BinaryTree<int>>(reconstruct_preorder<int>(p));
+    auto x = unique_ptr<BinaryTree<int>>(reconstruct_preorder<int>(p));
     assert(is_two_binary_trees_equal(root, x));
     delete_binary_tree(&root);
     delete_binary_tree(&x);

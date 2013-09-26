@@ -16,7 +16,8 @@ using std::unique_ptr;
 // @include
 template <typename T>
 pair<BinaryTree<T>*, int> find_non_k_balanced_node_helper(
-    const unique_ptr<BinaryTree<T>> &n, int k) {
+    const unique_ptr<BinaryTree<T>>& n,
+    int k) {
   // Empty tree.
   if (!n) {
     return {nullptr, 0};
@@ -41,13 +42,13 @@ pair<BinaryTree<T>*, int> find_non_k_balanced_node_helper(
 }
 
 template <typename T>
-BinaryTree<T>* find_non_k_balanced_node(
-    const unique_ptr<BinaryTree<T>> &n, int k) {
+BinaryTree<T>* find_non_k_balanced_node(const unique_ptr<BinaryTree<T>>& n,
+                                        int k) {
   return find_non_k_balanced_node_helper<T>(n, k).first;
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   //      3
   //    2   5
   //  1    4 6

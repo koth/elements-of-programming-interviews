@@ -26,7 +26,7 @@ template <typename T>
 BinaryTree<T>* LCA(const unique_ptr<BinaryTree<T>>& a,
                    const unique_ptr<BinaryTree<T>>& b) {
   int depth_a = get_depth(a), depth_b = get_depth(b);
-  auto *i = a.get(), *j = b.get();
+  auto* i = a.get(), *j = b.get();
   if (depth_b > depth_a) {
     swap(i, j);
   }
@@ -45,7 +45,7 @@ BinaryTree<T>* LCA(const unique_ptr<BinaryTree<T>>& a,
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   //      3
   //    2   5
   //  1    4 6

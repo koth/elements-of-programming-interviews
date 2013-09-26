@@ -1,8 +1,10 @@
 // Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
 #include <cassert>
+#include <memory>
 #include <stack>
 
+using std::make_shared;
 using std::shared_ptr;
 using std::stack;
 
@@ -30,13 +32,13 @@ void search_postings_list(const shared_ptr<node_t<T>>& L) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   shared_ptr<node_t<int>> L = nullptr, curr;
   curr = L;
-  // build a linked list L->1->2->3->4->5->nullptr
+  // Build a linked list L->1->2->3->4->5->nullptr.
   for (size_t i = 0; i < 5; ++i) {
     shared_ptr<node_t<int>> temp =
-        shared_ptr<node_t<int>>(new node_t<int>{-1, nullptr, nullptr});
+        make_shared<node_t<int>>(node_t<int>{-1, nullptr, nullptr});
     if (curr) {
       curr->next = temp;
       curr = temp;
@@ -44,9 +46,9 @@ int main(int argc, char *argv[]) {
       curr = L = temp;
     }
   }
-  L->jump = nullptr;  // no jump from 1
+  L->jump = nullptr;                    // no jump from 1
   L->next->jump = L->next->next->next;  // 2's jump points to 4
-  L->next->next->jump = L;  // 3's jump points to 1
+  L->next->next->jump = L;              // 3's jump points to 1
   L->next->next->next->jump = nullptr;  // no jump from 4
   L->next->next->next->next->jump =
       L->next->next->next->next;  // 5's jump points to 5

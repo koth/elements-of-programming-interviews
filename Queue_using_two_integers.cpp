@@ -15,7 +15,7 @@ using std::numeric_limits;
 // @include
 class Queue {
  public:
-  void enqueue(const unsigned& x) {
+  void enqueue(unsigned x) {
     if (size_ >= max_size_) {
       throw length_error("queue overflow");
     }
@@ -65,7 +65,6 @@ int main(int argc, char* argv[]) {
   catch (const exception& e) {
     cout << e.what() << endl;
   }
-  ;
   q.enqueue(0);
   q.enqueue(0);
   q.enqueue(0);
@@ -82,6 +81,5 @@ int main(int argc, char* argv[]) {
   catch (const exception& e) {
     cout << e.what() << endl;
   }
-  ;
   return 0;
 }

@@ -36,7 +36,7 @@ list<BinaryTree<T>*> connect_leaves(const unique_ptr<BinaryTree<T>>& n) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   //      3
   //    2   5
   //  1    4 6
@@ -55,7 +55,7 @@ int main(int argc, char *argv[]) {
   // should output 1, 4, 6
   list<BinaryTree<int>*> L = connect_leaves(root);
   vector<int> output;
-  for (const auto &l : L) {
+  for (const auto& l : L) {
     output.push_back(l->data);
     cout << l->data << endl;
   }

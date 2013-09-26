@@ -12,16 +12,16 @@ using std::unique_ptr;
 
 // @include
 template <typename T>
-BinaryTree<T>* LCA(const unique_ptr<BinaryTree<T>> &n,
-                   const unique_ptr<BinaryTree<T>> &a,
-                   const unique_ptr<BinaryTree<T>> &b) {
+BinaryTree<T>* LCA(const unique_ptr<BinaryTree<T>>& n,
+                   const unique_ptr<BinaryTree<T>>& a,
+                   const unique_ptr<BinaryTree<T>>& b) {
   if (!n) {  // empty subtree.
     return nullptr;
   } else if (n == a || n == b) {
     return n.get();
   }
 
-  auto *l_res = LCA(n->left, a, b), *r_res = LCA(n->right, a, b);
+  auto* l_res = LCA(n->left, a, b), *r_res = LCA(n->right, a, b);
   if (l_res && r_res) {
     return n.get();  // found a and b in different subtrees.
   } else {
@@ -30,7 +30,7 @@ BinaryTree<T>* LCA(const unique_ptr<BinaryTree<T>> &n,
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   //      3
   //    2   5
   //  1    4 6

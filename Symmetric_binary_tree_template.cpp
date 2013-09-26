@@ -31,7 +31,7 @@ bool is_symmetric(const unique_ptr<BinaryTree<T>>& n) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   // non symmetric tree test
   //      3
   //    2   5

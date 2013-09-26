@@ -14,9 +14,7 @@ using std::shared_ptr;
 template <typename T>
 class BinaryTree {
  public:
-  bool isLock() const {
-    return locked_;
-  }
+  bool isLock() const { return locked_; }
 
   void lock() {
     if (numChildreLocks_ == 0 && !locked_) {
@@ -52,17 +50,11 @@ class BinaryTree {
   }
 
   // @exclude
-  shared_ptr<BinaryTree<T>>& left() {
-    return left_;
-  }
+  shared_ptr<BinaryTree<T>>& left() { return left_; }
 
-  shared_ptr<BinaryTree<T>>& right() {
-    return right_;
-  }
+  shared_ptr<BinaryTree<T>>& right() { return right_; }
 
-  shared_ptr<BinaryTree<T>>& parent() {
-    return parent_;
-  }
+  shared_ptr<BinaryTree<T>>& parent() { return parent_; }
   // @include
  private:
   shared_ptr<BinaryTree<T>> left_, right_, parent_;
@@ -72,7 +64,7 @@ class BinaryTree {
 };
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   auto root = make_shared<BinaryTree<int>>(BinaryTree<int>());
   root->left() = make_shared<BinaryTree<int>>(BinaryTree<int>());
   root->left()->parent() = root;
@@ -82,21 +74,21 @@ int main(int argc, char *argv[]) {
   root->left()->left()->parent() = root->left();
   root->left()->right() = make_shared<BinaryTree<int>>(BinaryTree<int>());
   root->left()->right()->parent() = root->left();
-  // should output false
+  // Should output false.
   assert(!root->isLock());
   cout << boolalpha << root->isLock() << endl;
   root->lock();
-  // should output true
+  // Should output true.
   assert(root->isLock());
   cout << boolalpha << root->isLock() << endl;
   root->unLock();
   root->left()->lock();
   root->lock();
-  // should output false
+  // Should output false.
   assert(!root->isLock());
   cout << boolalpha << root->isLock() << endl;
   root->right()->lock();
-  // should output true
+  // Should output true.
   assert(root->right()->isLock());
   cout << boolalpha << root->isLock() << endl;
   return 0;

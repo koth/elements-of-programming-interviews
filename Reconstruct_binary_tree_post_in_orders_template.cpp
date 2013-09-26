@@ -30,12 +30,12 @@ BinaryTree<T>* reconstruct_post_in_orders_helper(
     return new BinaryTree<T>{post[post_e - 1],
       // Recursively build the left subtree.
       unique_ptr<BinaryTree<T>>(reconstruct_post_in_orders_helper<T>(
-        post, post_s, post_s + left_tree_size,
-        in, in_s, distance(in.cbegin(), it))),
+          post, post_s, post_s + left_tree_size,
+          in, in_s, distance(in.cbegin(), it))),
       // Recursively build the right subtree.
       unique_ptr<BinaryTree<T>>(reconstruct_post_in_orders_helper<T>(
-        post, post_s + left_tree_size, post_e - 1,
-        in, distance(in.cbegin(), it) + 1, in_e))
+          post, post_s + left_tree_size, post_e - 1,
+          in, distance(in.cbegin(), it) + 1, in_e))
       };
   }
   return nullptr;

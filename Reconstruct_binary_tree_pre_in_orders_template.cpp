@@ -30,12 +30,12 @@ BinaryTree<T>* reconstruct_pre_in_orders_helper(
     return new BinaryTree<T>{pre[pre_s],
       // Recursively build the left subtree.
       unique_ptr<BinaryTree<T>>(reconstruct_pre_in_orders_helper<T>(
-        pre, pre_s + 1, pre_s + 1 + left_tree_size,
-        in, in_s, distance(in.cbegin(), it))),
+          pre, pre_s + 1, pre_s + 1 + left_tree_size,
+          in, in_s, distance(in.cbegin(), it))),
       // Recursively build the right subtree.
       unique_ptr<BinaryTree<T>>(reconstruct_pre_in_orders_helper<T>(
-        pre, pre_s + 1 + left_tree_size, pre_e,
-        in, distance(in.cbegin(), it) + 1, in_e))
+          pre, pre_s + 1 + left_tree_size, pre_e,
+          in, distance(in.cbegin(), it) + 1, in_e))
       };
   }
   return nullptr;

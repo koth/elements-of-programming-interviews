@@ -32,7 +32,7 @@ BinaryTree<T>* find_successor(const unique_ptr<BinaryTree<T>>& node) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   //      3
   //    2   5
   //  1    4  6

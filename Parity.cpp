@@ -8,6 +8,7 @@
 #include "./Parity1.h"
 #include "./Parity2.h"
 #include "./Parity3.h"
+#include "./Parity4.h"
 
 using std::cout;
 using std::default_random_engine;
@@ -22,6 +23,7 @@ int main(int argc, char* argv[]) {
     long x = atol(argv[1]);
     assert(parity1(x) == parity3(x));
     assert(parity2(x) == parity3(x));
+    assert(parity3(x) == parity4(x));
     cout << "x = " << x << ", parity = " << parity3(x) << endl;
   } else {
     default_random_engine gen((random_device())());
@@ -30,6 +32,7 @@ int main(int argc, char* argv[]) {
       long x = dis(gen);
       assert(parity1(x) == parity3(x));
       assert(parity2(x) == parity3(x));
+      assert(parity4(x) == parity3(x));
       cout << "x = " << x << ", parity = " << parity3(x) << endl;
     }
   }

@@ -10,7 +10,7 @@ using std::string;
 using std::stringstream;
 
 // @include
-int eval(const string &s) {
+int eval(const string& s) {
   stack<int> eval_stack;
   stringstream ss(s);
   string symbol;
@@ -35,7 +35,7 @@ int eval(const string &s) {
           eval_stack.emplace(x / y);
           break;
       }
-    } else {  // number
+    } else {  // number.
       eval_stack.emplace(stoi(symbol));
     }
   }
@@ -43,7 +43,7 @@ int eval(const string &s) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   assert(0 == eval("2,-10,/"));
   assert(-5 == eval("-10,2,/"));
   assert(5 == eval("-10,-2,/"));

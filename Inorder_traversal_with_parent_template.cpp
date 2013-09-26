@@ -17,7 +17,7 @@ void inorder_traversal(const unique_ptr<BinaryTree<T>>& r) {
     return;
   }
 
-  BinaryTree<T> *prev = nullptr, *curr = r.get(), *next;
+  BinaryTree<T>* prev = nullptr, *curr = r.get(), *next;
   while (curr) {
     if (!prev || prev->left.get() == curr || prev->right.get() == curr) {
       if (curr->left) {
@@ -39,7 +39,7 @@ void inorder_traversal(const unique_ptr<BinaryTree<T>>& r) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   //      3
   //    2   5
   //  1    4 6
@@ -62,7 +62,7 @@ int main(int argc, char *argv[]) {
       unique_ptr<BinaryTree<int>>(new BinaryTree<int>{6, nullptr, nullptr});
   root->right->right->parent = root->right.get();
 
-  // should output 1 2 3 4 5 6
+  // Should output 1 2 3 4 5 6.
   inorder_traversal<int>(root);
   return 0;
 }

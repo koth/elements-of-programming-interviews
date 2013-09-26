@@ -44,7 +44,7 @@ void exterior_binary_tree(const unique_ptr<BinaryTree<T>>& root) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   //      3
   //    2   5
   //  1  0 4 6
