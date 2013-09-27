@@ -16,7 +16,7 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-const int base = 26, mod = 997;
+const int kBase = 26, kMod = 997;
 
 int rabin_karp(const string &t, const string &s) {
   if (s.size() > t.size()) {
@@ -24,11 +24,11 @@ int rabin_karp(const string &t, const string &s) {
   }
 
   int t_hash = 0, s_hash = 0;  // hash codes for the substring of t and s.
-  int power_s = 1;  // the modulo result of base^|s|.
+  int power_s = 1;  // the modulo result of kBase^|s|.
   for (int i = 0; i < s.size(); ++i) {
-    power_s = i ? power_s * base % mod : 1;
-    t_hash = (t_hash * base + t[i]) % mod;
-    s_hash = (s_hash * base + s[i]) % mod;
+    power_s = i ? power_s * kBase % kMod : 1;
+    t_hash = (t_hash * kBase + t[i]) % kMod;
+    s_hash = (s_hash * kBase + s[i]) % kMod;
   }
 
   for(int i = s.size(); i < t.size(); ++i) {
@@ -39,11 +39,11 @@ int rabin_karp(const string &t, const string &s) {
     }
 
     // Use rolling hash to compute the new hash code.
-    t_hash -= (t[i - s.size()] * power_s) % mod;
+    t_hash -= (t[i - s.size()] * power_s) % kMod;
     if (t_hash < 0) {
-      t_hash += mod;
+      t_hash += kMod;
     }
-    t_hash = (t_hash * base + t[i]) % mod;
+    t_hash = (t_hash * kBase + t[i]) % kMod;
   }
 
   // Try to match s and t[t.size() - s.size() : t.size() - 1].

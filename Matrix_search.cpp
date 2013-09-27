@@ -15,7 +15,7 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-bool matrix_search(const vector<vector<int>> &A, int x) {
+bool matrix_search(const vector<vector<int>>& A, int x) {
   int r = 0, c = A[0].size() - 1;
   while (r < A.size() && c >= 0) {
     if (A[r][c] == x) {
@@ -31,7 +31,7 @@ bool matrix_search(const vector<vector<int>> &A, int x) {
 // @exclude
 
 // O(n^2) solution for verifying answer.
-bool brute_force_search(const vector<vector<int>> &A, int x) {
+bool brute_force_search(const vector<vector<int>>& A, int x) {
   for (int i = 0; i < A.size(); ++i) {
     for (int j = 0; j < A[i].size(); ++j) {
       if (A[i][j] == x) {
@@ -42,7 +42,7 @@ bool brute_force_search(const vector<vector<int>> &A, int x) {
   return false;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 10000; ++times) {
     int n, m;

@@ -56,7 +56,7 @@ vector<string> Search_frequent_items(istringstream* sin, int k) {
   }
 
   // Reset hash for the following counting.
-  for (auto &it : hash) {
+  for (auto& it : hash) {
     it.second = 0;
   }
 
@@ -72,7 +72,7 @@ vector<string> Search_frequent_items(istringstream* sin, int k) {
   }
 
   vector<string> ret;
-  for (const pair<string, int> &it : hash) {
+  for (const pair<string, int>& it : hash) {
     // Select the word which occurs >= n / k times.
     if (it.second >= static_cast<double>(n) / k) {
       ret.emplace_back(it.first);
@@ -103,7 +103,7 @@ void check_ans(vector<string>* stream, int k, vector<string>* items) {
   assert(idx == items->size());
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     cout << times << endl;

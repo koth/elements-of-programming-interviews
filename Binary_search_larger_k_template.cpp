@@ -14,8 +14,7 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-template <typename T>
-int search_first_larger_k(const vector<T> &A, const T &k) {
+int search_first_larger_k(const vector<int>& A, int k) {
   int l = 0, r = A.size() - 1, res = -1;
   while (l <= r) {
     int m = l + ((r - l) >> 1);
@@ -30,8 +29,7 @@ int search_first_larger_k(const vector<T> &A, const T &k) {
 }
 // @exclude
 
-template <typename T>
-int check_ans(vector<T> &A, const T &k) {
+int check_ans(const vector<int>& A, int k) {
   for (int i = 0; i < A.size(); ++i) {
     if (A[i] > k) {
       return i;
@@ -40,7 +38,7 @@ int check_ans(vector<T> &A, const T &k) {
   return -1;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n;

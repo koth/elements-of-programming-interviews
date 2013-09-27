@@ -30,19 +30,15 @@ using std::vector;
 class Star {
  public:
   // The distance between this star to the Earth.
-  double distance() const {
-    return sqrt(x_ * x_ + y_ * y_ + z_ * z_);
-  }
+  double distance() const { return sqrt(x_ * x_ + y_ * y_ + z_ * z_); }
 
-  bool operator<(const Star &s) const {
-    return distance() < s.distance();
-  }
+  bool operator<(const Star& s) const { return distance() < s.distance(); }
 
   int ID_;
   double x_, y_, z_;
 };
 
-vector<Star> find_closest_k_stars(istringstream &sin, int k) {
+vector<Star> find_closest_k_stars(istringstream& sin, int k) {
   // Use max_heap to find the closest k stars.
   priority_queue<Star, vector<Star>> max_heap;
   string line;
@@ -82,7 +78,7 @@ vector<Star> find_closest_k_stars(istringstream &sin, int k) {
 }
 // @exclude
 
-int partition(vector<Star> *stars, int left, int right, int pivot_index) {
+int partition(vector<Star>* stars, int left, int right, int pivot_index) {
   double pivot_value((*stars)[pivot_index].distance());
   swap((*stars)[pivot_index], (*stars)[right]);
   int less_index = left;
@@ -124,7 +120,7 @@ vector<Star> select_k(vector<Star> stars, int k) {
   return closest_stars;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int num, k;
@@ -150,10 +146,10 @@ int main(int argc, char *argv[]) {
     string s;
     for (int i = 0; i < num; ++i) {
       stringstream ss;
-      ss << stars[i].ID_ << ',' << stars[i].x_ << ','
-         << stars[i].y_ << ',' << stars[i].z_ << endl;
+      ss << stars[i].ID_ << ',' << stars[i].x_ << ',' << stars[i].y_ << ','
+         << stars[i].z_ << endl;
       s += ss.str();
-      //cout << stars[i].ID_ << ' ' << stars[i].distance() << endl;
+      // cout << stars[i].ID_ << ' ' << stars[i].distance() << endl;
     }
     istringstream sin(s);
     vector<Star> closest_stars(find_closest_k_stars(sin, k));
@@ -161,7 +157,7 @@ int main(int argc, char *argv[]) {
     sort(selected_stars.begin(), selected_stars.end());
     sort(stars.begin(), stars.end());
     cout << k << endl;
-    //assert(stars[k - 1].ID_ == closest_stars[0].ID_);
+    // assert(stars[k - 1].ID_ == closest_stars[0].ID_);
     assert(stars[k - 1].distance() == selected_stars.back().distance());
   }
   return 0;

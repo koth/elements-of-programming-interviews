@@ -14,7 +14,7 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-int search_smallest_helper(const vector<int> &A, int l, int r) {
+int search_smallest_helper(const vector<int>& A, int l, int r) {
   if (l == r) {
     return l;
   }
@@ -24,7 +24,7 @@ int search_smallest_helper(const vector<int> &A, int l, int r) {
     return search_smallest_helper(A, m + 1, r);
   } else if (A[m] < A[r]) {
     return search_smallest_helper(A, l, m);
-  } else {  // A[m] == A[r]
+  } else {  // A[m] == A[r].
     // Smallest element must exist in either left or right side.
     int l_res = search_smallest_helper(A, l, m);
     int r_res = search_smallest_helper(A, m + 1, r);
@@ -32,12 +32,12 @@ int search_smallest_helper(const vector<int> &A, int l, int r) {
   }
 }
 
-int search_smallest(const vector<int> &A) {
+int search_smallest(const vector<int>& A) {
   return search_smallest_helper(A, 0, A.size() - 1);
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 10000; ++times) {
     int n;

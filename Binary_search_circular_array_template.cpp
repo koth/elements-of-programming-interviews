@@ -16,7 +16,7 @@ using std::unordered_set;
 using std::vector;
 
 // @include
-int search_smallest(const vector<int> &A) {
+int search_smallest(const vector<int>& A) {
   int l = 0, r = A.size() - 1;
   while (l < r) {
     int m = l + ((r - l) >> 1);
@@ -30,7 +30,7 @@ int search_smallest(const vector<int> &A) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n;

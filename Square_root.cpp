@@ -18,16 +18,17 @@ using std::uniform_real_distribution;
 int compare(double a, double b) {
   // Use normalization for precision problem.
   double diff = (a - b) / b;
-  return diff < -numeric_limits<double>::epsilon() ?
-         -1 : diff > numeric_limits<double>::epsilon();
+  return diff < -numeric_limits<double>::epsilon()
+             ? -1
+             : diff > numeric_limits<double>::epsilon();
 }
 
 double square_root(double x) {
   // Decide the search range according to x.
   double l, r;
-  if (compare(x, 1.0) < 0) {  // x < 1.0
+  if (compare(x, 1.0) < 0) {  // x < 1.0.
     l = x, r = 1.0;
-  } else {  // x >= 1.0
+  } else {  // x >= 1.0.
     l = 1.0, r = x;
   }
 
@@ -47,7 +48,7 @@ double square_root(double x) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 100000; ++times) {
     double x;

@@ -13,7 +13,6 @@
 #include "./Smallest_subarray_covering_set.h"
 #include "./Smallest_subarray_covering_set_stream.h"
 
-
 using std::cout;
 using std::default_random_engine;
 using std::endl;
@@ -36,9 +35,9 @@ string rand_string(int len) {
 }
 
 // O(n^2) solution
-int check_ans(const vector<string> &A, const vector<string> &Q) {
+int check_ans(const vector<string>& A, const vector<string>& Q) {
   unordered_set<string> dict;
-  for (const string &s : Q) {
+  for (const string& s : Q) {
     dict.emplace(s);
   }
 
@@ -61,7 +60,7 @@ int check_ans(const vector<string> &A, const vector<string> &Q) {
   return ans.second - ans.first;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n;

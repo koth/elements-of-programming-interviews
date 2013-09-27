@@ -6,7 +6,7 @@
 using std::vector;
 
 // @include
-int bsearch(int t, const vector<int> &A) {
+int bsearch(int t, const vector<int>& A) {
   int L = 0, U = A.size() - 1;
   while (L <= U) {
     int M = (L + U) / 2;
@@ -22,7 +22,7 @@ int bsearch(int t, const vector<int> &A) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   vector<int> A;
   A.emplace_back(1);
   A.emplace_back(2);

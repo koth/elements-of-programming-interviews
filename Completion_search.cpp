@@ -41,7 +41,7 @@ double completion_search(vector<double>* A, double budget) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 10000; ++times) {
     int n;

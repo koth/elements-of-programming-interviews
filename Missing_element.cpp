@@ -56,7 +56,7 @@ int find_missing_element(ifstream* ifs) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   int n = 300000000;
   default_random_engine gen((random_device())());
   if (argc == 2) {
@@ -76,7 +76,7 @@ int main(int argc, char *argv[]) {
   ifstream ifs("missing.txt");
   int missing = find_missing_element(&ifs);
   assert(hash.find(missing) == hash.cend());
-  // Remove file after the execution
+  // Remove file after the execution.
   remove("missing.txt");
   cout << missing << endl;
   return 0;

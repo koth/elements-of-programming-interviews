@@ -15,7 +15,7 @@ using std::random_device;
 using std::uniform_int_distribution;
 using std::vector;
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 100; ++times) {
     int n;

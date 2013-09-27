@@ -56,7 +56,8 @@ T find_kth_in_two_sorted_arrays(
 }
 */
 // @include
-int find_kth_in_two_sorted_arrays(const vector<int> &A, const vector<int> &B,
+int find_kth_in_two_sorted_arrays(const vector<int>& A,
+                                  const vector<int>& B,
                                   int k) {
   // Lower bound of elements we will choose in A.
   int l = max(0, static_cast<int>(k - B.size()));
@@ -87,7 +88,7 @@ int find_kth_in_two_sorted_arrays(const vector<int> &A, const vector<int> &B,
 // @exclude
 
 template <typename T>
-T check_answer(const vector<T> &A, const vector<T> &B, int k) {
+T check_answer(const vector<T>& A, const vector<T>& B, int k) {
   int i = 0, j = 0, count = 0;
   T ret;
   while ((i < A.size() || j < B.size()) && count < k) {
@@ -127,10 +128,10 @@ void small_test() {
   assert(0 == find_kth_in_two_sorted_arrays(A0, B0, 1));
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   small_test();
   default_random_engine gen((random_device())());
-  // Random test 10000 times
+  // Random test 10000 times.
   for (int times = 0; times < 10000; ++times) {
     vector<int> A, B;
     int n, m, k;

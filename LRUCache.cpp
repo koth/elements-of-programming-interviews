@@ -58,7 +58,7 @@ class LRUCache {
   typedef unordered_map<int, pair<typename list<int>::iterator, int>> Table;
 
   // Move the most recent accessed item to the front.
-  void moveToFront(int isbn, const typename Table::iterator &it) {
+  void moveToFront(int isbn, const typename Table::iterator& it) {
     data_.erase(it->second.first);
     data_.emplace_front(isbn);
     it->second.first = data_.begin();
@@ -69,7 +69,7 @@ class LRUCache {
 };
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   LRUCache<3> c;
   cout << "c.insert(1, 1)" << endl;
   c.insert(1, 1);

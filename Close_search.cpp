@@ -13,7 +13,7 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-int close_search(const vector<int> &A, int k) {
+int close_search(const vector<int>& A, int k) {
   int idx = 0;
   while (idx < A.size() && A[idx] != k) {
     idx += abs(A[idx] - k);
@@ -22,7 +22,7 @@ int close_search(const vector<int> &A, int k) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 10000; ++times) {
     int n;

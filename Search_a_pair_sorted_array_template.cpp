@@ -20,7 +20,7 @@ using std::vector;
 
 // @include
 template <typename Comp>
-pair<int, int> find_pair_using_comp(const vector<int> &A, int k, Comp comp) {
+pair<int, int> find_pair_using_comp(const vector<int>& A, int k, Comp comp) {
   pair<int, int> ret(0, A.size() - 1);
   while (ret.first < ret.second && comp(A[ret.first], 0)) {
     ++ret.first;
@@ -45,7 +45,7 @@ pair<int, int> find_pair_using_comp(const vector<int> &A, int k, Comp comp) {
   return {-1, -1};  // no answer.
 }
 
-pair<int, int> find_pos_neg_pair(const vector<int> &A, int k) {
+pair<int, int> find_pos_neg_pair(const vector<int>& A, int k) {
   // ret.first for positive, and ret.second for negative.
   pair<int, int> ret(A.size() - 1, A.size() - 1);
   // Find the last positive or zero.
@@ -74,17 +74,17 @@ pair<int, int> find_pos_neg_pair(const vector<int> &A, int k) {
   return {-1, -1};  // no answer.
 }
 
-pair<int, int> find_pair_sum_k(const vector<int> &A, int k) {
+pair<int, int> find_pair_sum_k(const vector<int>& A, int k) {
   pair<int, int> ret = find_pos_neg_pair(A, k);
   if (ret.first == -1 && ret.second == -1) {
-    return k >= 0 ? find_pair_using_comp(A, k, less<int>()) :
-           find_pair_using_comp(A, k, greater_equal<int>());
+    return k >= 0 ? find_pair_using_comp(A, k, less<int>())
+                  : find_pair_using_comp(A, k, greater_equal<int>());
   }
   return ret;
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 10000; ++times) {
     int n;
@@ -100,7 +100,7 @@ int main(int argc, char *argv[]) {
     for (size_t i = 0; i < n; ++i) {
       A.emplace_back(((pos_or_neg(gen)) ? 1 : -1) * (dis(gen)));
     }
-    sort(A.begin(), A.end(), [](int x, int y) {return abs(x) < abs(y);});
+    sort(A.begin(), A.end(), [](int x, int y) { return abs(x) < abs(y); });
     int k = ((pos_or_neg(gen)) ? 1 : -1) * (dis(gen));
     /*
     for (const int& a : A) {

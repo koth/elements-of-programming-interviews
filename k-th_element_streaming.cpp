@@ -40,7 +40,7 @@ void find_kth_largest_stream(istringstream* sin, int k) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   int num, k;
   if (argc == 2) {

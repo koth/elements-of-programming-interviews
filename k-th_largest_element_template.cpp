@@ -53,7 +53,7 @@ int find_k_th_largest(vector<int> A, int k) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n, k;

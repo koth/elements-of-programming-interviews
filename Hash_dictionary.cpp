@@ -17,32 +17,32 @@ string rand_string(int len) {
   default_random_engine gen((random_device())());
   while (len--) {
     uniform_int_distribution<int> zero_or_one(0, 1);
-    uniform_int_distribution<int> dis(0, 26);
+    uniform_int_distribution<char> dis(0, 26);
     ret += (zero_or_one(gen) ? 'a' : 'A') + dis(gen);
   }
   return ret;
 }
 
 // @include
-int string_hash(const string &str, int modulus) {
-  const int MULT = 997;
+int string_hash(const string& str, int modulus) {
+  const int kMult = 997;
   // @exclude
   /*
   return accumulate(str.cbegin(), str.cend(), 0,
-    [MULT, modulus](const int &val, const char &c) -> int {
-      return (val * MULT + c) % modulus;
+    [kMult, modulus](const int &val, const char &c) -> int {
+      return (val * kMult + c) % modulus;
     });
   */
   // @include
   int val = 0;
-  for (const char &c : str) {
-    val = (val * MULT + c) % modulus;
+  for (const char& c : str) {
+    val = (val * kMult + c) % modulus;
   }
   return val;
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   string str;
   if (argc == 2) {

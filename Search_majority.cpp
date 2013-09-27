@@ -45,7 +45,7 @@ string rand_string(int len) {
   return ret;
 }
 
-void check_ans(vector<string> &stream, const string &ans) {
+void check_ans(vector<string>& stream, const string& ans) {
   sort(stream.begin(), stream.end());
   int count = 1;
   bool find = false;
@@ -67,7 +67,7 @@ void check_ans(vector<string> &stream, const string &ans) {
   assert(find == true);
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 10000; ++times) {
     int n;

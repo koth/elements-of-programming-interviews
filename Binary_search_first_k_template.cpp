@@ -15,7 +15,7 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-int search_first(const vector<int> &A, int k) {
+int search_first(const vector<int>& A, int k) {
   int l = 0, r = A.size() - 1, res = -1;
   while (l <= r) {
     int m = l + ((r - l) >> 1);
@@ -32,7 +32,7 @@ int search_first(const vector<int> &A, int k) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n;

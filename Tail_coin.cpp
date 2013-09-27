@@ -16,12 +16,12 @@ int simulate_biased_coin(int n, int trails) {
   default_random_engine gen((random_device())());  // random num generator.
   // Generate random double in [0.0, 1.0].
   uniform_real_distribution<double> dis(0.0, 1.0);
-  const double bias = 0.4;
+  const double kBias = 0.4;
   int fails = 0;
   for (int i = 0; i < trails; ++i) {
     int biased_num = 0;
     for (int j = 0; j < n; ++j) {
-      biased_num += (dis(gen) >= bias);
+      biased_num += (dis(gen) >= kBias);
     }
 
     if (biased_num < (n >> 1)) {

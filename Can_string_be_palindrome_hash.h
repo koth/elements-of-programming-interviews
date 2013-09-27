@@ -12,15 +12,15 @@ using std::string;
 using std::unordered_map;
 
 // @include
-bool can_string_be_a_palindrome_hash(const string &s) {
+bool can_string_be_a_palindrome_hash(const string& s) {
   unordered_map<char, int> hash;
   // Insert each char into hash.
-  for_each(s.begin(), s.end(), [&hash](const char &c) { ++hash[c]; });
+  for_each(s.begin(), s.end(), [&hash](const char & c) { ++hash[c]; });
 
   // A string can be permuted as a palindrome if the number of odd time
   // chars <= 1.
   int odd_count = 0;
-  for (const pair<char, int> &p : hash) {
+  for (const pair<char, int>& p : hash) {
     if (p.second & 1 && ++odd_count > 1) {
       break;
     }

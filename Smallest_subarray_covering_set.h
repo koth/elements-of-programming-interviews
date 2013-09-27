@@ -31,7 +31,7 @@ pair<int, int> find_smallest_subarray_covering_subset(
       ++r;
     }
 
-    if (count_Q.size() == Q.size() &&
+    if (count_Q.size() == Q.size() &&  // found |Q| keywords.
         ((res.first == -1 && res.second == -1) ||
          r - 1 - l < res.second - res.first)) {
       res = {l, r - 1};

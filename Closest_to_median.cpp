@@ -17,7 +17,7 @@ using std::vector;
 
 // @include
 // Promote to double to prevent precision error.
-double find_median(vector<int> *A) {
+double find_median(vector<int>* A) {
   int half = A->size() >> 1;
   nth_element(A->begin(), A->begin() + half, A->end());
   if (A->size() & 1) {  // A has odd number elements.
@@ -33,9 +33,7 @@ class Comp {
  public:
   explicit Comp(double m) : m_(m) {};
 
-  bool operator()(int a, int b) const {
-    return fabs(a - m_) < fabs(b - m_);
-  }
+  bool operator()(int a, int b) const { return fabs(a - m_) < fabs(b - m_); }
 
  private:
   double m_;
@@ -48,32 +46,33 @@ vector<int> find_k_closest_to_median(vector<int> A, int k) {
 }
 // @exclude
 
-void check_ans(vector<int> &A, const vector<int> &res, int k) {
+void check_ans(vector<int>& A, const vector<int>& res, int k) {
   sort(A.begin(), A.end());
-  double median = (A.size() & 1) ? A[A.size() >> 1] :
-                  0.5 * (A[(A.size() >> 1) - 1] + A[A.size() >> 1]);
+  double median = (A.size() & 1)
+                      ? A[A.size() >> 1]
+                      : 0.5 * (A[(A.size() >> 1) - 1] + A[A.size() >> 1]);
   vector<double> temp;
-  for (const int &a : A) {
+  for (const int& a : A) {
     temp.emplace_back(fabs(median - a));
   }
   sort(temp.begin(), temp.end());
-  for (const int &r : res) {
+  for (const int& r : res) {
     assert(fabs(r - median) <= temp[k - 1]);
   }
 }
 
 void simple_test() {
-  vector<int> D = {3,2,3,5,7,3,1};
-  vector<int> Dexpres = {2,3,3};
-  vector<int> Dres = find_k_closest_to_median(D,3);
+  vector<int> D = {3, 2, 3, 5, 7, 3, 1};
+  vector<int> Dexpres = {2, 3, 3};
+  vector<int> Dres = find_k_closest_to_median(D, 3);
   check_ans(D, Dres, 3);
-  for (const int &d : Dres) {
+  for (const int& d : Dres) {
     cout << d << ' ';
   }
   cout << endl;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n, k;

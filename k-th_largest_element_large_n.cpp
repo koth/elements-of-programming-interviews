@@ -19,7 +19,7 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-int find_kth_largest_unknown_length(istringstream *sin, int k) {
+int find_kth_largest_unknown_length(istringstream* sin, int k) {
   vector<int> M;
   int x;
   while (*sin >> x) {
@@ -35,7 +35,7 @@ int find_kth_largest_unknown_length(istringstream *sin, int k) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n, k;
@@ -57,13 +57,13 @@ int main(int argc, char *argv[]) {
       A.emplace_back(dis(gen));
     }
     stringstream ss;
-    for (const int &a : A) {
+    for (const int& a : A) {
       ss << a << ' ';
     }
     /*
     cout << "n = " << n << ", k = " << k << endl;
     cout << ss.str() << endl;
-    //*/
+    */
     istringstream sin(ss.str());
     int res = find_kth_largest_unknown_length(&sin, k);
     nth_element(A.begin(), A.begin() + A.size() - k, A.end());

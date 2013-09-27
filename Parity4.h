@@ -7,10 +7,10 @@
 // The LSB of FOUR_BIT_PARITY_LOOKUP_TABLE is the parity of 0,
 // next bit is parity of 1, followed by the parity 2, etc.
 // Note that 0x6996 = 0b0110100110010110.
-const int FOUR_BIT_PARITY_LOOKUP_TABLE = 0x6996;
+const int kFourBitParityLookupTable = 0x6996;
 
 short four_bit_parity_lookup(int x) {
-  return FOUR_BIT_PARITY_LOOKUP_TABLE >> x;
+  return kFourBitParityLookupTable >> x;
 }
 
 short parity4(unsigned long x) {

@@ -29,13 +29,13 @@ string rand_string(int len) {
 }
 
 // @include
-bool anonymous_letter(const string &L, const string &M) {
+bool anonymous_letter(const string& L, const string& M) {
   unordered_map<char, int> hash;
   // Insert all chars in L into a hash table.
-  for_each(L.begin(), L.end(), [&hash](const char &c) { ++hash[c]; });
+  for_each(L.begin(), L.end(), [&hash](const char & c) { ++hash[c]; });
 
   // Check chars in M that could cover chars in a hash table.
-  for (const char &c : M) {
+  for (const char& c : M) {
     auto it = hash.find(c);
     if (it != hash.cend()) {
       if (--it->second == 0) {
@@ -51,7 +51,7 @@ bool anonymous_letter(const string &L, const string &M) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   string L, M;
   if (argc == 3) {

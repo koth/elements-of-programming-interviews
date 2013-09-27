@@ -21,7 +21,7 @@ using std::vector;
 
 // @include
 // Return (min, max) pair of elements in A.
-pair<int, int> find_min_max(const vector<int> &A) {
+pair<int, int> find_min_max(const vector<int>& A) {
   if (A.size() <= 1) {
     return {A.front(), A.front()};
   }
@@ -43,7 +43,7 @@ pair<int, int> find_min_max(const vector<int> &A) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 10000; ++times) {
     int n;

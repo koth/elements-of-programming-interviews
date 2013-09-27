@@ -17,7 +17,7 @@ using std::vector;
 
 // @include
 // Return pair<int, int>(duplicate, missing)
-pair<int, int> find_duplicate_missing(const vector<int> &A) {
+pair<int, int> find_duplicate_missing(const vector<int>& A) {
   int miss_XOR_dup = 0;
   for (int i = 0; i < A.size(); ++i) {
     miss_XOR_dup ^= i ^ A[i];
@@ -38,8 +38,8 @@ pair<int, int> find_duplicate_missing(const vector<int> &A) {
     }
   }
 
-  for (const int &A_i : A) {
-    if (A_i == miss_or_dup) {   // find duplicate.
+  for (const int& A_i : A) {
+    if (A_i == miss_or_dup) {  // find duplicate.
       return {miss_or_dup, miss_or_dup ^ miss_XOR_dup};
     }
   }
@@ -48,7 +48,7 @@ pair<int, int> find_duplicate_missing(const vector<int> &A) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n;

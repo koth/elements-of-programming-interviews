@@ -27,7 +27,7 @@ using std::vector;
 // @include
 struct Point {
   // Equal function for hash.
-  bool operator==(const Point &that) const {
+  bool operator==(const Point& that) const {
     return x == that.x && y == that.y;
   }
 
@@ -36,7 +36,7 @@ struct Point {
 
 // Hash function for Point.
 struct HashPoint {
-  size_t operator()(const Point &p) const {
+  size_t operator()(const Point& p) const {
     return hash<int>()(p.x) ^ hash<int>()(p.y);
   }
 };
@@ -50,15 +50,15 @@ pair<int, int> get_canonical_fractional(int a, int b) {
 // Line function of two points, a and b, and the equation is
 // y = x(b.y - a.y) / (b.x - a.x) + (b.x * a.y - a.x * b.y) / (b.x - a.x).
 struct Line {
-  Line(const Point &a, const Point &b) :
-    slope(a.x != b.x ? get_canonical_fractional(b.y - a.y, b.x - a.x) :
-      make_pair(1, 0)),
-    intercept(a.x != b.x ?
-      get_canonical_fractional(b.x * a.y - a.x * b.y, b.x - a.x) :
-      make_pair(a.x, 1)) {}
+  Line(const Point& a, const Point& b)
+      : slope(a.x != b.x ? get_canonical_fractional(b.y - a.y, b.x - a.x)
+                         : make_pair(1, 0)),
+        intercept(a.x != b.x ? get_canonical_fractional(b.x * a.y - a.x * b.y,
+                                                        b.x - a.x)
+                             : make_pair(a.x, 1)) {}
 
   // Equal function for Line.
-  bool operator==(const Line &that) const {
+  bool operator==(const Line& that) const {
     return slope == that.slope && intercept == that.intercept;
   }
 
@@ -72,7 +72,7 @@ struct Line {
 
 // Hash function for Line.
 struct HashLine {
-  size_t operator()(const Line &l) const {
+  size_t operator()(const Line& l) const {
     return hash<int>()(l.slope.first) ^ hash<int>()(l.slope.second) ^
            hash<int>()(l.intercept.first) ^ hash<int>()(l.intercept.second);
   }
@@ -80,7 +80,7 @@ struct HashLine {
 // @exclude
 
 // n^3 checking
-int check(const vector<Point> &P) {
+int check(const vector<Point>& P) {
   int max_count = 0;
   for (int i = 0; i < P.size(); ++i) {
     for (int j = i + 1; j < P.size(); ++j) {
@@ -99,7 +99,7 @@ int check(const vector<Point> &P) {
 }
 // @include
 
-Line find_line_with_most_points(const vector<Point> &P) {
+Line find_line_with_most_points(const vector<Point>& P) {
   // Add all possible lines into hash table.
   unordered_map<Line, unordered_set<Point, HashPoint>, HashLine> table;
   for (int i = 0; i < P.size(); ++i) {
@@ -110,25 +110,27 @@ Line find_line_with_most_points(const vector<Point> &P) {
   }
 
   // @exclude
-  auto line_max_points = max_element(table.cbegin(), table.cend(),
-    [](const pair<Line, unordered_set<Point, HashPoint>> &a,
-       const pair<Line, unordered_set<Point, HashPoint>> &b) {
-      return a.second.size() < b.second.size();
-    });
+  auto line_max_points =
+      max_element(table.cbegin(),
+                  table.cend(),
+                  [](const pair<Line, unordered_set<Point, HashPoint>> & a,
+                     const pair<Line, unordered_set<Point, HashPoint>> &
+                         b) { return a.second.size() < b.second.size(); });
   int res = check(P);
   // cout << res << " " << line_max_points.second.size() << endl;
   assert(res == line_max_points->second.size());
   // @include
   // Return the line with most points have passed.
-  return max_element(table.cbegin(), table.cend(),
-    [](const pair<Line, unordered_set<Point, HashPoint>> &a,
-       const pair<Line, unordered_set<Point, HashPoint>> &b) {
-      return a.second.size() < b.second.size();
-    })->first;
+  return max_element(table.cbegin(),
+                     table.cend(),
+                     [](const pair<Line, unordered_set<Point, HashPoint>> & a,
+                        const pair<Line, unordered_set<Point, HashPoint>> &
+                            b) { return a.second.size() < b.second.size(); })
+      ->first;
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 100; ++times) {
     cout << times << endl;
@@ -155,8 +157,8 @@ int main(int argc, char *argv[]) {
     }
     */
     Line l = find_line_with_most_points(points);
-    cout << l.slope.first << " " << l.slope.second << " "
-         << l.intercept.first << " " << l.intercept.second << endl;
+    cout << l.slope.first << " " << l.slope.second << " " << l.intercept.first
+         << " " << l.intercept.second << endl;
   }
   return 0;
 }

@@ -48,14 +48,14 @@ void approximate_sort(istringstream* sin, int k) {
 void simple_test() {
   vector<int> A = {2, 1, 5, 4, 3, 9, 8, 7, 6};
   stringstream ss;
-  for (const int &a : A) {
+  for (const int& a : A) {
     ss << a << ' ';
   }
   istringstream sin(ss.str());
   approximate_sort(&sin, 3);
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   simple_test();
   default_random_engine gen((random_device())());
   int n, k;
@@ -79,7 +79,7 @@ int main(int argc, char *argv[]) {
     A.push_back(dis(gen));
   }
   stringstream ss;
-  for (const int &a : A) {
+  for (const int& a : A) {
     ss << a << ' ';
   }
   istringstream sin(ss.str());

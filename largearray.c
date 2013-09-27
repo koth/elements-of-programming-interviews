@@ -10,19 +10,19 @@
 char A[N];
 // @exclude
 
-int comp(const void *a, const void *b) {
-  if (*(char *)a == *(char *)b)
+int comp(const void* a, const void* b) {
+  if (*(char*)a == *(char*)b)
     return 0;
-  else if (*(char *)a < *(char *)b)
+  else if (*(char*)a < *(char*)b)
     return -1;
   else
     return 1;
 }
 
-int comp_unsigned_int(const void *a, const void *b) {
-  if (*(unsigned int *)a == *(unsigned int *)b) {
+int comp_unsigned_int(const void* a, const void* b) {
+  if (*(unsigned int*)a == *(unsigned int*)b) {
     return 0;
-  } else if (*(unsigned int *)a < *(unsigned int *)b) {
+  } else if (*(unsigned int*)a < *(unsigned int*)b) {
     return -1;
   } else {
     return 1;
@@ -30,6 +30,7 @@ int comp_unsigned_int(const void *a, const void *b) {
 }
 
 void init(char A[]) {
+  srand(time(NULL));
   int i;
   unsigned int P[127];
   for (i = 0; i < 127; ++i) {
@@ -46,10 +47,10 @@ void init(char A[]) {
   while (pre < N) {
     A[pre++] = val;
   }
-  //qsort(A, N, sizeof(char), comp);  // too slow to sort
+  // qsort(A, N, sizeof(char), comp);  // too slow to sort
 }
 
-int binary_search(const char key, const char *A, int L, int U) {
+int binary_search(const char key, const char* A, int L, int U) {
   while (L <= U) {
     int M;
     // Change the following logic to M = (L + U) / 2 will fail this program.
@@ -69,12 +70,11 @@ int binary_search(const char key, const char *A, int L, int U) {
   return -1;
 }
 
-int main(int argc, char *argv[]) {
-  srand(time(NULL));
+int main(int argc, char* argv[]) {
   char key = 123;
-init(A);
-// @include
-char *B = (A + 1500000000);
+  init(A);
+  // @include
+char* B = (A + 1500000000);
 int L = -1499000000;
 int U = 1499000000;
 // On a 32-bit machine (U - L) = -1296967296 because the actual value,

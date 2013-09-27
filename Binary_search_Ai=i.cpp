@@ -16,7 +16,7 @@ using std::unordered_set;
 using std::vector;
 
 // @include
-int search_index_value_equal(const vector<int> &A) {
+int search_index_value_equal(const vector<int>& A) {
   int l = 0, r = A.size() - 1;
   while (l <= r) {
     int m = l + ((r - l) >> 1);
@@ -25,7 +25,7 @@ int search_index_value_equal(const vector<int> &A) {
       return m;
     } else if (val > 0) {
       r = m - 1;
-    } else {  // val < 0
+    } else {  // val < 0.
       l = m + 1;
     }
   }
@@ -33,8 +33,8 @@ int search_index_value_equal(const vector<int> &A) {
 }
 // @exclude
 
-// O(n) way to find ans
-int check_ans(const vector<int> &A) {
+// O(n) way to find ans.
+int check_ans(const vector<int>& A) {
   int ret = -1;
   for (int i = 0; i < A.size(); ++i) {
     if (A[i] == i) {
@@ -44,7 +44,7 @@ int check_ans(const vector<int> &A) {
   return ret;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n;

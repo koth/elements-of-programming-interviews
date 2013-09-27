@@ -21,14 +21,10 @@ using std::vector;
 struct Num {
   Num(int a, int b) : a(a), b(b), val(a + b * sqrt(2)) {}
 
-  bool operator<(const Num &n) const {
-    return val > n.val;
-  }
+  bool operator<(const Num& n) const { return val > n.val; }
 
   // Equal function for hash.
-  bool operator==(const Num &n) const {
-    return a == n.a && b == n.b;
-  }
+  bool operator==(const Num& n) const { return a == n.a && b == n.b; }
 
   int a, b;
   double val;
@@ -36,7 +32,7 @@ struct Num {
 
 // Hash function for Num.
 struct HashNum {
-  size_t operator()(const Num &n) const {
+  size_t operator()(const Num& n) const {
     return hash<int>()(n.a) ^ hash<int>()(n.b);
   }
 };
@@ -69,7 +65,7 @@ vector<Num> generate_first_k(int k) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int k;

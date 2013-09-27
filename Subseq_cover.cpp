@@ -38,7 +38,8 @@ string rand_string(int len) {
 
 // @include
 pair<int, int> find_smallest_sequentially_covering_subset(
-    const vector<string> &A, const vector<string> &Q) {
+    const vector<string>& A,
+    const vector<string>& Q) {
   unordered_map<string, int> K;  // stores the order of each Q[i].
   vector<int> L(Q.size(), -1), D(Q.size(), numeric_limits<int>::max());
 
@@ -52,14 +53,13 @@ pair<int, int> find_smallest_sequentially_covering_subset(
     auto it = K.find(A[i]);
     if (it != K.cend()) {
       if (it->second == 0) {  // first one, no predecessor.
-        D[0] = 1;  // base condition.
+        D[0] = 1;             // base condition.
       } else if (D[it->second - 1] != numeric_limits<int>::max()) {
         D[it->second] = i - L[it->second - 1] + D[it->second - 1];
       }
       L[it->second] = i;
 
-      if (it->second == Q.size() - 1 &&
-          D.back() < res.second - res.first + 1) {
+      if (it->second == Q.size() - 1 && D.back() < res.second - res.first + 1) {
         res = {i - D.back() + 1, i};
       }
     }
@@ -69,14 +69,14 @@ pair<int, int> find_smallest_sequentially_covering_subset(
 // @exclude
 
 void small_test() {
-  vector<string> A3 = {"0","1","2","3","4","5","6","7","8","9","2","4","6","10",
-                       "10","10","3","2","1","0"};
-  vector<string> subseq4 = {"0","2","9","4","6"};
+  vector<string> A3 = {"0", "1", "2", "3",  "4",  "5",  "6", "7", "8", "9",
+                       "2", "4", "6", "10", "10", "10", "3", "2", "1", "0"};
+  vector<string> subseq4 = {"0", "2", "9", "4", "6"};
   pair<int, int> rr = find_smallest_sequentially_covering_subset(A3, subseq4);
   assert(rr.first == 0 && rr.second == 12);
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   small_test();
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
@@ -89,7 +89,7 @@ int main(int argc, char *argv[]) {
       n = dis(gen);
     }
     uniform_int_distribution<int> dis(1, 5);
-    generate_n(back_inserter(A), n, [&]{ return rand_string(dis(gen)); });
+    generate_n(back_inserter(A), n, [&] { return rand_string(dis(gen)); });
     unordered_set<string> dict;
     copy(A.begin(), A.end(), inserter(dict, dict.end()));
     cout << "A = ";
@@ -100,7 +100,7 @@ int main(int argc, char *argv[]) {
     int m = m_dis(gen);
     vector<string> Q;
     auto it = dict.begin();
-    generate_n(back_inserter(Q), m, [&]{ return *it++; });
+    generate_n(back_inserter(Q), m, [&] { return *it++; });
     cout << "Q = ";
     copy(Q.begin(), Q.end(), ostream_iterator<string>(cout, ","));
     cout << endl;

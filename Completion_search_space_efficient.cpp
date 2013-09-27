@@ -1,3 +1,5 @@
+// Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
+
 #include <iostream>
 #include <iterator>
 #include <cmath>

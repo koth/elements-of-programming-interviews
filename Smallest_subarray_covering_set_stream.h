@@ -20,7 +20,7 @@ pair<int, int> find_smallest_subarray_covering_subset(
     istringstream* sin, const vector<string> &Q) {
   list<int> loc;  // tracks the last occurrence (index) of each string in Q.
   unordered_map<string, list<int>::iterator> dict;
-  for (const string &s : Q) {
+  for (const string& s : Q) {
     dict.emplace(s, loc.end());
   }
 
