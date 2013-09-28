@@ -31,7 +31,8 @@ string rand_string(int len) {
 // @include
 // Use BFS to find the least steps of transformation.
 int transform_string(unordered_set<string> D,
-                     const string &s, const string &t) {
+                     const string& s,
+                     const string& t) {
   queue<pair<string, int>> q;
   D.erase(s);  // mark s as visited by erasing it in D.
   q.emplace(s, 0);
@@ -47,7 +48,7 @@ int transform_string(unordered_set<string> D,
     string str = f.first;
     for (int i = 0; i < str.size(); ++i) {
       for (int j = 0; j < 26; ++j) {  // iterates through 'a' ~ 'z'.
-        str[i] = 'a' + j;  // change the (i + 1)-th char of str.
+        str[i] = 'a' + j;             // change the (i + 1)-th char of str.
         auto it(D.find(str));
         if (it != D.end()) {
           D.erase(it);  // mark str as visited by erasing it.
@@ -63,7 +64,7 @@ int transform_string(unordered_set<string> D,
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   int len;
   if (argc == 2) {

@@ -28,8 +28,8 @@ string rand_string(int len) {
 }
 
 // @include
-vector<string> word_breaking(const string &s,
-                             const unordered_set<string> &dict) {
+vector<string> word_breaking(const string& s,
+                             const unordered_set<string>& dict) {
   // T[i] stores the length of the last string which composed of s(0, i).
   vector<int> T(s.size(), 0);
   for (int i = 0; i < s.size(); ++i) {
@@ -61,7 +61,7 @@ vector<string> word_breaking(const string &s,
 // @exclude
 
 // Verify the strings in ans can be assembled into s.
-void check_ans(const string &s, vector<string> &ans) {
+void check_ans(const string& s, vector<string>& ans) {
   string temp;
   cout << s << endl;
   for (int i = 0; i < ans.size(); ++i) {
@@ -72,7 +72,7 @@ void check_ans(const string &s, vector<string> &ans) {
   assert(!ans.size() || !s.compare(temp));
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     unordered_set<string> dictionary;

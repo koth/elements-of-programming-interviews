@@ -8,7 +8,7 @@
 using std::vector;
 
 // @include
-vector<int> intersect_arrs3(const vector<int> &A, const vector<int> &B) {
+vector<int> intersect_arrs3(const vector<int>& A, const vector<int>& B) {
   vector<int> intersect;
   int i = 0, j = 0;
   while (i < A.size() && j < B.size()) {
@@ -17,7 +17,7 @@ vector<int> intersect_arrs3(const vector<int> &A, const vector<int> &B) {
       ++i, ++j;
     } else if (A[i] < B[j]) {
       ++i;
-    } else {  // A[i] > B[j]
+    } else {  // A[i] > B[j].
       ++j;
     }
   }

@@ -53,7 +53,7 @@ void check_ans(const unique_ptr<BinarySearchTree<T>>& n, const T& pre) {
   }
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   //      3
   //    2   5
   //  1    4  6

@@ -20,18 +20,17 @@ using std::set;
 using std::uniform_int_distribution;
 using std::vector;
 
-template <typename T>
-T distance(const vector<vector<T>>& arrs, const vector<int>& idx) {
-  T max_T = numeric_limits<T>::min(), min_T = numeric_limits<T>::max();
+int distance(const vector<vector<int>>& arrs, const vector<int>& idx) {
+  int max_val = numeric_limits<int>::min(),
+      min_val = numeric_limits<int>::max();
   for (int i = 0; i < idx.size(); ++i) {
-    max_T = max(max_T, arrs[i][idx[i]]);
-    min_T = min(min_T, arrs[i][idx[i]]);
+    max_val = max(max_val, arrs[i][idx[i]]);
+    min_val = min(min_val, arrs[i][idx[i]]);
   }
-  return max_T - min_T;
+  return max_val - min_val;
 }
 
 // @include
-template <typename T>
 struct ArrData {
   bool operator<(const ArrData& a) const {
     if (val != a.val) {
@@ -42,22 +41,21 @@ struct ArrData {
   }
 
   int idx;
-  T val;
+  int val;
 };
 
-template <typename T>
-T find_min_distance_sorted_arrays(const vector<vector<T>>& arrs) {
+int find_min_distance_sorted_arrays(const vector<vector<int>>& arrs) {
   // Pointers for each of arrs.
   vector<int> idx(arrs.size(), 0);
-  T min_dis = numeric_limits<T>::max();
-  set<ArrData<T>> current_heads;
+  int min_dis = numeric_limits<int>::max();
+  set<ArrData> current_heads;
 
   // Each of arrs puts its minimum element into current_heads.
   for (int i = 0; i < arrs.size(); ++i) {
     if (idx[i] >= arrs[i].size()) {
       return min_dis;
     }
-    current_heads.emplace(ArrData<T>{i, arrs[i][idx[i]]});
+    current_heads.emplace(ArrData{i, arrs[i][idx[i]]});
   }
 
   while (true) {
@@ -69,18 +67,17 @@ T find_min_distance_sorted_arrays(const vector<vector<T>>& arrs) {
       return min_dis;
     }
     current_heads.erase(current_heads.begin());
-    current_heads.emplace(ArrData<T>{tar, arrs[tar][idx[tar]]});
+    current_heads.emplace(ArrData{tar, arrs[tar][idx[tar]]});
   }
 }
 // @exclude
 
-template <typename T>
-void rec_gen_answer(const vector<vector<T>>& arrs,
+void rec_gen_answer(const vector<vector<int>>& arrs,
                     vector<int>& idx,
                     int level,
-                    T& ans) {
+                    int* ans) {
   if (level == arrs.size()) {
-    ans = min(distance(arrs, idx), ans);
+    *ans = min(distance(arrs, idx), *ans);
     return;
   }
   for (int i = 0; i < arrs[level].size(); ++i) {
@@ -89,11 +86,10 @@ void rec_gen_answer(const vector<vector<T>>& arrs,
   }
 }
 
-template <typename T>
-T brute_force_gen_answer(const vector<vector<T>>& arrs) {
-  T ans = numeric_limits<T>::max();
+int brute_force_gen_answer(const vector<vector<int>>& arrs) {
+  int ans = numeric_limits<int>::max();
   vector<int> idx(arrs.size());
-  rec_gen_answer(arrs, idx, 0, ans);
+  rec_gen_answer(arrs, idx, 0, &ans);
   cout << ans << endl;
   return ans;
 }
@@ -119,7 +115,7 @@ int main(int argc, char* argv[]) {
       }
       sort(arrs[i].begin(), arrs[i].end());
     }
-    int ans = find_min_distance_sorted_arrays<int>(arrs);
+    int ans = find_min_distance_sorted_arrays(arrs);
     cout << ans << endl;
     assert(brute_force_gen_answer(arrs) == ans);
   }

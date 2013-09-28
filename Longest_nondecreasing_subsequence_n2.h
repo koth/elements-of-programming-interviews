@@ -9,7 +9,7 @@ using std::vector;
 
 namespace LNS_n2 {
 // @include
-vector<int> longest_nondecreasing_subsequence(const vector<int> &A) {
+vector<int> longest_nondecreasing_subsequence(const vector<int>& A) {
   // Empty array.
   if (A.empty() == true) {
     return A;

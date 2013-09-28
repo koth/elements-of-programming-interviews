@@ -51,11 +51,10 @@ bool match_helper(const vector<vector<int>>& A, const vector<int>& S,
     return false;
   }
 
-  if (A[i][j] == S[len] &&
-      (match_helper(A, S, cache, i - 1, j, len + 1) ||
-       match_helper(A, S, cache, i + 1, j, len + 1) ||
-       match_helper(A, S, cache, i, j - 1, len + 1) ||
-       match_helper(A, S, cache, i, j + 1, len + 1))) {
+  if (A[i][j] == S[len] && (match_helper(A, S, cache, i - 1, j, len + 1) ||
+                            match_helper(A, S, cache, i + 1, j, len + 1) ||
+                            match_helper(A, S, cache, i, j - 1, len + 1) ||
+                            match_helper(A, S, cache, i, j + 1, len + 1))) {
     return true;
   }
   cache->emplace(i, j, len);
@@ -75,7 +74,7 @@ bool match(const vector<vector<int>>& A, const vector<int>& S) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   int n;
   if (argc == 2) {

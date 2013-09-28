@@ -26,7 +26,7 @@ bool search_min_first_BST(const unique_ptr<BinarySearchTree<T>>& r,
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   // A min-first BST
   //    1
   //  2   4
@@ -35,7 +35,8 @@ int main(int argc, char *argv[]) {
   root->left = unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{2});
   root->left->left =
       unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{3});
-  root->right = unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{4});
+  root->right =
+      unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{4});
   root->right->left =
       unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{5});
   root->right->right =

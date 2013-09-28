@@ -25,7 +25,7 @@ void count_occurrences(string S) {
       count = 1;
     }
   }
-  cout << '(' << S.back() << ',' << count << ')' << endl;;
+  cout << '(' << S.back() << ',' << count << ')' << endl;
 }
 // @exclude
 
@@ -39,7 +39,7 @@ string rand_string(int len) {
   return ret;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   string S;
   if (argc == 2) {

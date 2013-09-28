@@ -16,9 +16,9 @@ using std::vector;
 
 // @include
 // Calculate the non-circular solution.
-int find_max_subarray(const vector<int> &A) {
+int find_max_subarray(const vector<int>& A) {
   int maximum_till = 0, maximum = 0;
-  for (const int &a : A) {
+  for (const int& a : A) {
     maximum_till = max(a, a + maximum_till);
     maximum = max(maximum, maximum_till);
   }
@@ -26,7 +26,7 @@ int find_max_subarray(const vector<int> &A) {
 }
 
 // Calculate the solution which is circular.
-int find_circular_max_subarray(const vector<int> &A) {
+int find_circular_max_subarray(const vector<int>& A) {
   // Maximum subarray sum starts at index 0 and ends at or before index i.
   vector<int> maximum_begin;
   int sum = A.front();
@@ -53,13 +53,13 @@ int find_circular_max_subarray(const vector<int> &A) {
   return circular_max;
 }
 
-int max_subarray_sum_in_circular(const vector<int> &A) {
+int max_subarray_sum_in_circular(const vector<int>& A) {
   return max(find_max_subarray(A), find_circular_max_subarray(A));
 }
 // @exclude
 
 // O(n^2) solution
-int check_ans(const vector<int> &A) {
+int check_ans(const vector<int>& A) {
   int ans = 0;
   for (int i = 0; i < A.size(); ++i) {
     int sum = 0;
@@ -72,7 +72,7 @@ int check_ans(const vector<int> &A) {
   return ans;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n;

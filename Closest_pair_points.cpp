@@ -33,7 +33,7 @@ struct Point {
   // @include
 };
 
-double distance(const Point &a, const Point &b) {
+double distance(const Point& a, const Point& b) {
   return sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
 }
 
@@ -54,11 +54,11 @@ tuple<Point, Point, double> brute_force(const vector<Point> &P,
 }
 
 // Return the closest two points and its distance as a tuple.
-tuple<Point, Point, double> find_closest_pair_in_remain(vector<Point> *P,
+tuple<Point, Point, double> find_closest_pair_in_remain(vector<Point>* P,
                                                         double d) {
-  sort(P->begin(), P->end(), [](const Point &a, const Point &b) -> bool {
-                               return a.y < b.y;
-                             });
+  sort(P->begin(), P->end(), [](const Point & a, const Point & b)->bool {
+    return a.y < b.y;
+  });
 
   // At most six points in P.
   tuple<Point, Point, double> ret;
@@ -75,8 +75,8 @@ tuple<Point, Point, double> find_closest_pair_in_remain(vector<Point> *P,
 }
 
 // Return the closest two points and its distance as a tuple.
-tuple<Point, Point, double> find_closest_pair_points_helper(
-    const vector<Point> &P, int s, int e) {
+tuple<Point, Point, double>
+find_closest_pair_points_helper(const vector<Point>& P, int s, int e) {
   if (e - s <= 3) {  // brute-force to find answer if there are <= 3 points.
     return brute_force(P, s, e);
   }
@@ -86,7 +86,7 @@ tuple<Point, Point, double> find_closest_pair_points_helper(
   auto r_ret = find_closest_pair_points_helper(P, mid, e);
   auto min_l_r = get<2>(l_ret) < get<2>(r_ret) ? l_ret : r_ret;
   vector<Point> remain;  // stores the points whose x-dis < min_d.
-  for (const Point &p : P) {
+  for (const Point& p : P) {
     if (abs(p.x - P[mid].x) < get<2>(min_l_r)) {
       remain.emplace_back(p);
     }
@@ -97,15 +97,15 @@ tuple<Point, Point, double> find_closest_pair_points_helper(
 }
 
 pair<Point, Point> find_closest_pair_points(vector<Point> P) {
-  sort(P.begin(), P.end(), [](const Point &a, const Point &b) -> bool {
-                             return a.x < b.x;
-                           });
+  sort(P.begin(), P.end(), [](const Point & a, const Point & b)->bool {
+    return a.x < b.x;
+  });
   auto ret = find_closest_pair_points_helper(P, 0, P.size());
   return {get<0>(ret), get<1>(ret)};
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n;
@@ -123,10 +123,10 @@ int main(int argc, char *argv[]) {
     }
     auto p = find_closest_pair_points(points);
     auto q = brute_force(points, 0, points.size());
-    cout << "p = " << p.first << " " << p.second << ", dis = "
-         << distance(p.first, p.second) << endl;
-    cout << "q = " << get<0>(q) << " " << get<1>(q) << ", dis = "
-         << distance(get<0>(q), get<1>(q)) << endl;
+    cout << "p = " << p.first << " " << p.second
+         << ", dis = " << distance(p.first, p.second) << endl;
+    cout << "q = " << get<0>(q) << " " << get<1>(q)
+         << ", dis = " << distance(get<0>(q), get<1>(q)) << endl;
     assert(distance(p.first, p.second) == get<2>(q));
   }
   return 0;

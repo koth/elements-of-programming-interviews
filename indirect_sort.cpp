@@ -20,7 +20,7 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-void indirect_sort(const string &file_name) {
+void indirect_sort(const string& file_name) {
   // Store file records into A.
   ifstream ifs(file_name.c_str());
   vector<int> A;
@@ -31,14 +31,14 @@ void indirect_sort(const string &file_name) {
 
   // Initialize P.
   vector<const int*> P;
-  for (int &a : A) {
+  for (int& a : A) {
     P.emplace_back(&a);
   }
 
   // Indirectly sort file.
-  sort(P.begin(), P.end(), [](const int* a, const int* b) -> bool {
-                             return *a < *b;
-                           });
+  sort(P.begin(), P.end(), [](const int * a, const int * b)->bool {
+    return *a < *b;
+  });
 
   // Output file.
   ofstream ofs(file_name.c_str());
@@ -48,7 +48,7 @@ void indirect_sort(const string &file_name) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     cout << "times = " << times << endl;
@@ -60,14 +60,12 @@ int main(int argc, char *argv[]) {
       n = dis(gen);
     }
     vector<int> A;
-    generate_n(back_inserter(A),
-               n,
-               [&] {
-                 uniform_int_distribution<int> dis(0, 999999);
-                 return dis(gen);
-               });
+    generate_n(back_inserter(A), n, [&] {
+      uniform_int_distribution<int> dis(0, 999999);
+      return dis(gen);
+    });
     ofstream ofs("input.txt");
-    for (const int &a : A) {
+    for (const int& a : A) {
       ofs << a << endl;
     }
 

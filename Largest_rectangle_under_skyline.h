@@ -12,7 +12,7 @@ using std::stack;
 using std::vector;
 
 // @include
-int calculate_largest_rectangle(const vector<int> &A) {
+int calculate_largest_rectangle(const vector<int>& A) {
   // Calculate L.
   stack<int> s;
   vector<int> L;

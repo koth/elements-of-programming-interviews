@@ -20,7 +20,7 @@ struct Interval {
 };
 
 struct Endpoint {
-  bool operator<(const Endpoint &e) const {
+  bool operator<(const Endpoint& e) const {
     return time != e.time ? time < e.time : (isStart && !e.isStart);
   }
 
@@ -51,7 +51,7 @@ int find_max_concurrent_events(const vector<Interval>& A) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   int n;
   if (argc == 2) {

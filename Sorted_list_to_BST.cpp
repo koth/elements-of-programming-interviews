@@ -8,7 +8,7 @@
 
 using std::cout;
 using std::endl;
-using std::shared_ptr;
+using std::make_shared;
 
 // @include
 // Build a BST from the (s + 1)-th to the e-th node in L.
@@ -41,7 +41,7 @@ shared_ptr<node_t<T>> build_BST_from_sorted_doubly_list(
 
 int depth = 0;
 template <typename T>
-void inorder_traversal(const shared_ptr<node_t<T>>& node, const T &pre) {
+void inorder_traversal(const shared_ptr<node_t<T>>& node, const T& pre) {
   if (node) {
     depth++;
     inorder_traversal(node->prev, pre);
@@ -54,17 +54,17 @@ void inorder_traversal(const shared_ptr<node_t<T>>& node, const T &pre) {
   }
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   shared_ptr<node_t<int>> A[1000];
 
-  for ( int i = 0 ; i < 1000; i++ ) {
-    A[i] = shared_ptr<node_t<int>>(new node_t<int>{0});
+  for (int i = 0; i < 1000; i++) {
+    A[i] = make_shared<node_t<int>>(node_t<int>{0});
   }
 
-  shared_ptr<node_t<int>> temp0 = shared_ptr<node_t<int>>(new node_t<int>{0});
-  shared_ptr<node_t<int>> temp1 = shared_ptr<node_t<int>>(new node_t<int>{1});
-  shared_ptr<node_t<int>> temp2 = shared_ptr<node_t<int>>(new node_t<int>{2});
-  shared_ptr<node_t<int>> temp3 = shared_ptr<node_t<int>>(new node_t<int>{3});
+  shared_ptr<node_t<int>> temp0 = make_shared<node_t<int>>(node_t<int>{0});
+  shared_ptr<node_t<int>> temp1 = make_shared<node_t<int>>(node_t<int>{1});
+  shared_ptr<node_t<int>> temp2 = make_shared<node_t<int>>(node_t<int>{2});
+  shared_ptr<node_t<int>> temp3 = make_shared<node_t<int>>(node_t<int>{3});
   temp0->next = temp1;
   temp1->next = temp2;
   temp2->next = temp3;

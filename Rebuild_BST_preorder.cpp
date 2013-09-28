@@ -28,9 +28,9 @@ BinarySearchTree<T>* rebuild_BST_from_preorder_helper(
     return new BinarySearchTree<T>{
         preorder[s],
         unique_ptr<BinarySearchTree<T>>(
-          rebuild_BST_from_preorder_helper(preorder, s + 1, x)),
+            rebuild_BST_from_preorder_helper(preorder, s + 1, x)),
         unique_ptr<BinarySearchTree<T>>(
-          rebuild_BST_from_preorder_helper(preorder, x, e))
+            rebuild_BST_from_preorder_helper(preorder, x, e))
     };
   }
   return nullptr;
@@ -53,7 +53,7 @@ void check_ans(const unique_ptr<BinarySearchTree<T>>& n, const T& pre) {
   }
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   //      3
   //    2   5
   //  1    4  6

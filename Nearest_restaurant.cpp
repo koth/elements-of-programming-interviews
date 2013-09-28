@@ -58,7 +58,7 @@ list<BinarySearchTree<T>*> range_query_on_BST(
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   //      3
   //    2   5
   //  1    4  6
@@ -69,7 +69,8 @@ int main(int argc, char *argv[]) {
   root->left->left =
       unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{1});
   root->left->left->parent = root->left.get();
-  root->right = unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{5});
+  root->right =
+      unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{5});
   root->right->parent = root.get();
   root->right->left =
       unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{4});

@@ -18,8 +18,8 @@ using std::uniform_int_distribution;
 using std::vector;
 
 double EnglishFreq[] = {8.167, 1.492, 2.782, 4.253, 12.702, 2.228, 2.015,
-                        6.094, 6.966, 0.153, 0.772, 4.025, 2.406, 6.749,
-                        7.507, 1.929, 0.095, 5.987, 6.327, 9.056, 2.758,
+                        6.094, 6.966, 0.153, 0.772, 4.025,  2.406, 6.749,
+                        7.507, 1.929, 0.095, 5.987, 6.327,  9.056, 2.758,
                         0.978, 2.360, 0.150, 1.974, 0.074};
 
 // @include
@@ -31,19 +31,19 @@ struct Symbol {
 
 struct BinaryTree {
   double prob;
-  Symbol *s;
+  Symbol* s;
   shared_ptr<BinaryTree> left, right;
 };
 
 struct Compare {
-  bool operator()(const shared_ptr<BinaryTree> &lhs,
-                  const shared_ptr<BinaryTree> &rhs) const {
+  bool operator()(const shared_ptr<BinaryTree>& lhs,
+                  const shared_ptr<BinaryTree>& rhs) const {
     return lhs->prob > rhs->prob;
   }
 };
 
 // Traverse tree and assign code.
-void assign_huffman_code(const shared_ptr<BinaryTree> &r, const string &s) {
+void assign_huffman_code(const shared_ptr<BinaryTree>& r, const string& s) {
   if (r) {
     // This node (i.e.,leaf) contains symbol.
     if (r->s) {
@@ -55,11 +55,12 @@ void assign_huffman_code(const shared_ptr<BinaryTree> &r, const string &s) {
   }
 }
 
-void Huffman_encoding(vector<Symbol> *symbols) {
+void Huffman_encoding(vector<Symbol>* symbols) {
   // Initially assign each symbol into min->heap.
-  priority_queue<shared_ptr<BinaryTree>, vector<shared_ptr<BinaryTree>>,
+  priority_queue<shared_ptr<BinaryTree>,
+                 vector<shared_ptr<BinaryTree>>,
                  Compare> min_heap;
-  for (auto &s : *symbols) {
+  for (auto& s : *symbols) {
     min_heap.emplace(new BinaryTree{s.prob, &s, nullptr, nullptr});
   }
 
@@ -77,11 +78,11 @@ void Huffman_encoding(vector<Symbol> *symbols) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   int n;
   default_random_engine gen((random_device())());
   if (argc == 2) {
-    if (0 != strcmp(argv[1], "huffman"))  {
+    if (0 != strcmp(argv[1], "huffman")) {
       n = atoi(argv[1]);
     } else {
       n = 26;
@@ -115,8 +116,8 @@ int main(int argc, char *argv[]) {
   Huffman_encoding(&symbols);
   double avg = 0.0;
   for (int i = 0; i < symbols.size(); ++i) {
-    cout << symbols[i].c << ' ' << symbols[i].prob << ' '
-         << symbols[i].code << endl;
+    cout << symbols[i].c << ' ' << symbols[i].prob << ' ' << symbols[i].code
+         << endl;
     avg += symbols[i].prob / 100 * symbols[i].code.size();
   }
   cout << "average huffman code length = " << avg << endl;

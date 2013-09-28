@@ -30,7 +30,7 @@ struct GraphVertex {
 
 bool DFS(GraphVertex* cur, GraphVertex* pre, int time) {
   cur->d = ++time, cur->l = numeric_limits<int>::max();
-  for (GraphVertex* &next : cur->edges) {
+  for (GraphVertex*& next : cur->edges) {
     if (next != pre) {
       if (next->d != 0) {  // back edge.
         cur->l = min(cur->l, next->d);
@@ -45,7 +45,7 @@ bool DFS(GraphVertex* cur, GraphVertex* pre, int time) {
   return (pre == nullptr || cur->l < cur->d);
 }
 
-bool is_graph_2_for_all(vector<GraphVertex> *G) {
+bool is_graph_2_for_all(vector<GraphVertex>* G) {
   if (!G->empty()) {
     return DFS(&G->front(), nullptr, 0);
   }
@@ -55,7 +55,7 @@ bool is_graph_2_for_all(vector<GraphVertex> *G) {
 
 void DFS_exclusion(GraphVertex* cur, GraphVertex* a, GraphVertex* b) {
   cur->d = 1;
-  for (GraphVertex* &next : cur->edges) {
+  for (GraphVertex*& next : cur->edges) {
     if (next->d == 0 && ((cur != a && cur != b) || (next != a && next != b))) {
       DFS_exclusion(next, a, b);
     }
@@ -63,17 +63,17 @@ void DFS_exclusion(GraphVertex* cur, GraphVertex* a, GraphVertex* b) {
 }
 
 // O(n^2) check answer.
-bool check_answer(vector<GraphVertex> *G) {
+bool check_answer(vector<GraphVertex>* G) {
   // marks all vertices as white.
-  for (GraphVertex &n : *G) {
+  for (GraphVertex& n : *G) {
     n.d = 0;
   }
 
-  for (GraphVertex &g : *G) {
-    for (GraphVertex* &t : g.edges) {
+  for (GraphVertex& g : *G) {
+    for (GraphVertex*& t : g.edges) {
       DFS_exclusion(&g, &g, t);
       int count = 0;
-      for (GraphVertex &n : *G) {
+      for (GraphVertex& n : *G) {
         if (n.d == 1) {
           ++count;
           n.d = 0;
@@ -87,7 +87,7 @@ bool check_answer(vector<GraphVertex> *G) {
   return true;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     vector<GraphVertex> G;

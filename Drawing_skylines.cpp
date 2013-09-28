@@ -18,9 +18,11 @@ struct Skyline {
   int left, right, height;
 };
 
-void merge_intersect_skylines(vector<Skyline> *merged,
-                              Skyline*a, int *a_idx,
-                              Skyline*b, int *b_idx) {
+void merge_intersect_skylines(vector<Skyline>* merged,
+                              Skyline* a,
+                              int* a_idx,
+                              Skyline* b,
+                              int* b_idx) {
   if (a->right <= b->right) {
     if (a->height > b->height) {
       if (b->right != a->right) {
@@ -37,7 +39,7 @@ void merge_intersect_skylines(vector<Skyline> *merged,
       }
       ++*a_idx;
     }
-  } else {  // a->right > b->right
+  } else {  // a->right > b->right.
     if (a->height >= b->height) {
       ++*b_idx;
     } else {
@@ -50,7 +52,7 @@ void merge_intersect_skylines(vector<Skyline> *merged,
   }
 }
 
-vector<Skyline> merge_skylines(vector<Skyline> *L, vector<Skyline> *R) {
+vector<Skyline> merge_skylines(vector<Skyline>* L, vector<Skyline>* R) {
   int i = 0, j = 0;
   vector<Skyline> merged;
 
@@ -71,8 +73,9 @@ vector<Skyline> merge_skylines(vector<Skyline> *L, vector<Skyline> *R) {
   return merged;
 }
 
-vector<Skyline> drawing_skylines_helper(
-    const vector<Skyline> &skylines, int start, int end) {
+vector<Skyline> drawing_skylines_helper(const vector<Skyline>& skylines,
+                                        int start,
+                                        int end) {
   if (end - start <= 1) {  // 0 or 1 skyline, just copy it.
     return {skylines.cbegin() + start, skylines.cbegin() + end};
   }
@@ -87,7 +90,7 @@ vector<Skyline> drawing_skylines(vector<Skyline> skylines) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   // Random test 2000 times.
   for (int times = 0; times < 2000; ++times) {

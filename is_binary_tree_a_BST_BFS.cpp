@@ -23,7 +23,7 @@ struct QNode {
 };
 
 template <typename T>
-bool is_BST(const unique_ptr<BinaryTree<T>> &n) {
+bool is_BST(const unique_ptr<BinaryTree<T>>& n) {
   queue<QNode<T>> q;
   q.emplace(
       QNode<T>{n.get(), numeric_limits<T>::min(), numeric_limits<T>::max()});
@@ -46,7 +46,7 @@ bool is_BST(const unique_ptr<BinaryTree<T>> &n) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   //      3
   //    2   5
   //  1    4 6

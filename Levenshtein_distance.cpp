@@ -33,8 +33,8 @@ int Levenshtein_distance(string A, string B) {
     D[0] = i;
     for (int j = 1; j <= B.size(); ++j) {
       int pre_i_1_j = D[j];  // stores the value of D[i -1][j].
-      D[j] = A[i - 1] == B[j - 1] ?
-             pre_i_1_j_1 : 1 + min(pre_i_1_j_1, min(D[j - 1], D[j]));
+      D[j] = A[i - 1] == B[j - 1] ? pre_i_1_j_1
+                                  : 1 + min(pre_i_1_j_1, min(D[j - 1], D[j]));
       // Previous D[i - 1][j] will become the next D[i - 1][j - 1].
       pre_i_1_j_1 = pre_i_1_j;
     }
@@ -53,7 +53,7 @@ string rand_string(int len) {
   return ret;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   string A, B;
   // Wiki example (http://en.wikipedia.org/wiki/Levenshtein_distance)

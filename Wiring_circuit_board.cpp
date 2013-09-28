@@ -28,7 +28,7 @@ bool BFS(GraphVertex* s) {
   q.emplace(s);
 
   while (!q.empty()) {
-    for (GraphVertex* &t : q.front()->edges) {
+    for (GraphVertex*& t : q.front()->edges) {
       if (t->d == -1) {  // unvisited vertex.
         t->d = q.front()->d + 1;
         q.emplace(t);
@@ -55,7 +55,7 @@ bool is_any_placement_feasible(vector<GraphVertex>* G) {
 // @exclude
 
 bool DFS(GraphVertex* s) {
-  for (GraphVertex* &t : s->edges) {
+  for (GraphVertex*& t : s->edges) {
     if (t->d == -1) {
       t->d = !s->d;
       if (!DFS(t)) {
@@ -84,7 +84,7 @@ bool is_2_colorable(vector<GraphVertex>* G) {
   return true;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 9000; ++times) {
     int n;

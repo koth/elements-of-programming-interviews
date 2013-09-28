@@ -15,12 +15,12 @@ using std::unordered_set;
 using std::vector;
 
 // @include
-int minimize_difference(const vector<int> &A) {
+int minimize_difference(const vector<int>& A) {
   int sum = accumulate(A.cbegin(), A.cend(), 0);
 
   unordered_set<int> is_Ok;
   is_Ok.emplace(0);
-  for (const int &item : A) {
+  for (const int& item : A) {
     for (int v = sum >> 1; v >= item; --v) {
       if (is_Ok.find(v - item) != is_Ok.cend()) {
         is_Ok.emplace(v);
@@ -34,11 +34,11 @@ int minimize_difference(const vector<int> &A) {
       return (sum - i) - i;
     }
   }
-  return sum;   // one thief takes all.
+  return sum;  // one thief takes all.
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   int n;
   vector<int> A;

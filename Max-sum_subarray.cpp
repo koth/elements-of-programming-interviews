@@ -16,7 +16,7 @@ using std::vector;
 
 // @include
 template <typename T>
-pair<int, int> find_maximum_subarray(const vector<T> &A) {
+pair<int, int> find_maximum_subarray(const vector<T>& A) {
   // A[range.first : range.second - 1] will be the maximum subarray.
   pair<int, int> range(0, 0);
   int min_idx = -1;
@@ -64,7 +64,7 @@ vector<T> rand_vector(int len) {
 }
 
 template <typename T>
-void check_max_sum(const vector<T> &A, const pair<int, int> &range) {
+void check_max_sum(const vector<T>& A, const pair<int, int>& range) {
   T max_sum = 0;
   for (int i = range.first; i < range.second; ++i) {
     max_sum += A[i];
@@ -89,18 +89,18 @@ void simple_test() {
   B = {0};
   range = find_maximum_subarray(B);
   cout << range.first << " " << range.second << endl;
-  B = {0,0};
+  B = {0, 0};
   range = find_maximum_subarray(B);
   cout << range.first << " " << range.second << endl;
-  B = {0,0,0};
+  B = {0, 0, 0};
   range = find_maximum_subarray(B);
   cout << range.first << " " << range.second << endl;
-  B = {0,-5,0};
+  B = {0, -5, 0};
   range = find_maximum_subarray(B);
   cout << range.first << " " << range.second << endl;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   simple_test();
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {

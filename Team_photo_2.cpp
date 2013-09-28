@@ -12,9 +12,7 @@ using std::vector;
 
 template <typename HeightType>
 struct Player {
-  bool operator<(const Player &that) const {
-    return height < that.height;
-  }
+  bool operator<(const Player& that) const { return height < that.height; }
 
   HeightType height;
 };
@@ -28,7 +26,7 @@ class Team {
     }
   }
 
-  bool operator<(const Team &that) const {
+  bool operator<(const Team& that) const {
     vector<Player<HeightType>> this_sorted(sortHeightMembers());
     vector<Player<HeightType>> that_sorted(that.sortHeightMembers());
     for (int i = 0; i < this_sorted.size() && i < that_sorted.size(); ++i) {
@@ -95,7 +93,7 @@ int find_largest_number_teams(vector<GraphVertex>* G) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   vector<int> height(3);
   height[0] = 1, height[1] = 5, height[2] = 4;
   Team<int> t1(height);

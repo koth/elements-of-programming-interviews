@@ -17,7 +17,11 @@ using std::vector;
 
 // @include
 struct GraphVertex {
-  enum Color {white, gray, black} color;
+  enum Color {
+    white,
+    gray,
+    black
+  } color;
   vector<GraphVertex*> edges;
   // @exclude
   GraphVertex() : color(white) {}
@@ -32,7 +36,7 @@ bool DFS(GraphVertex* cur, const GraphVertex* pre) {
 
   cur->color = GraphVertex::gray;  // marks current vertex as a gray one.
   // Traverse the neighbor vertices.
-  for (GraphVertex* &next : cur->edges) {
+  for (GraphVertex*& next : cur->edges) {
     if (next != pre && next->color != GraphVertex::black) {
       if (DFS(next, cur)) {
         return true;
@@ -43,7 +47,7 @@ bool DFS(GraphVertex* cur, const GraphVertex* pre) {
   return false;
 }
 
-bool is_graph_2_exist(vector<GraphVertex> *G) {
+bool is_graph_2_exist(vector<GraphVertex>* G) {
   if (!G->empty()) {
     return DFS(&G->front(), nullptr);
   }
@@ -53,7 +57,7 @@ bool is_graph_2_exist(vector<GraphVertex> *G) {
 
 void DFS_exclusion(GraphVertex* cur, GraphVertex* a, GraphVertex* b) {
   cur->color = GraphVertex::black;
-  for (GraphVertex* &next : cur->edges) {
+  for (GraphVertex*& next : cur->edges) {
     if (next->color == GraphVertex::white &&
         ((cur != a && cur != b) || (next != a && next != b))) {
       DFS_exclusion(next, a, b);
@@ -62,17 +66,17 @@ void DFS_exclusion(GraphVertex* cur, GraphVertex* a, GraphVertex* b) {
 }
 
 // O(n^2) check answer.
-bool check_answer(vector<GraphVertex> *G) {
+bool check_answer(vector<GraphVertex>* G) {
   // marks all vertices as white.
-  for (GraphVertex &n : *G) {
+  for (GraphVertex& n : *G) {
     n.color = GraphVertex::white;
   }
 
-  for (GraphVertex &g : *G) {
-    for (GraphVertex* &t : g.edges) {
+  for (GraphVertex& g : *G) {
+    for (GraphVertex*& t : g.edges) {
       DFS_exclusion(&g, &g, t);
       int count = 0;
-      for (GraphVertex &n : *G) {
+      for (GraphVertex& n : *G) {
         if (n.color == GraphVertex::black) {
           ++count;
           n.color = GraphVertex::white;
@@ -86,7 +90,7 @@ bool check_answer(vector<GraphVertex> *G) {
   return false;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n;

@@ -30,15 +30,18 @@ pair<int, int> find_longest_subarray_less_equal_k(const vector<int> &A,
     min_prefix_sum[i] = min(min_prefix_sum[i], min_prefix_sum[i + 1]);
   }
 
-  pair<int, int> arr_idx(0,
-                         distance(min_prefix_sum.cbegin(),
-                                  upper_bound(min_prefix_sum.cbegin(),
-                                              min_prefix_sum.cend(), k) - 1));
+  pair<int, int> arr_idx(
+      0,
+      distance(
+          min_prefix_sum.cbegin(),
+          upper_bound(min_prefix_sum.cbegin(),
+                      min_prefix_sum.cend(), k) - 1));
   for (int i = 0; i < prefix_sum.size(); ++i) {
     auto idx = distance(min_prefix_sum.cbegin(),
                         upper_bound(min_prefix_sum.cbegin(),
                                     min_prefix_sum.cend(),
-                                    k + prefix_sum[i])) - 1;
+                                    k + prefix_sum[i])) -
+               1;
     if (idx - i - 1 > arr_idx.second - arr_idx.first) {
       arr_idx = {i + 1, idx};
     }
@@ -48,7 +51,7 @@ pair<int, int> find_longest_subarray_less_equal_k(const vector<int> &A,
 // @exclude
 
 // O(n^2) checking answer
-void check_answer(const vector<int> &A, const pair<int, int> &ans, int k) {
+void check_answer(const vector<int>& A, const pair<int, int>& ans, int k) {
   vector<int> sum(A.size() + 1, 0);
   sum[0] = 0;
   for (size_t i = 0; i < A.size(); ++i) {
@@ -76,7 +79,7 @@ void check_answer(const vector<int> &A, const pair<int, int> &ans, int k) {
   }
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n, k;

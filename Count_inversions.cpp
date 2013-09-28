@@ -15,7 +15,7 @@ using std::vector;
 
 // @include
 template <typename T>
-int merge(vector<T> &A, int start, int mid, int end) {
+int merge(vector<T>& A, int start, int mid, int end) {
   vector<T> sorted_A;
   int left_start = start, right_start = mid, inver_count = 0;
 
@@ -37,7 +37,7 @@ int merge(vector<T> &A, int start, int mid, int end) {
 }
 
 template <typename T>
-int count_inversions_helper(vector<T> &A, int start, int end) {
+int count_inversions_helper(vector<T>& A, int start, int end) {
   if (end - start <= 1) {
     return 0;
   }
@@ -55,7 +55,7 @@ int count_inversions(vector<T> A) {
 
 // O(n^2) check of inversions
 template <typename T>
-int n_2_check(const vector<T> &A) {
+int n_2_check(const vector<T>& A) {
   int count = 0;
   for (size_t i = 0; i < A.size(); ++i) {
     for (size_t j = i + 1; j < A.size(); ++j) {
@@ -68,7 +68,7 @@ int n_2_check(const vector<T> &A) {
   return count;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n;

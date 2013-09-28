@@ -23,17 +23,17 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-bool comp(const pair<int, int> &a, const pair<int, int> &b) {
+bool comp(const pair<int, int>& a, const pair<int, int>& b) {
   return a.second > b.second;
 }
 
-vector<deque<bool>> find_feasible_job_assignment(const vector<int> &T,
-                                                 const vector<int> &S) {
+vector<deque<bool>> find_feasible_job_assignment(const vector<int>& T,
+                                                  const vector<int>& S) {
   int T_total = accumulate(T.cbegin(), T.cend(), 0),  // aggregated work units
-      S_total = accumulate(S.cbegin(), S.cend(), 0,
-                           [&T](const int &x, const int &y) -> int {
-                             return x + min(y, static_cast<int>(T.size()));
-                           });  // tighter bound of server capacity.
+      S_total = accumulate(
+          S.cbegin(), S.cend(), 0, [&T](const int & x, const int & y)->int {
+            return x + min(y, static_cast<int>(T.size()));
+          });  // tighter bound of server capacity.
   if (T_total > S_total || *max_element(T.cbegin(), T.cend()) > S.size()) {
     return {};  // too many jobs or one task needs too many servers.
   }
@@ -51,7 +51,8 @@ vector<deque<bool>> find_feasible_job_assignment(const vector<int> &T,
   for (int j = 0; j < S_idx_data.size(); ++j) {
     if (S_idx_data[j].second < T_idx_data.size()) {
       nth_element(T_idx_data.begin(),
-                  T_idx_data.begin() + S_idx_data[j].second, T_idx_data.end(),
+                  T_idx_data.begin() + S_idx_data[j].second,
+                  T_idx_data.end(),
                   comp);
     }
 
@@ -72,8 +73,9 @@ vector<deque<bool>> find_feasible_job_assignment(const vector<int> &T,
 }
 // @exclude
 
-void check_answer(const vector<int> &T, const vector<int> &S,
-                  const vector<deque<bool>> &res) {
+void check_answer(const vector<int>& T,
+                  const vector<int>& S,
+                  const vector<deque<bool>>& res) {
   // Check row constraints.
   for (int i = 0; i < T.size(); ++i) {
     int sum = 0;
@@ -93,7 +95,7 @@ void check_answer(const vector<int> &T, const vector<int> &S,
   }
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n, m;
@@ -119,7 +121,7 @@ int main(int argc, char *argv[]) {
     copy(S.cbegin(), S.cend(), ostream_iterator<int>(cout, " "));
     cout << endl;
     vector<deque<bool>> res = find_feasible_job_assignment(T, S);
-    if (!res.empty()) {   // there is a feasible answer.
+    if (!res.empty()) {  // there is a feasible answer.
       cout << "found feasible assignment!" << endl;
       for (int i = 0; i < res.size(); ++i) {
         copy(res[i].cbegin(), res[i].cend(), ostream_iterator<int>(cout, " "));

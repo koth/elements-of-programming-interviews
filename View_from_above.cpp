@@ -23,13 +23,9 @@ struct LineSegment {
 
 class Endpoint {
  public:
-  bool operator<(const Endpoint &that) const {
-    return val() < that.val();
-  }
+  bool operator<(const Endpoint& that) const { return val() < that.val(); }
 
-  int val() const {
-    return isLeft_ ? l_->left : l_->right;
-  }
+  int val() const { return isLeft_ ? l_->left : l_->right; }
 
   bool isLeft_;
   const LineSegment* l_;
@@ -46,22 +42,22 @@ void calculate_view_from_above(const vector<LineSegment>& A) {
   int prev_xaxis = E.front().val();  // the first left end point.
   unique_ptr<LineSegment> prev = nullptr;
   map<int, const LineSegment*> T;
-  for (const auto& e: E) {
+  for (const auto& e : E) {
     if (!T.empty() && prev_xaxis != e.val()) {
       if (prev == nullptr) {  // found first segment.
-        prev = unique_ptr<LineSegment>(
-            new LineSegment{prev_xaxis, e.val(), T.crbegin()->second->color,
-                            T.crbegin()->second->height});
+        prev = unique_ptr<LineSegment>(new LineSegment{
+            prev_xaxis, e.val(),
+            T.crbegin()->second->color, T.crbegin()->second->height});
       } else {
         if (prev->height == T.crbegin()->second->height &&
             prev->color == T.crbegin()->second->color) {
           prev->right = e.val();
         } else {
           cout << "[" << prev->left << ", " << prev->right << "]"
-               << ", color = " << prev->color << ", height = "
-               << prev->height << endl;
-          *prev = {prev_xaxis, e.val(), T.crbegin()->second->color,
-                   T.crbegin()->second->height};
+               << ", color = " << prev->color << ", height = " << prev->height
+               << endl;
+          *prev = {prev_xaxis, e.val(),
+                   T.crbegin()->second->color, T.crbegin()->second->height};
         }
       }
     }
@@ -77,13 +73,13 @@ void calculate_view_from_above(const vector<LineSegment>& A) {
   // Output the remaining segment if any.
   if (prev) {
     cout << "[" << prev->left << ", " << prev->right << "]"
-         << ", color = " << prev->color << ", height = "
-         << prev->height << endl;
+         << ", color = " << prev->color << ", height = " << prev->height
+         << endl;
   }
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   vector<LineSegment> A;
   A.emplace_back(LineSegment{0, 4, 0, 0});
   A.emplace_back(LineSegment{1, 3, 1, 2});
@@ -97,7 +93,7 @@ int main(int argc, char *argv[]) {
   A.emplace_back(LineSegment{12, 15, 4, 1});
   A.emplace_back(LineSegment{14, 15, 2, 2});
   A.emplace_back(LineSegment{16, 17, 3, 2});
-  for (const LineSegment &s : A) {
+  for (const LineSegment& s : A) {
     cout << "line segment, left = " << s.left << ", right = " << s.right
          << ", color = " << s.color << ", height = " << s.height << endl;
   }

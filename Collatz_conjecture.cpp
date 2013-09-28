@@ -40,7 +40,7 @@ bool test_Collatz_conjecture(int n) {
           throw overflow_error("test process overflow");
         }
         test_i = next_test_i;
-      } else {  // even number.
+      } else {         // even number.
         test_i >>= 1;  // n / 2.
       }
     }
@@ -65,7 +65,7 @@ bool check(int n) {
   return true;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n;

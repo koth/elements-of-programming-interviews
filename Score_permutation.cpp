@@ -13,11 +13,11 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-int count_permutations(int k, const vector<int> &score_ways) {
+int count_permutations(int k, const vector<int>& score_ways) {
   vector<int> permutations(k + 1, 0);
   permutations[0] = 1;  // one way to reach 0.
   for (int i = 0; i <= k; ++i) {
-    for (const int &score : score_ways) {
+    for (const int& score : score_ways) {
       if (i >= score) {
         permutations[i] += permutations[i - score];
       }
@@ -33,7 +33,7 @@ void simple_test() {
   assert(18 == count_permutations(k, score_ways));
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   simple_test();
   default_random_engine gen((random_device())());
   int k;

@@ -19,9 +19,9 @@ struct Interval {
   };
 
  public:
-  bool operator<(const Interval &i) const {
-    return left.val != i.left.val ?
-           left.val < i.left.val : (left.isClose && !i.left.isClose);
+  bool operator<(const Interval& i) const {
+    return left.val != i.left.val ? left.val < i.left.val
+                                  : (left.isClose && !i.left.isClose);
   }
 
   Endpoint left, right;
@@ -55,16 +55,16 @@ vector<Interval> Union_intervals(vector<Interval> I) {
 }
 // @exclude
 
-void check_intervals(const vector<Interval> &A) {
+void check_intervals(const vector<Interval>& A) {
   // only check the intervals do not overlap with each other.
   for (size_t i = 1; i < A.size(); ++i) {
     assert(A[i - 1].right.val < A[i].left.val ||
-           (A[i - 1].right.val == A[i].left.val &&
-            !A[i - 1].right.isClose && !A[i].left.isClose));
+           (A[i - 1].right.val == A[i].left.val && !A[i - 1].right.isClose &&
+            !A[i].left.isClose));
   }
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n;

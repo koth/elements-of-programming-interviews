@@ -27,7 +27,7 @@ struct GraphVertex {
   // distance stores (dis, #edges) pair.
   pair<int, int> distance = {numeric_limits<int>::max(), 0};
   vector<pair<GraphVertex*, int>> edges;
-  int id;  // the id of this vertex.
+  int id;                       // the id of this vertex.
   GraphVertex* pred = nullptr;  // the predecessor in the shortest path.
 };
 
@@ -61,7 +61,7 @@ void Dijkstra_shortest_path(GraphVertex* s, GraphVertex* t) {
     node_set.erase(node_set.cbegin());
 
     // Relax neighboring vertices of u.
-    for (const auto &v : u->edges) {
+    for (const auto& v : u->edges) {
       int v_distance = u->distance.first + v.second;
       int v_num_edges = u->distance.second + 1;
       if (v.first->distance.first > v_distance ||
@@ -136,7 +136,7 @@ void test() {
   assert(G[t].distance.second == 3);
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   int n;
   if (argc == 2) {

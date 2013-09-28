@@ -41,23 +41,23 @@ pair<double, double> compute_height_and_diameter(
   return {height[0], max(diameter, height[0] + height[1])};
 }
 
-double compute_diameter(const unique_ptr<TreeNode> &T) {
+double compute_diameter(const unique_ptr<TreeNode>& T) {
   return T ? compute_height_and_diameter(T).second : 0.0;
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   unique_ptr<TreeNode> r = nullptr;
   assert(0.0 == compute_diameter(r));
   r = unique_ptr<TreeNode>(new TreeNode());
   r->edges.emplace_back(unique_ptr<TreeNode>(new TreeNode()), 10);
-  r->edges[0].first->edges.emplace_back(
-    unique_ptr<TreeNode>(new TreeNode()), 50);
+  r->edges[0]
+      .first->edges.emplace_back(unique_ptr<TreeNode>(new TreeNode()), 50);
   r->edges.emplace_back(unique_ptr<TreeNode>(new TreeNode()), 20);
   assert(80 == compute_diameter(r));
   cout << compute_diameter(r) << endl;
-  r->edges[0].first->edges.emplace_back(
-    unique_ptr<TreeNode>(new TreeNode()), 100);
+  r->edges[0]
+      .first->edges.emplace_back(unique_ptr<TreeNode>(new TreeNode()), 100);
   assert(150 == compute_diameter(r));
   cout << compute_diameter(r) << endl;
   return 0;

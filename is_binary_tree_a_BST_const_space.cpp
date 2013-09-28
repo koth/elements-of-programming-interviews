@@ -29,7 +29,7 @@ bool is_BST(const unique_ptr<BinaryTree<T>>& root) {
         pre = pre->right.get();
       }
 
-      // Build the successor link.
+      // Process the successor link.
       if (pre->right.get()) {  // pre->right == n.
         // Revert the successor link if predecessor's successor is n.
         pre->right.release();
@@ -54,7 +54,7 @@ bool is_BST(const unique_ptr<BinaryTree<T>>& root) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   //      3
   //    2   5
   //  1    4 6

@@ -10,7 +10,7 @@ using std::vector;
 
 // @include
 // V contains the number of votes for each state.
-long ties_election(const vector<int> &V) {
+long ties_election(const vector<int>& V) {
   int total_votes = accumulate(V.cbegin(), V.cend(), 0);
 
   // No way to tie if the total number of votes is odd.
@@ -34,12 +34,12 @@ void simple_test() {
   cout << ties_election(votes) << endl;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   simple_test();
-  vector<int> votes = {9, 3, 11, 6, 55, 9, 7, 3, 29, 16, 4, 4, 20, 11, 6, 6, 8,
-                       8, 4, 10, 11, 16, 10, 6, 10, 3, 5, 6, 4, 14, 5, 29, 15,
-                       3, 18, 7, 7, 20, 4, 9, 3, 11, 38, 6, 3, 13, 12, 5, 10, 3,
-                       3};
+  vector<int> votes = {9,  3, 11, 6,  55, 9,  7,  3,  29, 16, 4, 4,  20,
+                       11, 6, 6,  8,  8,  4,  10, 11, 16, 10, 6, 10, 3,
+                       5,  6, 4,  14, 5,  29, 15, 3,  18, 7,  7, 20, 4,
+                       9,  3, 11, 38, 6,  3,  13, 12, 5,  10, 3, 3};
   cout << ties_election(votes) << endl;
   return 0;
 }

@@ -13,10 +13,10 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-int count_combinations(int k, const vector<int> &score_ways) {
+int count_combinations(int k, const vector<int>& score_ways) {
   vector<int> combinations(k + 1, 0);
   combinations[0] = 1;  // one way to reach 0.
-  for (const int &score : score_ways) {
+  for (const int& score : score_ways) {
     for (int j = score; j <= k; ++j) {
       combinations[j] += combinations[j - score];
     }
@@ -31,7 +31,7 @@ void simple_test() {
   assert(4 == count_combinations(k, score_ways));
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   simple_test();
   default_random_engine gen((random_device())());
   int k;

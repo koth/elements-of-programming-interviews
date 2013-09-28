@@ -37,18 +37,20 @@ void Floyd_Warshall(vector<vector<double>>* G) {
   }
 }
 
-HighwaySection find_best_proposals(
-    const vector<HighwaySection>& H, const vector<HighwaySection>& P,
-    int a, int b, int n) {
+HighwaySection find_best_proposals(const vector<HighwaySection>& H,
+                                   const vector<HighwaySection>& P,
+                                   int a,
+                                   int b,
+                                   int n) {
   // G stores the shortest path distances between all pairs of vertices.
-  vector<vector<double>>
-      G(n, vector<double>(n, numeric_limits<double>::max()));
+  vector<vector<double>> G(n,
+                            vector<double>(n, numeric_limits<double>::max()));
   for (int i = 0; i < n; ++i) {
     G[i][i] = 0;
   }
 
   // Build a undirected graph G based on existing highway sections H.
-  for (const HighwaySection &h : H) {
+  for (const HighwaySection& h : H) {
     G[h.x][h.y] = G[h.y][h.x] = h.distance;
   }
   // Perform Floyd Warshall to build the shortest path between vertices.
@@ -57,7 +59,7 @@ HighwaySection find_best_proposals(
   // Examine each proposal for shorter distance between a and b.
   double min_dis_a_b = G[a][b];
   HighwaySection best_proposal = {-1, -1, 0.0};  // default
-  for (const HighwaySection &p : P) {
+  for (const HighwaySection& p : P) {
     // Check the path of a => p.x => p.y => b.
     if (G[a][p.x] != numeric_limits<double>::max() &&
         G[p.y][b] != numeric_limits<double>::max() &&
@@ -78,18 +80,20 @@ HighwaySection find_best_proposals(
 // @exclude
 
 // Try to add each proposal and use Floyd Warshall to solve, O(n^4) algorithm.
-HighwaySection check_ans(
-    const vector<HighwaySection>& H, const vector<HighwaySection>& P,
-    int a, int b, int n) {
+HighwaySection check_ans(const vector<HighwaySection>& H,
+                         const vector<HighwaySection>& P,
+                         int a,
+                         int b,
+                         int n) {
   // G stores the shortest path distances between all pairs of vertices.
-  vector<vector<double>>
-      G(n, vector<double>(n, numeric_limits<double>::max()));
+  vector<vector<double>> G(n,
+                            vector<double>(n, numeric_limits<double>::max()));
   for (int i = 0; i < n; ++i) {
     G[i][i] = 0;
   }
 
   // Build a undirected graph G based on existing highway sections H.
-  for (const HighwaySection &h : H) {
+  for (const HighwaySection& h : H) {
     G[h.x][h.y] = G[h.y][h.x] = h.distance;
   }
   // Perform Floyd Warshall to build the shortest path between vertices.
@@ -97,7 +101,7 @@ HighwaySection check_ans(
 
   double best_cost = G[a][b];
   HighwaySection best_proposal = {-1, -1, 0.0};  // default
-  for (const HighwaySection &p : P) {
+  for (const HighwaySection& p : P) {
     // Create new G_test for Floyd Warshall.
     vector<vector<double>> G_test(G);
     G_test[p.x][p.y] = G_test[p.y][p.x] = p.distance;
@@ -110,7 +114,7 @@ HighwaySection check_ans(
   return best_proposal;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   for (int times = 0; times < 1000; ++times) {
     default_random_engine gen((random_device())());
     int n, m, k;
@@ -149,8 +153,8 @@ int main(int argc, char *argv[]) {
     }
     //*
     for (int i = 0; i < m; ++i) {
-      cout << "H[i] = " << H[i].x << " " << H[i].y
-           << " " << H[i].distance << endl;
+      cout << "H[i] = " << H[i].x << " " << H[i].y << " " << H[i].distance
+           << endl;
     }
     //*/
 
@@ -166,8 +170,8 @@ int main(int argc, char *argv[]) {
     }
     //*
     for (int i = 0; i < k; ++i) {
-      cout << "P[i] = " << P[i].x << " " << P[i].y
-           << " " << P[i].distance << endl;
+      cout << "P[i] = " << P[i].x << " " << P[i].y << " " << P[i].distance
+           << endl;
     }
     //*/
 

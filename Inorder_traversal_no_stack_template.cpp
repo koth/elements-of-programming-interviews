@@ -21,7 +21,7 @@ void inorder_traversal(const unique_ptr<BinaryTree<T>>& root) {
         pre = pre->right.get();
       }
 
-      // Build the successor link.
+      // Process the successor link.
       if (pre->right.get()) {  // pre->right.get() == n.
         // Revert the successor link if predecessor's successor is n.
         pre->right.release();

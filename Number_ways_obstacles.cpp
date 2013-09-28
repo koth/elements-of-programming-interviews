@@ -35,7 +35,7 @@ int number_of_ways_with_obstacles(int n, int m,
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   int n, m;
   if (argc == 3) {

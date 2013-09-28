@@ -17,26 +17,27 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-int find_optimum_subarray_using_comp(
-    const vector<int> &A, const int&(*comp)(const int&, const int&)) {
+int find_optimum_subarray_using_comp(const vector<int>& A,
+                                     const int& (*comp)(const int&,
+                                                        const int&)) {
   int till = 0, overall = 0;
-  for (const int &a : A) {
+  for (const int& a : A) {
     till = comp(a, a + till);
     overall = comp(overall, till);
   }
   return overall;
 }
 
-int max_subarray_sum_in_circular(const vector<int> &A) {
+int max_subarray_sum_in_circular(const vector<int>& A) {
   // Find the max in non-circular case and circular case.
   return max(find_optimum_subarray_using_comp(A, max),  // non-circular case.
              accumulate(A.cbegin(), A.cend(), 0) -
-             find_optimum_subarray_using_comp(A, min));  // circular case.
+                 find_optimum_subarray_using_comp(A, min));  // circular case.
 }
 // @exclude
 
 // O(n^2) solution
-int check_ans(const vector<int> &A) {
+int check_ans(const vector<int>& A) {
   int ans = 0;
   for (int i = 0; i < A.size(); ++i) {
     int sum = 0;
@@ -49,7 +50,7 @@ int check_ans(const vector<int> &A) {
   return ans;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n;

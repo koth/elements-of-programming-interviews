@@ -24,7 +24,7 @@ BinarySearchTree<T>* find_first_equal_k(
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   //    3
   //  2   6
   // 1   4 6
@@ -32,7 +32,8 @@ int main(int argc, char *argv[]) {
   root->left = unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{2});
   root->left->left =
       unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{1});
-  root->right = unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{6});
+  root->right =
+      unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{6});
   root->right->left =
       unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{4});
   root->right->right =

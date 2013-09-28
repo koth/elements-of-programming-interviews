@@ -18,7 +18,7 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // O(m^3 n^3) time solution.
-int check_ans(const vector<deque<bool>> &A) {
+int check_ans(const vector<deque<bool>>& A) {
   int max = 0;
   for (int a = 0; a < A.size(); ++a) {
     for (int b = 0; b < A[a].size(); ++b) {
@@ -53,7 +53,7 @@ struct MaxHW {
   int h, w;
 };
 
-int max_square_submatrix(const vector<deque<bool>> &A) {
+int max_square_submatrix(const vector<deque<bool>>& A) {
   // DP table stores (h, w) for each (i, j).
   vector<vector<MaxHW>> table(A.size(), vector<MaxHW>(A.front().size()));
 
@@ -88,7 +88,7 @@ int max_square_submatrix(const vector<deque<bool>> &A) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n, m;

@@ -24,7 +24,7 @@ int maximize_fishing(vector<vector<int>> A) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   int n, m;
   if (argc == 3) {

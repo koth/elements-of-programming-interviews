@@ -21,7 +21,7 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-int max_rectangle_submatrix(const vector<deque<bool>> &A) {
+int max_rectangle_submatrix(const vector<deque<bool>>& A) {
   vector<vector<int>> table(A.size(), vector<int>(A.front().size()));
 
   for (int i = A.size() - 1; i >= 0; --i) {
@@ -30,16 +30,16 @@ int max_rectangle_submatrix(const vector<deque<bool>> &A) {
     }
   }
 
-  // Find the max among all instances of the largest rectangle
+  // Find the max among all instances of the largest rectangle.
   int max_rect_area = 0;
-  for (const vector<int> &t : table) {
+  for (const vector<int>& t : table) {
     max_rect_area = max(max_rect_area, calculate_largest_rectangle(t));
   }
   return max_rect_area;
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n, m;
@@ -63,7 +63,7 @@ int main(int argc, char *argv[]) {
       }
       cout << endl;
     }
-    //*/
+    */
     cout << max_rectangle_submatrix(A) << endl;
     cout << max_rectangle_submatrix_brute_force(A) << endl;
     assert(max_rectangle_submatrix_brute_force(A) ==

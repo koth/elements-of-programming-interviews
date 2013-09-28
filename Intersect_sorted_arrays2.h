@@ -9,7 +9,7 @@
 using std::vector;
 
 // @include
-vector<int> intersect_arrs2(const vector<int> &A, const vector<int> &B) {
+vector<int> intersect_arrs2(const vector<int>& A, const vector<int>& B) {
   vector<int> intersect;
   for (int i = 0; i < A.size(); ++i) {
     if ((i == 0 || A[i] != A[i - 1]) &&

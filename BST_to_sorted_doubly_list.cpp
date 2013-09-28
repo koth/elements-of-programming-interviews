@@ -54,7 +54,7 @@ shared_ptr<BinarySearchTree<T>> BST_to_doubly_list(
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   //    3
   //  2   5
   // 1   4 6

@@ -29,7 +29,7 @@ BinarySearchTree<T>* find_first_larger_k_with_k_exist(
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   //    3
   //  2   5
   // 1   4 7
@@ -37,7 +37,8 @@ int main(int argc, char *argv[]) {
   root->left = unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{2});
   root->left->left =
       unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{1});
-  root->right = unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{5});
+  root->right =
+      unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{5});
   root->right->left =
       unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{4});
   root->right->right =

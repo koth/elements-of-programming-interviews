@@ -25,7 +25,7 @@ int minimum_waiting_time(vector<int> service_time) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   int n;
   if (argc == 2) {

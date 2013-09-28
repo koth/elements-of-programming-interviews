@@ -25,19 +25,21 @@ struct Coordinate {
 
 // Check cur is within maze and is a white pixel.
 bool is_feasible(const Coordinate& cur, const vector<vector<int>>& maze) {
-  return cur.x >= 0 && cur.x < maze.size() &&
-         cur.y >= 0 && cur.y < maze[cur.x].size() && maze[cur.x][cur.y] == 0;
+  return cur.x >= 0 && cur.x < maze.size() && cur.y >= 0 &&
+         cur.y < maze[cur.x].size() && maze[cur.x][cur.y] == 0;
 }
 
 // Perform DFS to find a feasible path.
-bool search_maze_helper(vector<vector<int>>* maze, const Coordinate& cur,
-                        const Coordinate& e, vector<Coordinate>& path) {
+bool search_maze_helper(vector<vector<int>>* maze,
+                        const Coordinate& cur,
+                        const Coordinate& e,
+                        vector<Coordinate>& path) {
   if (cur == e) {
     return true;
   }
 
-  const array<array<int, 2>, 4> shift = {{{{0, 1}}, {{0, -1}},
-                                         {{1, 0}}, {{-1, 0}}}};
+  const array<array<int, 2>, 4> shift = {
+      {{{0, 1}}, {{0, -1}}, {{1, 0}}, {{-1, 0}}}};
 
   for (const auto& s : shift) {
     Coordinate next{cur.x + s[0], cur.y + s[1]};
@@ -54,7 +56,8 @@ bool search_maze_helper(vector<vector<int>>* maze, const Coordinate& cur,
 }
 
 vector<Coordinate> search_maze(vector<vector<int>> maze,
-                               const Coordinate& s, const Coordinate& e) {
+                               const Coordinate& s,
+                               const Coordinate& e) {
   vector<Coordinate> path;
   maze[s.x][s.y] = 1;
   path.emplace_back(s);
@@ -65,7 +68,7 @@ vector<Coordinate> search_maze(vector<vector<int>> maze,
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n, m;
@@ -108,7 +111,8 @@ int main(int argc, char *argv[]) {
       for (int i = 0; i < path.size(); ++i) {
         if (i > 0) {
           assert(abs(path[i - 1].x - path[i].x) +
-                 abs(path[i - 1].y - path[i].y) == 1);
+                     abs(path[i - 1].y - path[i].y) ==
+                 1);
         }
         cout << '(' << path[i].x << ',' << path[i].y << ')' << endl;
       }

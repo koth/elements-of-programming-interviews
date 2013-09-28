@@ -35,8 +35,7 @@ struct EndPoint {
   bool is_left;
 };
 
-vector<int> find_minimum_visits_helper(
-    const vector<EndPoint>& endpoints) {
+vector<int> find_minimum_visits_helper(const vector<EndPoint>& endpoints) {
   vector<int> S;  // a minimum set of visit times.
   unordered_set<const Interval*> covered;
   vector<const Interval*> covering;
@@ -67,7 +66,7 @@ vector<int> find_minimum_visits(const vector<Interval>& I) {
 // @exclude
 
 // O(n^2) checking solution
-void check_ans(const vector<Interval> &I, const vector<int> &ans) {
+void check_ans(const vector<Interval>& I, const vector<int>& ans) {
   deque<bool> is_visited(I.size(), false);
   for (const int& a : ans) {
     for (int i = 0; i < I.size(); ++i) {
@@ -77,7 +76,7 @@ void check_ans(const vector<Interval> &I, const vector<int> &ans) {
     }
   }
 
-  for (const bool &b : is_visited) {
+  for (const bool& b : is_visited) {
     assert(b == true);
   }
 }
@@ -94,7 +93,7 @@ void simple_test() {
   assert(ans.size() == 2 && ans[0] == 4 && ans[1] == 10);
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     cout << "Test " << times << endl;

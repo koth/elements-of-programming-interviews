@@ -15,7 +15,7 @@ using std::vector;
 // @include
 int number_of_ways(int n, int m) {
   vector<vector<int>> A(n, vector<int>(m, 0));
-  A[0][0] = 1;  // 1 way to start from (0, 0).
+  A[0][0] = 1;  // one way to start from (0, 0).
   for (int i = 0; i < n; ++i) {
     for (int j = 0; j < m; ++j) {
       A[i][j] += (i < 1 ? 0 : A[i - 1][j]) + (j < 1 ? 0 : A[i][j - 1]);
@@ -44,7 +44,7 @@ int check_ans(int n, int k) {
   return table[n][k];
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n, m;
@@ -55,8 +55,8 @@ int main(int argc, char *argv[]) {
       n = dis(gen);
       m = dis(gen);
     }
-    cout << "n = " << n << ", m = " << m << ", number of ways = "
-         << number_of_ways(n, m) << endl;
+    cout << "n = " << n << ", m = " << m
+         << ", number of ways = " << number_of_ways(n, m) << endl;
     assert(check_ans(n + m - 2, m - 1) == number_of_ways(n, m));
     if (argc == 3) {
       break;

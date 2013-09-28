@@ -108,7 +108,7 @@ vector<complex<int>> generate_Gaussian_primes_canary(int n) {
   return primes;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   int n;
   if (argc == 2) {

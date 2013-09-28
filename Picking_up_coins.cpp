@@ -15,7 +15,9 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-int pick_up_coins_helper(const vector<int> &C, int a, int b,
+int pick_up_coins_helper(const vector<int>& C,
+                         int a,
+                         int b,
                          vector<vector<int>>* T) {
   if (a > b) {
     return 0;  // base condition.
@@ -30,13 +32,13 @@ int pick_up_coins_helper(const vector<int> &C, int a, int b,
   return (*T)[a][b];
 }
 
-int pick_up_coins(const vector<int> &C) {
+int pick_up_coins(const vector<int>& C) {
   vector<vector<int>> T(C.size(), vector<int>(C.size(), -1));
   return pick_up_coins_helper(C, 0, C.size() - 1, &T);
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   vector<int> C;
   if (argc >= 2) {

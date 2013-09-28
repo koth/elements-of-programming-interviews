@@ -50,7 +50,7 @@ bool are_constraints_satisfied(
   // Assign group index for each connected component.
   int group_count = 0;
   for (pair<int, GraphVertex> vertex : G) {
-    if (vertex.second.group == -1) {  // is a unvisited vertex.
+    if (vertex.second.group == -1) {        // is a unvisited vertex.
       vertex.second.group = group_count++;  // assigns a group index.
       DFS(vertex.second);
     }
@@ -81,7 +81,7 @@ void small_test() {
   assert(!are_constraints_satisfied(E, I));
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   small_test();
   default_random_engine gen((random_device())());
   int n, m, k;
@@ -136,7 +136,7 @@ int main(int argc, char *argv[]) {
     cout << i.a << " " << i.b << endl;
   }
   cout << endl;
-  //*/
+  */
   bool res = are_constraints_satisfied(E, I);
   cout << boolalpha << res << endl;
   return 0;

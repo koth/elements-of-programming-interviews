@@ -18,7 +18,7 @@ using std::uniform_real_distribution;
 using std::vector;
 
 // @include
-bool Bellman_Ford(const vector<vector<double>> &G, int source) {
+bool Bellman_Ford(const vector<vector<double>>& G, int source) {
   vector<double> dis_to_source(G.size(), numeric_limits<double>::max());
   dis_to_source[source] = 0;
 
@@ -54,8 +54,8 @@ bool Bellman_Ford(const vector<vector<double>> &G, int source) {
 
 bool is_Arbitrage_exist(vector<vector<double>> G) {
   // Transform each edge in G.
-  for (vector<double> &edge_list : G) {
-    for (double &edge : edge_list) {
+  for (vector<double>& edge_list : G) {
+    for (double& edge : edge_list) {
       edge = -log10(edge);
     }
   }
@@ -65,7 +65,7 @@ bool is_Arbitrage_exist(vector<vector<double>> G) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   int n, m;
   if (argc == 2) {
@@ -97,8 +97,8 @@ int main(int argc, char *argv[]) {
   for (int i = 0; i < 3; ++i) {
     g[i][i] = 1;
   }
-  g[0][1] = 2, g[1][0] = 0.5, g[0][2] = g[2][0] = 1,
-  g[1][2] = 4, g[2][1] = 0.25;
+  g[0][1] = 2, g[1][0] = 0.5, g[0][2] = g[2][0] = 1, g[1][2] = 4,
+  g[2][1] = 0.25;
   res = is_Arbitrage_exist(g);
   assert(res == true);
   cout << boolalpha << is_Arbitrage_exist(g) << endl;

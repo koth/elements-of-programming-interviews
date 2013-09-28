@@ -17,10 +17,10 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-int evaluate(list<int> operand_list, const list<char> &oper_list) {
+int evaluate(list<int> operand_list, const list<char>& oper_list) {
   // Evaluate '*' first.
   auto operand_it = operand_list.begin();
-  for (const char &oper : oper_list) {
+  for (const char& oper : oper_list) {
     if (oper == '*') {
       int product = *operand_it;
       operand_it = operand_list.erase(operand_it);
@@ -35,16 +35,19 @@ int evaluate(list<int> operand_list, const list<char> &oper_list) {
   return accumulate(operand_list.cbegin(), operand_list.cend(), 0);
 }
 
-bool exp_synthesis_helper(const vector<int> &A, int k,
-                          list<int>* operand_list, list<char>* oper_list,
-                          int cur, int level) {
+bool exp_synthesis_helper(const vector<int>& A,
+                          int k,
+                          list<int>* operand_list,
+                          list<char>* oper_list,
+                          int cur,
+                          int level) {
   cur = cur * 10 + A[level] - '0';
   if (level == A.size() - 1) {
     operand_list->emplace_back(cur);
     if (evaluate(*operand_list, *oper_list) == k) {
       auto operand_it = operand_list->cbegin();
       cout << *operand_it++;
-      for (const char &oper : *oper_list) {
+      for (const char& oper : *oper_list) {
         cout << ' ' << oper << ' ' << *operand_it++;
       }
       cout << " = " << k << endl;
@@ -79,7 +82,7 @@ bool exp_synthesis_helper(const vector<int> &A, int k,
   return false;
 }
 
-void exp_synthesis(const vector<int> &A, int k) {
+void exp_synthesis(const vector<int>& A, int k) {
   list<char> oper_list;
   list<int> operand_list;
   if (!exp_synthesis_helper(A, k, &operand_list, &oper_list, 0, 0)) {
@@ -100,7 +103,7 @@ string rand_string(int len) {
   return ret;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   string s;
   int k;
   default_random_engine gen((random_device())());
@@ -113,7 +116,7 @@ int main(int argc, char *argv[]) {
     k = k_dis(gen);
   }
   vector<int> A;
-  for (const char &c : s) {
+  for (const char& c : s) {
     A.emplace_back(c);
   }
   cout << "s = " << s << ", k = " << k << endl;

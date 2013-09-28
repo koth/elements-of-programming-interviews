@@ -36,16 +36,17 @@ struct HashPair {
   }
 };
 
-bool check_feasible_helper(const vector<Jug>& jugs, int L, int H,
-                           unordered_set<pair<int, int>,
-                                         HashPair,
-                                         PairEqual>* c) {
+bool check_feasible_helper(
+    const vector<Jug>& jugs,
+    int L,
+    int H,
+    unordered_set<pair<int, int>, HashPair, PairEqual>* c) {
   if (L > H || c->find({L, H}) != c->cend() || (L < 0 && H < 0)) {
     return false;
   }
 
   // Checks the volume for each jug to see if it is possible.
-  for (const Jug &j : jugs) {
+  for (const Jug& j : jugs) {
     if ((L <= j.low && j.high <= H) ||  // base case: j is contained in [L, H]
         check_feasible_helper(jugs, L - j.low, H - j.high, c)) {
       return true;
@@ -61,7 +62,7 @@ bool check_feasible(const vector<Jug>& jugs, int L, int H) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   int n;
   vector<Jug> jugs;
   jugs.emplace_back(Jug{230, 240});

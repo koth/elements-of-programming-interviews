@@ -133,7 +133,7 @@ class BinarySearchTree {
 };
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   BinarySearchTree<int> BST;
   assert(BST.empty() == true);
   assert(BST.insert(4) == true);

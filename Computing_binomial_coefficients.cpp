@@ -43,7 +43,7 @@ int check_ans(int n, int k) {
   vector<int> temp;
   for (int i = 2; i <= k; ++i) {
     bool find = false;
-    for (int &a : number) {
+    for (int& a : number) {
       if ((a % i) == 0) {
         a /= i;
         find = true;
@@ -56,18 +56,18 @@ int check_ans(int n, int k) {
   }
 
   int res = 1;
-  for (const int &a : number) {
+  for (const int& a : number) {
     res *= a;
   }
 
-  for (const int &a : temp) {
+  for (const int& a : temp) {
     res /= a;
   }
 
   return res;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n, k;

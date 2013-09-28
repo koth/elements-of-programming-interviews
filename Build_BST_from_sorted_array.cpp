@@ -36,7 +36,7 @@ BinarySearchTree<T>* build_BST_from_sorted_array(const vector<T>& A) {
 // @exclude
 
 template <typename T>
-void traversal_check(const unique_ptr<BinarySearchTree<T>>& root, T *target) {
+void traversal_check(const unique_ptr<BinarySearchTree<T>>& root, T* target) {
   if (root) {
     traversal_check(root->left, target);
     assert(*target == root->data);
@@ -45,7 +45,7 @@ void traversal_check(const unique_ptr<BinarySearchTree<T>>& root, T *target) {
   }
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   for (int times = 0; times < 1000; ++times) {
     vector<int> A;
     int n;

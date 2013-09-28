@@ -26,7 +26,7 @@ struct MaxHW {
   int h, w;
 };
 
-int max_rectangle_submatrix(const vector<deque<bool>> &A) {
+int max_rectangle_submatrix(const vector<deque<bool>>& A) {
   // DP table stores (h, w) for each (i, j).
   vector<vector<MaxHW>> table(A.size(), vector<MaxHW>(A.front().size()));
 
@@ -59,7 +59,7 @@ int max_rectangle_submatrix(const vector<deque<bool>> &A) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n, m;

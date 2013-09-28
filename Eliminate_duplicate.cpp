@@ -14,7 +14,7 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-void eliminate_duplicate(vector<int> *A) {
+void eliminate_duplicate(vector<int>* A) {
   sort(A->begin(), A->end());  // makes identical elements become neighbors.
   // unique() removes adjacent duplicates and returns an iterator to the
   // element the follows the last element not removed. The effect of resize()
@@ -23,13 +23,13 @@ void eliminate_duplicate(vector<int> *A) {
 }
 // @exclude
 
-void check_ans(const vector<int> &A) {
+void check_ans(const vector<int>& A) {
   for (int i = 1; i < A.size(); ++i) {
     assert(A[i] != A[i - 1]);
   }
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n;

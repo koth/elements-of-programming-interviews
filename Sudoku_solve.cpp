@@ -16,7 +16,7 @@ using std::ostream_iterator;
 using std::vector;
 
 // @include
-bool valid_to_add(const vector<vector<int>> &A, int i, int j, int val) {
+bool valid_to_add(const vector<vector<int>>& A, int i, int j, int val) {
   // Check row constraints.
   for (int k = 0; k < A.size(); ++k) {
     if (val == A[k][j]) {
@@ -44,7 +44,7 @@ bool valid_to_add(const vector<vector<int>> &A, int i, int j, int val) {
   return true;
 }
 
-bool solve_Sudoku_helper(vector<vector<int>> *A, int i, int j) {
+bool solve_Sudoku_helper(vector<vector<int>>* A, int i, int j) {
   if (i == A->size()) {
     i = 0;  // starts a new row.
     if (++j == (*A)[i].size()) {
@@ -75,7 +75,7 @@ bool solve_Sudoku_helper(vector<vector<int>> *A, int i, int j) {
   return false;
 }
 
-bool solve_Sudoku(vector<vector<int>> *A) {
+bool solve_Sudoku(vector<vector<int>>* A) {
   if (!is_valid_Sudoku(*A)) {
     cout << "Initial configuration violates constraints." << endl;
     return false;
@@ -94,7 +94,7 @@ bool solve_Sudoku(vector<vector<int>> *A) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   vector<vector<int>> A(9, vector<int>(9, 0));
   A[0] = {0, 2, 6, 0, 0, 0, 8, 1, 0};
   A[1] = {3, 0, 0, 7, 0, 8, 0, 0, 6};

@@ -25,17 +25,11 @@ using std::vector;
 
 // @include
 struct Person {
-  bool operator<(const Person &that) const {
-    return key < that.key;
-  }
+  bool operator<(const Person& that) const { return key < that.key; }
 
-  bool operator==(const Person &that) const {
-    return key == that.key;
-  }
+  bool operator==(const Person& that) const { return key == that.key; }
 
-  bool operator!=(const Person &that) const {
-    return key != that.key;
-  }
+  bool operator!=(const Person& that) const { return key != that.key; }
 
   int key;
   string name;
@@ -48,14 +42,14 @@ struct HashPerson {
   }
 };
 
-void counting_sort(vector<Person> *people) {
+void counting_sort(vector<Person>* people) {
   unordered_map<int, int> key_to_count;
-  for (const Person &p : *people) {
+  for (const Person& p : *people) {
     ++key_to_count[p.key];
   }
   unordered_map<int, int> key_to_offset;
   int offset = 0;
-  for (const auto &p : key_to_count) {
+  for (const auto& p : key_to_count) {
     key_to_offset[p.first] = offset;
     offset += p.second;
   }
@@ -84,7 +78,7 @@ string rand_string(int len) {
   return ret;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int size;

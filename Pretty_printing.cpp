@@ -28,7 +28,7 @@ string rand_string(int len) {
 }
 
 // @include
-int find_pretty_printing(const vector<string> &W, int L) {
+int find_pretty_printing(const vector<string>& W, int L) {
   // Calculate M(i).
   vector<long> M(W.size(), numeric_limits<long>::max());
   for (int i = 0; i < W.size(); ++i) {
@@ -57,7 +57,7 @@ int find_pretty_printing(const vector<string> &W, int L) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   int n, L;
   if (argc == 2) {

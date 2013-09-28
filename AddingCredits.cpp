@@ -14,12 +14,12 @@ using std::unordered_set;
 // @include
 class ClientsCreditsInfo {
  public:
-  void insert(const string &s, int c) {
+  void insert(const string& s, int c) {
     credits_.emplace(s, c - offset_);
     inverse_credits_[c - offset_].emplace(s);
   }
 
-  void remove(const string &s) {
+  void remove(const string& s) {
     auto credits_it = credits_.find(s);
     if (credits_it != credits_.end()) {
       inverse_credits_[credits_it->second].erase(s);
@@ -27,19 +27,18 @@ class ClientsCreditsInfo {
     }
   }
 
-  int lookup(const string &s) const {
+  int lookup(const string& s) const {
     auto it = credits_.find(s);
     return it == credits_.cend() ? -1 : it->second + offset_;
   }
 
-  void addAll(int C) {
-    offset_ += C;
-  }
+  void addAll(int C) { offset_ += C; }
 
   string max() const {
     auto it = inverse_credits_.crbegin();
-    return it == inverse_credits_.crend() ||
-           it->second.empty() ? "" : *it->second.cbegin();
+    return it == inverse_credits_.crend() || it->second.empty()
+               ? ""
+               : *it->second.cbegin();
   }
 
  private:
@@ -49,7 +48,7 @@ class ClientsCreditsInfo {
 };
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   ClientsCreditsInfo a;
   assert(a.max() == "");
   a.insert("foo", 1);

@@ -14,18 +14,17 @@ using std::vector;
 class TournamentTree {
  public:
   // n items, and each box has unit_cap.
-  TournamentTree(int n, double unit_cap) :
-    // Complete binary tree with n leafs has 2n - 1 nodes.
-    tree_(vector<TreeNode>((n << 1) - 1, {unit_cap})) {}
+  TournamentTree(int n, double unit_cap)
+      :
+        // Complete binary tree with n leafs has 2n - 1 nodes.
+        tree_(vector<TreeNode>((n << 1) - 1, {unit_cap})) {}
 
-  void insert(int item, double item_cap) {
-    insertHelper(0, item, item_cap);
-  }
+  void insert(int item, double item_cap) { insertHelper(0, item, item_cap); }
   // @exclude
   void printLeaf() {
     for (int i = 0; i < tree_.size(); ++i) {
       cout << "i = " << i << ", cap = " << tree_[i].cap << endl;
-      for (const int &item : tree_[i].items) {
+      for (const int& item : tree_[i].items) {
         cout << item << ' ';
       }
       cout << endl;
@@ -35,8 +34,8 @@ class TournamentTree {
 
  private:
   struct TreeNode {
-    double cap;  // leaf: remaining capacity in the box.
-                 // non-leaf: max remaining capacity in the subtree.
+    double cap;         // leaf: remaining capacity in the box.
+                        // non-leaf: max remaining capacity in the subtree.
     vector<int> items;  // stores the items in the leaf node.
   };
 
@@ -57,7 +56,7 @@ class TournamentTree {
 };
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   // following is the example in the book.
   TournamentTree t(6, 1.0);
   t.insert(0, 0.60);

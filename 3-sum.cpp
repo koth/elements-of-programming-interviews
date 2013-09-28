@@ -15,7 +15,7 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-bool has_2_sum(const vector<int> &A, int t) {
+bool has_2_sum(const vector<int>& A, int t) {
   int j = 0, k = A.size() - 1;
 
   while (j <= k) {
@@ -33,7 +33,7 @@ bool has_2_sum(const vector<int> &A, int t) {
 bool has_3_sum(vector<int> A, int t) {
   sort(A.begin(), A.end());
 
-  for (const int &a : A) {
+  for (const int& a : A) {
     // Find if the sum of two numbers in A equals to t - a.
     if (has_2_sum(A, t - a)) {
       return true;
@@ -44,7 +44,7 @@ bool has_3_sum(vector<int> A, int t) {
 // @exclude
 
 // n^3 solution
-bool check_ans(const vector<int> &A, int t) {
+bool check_ans(const vector<int>& A, int t) {
   for (int i = 0; i < A.size(); ++i) {
     for (int j = 0; j < A.size(); ++j) {
       for (int k = 0; k < A.size(); ++k) {
@@ -57,7 +57,7 @@ bool check_ans(const vector<int> &A, int t) {
   return false;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n, T;

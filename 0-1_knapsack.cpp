@@ -26,7 +26,7 @@ vector<int> rand_vector(int len) {
 }
 
 // @include
-int knapsack(int w, const vector<pair<int, int>> &items) {
+int knapsack(int w, const vector<pair<int, int>>& items) {
   vector<int> V(w + 1, 0);
   for (int i = 0; i < items.size(); ++i) {
     for (int j = w; j >= items[i].first; --j) {
@@ -37,7 +37,7 @@ int knapsack(int w, const vector<pair<int, int>> &items) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   vector<int> weight, value;
   int n, W;

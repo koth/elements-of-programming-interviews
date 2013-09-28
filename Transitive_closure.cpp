@@ -40,7 +40,7 @@ void transitive_closure(vector<GraphVertex>* G) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   vector<GraphVertex> G;
   int n;
