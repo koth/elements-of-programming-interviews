@@ -16,9 +16,7 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-unsigned diff(unsigned a, unsigned b) {
-  return a > b ? a - b : b - a;
-}
+unsigned diff(unsigned a, unsigned b) { return a > b ? a - b : b - a; }
 
 unsigned find_closest_palindrome(unsigned x) {
   string str(to_string(x));
@@ -56,11 +54,11 @@ unsigned find_closest_palindrome(unsigned x) {
   // Make str a palindrome again by mirroring the left half to the right half.
   copy(str.cbegin(), str.cbegin() + (str.size() >> 1), str.rbegin());
   return diff(x, mirror_left) < diff(x, stoul(str)) ?
-         mirror_left : stoul(str);
+              mirror_left : stoul(str);
 }
 // @exclude
 
-bool is_palindrome(const unsigned &x) {
+bool is_palindrome(const unsigned& x) {
   string str(to_string(x));
   for (int i = 0, j = str.size() - 1; i < j; ++i, --j) {
     if (str[i] != str[j]) {
@@ -70,7 +68,7 @@ bool is_palindrome(const unsigned &x) {
   return true;
 }
 
-void check_answer(const unsigned &x, const unsigned &ans) {
+void check_answer(const unsigned& x, const unsigned& ans) {
   if (is_palindrome(x)) {
     assert(ans == x);
     return;
@@ -90,7 +88,7 @@ void check_answer(const unsigned &x, const unsigned &ans) {
   }
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 100000; ++times) {
     unsigned x;

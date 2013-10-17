@@ -18,7 +18,7 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-void Eliminate_rows(vector<deque<bool>> *B, int i, int j) {
+void Eliminate_rows(vector<deque<bool>>* B, int i, int j) {
   // Use B[i] to eliminate other rows' entry j.
   for (int a = 0; a < B->size(); ++a) {
     if (i != a && (*B)[a][j]) {
@@ -29,8 +29,8 @@ void Eliminate_rows(vector<deque<bool>> *B, int i, int j) {
   }
 }
 
-deque<bool> Gaussian_elimination(const vector<deque<bool>> &A,
-                                 const deque<bool> &y) {
+deque<bool> Gaussian_elimination(const vector<deque<bool>>& A,
+                                 const deque<bool>& y) {
   vector<deque<bool>> B(A);
   for (int i = 0; i < B.size(); ++i) {
     B[i].push_back(y[i]);
@@ -80,9 +80,9 @@ deque<bool> Gaussian_elimination(const vector<deque<bool>> &A,
 }
 // @exclude
 
-bool check_answer_with_solution(const vector<deque<bool>> &A,
-                                const deque<bool> &b,
-                                const deque<bool> &x) {
+bool check_answer_with_solution(const vector<deque<bool>>& A,
+                                const deque<bool>& b,
+                                const deque<bool>& x) {
   for (int i = 0; i < A.size(); ++i) {
     bool res = A[i][0] && x[0];
     for (int j = 1; j < A[i].size(); ++j) {
@@ -96,8 +96,8 @@ bool check_answer_with_solution(const vector<deque<bool>> &A,
   return true;
 }
 
-bool check_answer_no_solution(const vector<deque<bool>> &A,
-                              const deque<bool> &b) {
+bool check_answer_no_solution(const vector<deque<bool>>& A,
+                              const deque<bool>& b) {
   // Generate all possible combinations of x to test
   // there is no solution actually.
   for (int val = 0; val < (1 << b.size()); ++val) {
@@ -116,7 +116,7 @@ bool check_answer_no_solution(const vector<deque<bool>> &A,
   return true;
 }
 
-void rand_matrix(vector<deque<bool>> *A) {
+void rand_matrix(vector<deque<bool>>* A) {
   default_random_engine gen((random_device())());
   for (int i = 0; i < A->size(); ++i) {
     for (int j = 0; j < (*A)[i].size(); ++j) {
@@ -126,7 +126,7 @@ void rand_matrix(vector<deque<bool>> *A) {
   }
 }
 
-void rand_vec(deque<bool> *b) {
+void rand_vec(deque<bool>* b) {
   default_random_engine gen((random_device())());
   for (int i = 0; i < b->size(); ++i) {
     uniform_int_distribution<int> zero_or_one(0, 1);
@@ -134,7 +134,7 @@ void rand_vec(deque<bool> *b) {
   }
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   // Predefined tests.
   vector<deque<bool>> A(4);

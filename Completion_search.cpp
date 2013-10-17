@@ -68,7 +68,7 @@ int main(int argc, char* argv[]) {
     cout << endl;
     cout << "tar = " << tar << endl;
     double ret = completion_search(&A, tar);
-    if (ret != -1) {
+    if (ret != -1.0) {
       cout << "ret = " << ret << endl;
       double sum = 0.0;
       for (int i = 0; i < n; ++i) {

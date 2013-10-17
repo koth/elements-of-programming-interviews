@@ -13,7 +13,7 @@ using std::string;
 using std::to_string;
 
 // @include
-string tail(const string &file_name, int tail_count) {
+string tail(const string& file_name, int tail_count) {
   fstream file_ptr(file_name.c_str());
 
   file_ptr.seekg(0, ios::end);
@@ -39,7 +39,7 @@ string tail(const string &file_name, int tail_count) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   cout << "Usage: file name and tail count" << endl;
   int tail_count = 10;
   string file_name;

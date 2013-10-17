@@ -16,21 +16,21 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-int celebrity_finding(const vector<deque<bool>> &F) {
+int celebrity_finding(const vector<deque<bool>>& F) {
   // Start checking the relation from F[0][1].
   int i = 0, j = 1;
   while (j < F.size()) {
-    if (F[i][j] == true) {
+    if (F[i][j]) {
       i = j++;  // all candidates j' < j are not celebrity candidates.
-    } else {  // F[i][j] == false.
-      ++j;  // i is still a celebrity candidate but j is not.
+    } else {    // F[i][j] == false.
+      ++j;      // i is still a celebrity candidate but j is not.
     }
   }
   return i;
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n;

@@ -20,7 +20,7 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-int find_biggest_n_1_product(const vector<int> &A) {
+int find_biggest_n_1_product(const vector<int>& A) {
   // Build forward product L, and backward product R.
   vector<int> L, R(A.size());
   partial_sum(A.cbegin(), A.cend(), back_inserter(L), multiplies<int>());
@@ -38,7 +38,7 @@ int find_biggest_n_1_product(const vector<int> &A) {
 // @exclude
 
 // n^2 checking.
-int check_ans(const vector<int> &A) {
+int check_ans(const vector<int>& A) {
   int max_product = numeric_limits<int>::min();
   for (int i = 0; i < A.size(); ++i) {
     int product = 1;
@@ -55,7 +55,7 @@ int check_ans(const vector<int> &A) {
   return max_product;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 10000; ++times) {
     int n;

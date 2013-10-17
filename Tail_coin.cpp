@@ -32,7 +32,7 @@ int simulate_biased_coin(int n, int trails) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   int n, trails;
   default_random_engine gen((random_device())());
   if (argc == 3) {

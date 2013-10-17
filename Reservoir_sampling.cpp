@@ -41,7 +41,7 @@ vector<int> reservoir_sampling(istringstream* sin, int k) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   int n, k;
   default_random_engine gen((random_device())());
   if (argc == 2) {
@@ -75,6 +75,6 @@ int main(int argc, char *argv[]) {
   /*
   copy(ans.begin(), ans.end(), ostream_iterator<int>(cout, " "));
   cout << endl;
-  //*/
+  */
   return 0;
 }

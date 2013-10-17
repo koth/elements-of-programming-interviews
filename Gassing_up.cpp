@@ -16,7 +16,7 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-int find_start_city(const vector<int> &G, const vector<int> &D) {
+int find_start_city(const vector<int>& G, const vector<int>& D) {
   int carry = 0;
   pair<int, int> min(0, 0);
   for (int i = 1; i < G.size(); ++i) {
@@ -29,7 +29,7 @@ int find_start_city(const vector<int> &G, const vector<int> &D) {
 }
 // @exclude
 
-void check_ans(const vector<int> &G, const vector<int> &D, int c) {
+void check_ans(const vector<int>& G, const vector<int>& D, int c) {
   int s = c;
   int gas = 0;
   do {
@@ -39,7 +39,7 @@ void check_ans(const vector<int> &G, const vector<int> &D, int c) {
   } while (s != c);
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n;

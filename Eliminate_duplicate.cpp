@@ -17,14 +17,14 @@ using std::vector;
 void eliminate_duplicate(vector<int>* A) {
   sort(A->begin(), A->end());  // makes identical elements become neighbors.
   // unique() removes adjacent duplicates and returns an iterator to the
-  // element the follows the last element not removed. The effect of resize()
+  // element the follows the last element not removed. The effect of erase()
   // is to restrict A to the distinct element.
-  A->resize(distance(A->begin(), unique(A->begin(), A->end())));
+  A->erase(unique(A->begin(), A->end()), A->end());
 }
 // @exclude
 
 void check_ans(const vector<int>& A) {
-  for (int i = 1; i < A.size(); ++i) {
+  for (size_t i = 1; i < A.size(); ++i) {
     assert(A[i] != A[i - 1]);
   }
 }

@@ -19,7 +19,7 @@ bool is_door_open(int i) {
 // @exclude
 
 void check_answer(int n) {
-  deque<bool> doors(n + 1, false);  // false means closed door
+  deque<bool> doors(n + 1, false);  // false means closed door.
   for (int i = 1; i <= n; ++i) {
     int start = 0;
     while (start + i <= n) {
@@ -33,7 +33,7 @@ void check_answer(int n) {
   }
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   int n;
   if (argc == 2) {

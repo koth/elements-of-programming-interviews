@@ -60,30 +60,30 @@ int find_kth_in_two_sorted_arrays(const vector<int>& A,
                                   const vector<int>& B,
                                   int k) {
   // Lower bound of elements we will choose in A.
-  int l = max(0, static_cast<int>(k - B.size()));
+  int b = max(0, static_cast<int>(k - B.size()));
   // Upper bound of elements we will choose in A.
-  int u = min(static_cast<int>(A.size()), k);
+  int t = min(static_cast<int>(A.size()), k);
 
-  while (l < u) {
-    int x = l + ((u - l) >> 1);
+  while (b < t) {
+    int x = b + ((t - b) >> 1);
     int A_x_1 = (x <= 0 ? numeric_limits<int>::min() : A[x - 1]);
     int A_x = (x >= A.size() ? numeric_limits<int>::max() : A[x]);
     int B_k_x_1 = (k - x <= 0 ? numeric_limits<int>::min() : B[k - x - 1]);
     int B_k_x = (k - x >= B.size() ? numeric_limits<int>::max() : B[k - x]);
 
     if (A_x < B_k_x_1) {
-      l = x + 1;
+      b = x + 1;
     } else if (A_x_1 > B_k_x) {
-      u = x - 1;
+      t = x - 1;
     } else {
       // B[k - x - 1] <= A[x] && A[x - 1] < B[k - x].
       return max(A_x_1, B_k_x_1);
     }
   }
 
-  int A_l_1 = l <= 0 ? numeric_limits<int>::min() : A[l - 1];
-  int B_k_l_1 = k - l - 1 < 0 ? numeric_limits<int>::min() : B[k - l - 1];
-  return max(A_l_1, B_k_l_1);
+  int A_b_1 = b <= 0 ? numeric_limits<int>::min() : A[b - 1];
+  int B_k_b_1 = k - b - 1 < 0 ? numeric_limits<int>::min() : B[k - b - 1];
+  return max(A_b_1, B_k_b_1);
 }
 // @exclude
 
@@ -124,8 +124,11 @@ void small_test() {
   B0.emplace_back(1);
   B0.emplace_back(2);
   B0.emplace_back(3);
-  cout << "test output " << find_kth_in_two_sorted_arrays(A0, B0, 1) << endl;
   assert(0 == find_kth_in_two_sorted_arrays(A0, B0, 1));
+  assert(0 == find_kth_in_two_sorted_arrays(A0, B0, 2));
+  assert(1 == find_kth_in_two_sorted_arrays(A0, B0, 3));
+  assert(1 == find_kth_in_two_sorted_arrays(A0, B0, 4));
+  assert(2 == find_kth_in_two_sorted_arrays(A0, B0, 5));
 }
 
 int main(int argc, char* argv[]) {

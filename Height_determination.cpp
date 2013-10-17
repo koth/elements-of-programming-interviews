@@ -29,7 +29,7 @@ int getHeight(int c, int d) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   assert(getHeight(1, 10) == 10);
   assert(getHeight(2, 1) == 1);
   assert(getHeight(2, 2) == 3);

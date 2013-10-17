@@ -31,7 +31,7 @@ int uniform_random_a_b(int a, int b) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int a, b;
@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
     int x = uniform_random_a_b(a, b);
     cout << "a = " << a << " b = " << b << endl;
     cout << "random result = " << x << endl;
-    assert(x >=a && x <= b);
+    assert(x >= a && x <= b);
   }
   return 0;
 }

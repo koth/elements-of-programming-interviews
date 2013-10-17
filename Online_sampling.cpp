@@ -47,7 +47,7 @@ vector<int> online_sampling(int n, int k) {
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   int n, k;
   if (argc == 2) {
