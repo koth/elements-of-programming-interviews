@@ -14,17 +14,22 @@ using std::unordered_set;
 // @include
 class ClientsCreditsInfo {
  public:
-  void insert(const string& s, int c) {
-    credits_.emplace(s, c - offset_);
-    inverse_credits_[c - offset_].emplace(s);
+  bool insert(const string& s, int c) {
+    if (credits_.emplace(s, c - offset_).second) {
+      inverse_credits_[c - offset_].emplace(s);
+      return true;
+    }
+    return false;
   }
 
-  void remove(const string& s) {
+  bool remove(const string& s) {
     auto credits_it = credits_.find(s);
     if (credits_it != credits_.end()) {
       inverse_credits_[credits_it->second].erase(s);
       credits_.erase(credits_it);
+      return true;
     }
+    return false;
   }
 
   int lookup(const string& s) const {
@@ -51,20 +56,22 @@ class ClientsCreditsInfo {
 int main(int argc, char* argv[]) {
   ClientsCreditsInfo a;
   assert(a.max() == "");
-  a.insert("foo", 1);
-  a.insert("bar", 2);
+  assert(!a.remove("foo"));
+  assert(a.insert("foo", 1));
+  assert(!a.insert("foo", 10));
+  assert(a.insert("bar", 2));
   a.addAll(5);
-  a.insert("widget", 3);
+  assert(a.insert("widget", 3));
   a.addAll(5);
   a.insert("dothis", 4);
   assert(11 == a.lookup("foo"));
   assert(12 == a.lookup("bar"));
   assert(8 == a.lookup("widget"));
   assert(4 == a.lookup("dothis"));
-  a.remove("foo");
+  assert(a.remove("foo"));
   assert(-1 == a.lookup("foo"));
   assert(a.max().compare("bar") == 0);
-  a.insert("xyz", 13);
+  assert(a.insert("xyz", 13));
   assert(a.max().compare("xyz") == 0);
   a.insert("dd", 15);
   assert(a.max().compare("dd") == 0);
