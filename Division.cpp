@@ -4,12 +4,14 @@
 #include <iostream>
 #include <limits>
 #include <random>
+#include <string>
 
 using std::cout;
 using std::default_random_engine;
 using std::endl;
 using std::numeric_limits;
 using std::random_device;
+using std::stoul;
 using std::uniform_int_distribution;
 
 unsigned divide_x_y_bsearch(unsigned x, unsigned y) {
@@ -84,14 +86,14 @@ void simple_test() {
 
 int main(int argc, char* argv[]) {
   simple_test();
-  return 0;
   if (argc == 3) {
-    unsigned x = atoi(argv[1]), y = atoi(argv[2]);
+    unsigned x = static_cast<size_t>(stoul(argv[1]));
+    unsigned y = static_cast<size_t>(stoul(argv[2]));
     assert(x / y == divide_x_y(x, y));
     assert(x / y == divide_x_y_bsearch(x, y));
   } else {
     default_random_engine gen((random_device())());
-    uniform_int_distribution<int> dis(0, numeric_limits<int>::max());
+    uniform_int_distribution<size_t> dis(0, numeric_limits<size_t>::max());
     for (int times = 0; times < 100000; ++times) {
       unsigned x = dis(gen), y = dis(gen);
       y = (y == 0) ? 1 : y;  // ensure no divide by 0.
