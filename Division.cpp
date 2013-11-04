@@ -46,16 +46,19 @@ unsigned divide_x_y_bsearch(unsigned x, unsigned y) {
 
 // @include
 unsigned divide_x_y(unsigned x, unsigned y) {
-  if (x < y) {
-    return 0;
-  }
+  unsigned res = 0;
+  while (x >= y) {
+    int power = 1;
+    // Checks (y << power) >= (y << (power - 1)) to prevent potential
+    // overflow of unsigned.
+    while ((y << power) >= (y << (power - 1)) && (y << power) <= x) {
+      ++power;
+    }
 
-  int power = 0;
-  while ((y << power) <= x) {
-    ++power;
+    res += 1U << (power - 1);
+    x -= y << (power - 1);
   }
-  unsigned part = 1U << (power - 1);
-  return part | divide_x_y(x - (y << (power - 1)), y);
+  return res;
 }
 // @exclude
 
@@ -66,6 +69,7 @@ void simple_test() {
   assert(divide_x_y(64, 4) == 16);
   assert(divide_x_y(64, 5) == 12);
   assert(divide_x_y(65, 2) == 32);
+  assert(divide_x_y(2600540749, 2590366779) == 1);
   assert(divide_x_y_bsearch(4u, 2u));
   assert(divide_x_y_bsearch(64, 1) == 64);
   assert(divide_x_y_bsearch(64, 2) == 32);
@@ -80,13 +84,14 @@ void simple_test() {
 
 int main(int argc, char* argv[]) {
   simple_test();
+  return 0;
   if (argc == 3) {
     unsigned x = atoi(argv[1]), y = atoi(argv[2]);
     assert(x / y == divide_x_y(x, y));
     assert(x / y == divide_x_y_bsearch(x, y));
   } else {
     default_random_engine gen((random_device())());
-    uniform_int_distribution<unsigned> dis(0, numeric_limits<int>::max());
+    uniform_int_distribution<int> dis(0, numeric_limits<int>::max());
     for (int times = 0; times < 100000; ++times) {
       unsigned x = dis(gen), y = dis(gen);
       y = (y == 0) ? 1 : y;  // ensure no divide by 0.

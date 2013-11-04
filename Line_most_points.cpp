@@ -113,9 +113,9 @@ Line find_line_with_most_points(const vector<Point>& P) {
   auto line_max_points =
       max_element(table.cbegin(),
                   table.cend(),
-                  [](const pair<Line, unordered_set<Point, HashPoint>> & a,
-                     const pair<Line, unordered_set<Point, HashPoint>> &
-                         b) { return a.second.size() < b.second.size(); });
+                  [](const pair<Line, unordered_set<Point, HashPoint>>& a,
+                     const pair<Line, unordered_set<Point, HashPoint>>& b)
+                  { return a.second.size() < b.second.size(); });
   int res = check(P);
   // cout << res << " " << line_max_points.second.size() << endl;
   assert(res == line_max_points->second.size());
@@ -123,10 +123,9 @@ Line find_line_with_most_points(const vector<Point>& P) {
   // Return the line with most points have passed.
   return max_element(table.cbegin(),
                      table.cend(),
-                     [](const pair<Line, unordered_set<Point, HashPoint>> & a,
-                        const pair<Line, unordered_set<Point, HashPoint>> &
-                            b) { return a.second.size() < b.second.size(); })
-      ->first;
+                     [](const pair<Line, unordered_set<Point, HashPoint>>& a,
+                        const pair<Line, unordered_set<Point, HashPoint>>& b)
+                     { return a.second.size() < b.second.size(); })->first;
 }
 // @exclude
 

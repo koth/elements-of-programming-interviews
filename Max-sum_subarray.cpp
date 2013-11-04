@@ -15,12 +15,10 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-template <typename T>
-pair<int, int> find_maximum_subarray(const vector<T>& A) {
+pair<int, int> find_maximum_subarray(const vector<int>& A) {
   // A[range.first : range.second - 1] will be the maximum subarray.
   pair<int, int> range(0, 0);
-  int min_idx = -1;
-  T min_sum = 0, sum = 0, max_sum = 0;
+  int min_idx = -1, min_sum = 0, sum = 0, max_sum = 0;
   for (int i = 0; i < A.size(); ++i) {
     sum += A[i];
     if (sum < min_sum) {
@@ -103,7 +101,7 @@ void simple_test() {
 int main(int argc, char* argv[]) {
   simple_test();
   default_random_engine gen((random_device())());
-  for (int times = 0; times < 1000; ++times) {
+  for (int times = 0; times < 10000; ++times) {
     vector<int> A;
     if (argc == 1) {
       uniform_int_distribution<int> dis(1, 10000);
