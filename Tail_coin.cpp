@@ -11,7 +11,7 @@ using std::uniform_int_distribution;
 using std::uniform_real_distribution;
 
 // @include
-// Return the number of fail trails.
+// Return the number of failed trails.
 int simulate_biased_coin(int n, int trails) {
   default_random_engine gen((random_device())());  // random num generator.
   // Generate random double in [0.0, 1.0].

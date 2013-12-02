@@ -16,27 +16,27 @@ using std::vector;
 
 // @include
 void rearrange(vector<int>* A) {
-  for (int i = 0; i < A->size() - 1; ++i) {
-    if (((i & 1) == 1 && (*A)[i] < (*A)[i + 1]) ||
-        ((i & 1) == 0 && (*A)[i] > (*A)[i + 1])) {
-      swap((*A)[i], (*A)[i + 1]);
+  for (size_t i = 1; i < A->size(); ++i) {
+    if (((i & 1) == 0 && (*A)[i - 1] < (*A)[i]) ||
+        ((i & 1) == 1 && (*A)[i - 1] > (*A)[i])) {
+      swap((*A)[i - 1], (*A)[i]);
     }
   }
 }
 // @exclude
 
 void check_answer(const vector<int>& A) {
-  for (int i = 0; i < A.size(); ++i) {
+  for (size_t i = 0; i < A.size(); ++i) {
     if (i & 1) {
       assert(A[i] >= A[i - 1]);
-      if (i < A.size() - 1) {
+      if (i + 1 < A.size()) {
         assert(A[i] >= A[i + 1]);
       }
     } else {
       if (i > 0) {
         assert(A[i - 1] >= A[i]);
       }
-      if (i < A.size() - 1) {
+      if (i + 1 < A.size()) {
         assert(A[i + 1] >= A[i]);
       }
     }

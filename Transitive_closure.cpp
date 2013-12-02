@@ -5,6 +5,7 @@
 #include <deque>
 #include <iostream>
 #include <random>
+#include <string>
 #include <vector>
 
 using std::cout;
@@ -12,6 +13,7 @@ using std::default_random_engine;
 using std::deque;
 using std::endl;
 using std::random_device;
+using std::stoi;
 using std::uniform_int_distribution;
 using std::vector;
 
@@ -45,7 +47,7 @@ int main(int argc, char* argv[]) {
   vector<GraphVertex> G;
   int n;
   if (argc == 2) {
-    n = atoi(argv[1]);
+    n = stoi(argv[1]);
   } else {
     uniform_int_distribution<int> dis(1, 1000);
     n = dis(gen);

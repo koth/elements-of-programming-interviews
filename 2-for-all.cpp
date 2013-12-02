@@ -6,6 +6,7 @@
 #include <iostream>
 #include <limits>
 #include <random>
+#include <string>
 #include <vector>
 
 using std::boolalpha;
@@ -16,6 +17,7 @@ using std::endl;
 using std::min;
 using std::numeric_limits;
 using std::random_device;
+using std::stoi;
 using std::uniform_int_distribution;
 using std::vector;
 
@@ -93,7 +95,7 @@ int main(int argc, char* argv[]) {
     vector<GraphVertex> G;
     int n;
     if (argc == 2) {
-      n = atoi(argv[1]);
+      n = stoi(argv[1]);
     } else {
       uniform_int_distribution<int> dis(2, 101);
       n = dis(gen);

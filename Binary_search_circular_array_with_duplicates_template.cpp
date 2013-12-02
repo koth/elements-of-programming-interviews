@@ -4,12 +4,14 @@
 #include <cassert>
 #include <iostream>
 #include <random>
+#include <string>
 #include <vector>
 
 using std::cout;
 using std::default_random_engine;
 using std::endl;
 using std::random_device;
+using std::stoi;
 using std::uniform_int_distribution;
 using std::vector;
 
@@ -42,16 +44,14 @@ int main(int argc, char* argv[]) {
   for (int times = 0; times < 10000; ++times) {
     int n;
     if (argc == 2) {
-      n = atoi(argv[1]);
+      n = stoi(argv[1]);
     } else {
       uniform_int_distribution<int> dis(1, 10000);
       n = dis(gen);
     }
     vector<int> A;
-    for (size_t i = 0; i < n; ++i) {
-      uniform_int_distribution<int> dis(0, 999999);
-      A.emplace_back(dis(gen));
-    }
+    uniform_int_distribution<int> A_dis(0, 999999);
+    generate_n(back_inserter(A), n, [&] { return A_dis(gen); });
     sort(A.begin(), A.end());
     uniform_int_distribution<int> n_dis(0, n - 1);
     int shift = n_dis(gen);
@@ -59,13 +59,14 @@ int main(int argc, char* argv[]) {
     reverse(A.begin(), A.begin() + shift + 1);
     reverse(A.begin() + shift + 1, A.end());
     /*
-       for (size_t i = 0; i < n; ++i) {
-       cout << A[i] << ' ';
-       }
-       cout << endl;
-     */
+    for (size_t i = 0; i < n; ++i) {
+      cout << A[i] << ' ';
+    }
+    cout << endl;
+    */
     assert((shift + 1) % n == search_smallest(A));
   }
+
   // hand-made tests
   vector<int> A;
   A.emplace_back(2);
