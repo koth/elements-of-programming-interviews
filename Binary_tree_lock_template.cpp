@@ -90,6 +90,6 @@ int main(int argc, char* argv[]) {
   root->right()->lock();
   // Should output true.
   assert(root->right()->isLock());
-  cout << boolalpha << root->isLock() << endl;
+  cout << boolalpha << root->right()->isLock() << endl;
   return 0;
 }

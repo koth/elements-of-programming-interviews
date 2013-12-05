@@ -23,7 +23,7 @@ using std::vector;
 
 void print_matrix(const vector<deque<bool>> &A) {
   for (size_t i = 0; i < A.size(); ++i) {
-    for (size_t j = 0; j < A.size(); ++j) {
+    for (size_t j = 0; j < A[i].size(); ++j) {
       cout << A[i][j] << ' ';
     }
     cout << endl;
