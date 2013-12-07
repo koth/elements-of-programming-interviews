@@ -58,7 +58,7 @@ int main(int argc, char *argv[]) {
     }
 
     vector<int> ans(next_permutation(p));
-    next_permutation(p.begin(), p.end());
+    next_permutation(p.begin(), p.end());  // Built-in function verification.
     assert(equal(ans.cbegin(), ans.cend(), p.cbegin()));
   }
   return 0;
