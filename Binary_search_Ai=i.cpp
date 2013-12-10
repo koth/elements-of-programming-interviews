@@ -35,13 +35,12 @@ int search_index_value_equal(const vector<int>& A) {
 
 // O(n) way to find ans.
 int check_ans(const vector<int>& A) {
-  int ret = -1;
   for (int i = 0; i < A.size(); ++i) {
     if (A[i] == i) {
-      return ret;
+      return i;
     }
   }
-  return ret;
+  return -1;
 }
 
 int main(int argc, char* argv[]) {
@@ -75,7 +74,7 @@ int main(int argc, char* argv[]) {
     } else {
       cout << "no entry where A[k] = k" << endl;
     }
-    assert(ans = check_ans(A));
+    assert(ans == check_ans(A));
   }
   return 0;
 }

@@ -52,14 +52,13 @@ int main(int argc, char *argv[]) {
       uniform_int_distribution<int> dis(1, 100);
       int n = (argc == 2 ? atoi(argv[1]) : dis(gen));
       uniform_int_distribution<int> n_dis(0, n - 1);
-      for (size_t i = 0; i < n; ++i) {
-        p.emplace_back(n_dis(gen));
-      }
+      generate_n(back_inserter(p), n, [&] { return n_dis(gen); });
     }
 
     vector<int> ans(next_permutation(p));
-    next_permutation(p.begin(), p.end());  // Built-in function verification.
-    assert(equal(ans.cbegin(), ans.cend(), p.cbegin()));
+    // Use built-in function verification.
+    bool has_next_one = next_permutation(p.begin(), p.end());
+    assert((ans.size() == 0 && !has_next_one) || equal(ans.cbegin(), ans.cend(), p.cbegin()));
   }
   return 0;
 }
