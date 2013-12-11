@@ -19,6 +19,7 @@ using std::istringstream;
 using std::max;
 using std::priority_queue;
 using std::random_device;
+using std::stoi;
 using std::string;
 using std::stringstream;
 using std::swap;
@@ -125,12 +126,12 @@ int main(int argc, char* argv[]) {
   for (int times = 0; times < 1000; ++times) {
     int num, k;
     if (argc == 2) {
-      num = atoi(argv[1]);
+      num = stoi(argv[1]);
       uniform_int_distribution<int> dis(1, num);
       k = dis(gen);
     } else if (argc == 3) {
-      num = atoi(argv[1]);
-      k = atoi(argv[2]);
+      num = stoi(argv[1]);
+      k = stoi(argv[2]);
     } else {
       uniform_int_distribution<int> num_dis(1, 10000);
       num = num_dis(gen);
@@ -138,7 +139,7 @@ int main(int argc, char* argv[]) {
       k = k_dis(gen);
     }
     vector<Star> stars;
-    // randomly generate num of stars
+    // Randomly generate num of stars.
     uniform_real_distribution<double> dis(0, 100000);
     for (int i = 0; i < num; ++i) {
       stars.emplace_back(Star{i, dis(gen), dis(gen), dis(gen)});
@@ -156,7 +157,7 @@ int main(int argc, char* argv[]) {
     vector<Star> selected_stars(select_k(stars, k));
     sort(selected_stars.begin(), selected_stars.end());
     sort(stars.begin(), stars.end());
-    cout << k << endl;
+    cout << "k = " << k << endl;
     // assert(stars[k - 1].ID_ == closest_stars[0].ID_);
     assert(stars[k - 1].distance() == selected_stars.back().distance());
   }

@@ -82,6 +82,6 @@ int main(int argc, char* argv[]) {
         assert(ans[i].val >= ans[i - 1].val);
       }
     }
-    return 0;
   }
+  return 0;
 }

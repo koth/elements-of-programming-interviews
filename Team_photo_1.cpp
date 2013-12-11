@@ -47,7 +47,7 @@ int main(int argc, char* argv[]) {
   vector<int> height(3);
   height[0] = 1, height[1] = 5, height[2] = 4;
   Team t1(height);
-  height[0] = 2, height[2] = 3, height[3] = 4;
+  height[0] = 2, height[2] = 3, height[2] = 4;
   Team t2(height);
   assert(!(t1 < t2) && !(t2 < t1));
   height[0] = 0, height[1] = 3, height[2] = 2;

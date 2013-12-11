@@ -4,8 +4,11 @@
 #include <cassert>
 #include <fstream>
 #include <iostream>
+#include <limits>
+#include <numeric>
 #include <random>
 #include <stdexcept>
+#include <string>
 #include <unordered_set>
 #include <vector>
 
@@ -16,8 +19,10 @@ using std::endl;
 using std::ifstream;
 using std::invalid_argument;
 using std::ios;
+using std::numeric_limits;
 using std::ofstream;
 using std::random_device;
+using std::stoi;
 using std::uniform_int_distribution;
 using std::unordered_set;
 using std::vector;
@@ -57,23 +62,25 @@ int find_missing_element(ifstream* ifs) {
 // @exclude
 
 int main(int argc, char* argv[]) {
-  int n = 300000000;
+  int n;
   default_random_engine gen((random_device())());
   if (argc == 2) {
-    n = atoi(argv[1]);
+    n = stoi(argv[1]);
+  } else {
+    n = 300000000;
   }
+  vector<int> A(1000000000);
+  iota(A.begin(), A.end(), 0);
   unordered_set<int> hash;
   ofstream ofs("missing.txt");
   for (int i = 0; i < n; ++i) {
-    int x;
-    do {
-      uniform_int_distribution<int> dis(0, 999999);
-      x = dis(gen);
-    } while (hash.emplace(x).second == false);
-    ofs << x << endl;
+    hash.emplace(A[i]);
+    ofs << A[i] << endl;
   }
+  A.clear();
   ofs.close();
   ifstream ifs("missing.txt");
+  cout << "Before finding missing" << endl;
   int missing = find_missing_element(&ifs);
   assert(hash.find(missing) == hash.cend());
   // Remove file after the execution.
