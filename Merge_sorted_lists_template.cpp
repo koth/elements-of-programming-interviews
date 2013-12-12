@@ -5,6 +5,7 @@
 #include <limits>
 #include <memory>
 #include <random>
+#include <string>
 
 #include "./Linked_list_prototype_template.h"
 #include "./Merge_sorted_lists_template.h"
@@ -15,6 +16,7 @@ using std::endl;
 using std::make_shared;
 using std::numeric_limits;
 using std::random_device;
+using std::stoi;
 using std::uniform_int_distribution;
 
 int main(int argc, char* argv[]) {
@@ -23,9 +25,9 @@ int main(int argc, char* argv[]) {
     shared_ptr<node_t<int>> F = nullptr, L = nullptr;
     int n, m;
     if (argc == 3) {
-      n = atoi(argv[1]), m = atoi(argv[2]);
+      n = stoi(argv[1]), m = stoi(argv[2]);
     } else if (argc == 2) {
-      n = atoi(argv[1]), m = atoi(argv[1]);
+      n = stoi(argv[1]), m = stoi(argv[1]);
     } else {
       uniform_int_distribution<int> dis(0, 99);
       n = dis(gen), m = dis(gen);

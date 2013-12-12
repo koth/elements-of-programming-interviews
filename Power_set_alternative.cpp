@@ -14,7 +14,14 @@ using std::random_device;
 using std::uniform_int_distribution;
 using std::vector;
 
+void generate_power_set_helper(const vector<int>& S, int idx, vector<int>* res);
+
 // @include
+void generate_power_set(const vector<int>& S) {
+  vector<int> res;
+  generate_power_set_helper(S, 0, &res);
+}
+
 void generate_power_set_helper(const vector<int>& S, int idx,
                                vector<int>* res) {
   if (!res->empty()) {
@@ -29,11 +36,6 @@ void generate_power_set_helper(const vector<int>& S, int idx,
     generate_power_set_helper(S, i + 1, res);
     res->pop_back();
   }
-}
-
-void generate_power_set(const vector<int>& S) {
-  vector<int> res;
-  generate_power_set_helper(S, 0, &res);
 }
 // @exclude
 

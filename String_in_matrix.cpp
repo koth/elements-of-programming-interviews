@@ -85,8 +85,8 @@ int main(int argc, char* argv[]) {
   }
   vector<vector<int>> A(n, vector<int>(n));
   rand_matrix(&A);
-  for (int i = 0; i < A.size(); ++i) {
-    for (int j = 0; j < A[i].size(); ++j) {
+  for (size_t i = 0; i < A.size(); ++i) {
+    for (size_t j = 0; j < A[i].size(); ++j) {
       cout << A[i][j] << ' ';
     }
     cout << endl;
@@ -94,7 +94,7 @@ int main(int argc, char* argv[]) {
   cout << "S = ";
   uniform_int_distribution<int> dis(1, n * n >> 1);
   vector<int> S(1 + dis(gen));
-  for (int i = 0; i < S.size(); ++i) {
+  for (size_t i = 0; i < S.size(); ++i) {
     uniform_int_distribution<int> dis(0, n - 1);
     S[i] = dis(gen);
   }

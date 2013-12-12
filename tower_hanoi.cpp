@@ -13,17 +13,9 @@ using std::random_device;
 using std::stack;
 using std::uniform_int_distribution;
 
-// @include
-void transfer(int n, array<stack<int>, 3>& pegs, int from, int to, int use) {
-  if (n > 0) {
-    transfer(n - 1, pegs, from, use, to);
-    pegs[to].push(pegs[from].top());
-    pegs[from].pop();
-    cout << "Move from peg " << from << " to peg " << to << endl;
-    transfer(n - 1, pegs, use, to, from);
-  }
-}
+void transfer(int n, array<stack<int>, 3>& pegs, int from, int to, int use);
 
+// @include
 void move_tower_hanoi(int n) {
   array<stack<int>, 3> pegs;
   // Initialize pegs.
@@ -32,6 +24,16 @@ void move_tower_hanoi(int n) {
   }
 
   transfer(n, pegs, 0, 1, 2);
+}
+
+void transfer(int n, array<stack<int>, 3>& pegs, int from, int to, int use) {
+  if (n > 0) {
+    transfer(n - 1, pegs, from, use, to);
+    pegs[to].push(pegs[from].top());
+    pegs[from].pop();
+    cout << "Move from peg " << from << " to peg " << to << endl;
+    transfer(n - 1, pegs, use, to, from);
+  }
 }
 // @exclude
 

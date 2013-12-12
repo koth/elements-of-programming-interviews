@@ -12,7 +12,16 @@ struct node_t {
   shared_ptr<node_t<T>> next, jump;
 };
 
+template <typename T>
+void search_postings_list_helper(const shared_ptr<node_t<T>>& L, int* order);
+
 // @include
+template <typename T>
+void search_postings_list(const shared_ptr<node_t<T>>& L) {
+  int order = 0;
+  search_postings_list_helper<T>(L, &order);
+}
+
 template <typename T>
 void search_postings_list_helper(const shared_ptr<node_t<T>>& L, int* order) {
   if (L && L->order == -1) {
@@ -20,12 +29,6 @@ void search_postings_list_helper(const shared_ptr<node_t<T>>& L, int* order) {
     search_postings_list_helper<T>(L->jump, order);
     search_postings_list_helper<T>(L->next, order);
   }
-}
-
-template <typename T>
-void search_postings_list(const shared_ptr<node_t<T>>& L) {
-  int order = 0;
-  search_postings_list_helper<T>(L, &order);
 }
 // @exclude
 

@@ -15,7 +15,13 @@ using std::stoi;
 using std::uniform_int_distribution;
 using std::vector;
 
+int search_smallest_helper(const vector<int>& A, int l, int r);
+
 // @include
+int search_smallest(const vector<int>& A) {
+  return search_smallest_helper(A, 0, A.size() - 1);
+}
+
 int search_smallest_helper(const vector<int>& A, int l, int r) {
   if (l == r) {
     return l;
@@ -32,10 +38,6 @@ int search_smallest_helper(const vector<int>& A, int l, int r) {
     int r_res = search_smallest_helper(A, m + 1, r);
     return A[r_res] < A[l_res] ? r_res : l_res;
   }
-}
-
-int search_smallest(const vector<int>& A) {
-  return search_smallest_helper(A, 0, A.size() - 1);
 }
 // @exclude
 

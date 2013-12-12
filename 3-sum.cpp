@@ -14,7 +14,21 @@ using std::random_device;
 using std::uniform_int_distribution;
 using std::vector;
 
+bool has_2_sum(const vector<int>& A, int t);
+
 // @include
+bool has_3_sum(vector<int> A, int t) {
+  sort(A.begin(), A.end());
+
+  for (const int& a : A) {
+    // Find if the sum of two numbers in A equals to t - a.
+    if (has_2_sum(A, t - a)) {
+      return true;
+    }
+  }
+  return false;
+}
+
 bool has_2_sum(const vector<int>& A, int t) {
   int j = 0, k = A.size() - 1;
 
@@ -25,18 +39,6 @@ bool has_2_sum(const vector<int>& A, int t) {
       ++j;
     } else {  // A[j] + A[k] > t.
       --k;
-    }
-  }
-  return false;
-}
-
-bool has_3_sum(vector<int> A, int t) {
-  sort(A.begin(), A.end());
-
-  for (const int& a : A) {
-    // Find if the sum of two numbers in A equals to t - a.
-    if (has_2_sum(A, t - a)) {
-      return true;
     }
   }
   return false;

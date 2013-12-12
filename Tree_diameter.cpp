@@ -18,10 +18,18 @@ using std::pair;
 using std::unique_ptr;
 using std::vector;
 
+struct TreeNode;
+pair<double, double> compute_height_and_diameter(
+    const unique_ptr<TreeNode>& r);
+
 // @include
 struct TreeNode {
   vector<pair<unique_ptr<TreeNode>, double>> edges;
 };
+
+double compute_diameter(const unique_ptr<TreeNode>& T) {
+  return T ? compute_height_and_diameter(T).second : 0.0;
+}
 
 // Return (height, diameter) pair.
 pair<double, double> compute_height_and_diameter(
@@ -39,10 +47,6 @@ pair<double, double> compute_height_and_diameter(
     diameter = max(diameter, h_d.second);
   }
   return {height[0], max(diameter, height[0] + height[1])};
-}
-
-double compute_diameter(const unique_ptr<TreeNode>& T) {
-  return T ? compute_height_and_diameter(T).second : 0.0;
 }
 // @exclude
 

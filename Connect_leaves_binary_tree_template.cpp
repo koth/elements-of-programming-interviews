@@ -14,7 +14,18 @@ using std::list;
 using std::unique_ptr;
 using std::vector;
 
+template <typename T>
+void connect_leaves_helper(const unique_ptr<BinaryTree<T>>& n,
+                           list<BinaryTree<T>*>* L);
+
 // @include
+template <typename T>
+list<BinaryTree<T>*> connect_leaves(const unique_ptr<BinaryTree<T>>& n) {
+  list<BinaryTree<T>*> L;
+  connect_leaves_helper(n, &L);
+  return L;
+}
+
 template <typename T>
 void connect_leaves_helper(const unique_ptr<BinaryTree<T>>& n,
                            list<BinaryTree<T>*>* L) {
@@ -26,13 +37,6 @@ void connect_leaves_helper(const unique_ptr<BinaryTree<T>>& n,
       connect_leaves_helper(n->right, L);
     }
   }
-}
-
-template <typename T>
-list<BinaryTree<T>*> connect_leaves(const unique_ptr<BinaryTree<T>>& n) {
-  list<BinaryTree<T>*> L;
-  connect_leaves_helper(n, &L);
-  return L;
 }
 // @exclude
 

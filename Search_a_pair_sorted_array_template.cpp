@@ -18,7 +18,20 @@ using std::random_device;
 using std::uniform_int_distribution;
 using std::vector;
 
+template <typename Comp>
+pair<int, int> find_pair_using_comp(const vector<int>& A, int k, Comp comp);
+pair<int, int> find_pos_neg_pair(const vector<int>& A, int k);
+
 // @include
+pair<int, int> find_pair_sum_k(const vector<int>& A, int k) {
+  pair<int, int> ret = find_pos_neg_pair(A, k);
+  if (ret.first == -1 && ret.second == -1) {
+    return k >= 0 ? find_pair_using_comp(A, k, less<int>())
+                  : find_pair_using_comp(A, k, greater_equal<int>());
+  }
+  return ret;
+}
+
 template <typename Comp>
 pair<int, int> find_pair_using_comp(const vector<int>& A, int k, Comp comp) {
   pair<int, int> ret(0, A.size() - 1);
@@ -72,15 +85,6 @@ pair<int, int> find_pos_neg_pair(const vector<int>& A, int k) {
     }
   }
   return {-1, -1};  // no answer.
-}
-
-pair<int, int> find_pair_sum_k(const vector<int>& A, int k) {
-  pair<int, int> ret = find_pos_neg_pair(A, k);
-  if (ret.first == -1 && ret.second == -1) {
-    return k >= 0 ? find_pair_using_comp(A, k, less<int>())
-                  : find_pair_using_comp(A, k, greater_equal<int>());
-  }
-  return ret;
 }
 // @exclude
 

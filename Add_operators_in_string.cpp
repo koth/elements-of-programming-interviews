@@ -16,23 +16,21 @@ using std::string;
 using std::uniform_int_distribution;
 using std::vector;
 
-// @include
-int evaluate(list<int> operand_list, const list<char>& oper_list) {
-  // Evaluate '*' first.
-  auto operand_it = operand_list.begin();
-  for (const char& oper : oper_list) {
-    if (oper == '*') {
-      int product = *operand_it;
-      operand_it = operand_list.erase(operand_it);
-      product *= *operand_it;
-      *operand_it = product;
-    } else {
-      ++operand_it;
-    }
-  }
+bool exp_synthesis_helper(const vector<int>& A,
+                          int k,
+                          list<int>* operand_list,
+                          list<char>* oper_list,
+                          int cur,
+                          int level);
+int evaluate(list<int> operand_list, const list<char>& oper_list);
 
-  // Evaluate '+' second.
-  return accumulate(operand_list.cbegin(), operand_list.cend(), 0);
+// @include
+void exp_synthesis(const vector<int>& A, int k) {
+  list<char> oper_list;
+  list<int> operand_list;
+  if (!exp_synthesis_helper(A, k, &operand_list, &oper_list, 0, 0)) {
+    cout << "no answer" << endl;
+  }
 }
 
 bool exp_synthesis_helper(const vector<int>& A,
@@ -82,12 +80,22 @@ bool exp_synthesis_helper(const vector<int>& A,
   return false;
 }
 
-void exp_synthesis(const vector<int>& A, int k) {
-  list<char> oper_list;
-  list<int> operand_list;
-  if (!exp_synthesis_helper(A, k, &operand_list, &oper_list, 0, 0)) {
-    cout << "no answer" << endl;
+int evaluate(list<int> operand_list, const list<char>& oper_list) {
+  // Evaluate '*' first.
+  auto operand_it = operand_list.begin();
+  for (const char& oper : oper_list) {
+    if (oper == '*') {
+      int product = *operand_it;
+      operand_it = operand_list.erase(operand_it);
+      product *= *operand_it;
+      *operand_it = product;
+    } else {
+      ++operand_it;
+    }
   }
+
+  // Evaluate '+' second.
+  return accumulate(operand_list.cbegin(), operand_list.cend(), 0);
 }
 // @exclude
 

@@ -19,6 +19,9 @@ using std::vector;
 using std::uniform_int_distribution;
 using std::unordered_map;
 
+struct GraphVertex;
+void DFS(const GraphVertex& u);
+
 // @include
 struct Constraint {
   int a, b;
@@ -28,15 +31,6 @@ struct GraphVertex {
   int group = -1;  // represents the connected component it belongs.
   vector<GraphVertex*> edges;
 };
-
-void DFS(const GraphVertex& u) {
-  for (const auto& v : u.edges) {
-    if (v->group == -1) {
-      v->group = u.group;
-      DFS(*v);
-    }
-  }
-}
 
 bool are_constraints_satisfied(
     const vector<Constraint>& E,    // Equality constraints.
@@ -64,6 +58,15 @@ bool are_constraints_satisfied(
     }
   }
   return true;
+}
+
+void DFS(const GraphVertex& u) {
+  for (const auto& v : u.edges) {
+    if (v->group == -1) {
+      v->group = u.group;
+      DFS(*v);
+    }
+  }
 }
 // @exclude
 

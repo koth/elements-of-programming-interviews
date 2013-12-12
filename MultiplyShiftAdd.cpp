@@ -12,18 +12,9 @@ using std::random_device;
 using std::string;
 using std::uniform_int_distribution;
 
-// @include
-unsigned add_no_operator(unsigned a, unsigned b) {
-  unsigned sum = 0, carryin = 0, k = 1, temp_a = a, temp_b = b;
-  while (temp_a || temp_b) {
-    unsigned ak = a & k, bk = b & k;
-    unsigned carryout = (ak & bk) | (ak & carryin) | (bk & carryin);
-    sum |= (ak ^ bk ^ carryin);
-    carryin = carryout << 1, k <<= 1, temp_a >>= 1, temp_b >>= 1;
-  }
-  return sum + carryin;
-}
+unsigned add_no_operator(unsigned a, unsigned b);
 
+// @include
 unsigned multiply_no_operator(unsigned x, unsigned y) {
   unsigned sum = 0, k = 1;
   while (x) {
@@ -34,6 +25,17 @@ unsigned multiply_no_operator(unsigned x, unsigned y) {
     x >>= 1, k <<= 1, y <<= 1;
   }
   return sum;
+}
+
+unsigned add_no_operator(unsigned a, unsigned b) {
+  unsigned sum = 0, carryin = 0, k = 1, temp_a = a, temp_b = b;
+  while (temp_a || temp_b) {
+    unsigned ak = a & k, bk = b & k;
+    unsigned carryout = (ak & bk) | (ak & carryin) | (bk & carryin);
+    sum |= (ak ^ bk ^ carryin);
+    carryin = carryout << 1, k <<= 1, temp_a >>= 1, temp_b >>= 1;
+  }
+  return sum + carryin;
 }
 // @exclude
 

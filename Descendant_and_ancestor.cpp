@@ -7,17 +7,12 @@
 
 using std::unique_ptr;
 
-// @include
 template <typename T>
 bool search_m_before_t(BinarySearchTree<T>* p,
                        const unique_ptr<BinarySearchTree<T>>& t,
-                       const unique_ptr<BinarySearchTree<T>>& m) {
-  while (p && p != t.get() && p != m.get()) {
-    p = p->data > t->data ? p->left.get() : p->right.get();
-  }
-  return p == m.get();
-}
+                       const unique_ptr<BinarySearchTree<T>>& m);
 
+// @include
 template <typename T>
 bool is_r_s_descendant_ancestor_of_m(
     const unique_ptr<BinarySearchTree<T>>& r,
@@ -40,6 +35,16 @@ bool is_r_s_descendant_ancestor_of_m(
   }
   // Try to search m before reaching the other.
   return search_m_before_t(cur_r, s, m) || search_m_before_t(cur_s, r, m);
+}
+
+template <typename T>
+bool search_m_before_t(BinarySearchTree<T>* p,
+                       const unique_ptr<BinarySearchTree<T>>& t,
+                       const unique_ptr<BinarySearchTree<T>>& m) {
+  while (p && p != t.get() && p != m.get()) {
+    p = p->data > t->data ? p->left.get() : p->right.get();
+  }
+  return p == m.get();
 }
 // @exclude
 

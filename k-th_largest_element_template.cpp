@@ -16,22 +16,9 @@ using std::swap;
 using std::uniform_int_distribution;
 using std::vector;
 
+int partition(vector<int>* A, int l, int r, int pivot);
+
 // @include
-// Partition A according pivot, return its index after partition.
-int partition(vector<int>* A, int l, int r, int pivot) {
-  int pivot_value = (*A)[pivot];
-  int larger_index = l;
-
-  swap((*A)[pivot], (*A)[r]);
-  for (int i = l; i < r; ++i) {
-    if ((*A)[i] > pivot_value) {
-      swap((*A)[i], (*A)[larger_index++]);
-    }
-  }
-  swap((*A)[r], (*A)[larger_index]);
-  return larger_index;
-}
-
 int find_k_th_largest(vector<int> A, int k) {
   int l = 0, r = A.size() - 1;
 
@@ -50,6 +37,21 @@ int find_k_th_largest(vector<int> A, int k) {
   // @exclude
   throw length_error("no k-th node in array A");
   // @include
+}
+
+// Partition A according pivot, return its index after partition.
+int partition(vector<int>* A, int l, int r, int pivot) {
+  int pivot_value = (*A)[pivot];
+  int larger_index = l;
+
+  swap((*A)[pivot], (*A)[r]);
+  for (int i = l; i < r; ++i) {
+    if ((*A)[i] > pivot_value) {
+      swap((*A)[i], (*A)[larger_index++]);
+    }
+  }
+  swap((*A)[r], (*A)[larger_index]);
+  return larger_index;
 }
 // @exclude
 

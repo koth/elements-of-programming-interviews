@@ -14,15 +14,6 @@ using std::unique_ptr;
 
 // @include
 template <typename T>
-int get_depth(const BinaryTree<T>* n) {
-  int d = 0;
-  while (n) {
-    ++d, n = n->parent;
-  }
-  return d;
-}
-
-template <typename T>
 BinaryTree<T>* LCA(const unique_ptr<BinaryTree<T>>& a,
                    const unique_ptr<BinaryTree<T>>& b) {
   auto* i = a.get(), *j = b.get();
@@ -42,6 +33,15 @@ BinaryTree<T>* LCA(const unique_ptr<BinaryTree<T>>& a,
     i = i->parent, j = j->parent;
   }
   return i;
+}
+
+template <typename T>
+int get_depth(const BinaryTree<T>* n) {
+  int d = 0;
+  while (n) {
+    ++d, n = n->parent;
+  }
+  return d;
 }
 // @exclude
 

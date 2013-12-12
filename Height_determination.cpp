@@ -8,7 +8,14 @@ using std::cout;
 using std::endl;
 using std::vector;
 
+int get_height_helper(vector<vector<int>>* F, int c, int d);
+
 // @include
+int getHeight(int c, int d) {
+  vector<vector<int>> F(c + 1, vector<int>(d + 1, -1));
+  return get_height_helper(&F, c, d);
+}
+
 int get_height_helper(vector<vector<int>>* F, int c, int d) {
   if (d == 0) {
     return 0;
@@ -21,11 +28,6 @@ int get_height_helper(vector<vector<int>>* F, int c, int d) {
     }
     return (*F)[c][d];
   }
-}
-
-int getHeight(int c, int d) {
-  vector<vector<int>> F(c + 1, vector<int>(d + 1, -1));
-  return get_height_helper(&F, c, d);
 }
 // @exclude
 

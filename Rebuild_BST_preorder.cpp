@@ -15,7 +15,17 @@ using std::numeric_limits;
 using std::unique_ptr;
 using std::vector;
 
+template <typename T>
+BinarySearchTree<T>* rebuild_BST_from_preorder_helper(
+    const vector<T> &preorder, int s, int e);
+
 // @include
+// Given a preorder traversal of a BST, return its root.
+template <typename T>
+BinarySearchTree<T>* rebuild_BST_from_preorder(const vector<T>& preorder) {
+  return rebuild_BST_from_preorder_helper(preorder, 0, preorder.size());
+}
+
 // Build a BST based on preorder[s : e - 1], return its root.
 template <typename T>
 BinarySearchTree<T>* rebuild_BST_from_preorder_helper(
@@ -34,12 +44,6 @@ BinarySearchTree<T>* rebuild_BST_from_preorder_helper(
     };
   }
   return nullptr;
-}
-
-// Given a preorder traversal of a BST, return its root.
-template <typename T>
-BinarySearchTree<T>* rebuild_BST_from_preorder(const vector<T>& preorder) {
-  return rebuild_BST_from_preorder_helper(preorder, 0, preorder.size());
 }
 // @exclude
 

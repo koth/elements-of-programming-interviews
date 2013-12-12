@@ -39,18 +39,13 @@ shared_ptr<node_t<T>> build_BST_from_sorted_doubly_list(
 }
 // @exclude
 
-int depth = 0;
 template <typename T>
-void inorder_traversal(const shared_ptr<node_t<T>>& node, const T& pre) {
+void inorder_traversal(const shared_ptr<node_t<T>>& node, const T& pre, int depth) {
   if (node) {
-    depth++;
-    inorder_traversal(node->prev, pre);
-    depth--;
+    inorder_traversal(node->prev, pre, depth + 1);
     assert(pre <= node->data);
     cout << node->data << ' ' << "; depth = " << depth << endl;
-    depth++;
-    inorder_traversal(node->next, node->data);
-    depth--;
+    inorder_traversal(node->next, node->data, depth + 1);
   }
 }
 
@@ -76,6 +71,6 @@ int main(int argc, char* argv[]) {
 
   shared_ptr<node_t<int>> L = temp0;
   auto root = build_BST_from_sorted_doubly_list(L, 4);
-  inorder_traversal(root, -1);
+  inorder_traversal(root, -1, 0);
   return 0;
 }

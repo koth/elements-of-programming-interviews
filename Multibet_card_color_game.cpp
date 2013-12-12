@@ -13,7 +13,20 @@ using std::min;
 using std::numeric_limits;
 using std::unordered_map;
 
+double compute_best_payoff_helper(
+    unordered_map<int, unordered_map<int, unordered_map<int, double>>>& cache,
+    double upper_bound,
+    int cash,
+    int num_red,
+    int num_cards);
+
 // @include
+double compute_best_payoff(int cash) {
+  double upper_bound = 9.09 * cash;
+  unordered_map<int, unordered_map<int, unordered_map<int, double>>> cache;
+  return compute_best_payoff_helper(cache, upper_bound, cash, 26, 52);
+}
+
 double compute_best_payoff_helper(
     unordered_map<int, unordered_map<int, unordered_map<int, double>>>& cache,
     double upper_bound,
@@ -47,12 +60,6 @@ double compute_best_payoff_helper(
     cache[cash][num_red][num_cards] = best;
   }
   return cache[cash][num_red][num_cards];
-}
-
-double compute_best_payoff(int cash) {
-  double upper_bound = 9.09 * cash;
-  unordered_map<int, unordered_map<int, unordered_map<int, double>>> cache;
-  return compute_best_payoff_helper(cache, upper_bound, cash, 26, 52);
 }
 // @exclude
 

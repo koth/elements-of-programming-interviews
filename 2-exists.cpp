@@ -15,6 +15,9 @@ using std::random_device;
 using std::uniform_int_distribution;
 using std::vector;
 
+struct GraphVertex;
+bool DFS(GraphVertex* cur, const GraphVertex* pre);
+
 // @include
 struct GraphVertex {
   enum Color {
@@ -27,6 +30,13 @@ struct GraphVertex {
   GraphVertex() : color(white) {}
   // @include
 };
+
+bool is_graph_2_exist(vector<GraphVertex>* G) {
+  if (!G->empty()) {
+    return DFS(&G->front(), nullptr);
+  }
+  return false;
+}
 
 bool DFS(GraphVertex* cur, const GraphVertex* pre) {
   // Visiting a gray vertex means a cycle.
@@ -44,13 +54,6 @@ bool DFS(GraphVertex* cur, const GraphVertex* pre) {
     }
   }
   cur->color = GraphVertex::black;  // marks current vertex as black.
-  return false;
-}
-
-bool is_graph_2_exist(vector<GraphVertex>* G) {
-  if (!G->empty()) {
-    return DFS(&G->front(), nullptr);
-  }
   return false;
 }
 // @exclude

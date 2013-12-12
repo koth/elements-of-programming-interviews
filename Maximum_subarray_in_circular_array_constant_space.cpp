@@ -16,7 +16,18 @@ using std::random_device;
 using std::uniform_int_distribution;
 using std::vector;
 
+int find_optimum_subarray_using_comp(const vector<int>& A,
+                                     const int& (*comp)(const int&,
+                                                        const int&));
+
 // @include
+int max_subarray_sum_in_circular(const vector<int>& A) {
+  // Find the max in non-circular case and circular case.
+  return max(find_optimum_subarray_using_comp(A, max),  // non-circular case.
+             accumulate(A.cbegin(), A.cend(), 0) -
+                 find_optimum_subarray_using_comp(A, min));  // circular case.
+}
+
 int find_optimum_subarray_using_comp(const vector<int>& A,
                                      const int& (*comp)(const int&,
                                                         const int&)) {
@@ -26,13 +37,6 @@ int find_optimum_subarray_using_comp(const vector<int>& A,
     overall = comp(overall, till);
   }
   return overall;
-}
-
-int max_subarray_sum_in_circular(const vector<int>& A) {
-  // Find the max in non-circular case and circular case.
-  return max(find_optimum_subarray_using_comp(A, max),  // non-circular case.
-             accumulate(A.cbegin(), A.cend(), 0) -
-                 find_optimum_subarray_using_comp(A, min));  // circular case.
 }
 // @exclude
 

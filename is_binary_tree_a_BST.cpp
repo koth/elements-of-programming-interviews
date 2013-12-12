@@ -13,7 +13,17 @@ using std::endl;
 using std::numeric_limits;
 using std::unique_ptr;
 
+template <typename T>
+bool is_BST_helper(const unique_ptr<BinaryTree<T>>& r,
+                   const T& lower,
+                   const T& upper);
+
 // @include
+template <typename T>
+bool is_BST(const unique_ptr<BinaryTree<T>>& r) {
+  return is_BST_helper(r, numeric_limits<T>::min(), numeric_limits<T>::max());
+}
+
 template <typename T>
 bool is_BST_helper(const unique_ptr<BinaryTree<T>>& r,
                    const T& lower,
@@ -26,11 +36,6 @@ bool is_BST_helper(const unique_ptr<BinaryTree<T>>& r,
 
   return is_BST_helper(r->left, lower, r->data) &&
          is_BST_helper(r->right, r->data, upper);
-}
-
-template <typename T>
-bool is_BST(const unique_ptr<BinaryTree<T>>& r) {
-  return is_BST_helper(r, numeric_limits<T>::min(), numeric_limits<T>::max());
 }
 // @exclude
 

@@ -11,7 +11,16 @@ using std::cout;
 using std::endl;
 using std::unique_ptr;
 
+template <typename T>
+bool is_symmetric_helper(const unique_ptr<BinaryTree<T>>& l,
+                         const unique_ptr<BinaryTree<T>>& r);
+
 // @include
+template <typename T>
+bool is_symmetric(const unique_ptr<BinaryTree<T>>& n) {
+  return !n || is_symmetric_helper<T>(n->left, n->right);
+}
+
 template <typename T>
 bool is_symmetric_helper(const unique_ptr<BinaryTree<T>>& l,
                          const unique_ptr<BinaryTree<T>>& r) {
@@ -23,11 +32,6 @@ bool is_symmetric_helper(const unique_ptr<BinaryTree<T>>& l,
   } else {  // (l && !r) || (!l && r)
     return false;
   }
-}
-
-template <typename T>
-bool is_symmetric(const unique_ptr<BinaryTree<T>>& n) {
-  return !n || is_symmetric_helper<T>(n->left, n->right);
 }
 // @exclude
 

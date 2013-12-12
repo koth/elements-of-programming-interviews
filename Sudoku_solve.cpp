@@ -15,33 +15,26 @@ using std::endl;
 using std::ostream_iterator;
 using std::vector;
 
+bool solve_Sudoku_helper(vector<vector<int>>* A, int i, int j);
+bool valid_to_add(const vector<vector<int>>& A, int i, int j, int val);
+
 // @include
-bool valid_to_add(const vector<vector<int>>& A, int i, int j, int val) {
-  // Check row constraints.
-  for (int k = 0; k < A.size(); ++k) {
-    if (val == A[k][j]) {
-      return false;
-    }
+bool solve_Sudoku(vector<vector<int>>* A) {
+  if (!is_valid_Sudoku(*A)) {
+    cout << "Initial configuration violates constraints." << endl;
+    return false;
   }
 
-  // Check column constraints.
-  for (int k = 0; k < A.size(); ++k) {
-    if (val == A[i][k]) {
-      return false;
+  if (solve_Sudoku_helper(A, 0, 0)) {
+    for (int i = 0; i < A->size(); ++i) {
+      copy((*A)[i].begin(), (*A)[i].end(), ostream_iterator<int>(cout, " "));
+      cout << endl;
     }
+    return true;
+  } else {
+    cout << "No solution exists." << endl;
+    return false;
   }
-
-  // Check region constraints.
-  int region_size = sqrt(A.size());
-  int I = i / region_size, J = j / region_size;
-  for (int a = 0; a < region_size; ++a) {
-    for (int b = 0; b < region_size; ++b) {
-      if (val == A[region_size * I + a][region_size * J + b]) {
-        return false;
-      }
-    }
-  }
-  return true;
 }
 
 bool solve_Sudoku_helper(vector<vector<int>>* A, int i, int j) {
@@ -75,22 +68,32 @@ bool solve_Sudoku_helper(vector<vector<int>>* A, int i, int j) {
   return false;
 }
 
-bool solve_Sudoku(vector<vector<int>>* A) {
-  if (!is_valid_Sudoku(*A)) {
-    cout << "Initial configuration violates constraints." << endl;
-    return false;
+bool valid_to_add(const vector<vector<int>>& A, int i, int j, int val) {
+  // Check row constraints.
+  for (int k = 0; k < A.size(); ++k) {
+    if (val == A[k][j]) {
+      return false;
+    }
   }
 
-  if (solve_Sudoku_helper(A, 0, 0)) {
-    for (int i = 0; i < A->size(); ++i) {
-      copy((*A)[i].begin(), (*A)[i].end(), ostream_iterator<int>(cout, " "));
-      cout << endl;
+  // Check column constraints.
+  for (int k = 0; k < A.size(); ++k) {
+    if (val == A[i][k]) {
+      return false;
     }
-    return true;
-  } else {
-    cout << "No solution exists." << endl;
-    return false;
   }
+
+  // Check region constraints.
+  int region_size = sqrt(A.size());
+  int I = i / region_size, J = j / region_size;
+  for (int a = 0; a < region_size; ++a) {
+    for (int b = 0; b < region_size; ++b) {
+      if (val == A[region_size * I + a][region_size * J + b]) {
+        return false;
+      }
+    }
+  }
+  return true;
 }
 // @exclude
 

@@ -8,7 +8,23 @@ using std::cout;
 using std::endl;
 using std::string;
 
+bool is_match_here(const string &r, const string &s);
+
 // @include
+bool is_match(const string &r, const string &s) {
+  // Case (2.) : starts with '^'.
+  if (r.front() == '^') {
+    return is_match_here(r.substr(1), s);
+  }
+
+  for (int i = 0; i <= s.size(); ++i) {
+    if (is_match_here(r, s.substr(i))) {
+      return true;
+    }
+  }
+  return false;
+}
+
 bool is_match_here(const string &r, const string &s) {
   // Case (1.)
   if (r.empty()) {
@@ -35,20 +51,6 @@ bool is_match_here(const string &r, const string &s) {
   // Case (3.)
   return !s.empty() && (r.front() == '.' || r.front() == s.front()) &&
          is_match_here(r.substr(1), s.substr(1));
-}
-
-bool is_match(const string &r, const string &s) {
-  // Case (2.) : starts with '^'.
-  if (r.front() == '^') {
-    return is_match_here(r.substr(1), s);
-  }
-
-  for (int i = 0; i <= s.size(); ++i) {
-    if (is_match_here(r, s.substr(i))) {
-      return true;
-    }
-  }
-  return false;
 }
 // @exclude
 

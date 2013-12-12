@@ -12,7 +12,15 @@ using std::random_device;
 using std::uniform_int_distribution;
 using std::vector;
 
+void print_matrix_clockwise(const vector<vector<int>> &A, int offset);
+
 // @include
+void print_matrix_in_spiral_order(const vector<vector<int>> &A) {
+  for (int offset = 0; offset < ceil(0.5 * A.size()); ++offset) {
+    print_matrix_clockwise(A, offset);
+  }
+}
+
 void print_matrix_clockwise(const vector<vector<int>> &A, int offset) {
   if (offset == A.size() - offset - 1) {  // for matrix with odd size.
     cout << A[offset][offset];
@@ -29,12 +37,6 @@ void print_matrix_clockwise(const vector<vector<int>> &A, int offset) {
   }
   for (int i = A.size() - offset - 1; i > offset; --i) {
     cout << A[i][offset] << ' ';
-  }
-}
-
-void print_matrix_in_spiral_order(const vector<vector<int>> &A) {
-  for (int offset = 0; offset < ceil(0.5 * A.size()); ++offset) {
-    print_matrix_clockwise(A, offset);
   }
 }
 // @exclude

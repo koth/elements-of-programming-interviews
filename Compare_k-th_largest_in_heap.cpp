@@ -8,7 +8,21 @@ using std::cout;
 using std::endl;
 using std::vector;
 
+void compare_kth_largest_heap_helper(const vector<int>& max_heap,
+                                     int k,
+                                     int x,
+                                     int idx,
+                                     int* larger,
+                                     int* equal);
+
 // @include
+// -1 means smaller, 0 means equal, and 1 means larger.
+int compare_kth_largest_heap(const vector<int>& max_heap, int k, int x) {
+  int larger = 0, equal = 0;
+  compare_kth_largest_heap_helper(max_heap, k, x, 0, &larger, &equal);
+  return larger >= k ? 1 : (larger + equal >= k ? 0 : -1);
+}
+
 void compare_kth_largest_heap_helper(const vector<int>& max_heap,
                                      int k,
                                      int x,
@@ -28,13 +42,6 @@ void compare_kth_largest_heap_helper(const vector<int>& max_heap,
       max_heap, k, x, (idx << 1) + 1, larger, equal);
   compare_kth_largest_heap_helper(
       max_heap, k, x, (idx << 1) + 2, larger, equal);
-}
-
-// -1 means smaller, 0 means equal, and 1 means larger.
-int compare_kth_largest_heap(const vector<int>& max_heap, int k, int x) {
-  int larger = 0, equal = 0;
-  compare_kth_largest_heap_helper(max_heap, k, x, 0, &larger, &equal);
-  return larger >= k ? 1 : (larger + equal >= k ? 0 : -1);
 }
 // @exclude
 

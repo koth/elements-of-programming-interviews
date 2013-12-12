@@ -22,11 +22,9 @@ using std::random_device;
 using std::uniform_int_distribution;
 using std::vector;
 
-// @include
-bool comp(const pair<int, int>& a, const pair<int, int>& b) {
-  return a.second > b.second;
-}
+bool comp(const pair<int, int>& a, const pair<int, int>& b);
 
+// @include
 vector<deque<bool>> find_feasible_job_assignment(const vector<int>& T,
                                                   const vector<int>& S) {
   int T_total = accumulate(T.cbegin(), T.cend(), 0),  // aggregated work units
@@ -70,6 +68,10 @@ vector<deque<bool>> find_feasible_job_assignment(const vector<int>& T,
     return {};  // still some jobs remain, no feasible assignment.
   }
   return X;
+}
+
+bool comp(const pair<int, int>& a, const pair<int, int>& b) {
+  return a.second > b.second;
 }
 // @exclude
 

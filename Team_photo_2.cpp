@@ -47,6 +47,11 @@ class Team {
   vector<Player<HeightType>> members_;
 };
 
+struct GraphVertex;
+stack<GraphVertex*> build_topological_ordering(vector<GraphVertex>* G);
+int find_longest_path(stack<GraphVertex*>* vertex_order);
+void DFS(GraphVertex* cur, stack<GraphVertex*>* vertex_order);
+
 // @include
 struct GraphVertex {
   vector<GraphVertex*> edges;
@@ -54,14 +59,9 @@ struct GraphVertex {
   bool visited = false;
 };
 
-void DFS(GraphVertex* cur, stack<GraphVertex*>* vertex_order) {
-  cur->visited = true;
-  for (const auto& next : cur->edges) {
-    if (!next->visited) {
-      DFS(next, vertex_order);
-    }
-  }
-  vertex_order->emplace(cur);
+int find_largest_number_teams(vector<GraphVertex>* G) {
+  stack<GraphVertex*> vertex_order(build_topological_ordering(G));
+  return find_longest_path(&vertex_order);
 }
 
 stack<GraphVertex*> build_topological_ordering(vector<GraphVertex>* G) {
@@ -87,9 +87,14 @@ int find_longest_path(stack<GraphVertex*>* vertex_order) {
   return max_distance;
 }
 
-int find_largest_number_teams(vector<GraphVertex>* G) {
-  stack<GraphVertex*> vertex_order(build_topological_ordering(G));
-  return find_longest_path(&vertex_order);
+void DFS(GraphVertex* cur, stack<GraphVertex*>* vertex_order) {
+  cur->visited = true;
+  for (const auto& next : cur->edges) {
+    if (!next->visited) {
+      DFS(next, vertex_order);
+    }
+  }
+  vertex_order->emplace(cur);
 }
 // @exclude
 

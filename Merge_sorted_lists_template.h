@@ -4,22 +4,6 @@
 
 // @include
 template <typename T>
-void append_node(shared_ptr<node_t<T>>* head,
-                 shared_ptr<node_t<T>>* tail,
-                 shared_ptr<node_t<T>>* n) {
-  *head ? (*tail)->next = *n : *head = *n;
-  *tail = *n;  // reset tail to the last node.
-}
-
-template <typename T>
-void append_node_and_advance(shared_ptr<node_t<T>>* head,
-                             shared_ptr<node_t<T>>* tail,
-                             shared_ptr<node_t<T>>* n) {
-  append_node(head, tail, n);
-  *n = (*n)->next;  // advance n.
-}
-
-template <typename T>
 shared_ptr<node_t<T>> merge_sorted_linked_lists(shared_ptr<node_t<T>> F,
                                                 shared_ptr<node_t<T>> L) {
   shared_ptr<node_t<T>> sorted_head = nullptr, tail = nullptr;
@@ -37,5 +21,21 @@ shared_ptr<node_t<T>> merge_sorted_linked_lists(shared_ptr<node_t<T>> F,
     append_node(&sorted_head, &tail, &L);
   }
   return sorted_head;
+}
+
+template <typename T>
+void append_node_and_advance(shared_ptr<node_t<T>>* head,
+                             shared_ptr<node_t<T>>* tail,
+                             shared_ptr<node_t<T>>* n) {
+  append_node(head, tail, n);
+  *n = (*n)->next;  // advance n.
+}
+
+template <typename T>
+void append_node(shared_ptr<node_t<T>>* head,
+                 shared_ptr<node_t<T>>* tail,
+                 shared_ptr<node_t<T>>* n) {
+  *head ? (*tail)->next = *n : *head = *n;
+  *tail = *n;  // reset tail to the last node.
 }
 // @exclude

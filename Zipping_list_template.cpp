@@ -4,6 +4,7 @@
 #include <iostream>
 #include <memory>
 #include <random>
+#include <string>
 
 #include "./Linked_list_prototype_template.h"
 #include "./Reverse_linked_list_iterative_template.h"
@@ -14,17 +15,14 @@ using std::endl;
 using std::make_shared;
 using std::random_device;
 using std::shared_ptr;
+using std::stoi;
 using std::uniform_int_distribution;
 
-// @include
 template <typename T>
 void connect_a_next_to_b_advance_a(shared_ptr<node_t<T>>* a,
-                                   const shared_ptr<node_t<T>>& b) {
-  shared_ptr<node_t<T>> temp = (*a)->next;
-  (*a)->next = b;
-  (*a) = temp;
-}
+                                   const shared_ptr<node_t<T>>& b);
 
+// @include
 template <typename T>
 shared_ptr<node_t<T>> zipping_linked_list(const shared_ptr<node_t<T>>& L) {
   shared_ptr<node_t<T>> slow = L, fast = L, pre_slow = nullptr;
@@ -55,6 +53,14 @@ shared_ptr<node_t<T>> zipping_linked_list(const shared_ptr<node_t<T>>& L) {
   }
   return L;
 }
+
+template <typename T>
+void connect_a_next_to_b_advance_a(shared_ptr<node_t<T>>* a,
+                                   const shared_ptr<node_t<T>>& b) {
+  shared_ptr<node_t<T>> temp = (*a)->next;
+  (*a)->next = b;
+  (*a) = temp;
+}
 // @exclude
 
 int main(int argc, char* argv[]) {
@@ -62,15 +68,15 @@ int main(int argc, char* argv[]) {
   shared_ptr<node_t<int>> head = nullptr;
   int n;
   if (argc > 2) {
-    for (size_t i = 1; i < argc; ++i) {
+    for (int i = 1; i < argc; ++i) {
       auto curr =
-          make_shared<node_t<int>>(node_t<int>{atoi(argv[i]), nullptr});
+          make_shared<node_t<int>>(node_t<int>{stoi(argv[i]), nullptr});
       curr->next = head;
       head = curr;
     }
   } else {
     if (argc == 2) {
-      n = atoi(argv[1]);
+      n = stoi(argv[1]);
     } else {
       uniform_int_distribution<int> dis(1, 1000);
       n = dis(gen);

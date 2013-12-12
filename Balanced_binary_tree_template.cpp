@@ -13,7 +13,15 @@ using std::endl;
 using std::max;
 using std::unique_ptr;
 
+template <typename T>
+int get_height(const unique_ptr<BinaryTree<T>>& n);
+
 // @include
+template <typename T>
+bool is_balanced_binary_tree(const unique_ptr<BinaryTree<T>>& n) {
+  return get_height(n) != -2;
+}
+
 template <typename T>
 int get_height(const unique_ptr<BinaryTree<T>>& n) {
   if (!n) {
@@ -33,11 +41,6 @@ int get_height(const unique_ptr<BinaryTree<T>>& n) {
     return -2;  // current node n is not balanced.
   }
   return max(l_height, r_height) + 1;  // return the height.
-}
-
-template <typename T>
-bool is_balanced_binary_tree(const unique_ptr<BinaryTree<T>>& n) {
-  return get_height(n) != -2;
 }
 // @exclude
 

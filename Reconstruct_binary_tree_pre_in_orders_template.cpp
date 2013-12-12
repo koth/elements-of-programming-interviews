@@ -18,7 +18,19 @@ using std::uniform_int_distribution;
 using std::unique_ptr;
 using std::vector;
 
+template <typename T>
+BinaryTree<T>* reconstruct_pre_in_orders_helper(
+    const vector<T>& pre, int pre_s, int pre_e,
+    const vector<T>& in, int in_s, int in_e);
+
 // @include
+template <typename T>
+BinaryTree<T>* reconstruct_pre_in_orders(const vector<T>& pre,
+                                         const vector<T>& in) {
+  return reconstruct_pre_in_orders_helper(pre, 0, pre.size(),
+                                          in, 0, in.size());
+}
+
 template <typename T>
 BinaryTree<T>* reconstruct_pre_in_orders_helper(
     const vector<T>& pre, int pre_s, int pre_e,
@@ -39,13 +51,6 @@ BinaryTree<T>* reconstruct_pre_in_orders_helper(
       };
   }
   return nullptr;
-}
-
-template <typename T>
-BinaryTree<T>* reconstruct_pre_in_orders(const vector<T>& pre,
-                                         const vector<T>& in) {
-  return reconstruct_pre_in_orders_helper(pre, 0, pre.size(),
-                                          in, 0, in.size());
 }
 // @exclude
 

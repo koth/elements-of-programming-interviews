@@ -17,11 +17,26 @@ using std::random_device;
 using std::uniform_int_distribution;
 using std::vector;
 
+struct GraphVertex;
+bool BFS(GraphVertex* s);
+
 // @include
 struct GraphVertex {
   int d = -1;
   vector<GraphVertex*> edges;
 };
+
+bool is_any_placement_feasible(vector<GraphVertex>* G) {
+  for (GraphVertex& v : *G) {
+    if (v.d == -1) {  // unvisited vertex.
+      v.d = 0;
+      if (!BFS(&v)) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
 
 bool BFS(GraphVertex* s) {
   queue<GraphVertex*> q;
@@ -37,18 +52,6 @@ bool BFS(GraphVertex* s) {
       }
     }
     q.pop();
-  }
-  return true;
-}
-
-bool is_any_placement_feasible(vector<GraphVertex>* G) {
-  for (GraphVertex& v : *G) {
-    if (v.d == -1) {  // unvisited vertex.
-      v.d = 0;
-      if (!BFS(&v)) {
-        return false;
-      }
-    }
   }
   return true;
 }

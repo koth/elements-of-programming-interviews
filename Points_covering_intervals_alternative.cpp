@@ -19,6 +19,9 @@ using std::uniform_int_distribution;
 using std::unordered_set;
 using std::vector;
 
+struct EndPoint;
+vector<int> find_minimum_visits_helper(const vector<EndPoint>& endpoints);
+
 // @include
 struct Interval {
   int left, right;
@@ -34,6 +37,17 @@ struct EndPoint {
   const Interval* ptr;
   bool is_left;
 };
+
+vector<int> find_minimum_visits(const vector<Interval>& I) {
+  vector<EndPoint> endpoints;
+  for (size_t i = 0; i < I.size(); ++i) {
+    endpoints.emplace_back(EndPoint{&I[i], true});
+    endpoints.emplace_back(EndPoint{&I[i], false});
+  }
+  sort(endpoints.begin(), endpoints.end());
+
+  return find_minimum_visits_helper(endpoints);
+}
 
 vector<int> find_minimum_visits_helper(const vector<EndPoint>& endpoints) {
   vector<int> S;  // a minimum set of visit times.
@@ -52,24 +66,13 @@ vector<int> find_minimum_visits_helper(const vector<EndPoint>& endpoints) {
   }
   return S;
 }
-
-vector<int> find_minimum_visits(const vector<Interval>& I) {
-  vector<EndPoint> endpoints;
-  for (int i = 0; i < I.size(); ++i) {
-    endpoints.emplace_back(EndPoint{&I[i], true});
-    endpoints.emplace_back(EndPoint{&I[i], false});
-  }
-  sort(endpoints.begin(), endpoints.end());
-
-  return find_minimum_visits_helper(endpoints);
-}
 // @exclude
 
 // O(n^2) checking solution
 void check_ans(const vector<Interval>& I, const vector<int>& ans) {
   deque<bool> is_visited(I.size(), false);
   for (const int& a : ans) {
-    for (int i = 0; i < I.size(); ++i) {
+    for (size_t i = 0; i < I.size(); ++i) {
       if (a >= I[i].left && a <= I[i].right) {
         is_visited[i] = true;
       }

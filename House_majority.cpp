@@ -13,7 +13,24 @@ using std::random_device;
 using std::uniform_real_distribution;
 using std::vector;
 
+double house_majority_helper(const vector<double>& prob,
+                             int r,
+                             int n,
+                             vector<vector<double>>& P);
+
 // @include
+double house_majority(const vector<double>& prob, int n) {
+  // Initialize DP table.
+  vector<vector<double>> P(n + 1, vector<double>(n + 1, -1.0));
+
+  // Accumulate the probabilities of majority cases.
+  double prob_sum = 0.0;
+  for (int r = ceil(0.5 * n); r <= n; ++r) {
+    prob_sum += house_majority_helper(prob, r, n, P);
+  }
+  return prob_sum;
+}
+
 // prob is the probability that each Republican wins.
 // r is the number of Republicans wins, and n is the number of elections.
 double house_majority_helper(const vector<double>& prob,
@@ -33,18 +50,6 @@ double house_majority_helper(const vector<double>& prob,
               house_majority_helper(prob, r, n - 1, P) * (1.0 - prob[n - 1]);
   }
   return P[r][n];
-}
-
-double house_majority(const vector<double>& prob, int n) {
-  // Initialize DP table.
-  vector<vector<double>> P(n + 1, vector<double>(n + 1, -1.0));
-
-  // Accumulate the probabilities of majority cases.
-  double prob_sum = 0.0;
-  for (int r = ceil(0.5 * n); r <= n; ++r) {
-    prob_sum += house_majority_helper(prob, r, n, P);
-  }
-  return prob_sum;
 }
 // @exclude
 

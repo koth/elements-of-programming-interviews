@@ -13,16 +13,9 @@ using std::numeric_limits;
 using std::random_device;
 using std::uniform_real_distribution;
 
-// @include
-// 0 means equal, -1 means smaller, and 1 means larger.
-int compare(double a, double b) {
-  // Use normalization for precision problem.
-  double diff = (a - b) / b;
-  return diff < -numeric_limits<double>::epsilon()
-             ? -1
-             : diff > numeric_limits<double>::epsilon();
-}
+int compare(double a, double b);
 
+// @include
 double square_root(double x) {
   // Decide the search range according to x.
   double l, r;
@@ -45,6 +38,15 @@ double square_root(double x) {
     }
   }
   return l;
+}
+
+// 0 means equal, -1 means smaller, and 1 means larger.
+int compare(double a, double b) {
+  // Use normalization for precision problem.
+  double diff = (a - b) / b;
+  return diff < -numeric_limits<double>::epsilon()
+             ? -1
+             : diff > numeric_limits<double>::epsilon();
 }
 // @exclude
 

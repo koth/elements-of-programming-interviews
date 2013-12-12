@@ -13,6 +13,21 @@ using std::make_shared;
 using std::numeric_limits;
 using std::shared_ptr;
 
+template <typename T>
+shared_ptr<BinarySearchTree<T>> merge_sorted_linked_lists(
+    shared_ptr<BinarySearchTree<T>> A,
+    shared_ptr<BinarySearchTree<T>> B);
+
+template <typename T>
+void append_node_and_advance(shared_ptr<BinarySearchTree<T>>* head,
+                             shared_ptr<BinarySearchTree<T>>* tail,
+                             shared_ptr<BinarySearchTree<T>>* n);
+
+template <typename T>
+void append_node(shared_ptr<BinarySearchTree<T>>* head,
+                 shared_ptr<BinarySearchTree<T>>* tail,
+                 shared_ptr<BinarySearchTree<T>>* n);
+
 // Build a BST from the (s + 1)-th to the e-th node in L.
 template <typename T>
 shared_ptr<BinarySearchTree<T>> build_BST_from_sorted_doubly_list_helper(
@@ -89,23 +104,16 @@ int count_len(shared_ptr<BinarySearchTree<T>> L) {
 
 // @include
 template <typename T>
-void append_node(shared_ptr<BinarySearchTree<T>>* head,
-                 shared_ptr<BinarySearchTree<T>>* tail,
-                 shared_ptr<BinarySearchTree<T>>* n) {
-  if (*head) {
-    (*tail)->right = *n, (*n)->left = *tail;
-  } else {
-    *head = *n;
-  }
-  *tail = *n;
-}
-
-template <typename T>
-void append_node_and_advance(shared_ptr<BinarySearchTree<T>>* head,
-                             shared_ptr<BinarySearchTree<T>>* tail,
-                             shared_ptr<BinarySearchTree<T>>* n) {
-  append_node(head, tail, n);
-  *n = (*n)->right;  // advance n.
+shared_ptr<BinarySearchTree<T>> merge_BSTs(
+    shared_ptr<BinarySearchTree<T>> A,
+    shared_ptr<BinarySearchTree<T>> B) {
+  // Transform BSTs A and B into sorted doubly lists.
+  A = BST_to_doubly_list(A), B = BST_to_doubly_list(B);
+  A->left->right = B->left->right = nullptr;
+  A->left = B->left = nullptr;
+  int len_A = count_len(A), len_B = count_len(B);
+  return build_BST_from_sorted_doubly_list(merge_sorted_linked_lists(A, B),
+                                           len_A + len_B);
 }
 
 // Merge two sorted linked lists, return the head of list.
@@ -131,16 +139,23 @@ shared_ptr<BinarySearchTree<T>> merge_sorted_linked_lists(
 }
 
 template <typename T>
-shared_ptr<BinarySearchTree<T>> merge_BSTs(
-    shared_ptr<BinarySearchTree<T>> A,
-    shared_ptr<BinarySearchTree<T>> B) {
-  // Transform BSTs A and B into sorted doubly lists.
-  A = BST_to_doubly_list(A), B = BST_to_doubly_list(B);
-  A->left->right = B->left->right = nullptr;
-  A->left = B->left = nullptr;
-  int len_A = count_len(A), len_B = count_len(B);
-  return build_BST_from_sorted_doubly_list(merge_sorted_linked_lists(A, B),
-                                           len_A + len_B);
+void append_node_and_advance(shared_ptr<BinarySearchTree<T>>* head,
+                             shared_ptr<BinarySearchTree<T>>* tail,
+                             shared_ptr<BinarySearchTree<T>>* n) {
+  append_node(head, tail, n);
+  *n = (*n)->right;  // advance n.
+}
+
+template <typename T>
+void append_node(shared_ptr<BinarySearchTree<T>>* head,
+                 shared_ptr<BinarySearchTree<T>>* tail,
+                 shared_ptr<BinarySearchTree<T>>* n) {
+  if (*head) {
+    (*tail)->right = *n, (*n)->left = *tail;
+  } else {
+    *head = *n;
+  }
+  *tail = *n;
 }
 // @exclude
 

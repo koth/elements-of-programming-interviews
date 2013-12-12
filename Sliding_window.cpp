@@ -27,7 +27,7 @@ struct TrafficElement {
   int time, volume;
 };
 
-void TrafficVolumes(const vector<TrafficElement>& A, int w) {
+void calculate_traffic_volumes(const vector<TrafficElement>& A, int w) {
   Queue<TrafficElement> Q;
   for (int i = 0; i < A.size(); ++i) {
     Q.enqueue(A[i]);
@@ -46,6 +46,6 @@ int main(int argc, char* argv[]) {
                               TrafficElement{2, 3}, TrafficElement{3, 1},
                               TrafficElement{4, 0}, TrafficElement{5, 2},
                               TrafficElement{6, 2}, TrafficElement{7, 2}};
-  TrafficVolumes(A, w);
+  calculate_traffic_volumes(A, w);
   return 0;
 }

@@ -15,9 +15,9 @@ using std::to_string;
 using std::uniform_int_distribution;
 using std::vector;
 
-// @include
-unsigned diff(unsigned a, unsigned b) { return a > b ? a - b : b - a; }
+unsigned diff(unsigned a, unsigned b);
 
+// @include
 unsigned find_closest_palindrome(unsigned x) {
   string str(to_string(x));
   // Make str a palindrome by mirroring the left half to the right half.
@@ -56,6 +56,8 @@ unsigned find_closest_palindrome(unsigned x) {
   return diff(x, mirror_left) < diff(x, stoul(str)) ?
               mirror_left : stoul(str);
 }
+
+unsigned diff(unsigned a, unsigned b) { return a > b ? a - b : b - a; }
 // @exclude
 
 bool is_palindrome(const unsigned& x) {

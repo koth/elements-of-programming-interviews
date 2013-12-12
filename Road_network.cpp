@@ -17,25 +17,13 @@ using std::uniform_int_distribution;
 using std::uniform_real_distribution;
 using std::vector;
 
+void Floyd_Warshall(vector<vector<double>>* G);
+
 // @include
 struct HighwaySection {
   int x, y;
   double distance;
 };
-
-void Floyd_Warshall(vector<vector<double>>* G) {
-  for (int k = 0; k < G->size(); ++k) {
-    for (int i = 0; i < G->size(); ++i) {
-      for (int j = 0; j < G->size(); ++j) {
-        if ((*G)[i][k] != numeric_limits<double>::max() &&
-            (*G)[k][j] != numeric_limits<double>::max() &&
-            (*G)[i][j] > (*G)[i][k] + (*G)[k][j]) {
-          (*G)[i][j] = (*G)[i][k] + (*G)[k][j];
-        }
-      }
-    }
-  }
-}
 
 HighwaySection find_best_proposals(const vector<HighwaySection>& H,
                                    const vector<HighwaySection>& P,
@@ -76,6 +64,20 @@ HighwaySection find_best_proposals(const vector<HighwaySection>& H,
     }
   }
   return best_proposal;
+}
+
+void Floyd_Warshall(vector<vector<double>>* G) {
+  for (int k = 0; k < G->size(); ++k) {
+    for (int i = 0; i < G->size(); ++i) {
+      for (int j = 0; j < G->size(); ++j) {
+        if ((*G)[i][k] != numeric_limits<double>::max() &&
+            (*G)[k][j] != numeric_limits<double>::max() &&
+            (*G)[i][j] > (*G)[i][k] + (*G)[k][j]) {
+          (*G)[i][j] = (*G)[i][k] + (*G)[k][j];
+        }
+      }
+    }
+  }
 }
 // @exclude
 

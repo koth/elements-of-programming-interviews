@@ -13,14 +13,9 @@ using std::iota;
 using std::ostream_iterator;
 using std::vector;
 
-// @include
-int backtrace(const vector<int> &F, int idx) {
-  while (F[idx] != idx) {
-    idx = F[idx];
-  }
-  return idx;
-}
+int backtrace(const vector<int> &F, int idx);
 
+// @include
 /*
  * A and B encode pairwise equivalences on a cardinality N set whose elements
  * are indexed by 0, 1, 2, ..., N-1.
@@ -50,6 +45,13 @@ vector<int> compute_equival_classes(int n, const vector<int> &A,
     }
   }
   return F;
+}
+
+int backtrace(const vector<int> &F, int idx) {
+  while (F[idx] != idx) {
+    idx = F[idx];
+  }
+  return idx;
 }
 // @exclude
 

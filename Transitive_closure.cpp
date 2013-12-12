@@ -17,11 +17,22 @@ using std::stoi;
 using std::uniform_int_distribution;
 using std::vector;
 
+struct GraphVertex;
+void DFS(GraphVertex* cur, int time, vector<GraphVertex*>* contacts);
+
 // @include
 struct GraphVertex {
   int visit_time = -1;
   vector<GraphVertex*> edges, extended_contacts;
 };
+
+void transitive_closure(vector<GraphVertex>* G) {
+  // Build extended contacts for each vertex.
+  for (int i = 0; i < G->size(); ++i) {
+    (*G)[i].visit_time = i;
+    DFS(&(*G)[i], i, &(*G)[i].extended_contacts);
+  }
+}
 
 void DFS(GraphVertex* cur, int time, vector<GraphVertex*>* contacts) {
   for (const auto& next : cur->edges) {
@@ -30,14 +41,6 @@ void DFS(GraphVertex* cur, int time, vector<GraphVertex*>* contacts) {
       contacts->emplace_back(next);
       DFS(next, time, contacts);
     }
-  }
-}
-
-void transitive_closure(vector<GraphVertex>* G) {
-  // Build extended contacts for each vertex.
-  for (int i = 0; i < G->size(); ++i) {
-    (*G)[i].visit_time = i;
-    DFS(&(*G)[i], i, &(*G)[i].extended_contacts);
   }
 }
 // @exclude

@@ -14,7 +14,14 @@ using std::random_device;
 using std::uniform_int_distribution;
 using std::vector;
 
+int find_max_subarray(const vector<int>& A);
+int find_circular_max_subarray(const vector<int>& A);
+
 // @include
+int max_subarray_sum_in_circular(const vector<int>& A) {
+  return max(find_max_subarray(A), find_circular_max_subarray(A));
+}
+
 // Calculate the non-circular solution.
 int find_max_subarray(const vector<int>& A) {
   int maximum_till = 0, maximum = 0;
@@ -51,10 +58,6 @@ int find_circular_max_subarray(const vector<int>& A) {
     circular_max = max(circular_max, maximum_begin[i] + maximum_end[i]);
   }
   return circular_max;
-}
-
-int max_subarray_sum_in_circular(const vector<int>& A) {
-  return max(find_max_subarray(A), find_circular_max_subarray(A));
 }
 // @exclude
 

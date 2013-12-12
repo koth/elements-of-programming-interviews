@@ -28,7 +28,25 @@ BinarySearchTree<T>* find_successor_BST(BinarySearchTree<T>* n) {
   return n->parent ? n->parent : nullptr;
 }
 
+template <typename T>
+BinarySearchTree<T>* find_first_larger_equal_k(
+    const unique_ptr<BinarySearchTree<T>>& r,
+    const T& k);
+
 // @include
+template <typename T>
+list<BinarySearchTree<T>*> range_query_on_BST(
+    const unique_ptr<BinarySearchTree<T>>& n,
+    const T& L,
+    const T& U) {
+  list<BinarySearchTree<T>*> res;
+  for (auto* it = find_first_larger_equal_k(n, L); it && it->data <= U;
+       it = find_successor_BST(it)) {
+    res.emplace_back(it);
+  }
+  return res;
+}
+
 template <typename T>
 BinarySearchTree<T>* find_first_larger_equal_k(
     const unique_ptr<BinarySearchTree<T>>& r,
@@ -42,19 +60,6 @@ BinarySearchTree<T>* find_first_larger_equal_k(
   }
   // r->data < k so search the right subtree.
   return find_first_larger_equal_k(r->right, k);
-}
-
-template <typename T>
-list<BinarySearchTree<T>*> range_query_on_BST(
-    const unique_ptr<BinarySearchTree<T>>& n,
-    const T& L,
-    const T& U) {
-  list<BinarySearchTree<T>*> res;
-  for (auto* it = find_first_larger_equal_k(n, L); it && it->data <= U;
-       it = find_successor_BST(it)) {
-    res.emplace_back(it);
-  }
-  return res;
 }
 // @exclude
 

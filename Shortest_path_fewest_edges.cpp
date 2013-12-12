@@ -22,6 +22,9 @@ using std::set;
 using std::uniform_int_distribution;
 using std::vector;
 
+struct GraphVertex;
+void output_shortest_path(GraphVertex*& v);
+
 // @include
 struct GraphVertex {
   // distance stores (dis, #edges) pair.
@@ -38,13 +41,6 @@ struct Comp {
             lhs->distance.second < rhs->distance.second);
   }
 };
-
-void output_shortest_path(GraphVertex*& v) {
-  if (v) {
-    output_shortest_path(v->pred);
-    cout << v->id << " ";
-  }
-}
 
 void Dijkstra_shortest_path(GraphVertex* s, GraphVertex* t) {
   // Initialization the distance of starting point.
@@ -77,6 +73,13 @@ void Dijkstra_shortest_path(GraphVertex* s, GraphVertex* t) {
 
   // Output the shortest path with fewest edges.
   output_shortest_path(t);
+}
+
+void output_shortest_path(GraphVertex*& v) {
+  if (v) {
+    output_shortest_path(v->pred);
+    cout << v->id << " ";
+  }
 }
 // @exclude
 

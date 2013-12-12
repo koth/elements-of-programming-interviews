@@ -21,19 +21,10 @@ using std::random_device;
 using std::uniform_int_distribution;
 using std::vector;
 
+int find_set(vector<int>* set, int x);
+void union_set(vector<int>* set, int x, int y);
+
 // @include
-int find_set(vector<int>* set, int x) {
-  if ((*set)[x] != x) {
-    (*set)[x] = find_set(set, (*set)[x]);  // path compression.
-  }
-  return (*set)[x];
-}
-
-void union_set(vector<int>* set, int x, int y) {
-  int x_root = find_set(set, x), y_root = find_set(set, y);
-  (*set)[min(x_root, y_root)] = max(x_root, y_root);
-}
-
 vector<int> offline_minimum(const vector<int> &A, const vector<int> &E) {
   vector<int> R(A.size(), E.size());
   int pre = 0;
@@ -56,6 +47,18 @@ vector<int> offline_minimum(const vector<int> &A, const vector<int> &E) {
     }
   }
   return ret;
+}
+
+int find_set(vector<int>* set, int x) {
+  if ((*set)[x] != x) {
+    (*set)[x] = find_set(set, (*set)[x]);  // path compression.
+  }
+  return (*set)[x];
+}
+
+void union_set(vector<int>* set, int x, int y) {
+  int x_root = find_set(set, x), y_root = find_set(set, y);
+  (*set)[min(x_root, y_root)] = max(x_root, y_root);
 }
 // @exclude
 

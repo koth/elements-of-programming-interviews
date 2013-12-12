@@ -13,7 +13,28 @@ using std::random_device;
 using std::uniform_int_distribution;
 using std::vector;
 
+template <typename T>
+int count_inversions_helper(vector<T>& A, int start, int end);
+template <typename T>
+int merge(vector<T>& A, int start, int mid, int end);
+
 // @include
+template <typename T>
+int count_inversions(vector<T> A) {
+  return count_inversions_helper(A, 0, A.size());
+}
+
+template <typename T>
+int count_inversions_helper(vector<T>& A, int start, int end) {
+  if (end - start <= 1) {
+    return 0;
+  }
+
+  int mid = start + ((end - start) >> 1);
+  return count_inversions_helper(A, start, mid) +
+         count_inversions_helper(A, mid, end) + merge(A, start, mid, end);
+}
+
 template <typename T>
 int merge(vector<T>& A, int start, int mid, int end) {
   vector<T> sorted_A;
@@ -34,22 +55,6 @@ int merge(vector<T>& A, int start, int mid, int end) {
   // Update A with sorted_A.
   copy(sorted_A.begin(), sorted_A.end(), A.begin() + start);
   return inver_count;
-}
-
-template <typename T>
-int count_inversions_helper(vector<T>& A, int start, int end) {
-  if (end - start <= 1) {
-    return 0;
-  }
-
-  int mid = start + ((end - start) >> 1);
-  return count_inversions_helper(A, start, mid) +
-         count_inversions_helper(A, mid, end) + merge(A, start, mid, end);
-}
-
-template <typename T>
-int count_inversions(vector<T> A) {
-  return count_inversions_helper(A, 0, A.size());
 }
 // @exclude
 

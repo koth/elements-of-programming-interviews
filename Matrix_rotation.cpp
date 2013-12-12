@@ -16,7 +16,7 @@ using std::uniform_int_distribution;
 using std::vector;
 
 void print_matrix(const vector<vector<int>> &A) {
-  for (int i = 0; i < A.size(); ++i) {
+  for (size_t i = 0; i < A.size(); ++i) {
     copy(A[i].begin(), A[i].end(), ostream_iterator<int>(cout, " "));
     cout << endl;
   }
@@ -25,20 +25,21 @@ void print_matrix(const vector<vector<int>> &A) {
 void check_answer(const vector<vector<int>> &A) {
   int k = 1;
   for (int j = A.size() - 1; j >= 0; --j) {
-    for (int i = 0; i < A.size(); ++i) {
+    for (size_t i = 0; i < A.size(); ++i) {
       assert(k++ == A[i][j]);
     }
   }
 }
 
-// @include
+void rotate_matrix_helper(vector<vector<int>>* A,
+                          int x_s, int x_e, int y_s, int y_e);
 void copy_matrix(vector<vector<int>>* A,
                  int A_x_s, int A_x_e, int A_y_s, int A_y_e,
-                 const vector<vector<int>> &S, int S_x, int S_y) {
-  for (int i = 0; i < A_x_e - A_x_s; ++i) {
-    copy(S[S_x + i].cbegin() + S_y, S[S_x + i].cbegin() + S_y + A_y_e - A_y_s,
-         (*A)[A_x_s + i].begin() + A_y_s);
-  }
+                 const vector<vector<int>> &S, int S_x, int S_y);
+
+// @include
+void rotate_matrix(vector<vector<int>>* A) {
+  rotate_matrix_helper(A, 0, A->size(), 0, A->size());
 }
 
 void rotate_matrix_helper(vector<vector<int>>* A,
@@ -61,8 +62,13 @@ void rotate_matrix_helper(vector<vector<int>>* A,
   }
 }
 
-void rotate_matrix(vector<vector<int>>* A) {
-  rotate_matrix_helper(A, 0, A->size(), 0, A->size());
+void copy_matrix(vector<vector<int>>* A,
+                 int A_x_s, int A_x_e, int A_y_s, int A_y_e,
+                 const vector<vector<int>> &S, int S_x, int S_y) {
+  for (int i = 0; i < A_x_e - A_x_s; ++i) {
+    copy(S[S_x + i].cbegin() + S_y, S[S_x + i].cbegin() + S_y + A_y_e - A_y_s,
+         (*A)[A_x_s + i].begin() + A_y_s);
+  }
 }
 // @exclude
 
@@ -72,8 +78,8 @@ int main(int argc, char *argv[]) {
     n = atoi(argv[1]);
     vector<vector<int>> A(1 << n, vector<int>(1 << n));
     int k = 1;
-    for (int i = 0; i < A.size(); ++i) {
-      for (int j = 0; j < A[i].size(); ++j) {
+    for (size_t i = 0; i < A.size(); ++i) {
+      for (size_t j = 0; j < A[i].size(); ++j) {
         A[i][j] = k++;
       }
     }
@@ -86,8 +92,8 @@ int main(int argc, char *argv[]) {
       n = dis(gen);
       vector<vector<int>> A(1 << n, vector<int>(1 << n));
       int k = 1;
-      for (int i = 0; i < A.size(); ++i) {
-        for (int j = 0; j < A[i].size(); ++j) {
+      for (size_t i = 0; i < A.size(); ++i) {
+        for (size_t j = 0; j < A[i].size(); ++j) {
           A[i][j] = k++;
         }
       }

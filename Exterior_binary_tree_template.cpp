@@ -9,7 +9,23 @@ using std::cout;
 using std::endl;
 using std::unique_ptr;
 
+template <typename T>
+void left_boundary_b_tree(const unique_ptr<BinaryTree<T>>& n,
+                          bool is_boundary);
+template <typename T>
+void right_boundary_b_tree(const unique_ptr<BinaryTree<T>>& n,
+                           bool is_boundary);
+
 // @include
+template <typename T>
+void exterior_binary_tree(const unique_ptr<BinaryTree<T>>& root) {
+  if (root) {
+    cout << root->data << ' ';
+    left_boundary_b_tree(root->left, true);
+    right_boundary_b_tree(root->right, true);
+  }
+}
+
 template <typename T>
 void left_boundary_b_tree(const unique_ptr<BinaryTree<T>>& n,
                           bool is_boundary) {
@@ -31,15 +47,6 @@ void right_boundary_b_tree(const unique_ptr<BinaryTree<T>>& n,
     if (is_boundary || (!n->left && !n->right)) {
       cout << n->data << ' ';
     }
-  }
-}
-
-template <typename T>
-void exterior_binary_tree(const unique_ptr<BinaryTree<T>>& root) {
-  if (root) {
-    cout << root->data << ' ';
-    left_boundary_b_tree(root->left, true);
-    right_boundary_b_tree(root->right, true);
   }
 }
 // @exclude

@@ -18,14 +18,9 @@ using std::set;
 using std::uniform_int_distribution;
 using std::vector;
 
-// @include
-bool is_unit(const complex<int>& z) {
-  return (z.real() == 1 && z.imag() == 0) ||
-         (z.real() == -1 && z.imag() == 0) ||
-         (z.real() == 0 && z.imag() == 1) ||
-         (z.real() == 0 && z.imag() == -1);
-}
+bool is_unit(const complex<int>& z);
 
+// @include
 struct ComplexCompare {
   bool operator()(const complex<double>& lhs,
                   const complex<double>& rhs) const {
@@ -74,6 +69,13 @@ vector<complex<int>> generate_Gaussian_primes(int n) {
     }
   }
   return primes;
+}
+
+bool is_unit(const complex<int>& z) {
+  return (z.real() == 1 && z.imag() == 0) ||
+         (z.real() == -1 && z.imag() == 0) ||
+         (z.real() == 0 && z.imag() == 1) ||
+         (z.real() == 0 && z.imag() == -1);
 }
 // @exclude
 

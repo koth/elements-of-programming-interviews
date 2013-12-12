@@ -14,7 +14,17 @@ using std::random_device;
 using std::uniform_int_distribution;
 using std::vector;
 
+int pick_up_coins_helper(const vector<int>& C,
+                         int a,
+                         int b,
+                         vector<vector<int>>* T);
+
 // @include
+int pick_up_coins(const vector<int>& C) {
+  vector<vector<int>> T(C.size(), vector<int>(C.size(), -1));
+  return pick_up_coins_helper(C, 0, C.size() - 1, &T);
+}
+
 int pick_up_coins_helper(const vector<int>& C,
                          int a,
                          int b,
@@ -30,11 +40,6 @@ int pick_up_coins_helper(const vector<int>& C,
                                 pick_up_coins_helper(C, a, b - 2, T)));
   }
   return (*T)[a][b];
-}
-
-int pick_up_coins(const vector<int>& C) {
-  vector<vector<int>> T(C.size(), vector<int>(C.size(), -1));
-  return pick_up_coins_helper(C, 0, C.size() - 1, &T);
 }
 // @exclude
 

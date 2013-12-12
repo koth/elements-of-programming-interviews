@@ -33,7 +33,7 @@ string rand_string(int len) {
 }
 
 // @include
-vector<string> Search_frequent_items(istringstream* sin, int k) {
+vector<string> search_frequent_items(istringstream* sin, int k) {
   // Find the candidates which may occur >= n / k times.
   string buf;
   unordered_map<string, int> hash;
@@ -132,7 +132,7 @@ int main(int argc, char* argv[]) {
       s += ' ';
     }
     istringstream sin(s);
-    vector<string> items = Search_frequent_items(&sin, k);
+    vector<string> items = search_frequent_items(&sin, k);
     check_ans(&stream, k, &items);
   }
   return 0;

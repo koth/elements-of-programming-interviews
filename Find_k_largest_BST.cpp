@@ -16,7 +16,20 @@ using std::uniform_int_distribution;
 using std::unique_ptr;
 using std::vector;
 
+template <typename T>
+void find_k_largest_in_BST_helper(const unique_ptr<BinarySearchTree<T>>& r,
+                                  int k,
+                                  vector<T>* k_elements);
+
 // @include
+template <typename T>
+vector<T> find_k_largest_in_BST(const unique_ptr<BinarySearchTree<T>>& root,
+                                int k) {
+  vector<T> k_elements;
+  find_k_largest_in_BST_helper(root, k, &k_elements);
+  return k_elements;
+}
+
 template <typename T>
 void find_k_largest_in_BST_helper(const unique_ptr<BinarySearchTree<T>>& r,
                                   int k,
@@ -29,14 +42,6 @@ void find_k_largest_in_BST_helper(const unique_ptr<BinarySearchTree<T>>& r,
       find_k_largest_in_BST_helper(r->left, k, k_elements);
     }
   }
-}
-
-template <typename T>
-vector<T> find_k_largest_in_BST(const unique_ptr<BinarySearchTree<T>>& root,
-                                int k) {
-  vector<T> k_elements;
-  find_k_largest_in_BST_helper(root, k, &k_elements);
-  return k_elements;
 }
 // @exclude
 

@@ -16,16 +16,10 @@ using std::string;
 using std::uniform_int_distribution;
 using std::vector;
 
-// @include
-string trans_int_to_binary(int decimal) {
-  string ret;
-  while (decimal) {
-    ret.insert(0, 1, '0' + (decimal & 1));
-    decimal >>= 1;
-  }
-  return ret;
-}
+string trans_int_to_binary(int decimal);
+int trans_binary_to_int(const string& binary);
 
+// @include
 string encode(const vector<int>& A) {
   string ret;
   for (const int& a : A) {
@@ -36,10 +30,11 @@ string encode(const vector<int>& A) {
   return ret;
 }
 
-int trans_binary_to_int(const string& binary) {
-  int ret = 0;
-  for (const char& c : binary) {
-    ret = (ret << 1) + c - '0';
+string trans_int_to_binary(int decimal) {
+  string ret;
+  while (decimal) {
+    ret.insert(0, 1, '0' + (decimal & 1));
+    decimal >>= 1;
   }
   return ret;
 }
@@ -57,6 +52,14 @@ vector<int> decode(const string& s) {
     int len = zero_idx - idx + 1;
     ret.emplace_back(trans_binary_to_int(s.substr(zero_idx, len)));
     idx = zero_idx + len;
+  }
+  return ret;
+}
+
+int trans_binary_to_int(const string& binary) {
+  int ret = 0;
+  for (const char& c : binary) {
+    ret = (ret << 1) + c - '0';
   }
   return ret;
 }

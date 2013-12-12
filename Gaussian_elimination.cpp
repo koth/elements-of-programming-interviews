@@ -17,18 +17,9 @@ using std::random_device;
 using std::uniform_int_distribution;
 using std::vector;
 
-// @include
-void Eliminate_rows(vector<deque<bool>>* B, int i, int j) {
-  // Use B[i] to eliminate other rows' entry j.
-  for (int a = 0; a < B->size(); ++a) {
-    if (i != a && (*B)[a][j]) {
-      for (int b = 0; b < (*B)[i].size(); ++b) {
-        (*B)[a][b] = (*B)[a][b] ^ (*B)[i][b];
-      }
-    }
-  }
-}
+void Eliminate_rows(vector<deque<bool>>* B, int i, int j);
 
+// @include
 deque<bool> Gaussian_elimination(const vector<deque<bool>>& A,
                                  const deque<bool>& y) {
   vector<deque<bool>> B(A);
@@ -77,6 +68,17 @@ deque<bool> Gaussian_elimination(const vector<deque<bool>>& A,
     x.push_back(B[i].back());
   }
   return x;
+}
+
+void Eliminate_rows(vector<deque<bool>>* B, int i, int j) {
+  // Use B[i] to eliminate other rows' entry j.
+  for (int a = 0; a < B->size(); ++a) {
+    if (i != a && (*B)[a][j]) {
+      for (int b = 0; b < (*B)[i].size(); ++b) {
+        (*B)[a][b] = (*B)[a][b] ^ (*B)[i][b];
+      }
+    }
+  }
 }
 // @exclude
 
