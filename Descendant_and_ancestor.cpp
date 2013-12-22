@@ -58,7 +58,6 @@ void small_test() {
 
 int main(int argc, char* argv[]) {
   small_test();
-  return 0;
   //      3
   //    2   5
   //  1    4 6

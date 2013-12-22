@@ -67,7 +67,7 @@ int main(int argc, char* argv[]) {
   temp0->prev = nullptr;
   temp1->prev = temp0;
   temp2->prev = temp1;
-  temp2->prev = temp2;
+  temp3->prev = temp2;
 
   shared_ptr<node_t<int>> L = temp0;
   auto root = build_BST_from_sorted_doubly_list(L, 4);

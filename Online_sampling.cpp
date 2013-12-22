@@ -20,7 +20,7 @@ vector<int> online_sampling(int n, int k) {
   unordered_map<int, int> H;
   default_random_engine gen((random_device())());  // random num generator.
   for (int i = 0; i < k; ++i) {
-    // Generate random int in [i, n - 1].
+    // Generate random int in [0, n - 1 - i].
     uniform_int_distribution<int> dis(0, n - 1 - i);
     int r = dis(gen);
     auto ptr1 = H.find(r), ptr2 = H.find(n - 1 - i);
