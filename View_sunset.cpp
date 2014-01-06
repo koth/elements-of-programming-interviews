@@ -18,12 +18,11 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-template <typename T>
-vector<pair<int, T>> examine_buildings_with_sunset(istringstream* sin) {
+vector<pair<int, int>> examine_buildings_with_sunset(istringstream* sin) {
   int idx = 0;  // building's index.
-  T height;
+  int height;
   // Stores (building_idx, building_height) pair with sunset views.
-  vector<pair<int, T>> buildings_with_sunset;
+  vector<pair<int, int>> buildings_with_sunset;
   while (*sin >> height) {
     while (!buildings_with_sunset.empty() &&
            height >= buildings_with_sunset.back().second) {
@@ -54,7 +53,7 @@ int main(int argc, char* argv[]) {
       ss << height << ' ';
     }
     istringstream sin(ss.str());
-    vector<pair<int, int>> res = examine_buildings_with_sunset<int>(&sin);
+    vector<pair<int, int>> res = examine_buildings_with_sunset(&sin);
     cout << res[0].first << ' ' << res[0].second << endl;
     for (int i = 1; i < res.size(); ++i) {
       cout << res[i].first << ' ' << res[i].second << endl;

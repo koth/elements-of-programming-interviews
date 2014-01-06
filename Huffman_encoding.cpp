@@ -40,7 +40,7 @@ struct BinaryTree {
 
 struct Compare {
   bool operator()(const shared_ptr<BinaryTree>& lhs,
-                  const shared_ptr<BinaryTree>& rhs) const {
+                  const shared_ptr<BinaryTree>& rhs) {
     return lhs->prob > rhs->prob;
   }
 };

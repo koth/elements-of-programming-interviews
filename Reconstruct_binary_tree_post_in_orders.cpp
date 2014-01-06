@@ -18,35 +18,32 @@ using std::uniform_int_distribution;
 using std::unique_ptr;
 using std::vector;
 
-template <typename T>
-BinaryTree<T>* reconstruct_pre_in_orders_helper(
-    const vector<T>& pre, int pre_s, int pre_e,
-    const vector<T>& in, int in_s, int in_e);
+BinaryTree<int>* reconstruct_post_in_orders_helper(
+    const vector<int>& post, int post_s, int post_e,
+    const vector<int>& in, int in_s, int in_e);
 
 // @include
-template <typename T>
-BinaryTree<T>* reconstruct_pre_in_orders(const vector<T>& pre,
-                                         const vector<T>& in) {
-  return reconstruct_pre_in_orders_helper(pre, 0, pre.size(),
-                                          in, 0, in.size());
+BinaryTree<int>* reconstruct_post_in_orders(const vector<int>& post,
+                                            const vector<int>& in) {
+  return reconstruct_post_in_orders_helper(post, 0, post.size(),
+                                           in, 0, in.size());
 }
 
-template <typename T>
-BinaryTree<T>* reconstruct_pre_in_orders_helper(
-    const vector<T>& pre, int pre_s, int pre_e,
-    const vector<T>& in, int in_s, int in_e) {
-  if (pre_e > pre_s && in_e > in_s) {
-    auto it = find(in.cbegin() + in_s, in.cbegin() + in_e, pre[pre_s]);
+BinaryTree<int>* reconstruct_post_in_orders_helper(
+    const vector<int>& post, int post_s, int post_e,
+    const vector<int>& in, int in_s, int in_e) {
+  if (post_e > post_s && in_e > in_s) {
+    auto it = find(in.cbegin() + in_s, in.cbegin() + in_e, post[post_e - 1]);
     auto left_tree_size = distance(in.cbegin(), it) - in_s;
 
-    return new BinaryTree<T>{pre[pre_s],
+    return new BinaryTree<int>{post[post_e - 1],
       // Recursively build the left subtree.
-      unique_ptr<BinaryTree<T>>(reconstruct_pre_in_orders_helper<T>(
-          pre, pre_s + 1, pre_s + 1 + left_tree_size,
+      unique_ptr<BinaryTree<int>>(reconstruct_post_in_orders_helper(
+          post, post_s, post_s + left_tree_size,
           in, in_s, distance(in.cbegin(), it))),
       // Recursively build the right subtree.
-      unique_ptr<BinaryTree<T>>(reconstruct_pre_in_orders_helper<T>(
-          pre, pre_s + 1 + left_tree_size, pre_e,
+      unique_ptr<BinaryTree<int>>(reconstruct_post_in_orders_helper(
+          post, post_s + left_tree_size, post_e - 1,
           in, distance(in.cbegin(), it) + 1, in_e))
       };
   }
@@ -66,10 +63,10 @@ int main(int argc, char *argv[]) {
       n = dis(gen);
     }
     unique_ptr<BinaryTree<int>> root = generate_rand_binary_tree<int>(n, true);
-    vector<int> pre = generate_preorder(root);
+    vector<int> post = generate_postorder(root);
     vector<int> in = generate_inorder(root);
     auto res =
-        unique_ptr<BinaryTree<int>>(reconstruct_pre_in_orders<int>(pre, in));
+        unique_ptr<BinaryTree<int>>(reconstruct_post_in_orders(post, in));
     assert(is_two_binary_trees_equal<int>(root, res));
     delete_binary_tree(&root);
     delete_binary_tree(&res);

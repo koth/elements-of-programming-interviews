@@ -14,21 +14,18 @@ using std::list;
 using std::unique_ptr;
 using std::vector;
 
-template <typename T>
-void connect_leaves_helper(const unique_ptr<BinaryTree<T>>& n,
-                           list<BinaryTree<T>*>* L);
+void connect_leaves_helper(const unique_ptr<BinaryTree<int>>& n,
+                           list<BinaryTree<int>*>* L);
 
 // @include
-template <typename T>
-list<BinaryTree<T>*> connect_leaves(const unique_ptr<BinaryTree<T>>& n) {
-  list<BinaryTree<T>*> L;
+list<BinaryTree<int>*> connect_leaves(const unique_ptr<BinaryTree<int>>& n) {
+  list<BinaryTree<int>*> L;
   connect_leaves_helper(n, &L);
   return L;
 }
 
-template <typename T>
-void connect_leaves_helper(const unique_ptr<BinaryTree<T>>& n,
-                           list<BinaryTree<T>*>* L) {
+void connect_leaves_helper(const unique_ptr<BinaryTree<int>>& n,
+                           list<BinaryTree<int>*>* L) {
   if (n) {
     if (!n->left && !n->right) {
       L->emplace_back(n.get());

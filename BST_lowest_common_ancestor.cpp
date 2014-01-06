@@ -8,10 +8,9 @@
 using std::unique_ptr;
 
 // @include
-template <typename T>
-BinarySearchTree<T>* find_LCA(const unique_ptr<BinarySearchTree<T>>& x,
-                              const unique_ptr<BinarySearchTree<T>>& s,
-                              const unique_ptr<BinarySearchTree<T>>& b) {
+BinarySearchTree<int>* find_LCA(const unique_ptr<BinarySearchTree<int>>& x,
+                                const unique_ptr<BinarySearchTree<int>>& s,
+                                const unique_ptr<BinarySearchTree<int>>& b) {
   auto* p = x.get();
   while (p->data < s->data || p->data > b->data) {
     while (p->data < s->data) {

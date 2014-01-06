@@ -13,19 +13,15 @@ using std::random_device;
 using std::uniform_int_distribution;
 using std::vector;
 
-template <typename T>
-int count_inversions_helper(vector<T>& A, int start, int end);
-template <typename T>
-int merge(vector<T>& A, int start, int mid, int end);
+int count_inversions_helper(vector<int>& A, int start, int end);
+int merge(vector<int>& A, int start, int mid, int end);
 
 // @include
-template <typename T>
-int count_inversions(vector<T> A) {
+int count_inversions(vector<int> A) {
   return count_inversions_helper(A, 0, A.size());
 }
 
-template <typename T>
-int count_inversions_helper(vector<T>& A, int start, int end) {
+int count_inversions_helper(vector<int>& A, int start, int end) {
   if (end - start <= 1) {
     return 0;
   }
@@ -35,9 +31,8 @@ int count_inversions_helper(vector<T>& A, int start, int end) {
          count_inversions_helper(A, mid, end) + merge(A, start, mid, end);
 }
 
-template <typename T>
-int merge(vector<T>& A, int start, int mid, int end) {
-  vector<T> sorted_A;
+int merge(vector<int>& A, int start, int mid, int end) {
+  vector<int> sorted_A;
   int left_start = start, right_start = mid, inver_count = 0;
 
   while (left_start < mid && right_start < end) {

@@ -15,8 +15,7 @@ class TournamentTree {
  public:
   // n items, and each box has unit_cap.
   TournamentTree(int n, double unit_cap)
-      :
-        // Complete binary tree with n leafs has 2n - 1 nodes.
+      : // Complete binary tree with n leafs has 2n - 1 nodes.
         tree_(vector<TreeNode>((n << 1) - 1, {unit_cap})) {}
 
   void insert(int item, double item_cap) { insertHelper(0, item, item_cap); }

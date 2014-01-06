@@ -13,12 +13,11 @@ using std::length_error;
 using std::vector;
 
 // @include
-template <typename T>
 class Queue {
  public:
   explicit Queue(size_t cap) : data_(cap) {}
 
-  void enqueue(const T& x) {
+  void enqueue(int x) {
     // Dynamically resize due to data_.size() limit.
     if (count_ == data_.size()) {
       // Rearrange elements.
@@ -31,10 +30,10 @@ class Queue {
     tail_ = (tail_ + 1) % data_.size(), ++count_;
   }
 
-  T dequeue() {
+  int dequeue() {
     if (count_) {
       --count_;
-      T ret = data_[head_];
+      int ret = data_[head_];
       head_ = (head_ + 1) % data_.size();
       return ret;
     }
@@ -45,12 +44,12 @@ class Queue {
 
  private:
   size_t head_ = 0, tail_ = 0, count_ = 0;
-  vector<T> data_;
+  vector<int> data_;
 };
 // @exclude
 
 void test() {
-  Queue<int> q(8);
+  Queue q(8);
   q.enqueue(1);
   q.enqueue(2);
   q.enqueue(3);
@@ -90,7 +89,7 @@ void test() {
 
 int main(int argc, char* argv[]) {
   test();
-  Queue<int> q(8);
+  Queue q(8);
   q.enqueue(1);
   q.enqueue(2);
   q.enqueue(3);

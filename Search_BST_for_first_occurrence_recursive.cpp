@@ -8,10 +8,9 @@
 using std::unique_ptr;
 
 // @include
-template <typename T>
-BinarySearchTree<T>* find_first_equal_k(
-    const unique_ptr<BinarySearchTree<T>>& r,
-    const T& k) {
+BinarySearchTree<int>* find_first_equal_k(
+    const unique_ptr<BinarySearchTree<int>>& r,
+    int k) {
   if (!r) {
     return nullptr;  // no match.
   } else if (r->data == k) {
@@ -38,8 +37,8 @@ int main(int argc, char* argv[]) {
       unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{4});
   root->right->right =
       unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{6});
-  assert(!find_first_equal_k<int>(root, 7));
-  assert(find_first_equal_k<int>(root, 6)->data == 6 &&
-         find_first_equal_k<int>(root, 6)->right->data == 6);
+  assert(!find_first_equal_k(root, 7));
+  assert(find_first_equal_k(root, 6)->data == 6 &&
+         find_first_equal_k(root, 6)->right->data == 6);
   return 0;
 }

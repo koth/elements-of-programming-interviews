@@ -15,13 +15,12 @@ struct node_t {
 };
 
 // @include
-template <typename T>
-void search_postings_list(const shared_ptr<node_t<T>>& L) {
-  stack<shared_ptr<node_t<T>>> s;
+void search_postings_list(const shared_ptr<node_t<int>>& L) {
+  stack<shared_ptr<node_t<int>>> s;
   int order = 0;
   s.emplace(L);
   while (!s.empty()) {
-    shared_ptr<node_t<T>> curr = s.top();
+    shared_ptr<node_t<int>> curr = s.top();
     s.pop();
     if (curr && curr->order == -1) {
       curr->order = order++;

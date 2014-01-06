@@ -12,10 +12,9 @@ using std::stack;
 using std::unique_ptr;
 
 // @include
-template <typename T>
-void print_BST_in_sorted_order(const unique_ptr<BinarySearchTree<T>>& n) {
-  stack<const BinarySearchTree<T>*> s;
-  const BinarySearchTree<T>* curr = n.get();
+void print_BST_in_sorted_order(const unique_ptr<BinarySearchTree<int>>& n) {
+  stack<const BinarySearchTree<int>*> s;
+  const BinarySearchTree<int>* curr = n.get();
 
   while (!s.empty() || curr) {
     if (curr) {
@@ -48,6 +47,6 @@ int main(int argc, char* argv[]) {
   root->right->right =
       unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{6, nullptr});
   // should output 1 2 3 4 5 6
-  print_BST_in_sorted_order<int>(root);
+  print_BST_in_sorted_order(root);
   return 0;
 }

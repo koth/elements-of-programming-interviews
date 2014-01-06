@@ -19,9 +19,8 @@ struct BinaryTree {
 };
 
 // @include
-template <typename T>
-const BinaryTree<T>* find_kth_node_binary_tree(
-    const unique_ptr<BinaryTree<T>>& root, int k) {
+const BinaryTree<int>* find_kth_node_binary_tree(
+    const unique_ptr<BinaryTree<int>>& root, int k) {
   const auto* n = root.get();
   while (n) {
     int left_size = n->left ? n->left->size : 0;
@@ -68,32 +67,32 @@ int main(int argc, char* argv[]) {
   root->right->right->data = 6;
   // should throw
   try {
-    find_kth_node_binary_tree<int>(root, 0);
+    find_kth_node_binary_tree(root, 0);
   }
   catch (const exception& e) {
     cout << e.what() << endl;
   }
   // should output 1
-  assert(find_kth_node_binary_tree<int>(root, 1)->data == 1);
-  cout << (find_kth_node_binary_tree<int>(root, 1))->data << endl;
+  assert(find_kth_node_binary_tree(root, 1)->data == 1);
+  cout << (find_kth_node_binary_tree(root, 1))->data << endl;
   // should output 2
-  assert(find_kth_node_binary_tree<int>(root, 2)->data == 2);
-  cout << (find_kth_node_binary_tree<int>(root, 2))->data << endl;
+  assert(find_kth_node_binary_tree(root, 2)->data == 2);
+  cout << (find_kth_node_binary_tree(root, 2))->data << endl;
   // should output 3
-  assert(find_kth_node_binary_tree<int>(root, 3)->data == 3);
-  cout << (find_kth_node_binary_tree<int>(root, 3))->data << endl;
+  assert(find_kth_node_binary_tree(root, 3)->data == 3);
+  cout << (find_kth_node_binary_tree(root, 3))->data << endl;
   // should output 4
-  assert(find_kth_node_binary_tree<int>(root, 4)->data == 4);
-  cout << (find_kth_node_binary_tree<int>(root, 4))->data << endl;
+  assert(find_kth_node_binary_tree(root, 4)->data == 4);
+  cout << (find_kth_node_binary_tree(root, 4))->data << endl;
   // should output 5
-  assert(find_kth_node_binary_tree<int>(root, 5)->data == 5);
-  cout << (find_kth_node_binary_tree<int>(root, 5))->data << endl;
+  assert(find_kth_node_binary_tree(root, 5)->data == 5);
+  cout << (find_kth_node_binary_tree(root, 5))->data << endl;
   // should output 6
-  assert(find_kth_node_binary_tree<int>(root, 6)->data == 6);
-  cout << (find_kth_node_binary_tree<int>(root, 6))->data << endl;
+  assert(find_kth_node_binary_tree(root, 6)->data == 6);
+  cout << (find_kth_node_binary_tree(root, 6))->data << endl;
   // should throw
   try {
-    find_kth_node_binary_tree<int>(root, 7);
+    find_kth_node_binary_tree(root, 7);
   }
   catch (const exception& e) {
     cout << e.what() << endl;

@@ -11,8 +11,7 @@ using std::endl;
 using std::unique_ptr;
 
 // @include
-template <typename T>
-BinaryTree<T>* find_successor(const unique_ptr<BinaryTree<T>>& node) {
+BinaryTree<int>* find_successor(const unique_ptr<BinaryTree<int>>& node) {
   auto* n = node.get();
   if (n->right) {
     // Find the leftmost element in n's right subtree.

@@ -12,8 +12,7 @@ using std::make_shared;
 using std::shared_ptr;
 
 // @include
-template <typename T>
-void deletion_from_list(const shared_ptr<node_t<T>>& v) {
+void deletion_from_list(const shared_ptr<node_t<int>>& v) {
   v->data = v->next->data;
   v->next = v->next->next;
 }

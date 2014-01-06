@@ -16,23 +16,22 @@ using std::stack;
 using std::pair;
 
 // @include
-template <typename T>
 class Stack {
  public:
   bool empty() const { return s_.empty(); }
 
-  const T& max() const {
+  int max() const {
     if (!empty()) {
       return aux_.top().first;
     }
     throw length_error("empty stack");
   }
 
-  T pop() {
+  int pop() {
     if (empty()) {
       throw length_error("empty stack");
     }
-    T ret = s_.top();
+    int ret = s_.top();
     s_.pop();
     if (ret == aux_.top().first) {
       --aux_.top().second;
@@ -43,7 +42,7 @@ class Stack {
     return ret;
   }
 
-  void push(const T& x) {
+  void push(int x) {
     s_.emplace(x);
     if (!aux_.empty()) {
       if (x == aux_.top().first) {
@@ -57,13 +56,13 @@ class Stack {
   }
 
  private:
-  stack<T> s_;
-  stack<pair<T, int>> aux_;
+  stack<int> s_;
+  stack<pair<int, int>> aux_;
 };
 // @exclude
 
 int main(int argc, char* argv[]) {
-  Stack<int> s;
+  Stack s;
   s.push(1);
   s.push(2);
   assert(s.max() == 2);

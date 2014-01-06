@@ -9,7 +9,6 @@ using std::endl;
 using std::unique_ptr;
 
 // @include
-template <typename T>
 class BinarySearchTree {
  public:
   virtual ~BinarySearchTree() { clear(); }
@@ -18,7 +17,7 @@ class BinarySearchTree {
 
   void clear() { clear(&root_); }
 
-  bool insert(const T& key) {
+  bool insert(int key) {
     if (empty()) {
       root_ = unique_ptr<TreeNode>(new TreeNode{key, nullptr, nullptr});
     } else {
@@ -44,7 +43,7 @@ class BinarySearchTree {
     return true;
   }
 
-  bool erase(const T& key) {
+  bool erase(int key) {
     // Find the node with key.
     TreeNode* curr = root_.get(), *par = nullptr;
     while (curr && curr->data != key) {
@@ -93,12 +92,12 @@ class BinarySearchTree {
     return true;
   }
   // @exclude
-  T GetRootVal() const { return root_->data; }
+  int GetRootVal() const { return root_->data; }
   // @include
 
  private:
   struct TreeNode {
-    T data;
+    int data;
     unique_ptr<TreeNode> left, right;
   };
 
@@ -134,7 +133,7 @@ class BinarySearchTree {
 // @exclude
 
 int main(int argc, char* argv[]) {
-  BinarySearchTree<int> BST;
+  BinarySearchTree BST;
   assert(BST.empty() == true);
   assert(BST.insert(4) == true);
   assert(BST.insert(5) == true);

@@ -11,10 +11,9 @@ using std::endl;
 using std::unique_ptr;
 
 // @include
-template <typename T>
-BinaryTree<T>* LCA(const unique_ptr<BinaryTree<T>>& n,
-                   const unique_ptr<BinaryTree<T>>& a,
-                   const unique_ptr<BinaryTree<T>>& b) {
+BinaryTree<int>* LCA(const unique_ptr<BinaryTree<int>>& n,
+                     const unique_ptr<BinaryTree<int>>& a,
+                     const unique_ptr<BinaryTree<int>>& b) {
   if (!n) {  // empty subtree.
     return nullptr;
   } else if (n == a || n == b) {

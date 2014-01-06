@@ -15,54 +15,51 @@ using std::priority_queue;
 using std::vector;
 
 // @include
-template <typename T>
 struct Compare {
-  bool operator()(const pair<int, T>& lhs, const pair<int, T>& rhs) const {
+  bool operator()(const pair<int, int>& lhs, const pair<int, int>& rhs) {
     return lhs.first < rhs.first;
   }
 };
 
-template <typename T>
 class Stack {
  public:
-  void push(const T& x) { H.emplace(order_++, x); }
+  void push(int x) { H.emplace(order_++, x); }
 
-  T pop() {
-    T ret = H.top().second;
+  int pop() {
+    int ret = H.top().second;
     H.pop();
     return ret;
   }
 
-  const T& peek() const { return H.top().second; }
+  const int& peek() const { return H.top().second; }
 
  private:
   int order_ = 0;
   // Uses a pair where first is the order_ and the second is the element.
-  priority_queue<pair<int, T>, vector<pair<int, T>>, Compare<T>> H;
+  priority_queue<pair<int, int>, vector<pair<int, int>>, Compare> H;
 };
 
-template <typename T>
 class Queue {
  public:
-  void enqueue(const T& x) { H.emplace(order_--, x); }
+  void enqueue(int x) { H.emplace(order_--, x); }
 
-  T dequeue() {
-    T ret = H.top().second;
+  int dequeue() {
+    int ret = H.top().second;
     H.pop();
     return ret;
   }
 
-  const T& head() const { return H.top().second; }
+  const int& head() const { return H.top().second; }
 
  private:
   int order_ = 0;
   // Uses a pair where first is the order_ and the second is the element.
-  priority_queue<pair<int, T>, vector<pair<int, T>>, Compare<T>> H;
+  priority_queue<pair<int, int>, vector<pair<int, int>>, Compare> H;
 };
 // @exclude
 
 int main(int argc, char* argv[]) {
-  Stack<int> s;
+  Stack s;
   s.push(1);
   s.push(2);
   s.push(3);
@@ -82,7 +79,7 @@ int main(int argc, char* argv[]) {
     cout << e.what() << endl;
   }
 
-  Queue<int> q;
+  Queue q;
   q.enqueue(1);
   q.enqueue(2);
   assert(q.head() == 1);

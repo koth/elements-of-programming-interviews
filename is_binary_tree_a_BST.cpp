@@ -13,21 +13,20 @@ using std::endl;
 using std::numeric_limits;
 using std::unique_ptr;
 
-template <typename T>
-bool is_BST_helper(const unique_ptr<BinaryTree<T>>& r,
-                   const T& lower,
-                   const T& upper);
+bool is_BST_helper(const unique_ptr<BinaryTree<int>>& r,
+                   const int& lower,
+                   const int& upper);
 
 // @include
-template <typename T>
-bool is_BST(const unique_ptr<BinaryTree<T>>& r) {
-  return is_BST_helper(r, numeric_limits<T>::min(), numeric_limits<T>::max());
+bool is_BST(const unique_ptr<BinaryTree<int>>& r) {
+  return is_BST_helper(r,
+                       numeric_limits<int>::min(),
+                       numeric_limits<int>::max());
 }
 
-template <typename T>
-bool is_BST_helper(const unique_ptr<BinaryTree<T>>& r,
-                   const T& lower,
-                   const T& upper) {
+bool is_BST_helper(const unique_ptr<BinaryTree<int>>& r,
+                   const int& lower,
+                   const int& upper) {
   if (!r) {
     return true;
   } else if (r->data < lower || r->data > upper) {
@@ -60,7 +59,7 @@ int main(int argc, char* argv[]) {
   assert(!is_BST(root));
   cout << boolalpha << is_BST(root) << endl;
   // should output true.
-  assert(is_BST<int>(nullptr) == true);
-  cout << boolalpha << is_BST<int>(nullptr) << endl;
+  assert(is_BST(nullptr) == true);
+  cout << boolalpha << is_BST(nullptr) << endl;
   return 0;
 }

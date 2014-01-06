@@ -13,21 +13,18 @@ using std::endl;
 using std::pair;
 using std::unique_ptr;
 
-template <typename T>
-pair<BinaryTree<T>*, int> find_non_k_balanced_node_helper(
-    const unique_ptr<BinaryTree<T>>& n,
+pair<BinaryTree<int>*, int> find_non_k_balanced_node_helper(
+    const unique_ptr<BinaryTree<int>>& n,
     int k);
 
 // @include
-template <typename T>
-BinaryTree<T>* find_non_k_balanced_node(const unique_ptr<BinaryTree<T>>& n,
-                                        int k) {
-  return find_non_k_balanced_node_helper<T>(n, k).first;
+BinaryTree<int>* find_non_k_balanced_node(
+    const unique_ptr<BinaryTree<int>>& n, int k) {
+  return find_non_k_balanced_node_helper(n, k).first;
 }
 
-template <typename T>
-pair<BinaryTree<T>*, int> find_non_k_balanced_node_helper(
-    const unique_ptr<BinaryTree<T>>& n,
+pair<BinaryTree<int>*, int> find_non_k_balanced_node_helper(
+    const unique_ptr<BinaryTree<int>>& n,
     int k) {
   // Empty tree.
   if (!n) {
@@ -35,12 +32,12 @@ pair<BinaryTree<T>*, int> find_non_k_balanced_node_helper(
   }
 
   // Early return if left subtree is not k-balanced.
-  auto L = find_non_k_balanced_node_helper<T>(n->left, k);
+  auto L = find_non_k_balanced_node_helper(n->left, k);
   if (L.first) {
     return L;
   }
   // Early return if right subtree is not k-balanced.
-  auto R = find_non_k_balanced_node_helper<T>(n->right, k);
+  auto R = find_non_k_balanced_node_helper(n->right, k);
   if (R.first) {
     return R;
   }
@@ -70,7 +67,7 @@ int main(int argc, char* argv[]) {
   root->right->right =
       unique_ptr<BinaryTree<int>>(new BinaryTree<int>{6, nullptr, nullptr});
   int k = 0;
-  BinaryTree<int>* ans(find_non_k_balanced_node<int>(root, k));
+  BinaryTree<int>* ans(find_non_k_balanced_node(root, k));
   assert(ans->data == 2);
   if (ans) {
     cout << ans->data << endl;

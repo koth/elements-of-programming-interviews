@@ -11,7 +11,6 @@ using std::make_shared;
 using std::shared_ptr;
 
 // @include
-template <typename T>
 class BinaryTree {
  public:
   bool isLock() const { return locked_; }
@@ -19,7 +18,7 @@ class BinaryTree {
   void lock() {
     if (numChildreLocks_ == 0 && !locked_) {
       // Make sure all parents do not lock.
-      shared_ptr<BinaryTree<T>> n = parent_;
+      shared_ptr<BinaryTree> n = parent_;
       while (n) {
         if (n->locked_) {
           return;
@@ -41,7 +40,7 @@ class BinaryTree {
     if (locked_) {
       // Unlock itself and update its parents.
       locked_ = false;
-      shared_ptr<BinaryTree<T>> n = parent_;
+      shared_ptr<BinaryTree> n = parent_;
       while (n) {
         --n->numChildreLocks_;
         n = n->parent_;
@@ -50,14 +49,14 @@ class BinaryTree {
   }
 
   // @exclude
-  shared_ptr<BinaryTree<T>>& left() { return left_; }
+  shared_ptr<BinaryTree>& left() { return left_; }
 
-  shared_ptr<BinaryTree<T>>& right() { return right_; }
+  shared_ptr<BinaryTree>& right() { return right_; }
 
-  shared_ptr<BinaryTree<T>>& parent() { return parent_; }
+  shared_ptr<BinaryTree>& parent() { return parent_; }
   // @include
  private:
-  shared_ptr<BinaryTree<T>> left_, right_, parent_;
+  shared_ptr<BinaryTree> left_, right_, parent_;
 
   bool locked_;
   int numChildreLocks_;
@@ -65,14 +64,14 @@ class BinaryTree {
 // @exclude
 
 int main(int argc, char* argv[]) {
-  auto root = make_shared<BinaryTree<int>>(BinaryTree<int>());
-  root->left() = make_shared<BinaryTree<int>>(BinaryTree<int>());
+  auto root = make_shared<BinaryTree>(BinaryTree());
+  root->left() = make_shared<BinaryTree>(BinaryTree());
   root->left()->parent() = root;
-  root->right() = make_shared<BinaryTree<int>>(BinaryTree<int>());
+  root->right() = make_shared<BinaryTree>(BinaryTree());
   root->right()->parent() = root;
-  root->left()->left() = make_shared<BinaryTree<int>>(BinaryTree<int>());
+  root->left()->left() = make_shared<BinaryTree>(BinaryTree());
   root->left()->left()->parent() = root->left();
-  root->left()->right() = make_shared<BinaryTree<int>>(BinaryTree<int>());
+  root->left()->right() = make_shared<BinaryTree>(BinaryTree());
   root->left()->right()->parent() = root->left();
   // Should output false.
   assert(!root->isLock());

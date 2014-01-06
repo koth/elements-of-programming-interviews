@@ -16,26 +16,23 @@ using std::stack;
 using std::uniform_int_distribution;
 using std::vector;
 
-template <typename T>
-void insert(stack<T>* S, const T& e);
+void insert(stack<int>* S, int e);
 
 // @include
-template <typename T>
-void sort(stack<T>* S) {
+void sort(stack<int>* S) {
   if (!S->empty()) {
-    T e = S->top();
+    int e = S->top();
     S->pop();
     sort(S);
     insert(S, e);
   }
 }
 
-template <typename T>
-void insert(stack<T>* S, const T& e) {
+void insert(stack<int>* S, int e) {
   if (S->empty() || S->top() <= e) {
     S->push(e);
   } else {
-    T f = S->top();
+    int f = S->top();
     S->pop();
     insert(S, e);
     S->push(f);

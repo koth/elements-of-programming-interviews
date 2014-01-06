@@ -16,24 +16,21 @@ using std::uniform_int_distribution;
 using std::unique_ptr;
 using std::vector;
 
-template <typename T>
-void find_k_largest_in_BST_helper(const unique_ptr<BinarySearchTree<T>>& r,
+void find_k_largest_in_BST_helper(const unique_ptr<BinarySearchTree<int>>& r,
                                   int k,
-                                  vector<T>* k_elements);
+                                  vector<int>* k_elements);
 
 // @include
-template <typename T>
-vector<T> find_k_largest_in_BST(const unique_ptr<BinarySearchTree<T>>& root,
-                                int k) {
-  vector<T> k_elements;
+vector<int> find_k_largest_in_BST(
+    const unique_ptr<BinarySearchTree<int>>& root, int k) {
+  vector<int> k_elements;
   find_k_largest_in_BST_helper(root, k, &k_elements);
   return k_elements;
 }
 
-template <typename T>
-void find_k_largest_in_BST_helper(const unique_ptr<BinarySearchTree<T>>& r,
+void find_k_largest_in_BST_helper(const unique_ptr<BinarySearchTree<int>>& r,
                                   int k,
-                                  vector<T>* k_elements) {
+                                  vector<int>* k_elements) {
   // Performs reverse inorder traversal.
   if (r && k_elements->size() < k) {
     find_k_largest_in_BST_helper(r->right, k, k_elements);

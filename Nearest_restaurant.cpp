@@ -9,8 +9,7 @@
 using std::list;
 using std::unique_ptr;
 
-template <typename T>
-BinarySearchTree<T>* find_successor_BST(BinarySearchTree<T>* n) {
+BinarySearchTree<int>* find_successor_BST(BinarySearchTree<int>* n) {
   if (n->right) {
     // Find the smallest element in n's right subtree.
     n = n->right.get();
@@ -28,18 +27,16 @@ BinarySearchTree<T>* find_successor_BST(BinarySearchTree<T>* n) {
   return n->parent ? n->parent : nullptr;
 }
 
-template <typename T>
-BinarySearchTree<T>* find_first_larger_equal_k(
-    const unique_ptr<BinarySearchTree<T>>& r,
-    const T& k);
+BinarySearchTree<int>* find_first_larger_equal_k(
+    const unique_ptr<BinarySearchTree<int>>& r,
+    int k);
 
 // @include
-template <typename T>
-list<BinarySearchTree<T>*> range_query_on_BST(
-    const unique_ptr<BinarySearchTree<T>>& n,
-    const T& L,
-    const T& U) {
-  list<BinarySearchTree<T>*> res;
+list<BinarySearchTree<int>*> range_query_on_BST(
+    const unique_ptr<BinarySearchTree<int>>& n,
+    int L,
+    int U) {
+  list<BinarySearchTree<int>*> res;
   for (auto* it = find_first_larger_equal_k(n, L); it && it->data <= U;
        it = find_successor_BST(it)) {
     res.emplace_back(it);
@@ -47,10 +44,9 @@ list<BinarySearchTree<T>*> range_query_on_BST(
   return res;
 }
 
-template <typename T>
-BinarySearchTree<T>* find_first_larger_equal_k(
-    const unique_ptr<BinarySearchTree<T>>& r,
-    const T& k) {
+BinarySearchTree<int>* find_first_larger_equal_k(
+    const unique_ptr<BinarySearchTree<int>>& r,
+    int k) {
   if (!r) {
     return nullptr;
   } else if (r->data >= k) {

@@ -13,33 +13,32 @@ using std::pair;
 using std::stack;
 
 // @include
-template <typename T>
 class Stack {
  public:
   bool empty() const { return s_.empty(); }
 
-  const T& max() const {
+  int max() const {
     if (!empty()) {
       return s_.top().second;
     }
     throw length_error("empty stack");
   }
 
-  T pop() {
+  int pop() {
     if (empty()) {
       throw length_error("empty stack");
     }
-    T ret = s_.top().first;
+    int ret = s_.top().first;
     s_.pop();
     return ret;
   }
 
-  void push(const T& x) {
+  void push(int x) {
     s_.emplace(x, std::max(x, empty() ? x : s_.top().second));
   }
 
  private:
-  stack<pair<T, T>> s_;
+  stack<pair<int, int>> s_;
 };
 // @exclude
 #endif  // SOLUTIONS_STACK_WITH_MAX_TEMPLATE_H_

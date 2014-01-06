@@ -12,10 +12,11 @@ using std::endl;
 using std::swap;
 using std::unique_ptr;
 
+int get_depth(const BinaryTree<int>* n);
+
 // @include
-template <typename T>
-BinaryTree<T>* LCA(const unique_ptr<BinaryTree<T>>& a,
-                   const unique_ptr<BinaryTree<T>>& b) {
+BinaryTree<int>* LCA(const unique_ptr<BinaryTree<int>>& a,
+                     const unique_ptr<BinaryTree<int>>& b) {
   auto* i = a.get(), *j = b.get();
   int depth_i = get_depth(i), depth_j = get_depth(j);
   if (depth_j > depth_i) {
@@ -35,8 +36,7 @@ BinaryTree<T>* LCA(const unique_ptr<BinaryTree<T>>& a,
   return i;
 }
 
-template <typename T>
-int get_depth(const BinaryTree<T>* n) {
+int get_depth(const BinaryTree<int>* n) {
   int d = 0;
   while (n) {
     ++d, n = n->parent;

@@ -8,9 +8,7 @@
 using std::unique_ptr;
 
 // @include
-template <typename T>
-bool search_min_first_BST(const unique_ptr<BinarySearchTree<T>>& r,
-                          const T& k) {
+bool search_min_first_BST(const unique_ptr<BinarySearchTree<int>>& r, int k) {
   if (!r || r->data > k) {
     return false;
   } else if (r->data == k) {

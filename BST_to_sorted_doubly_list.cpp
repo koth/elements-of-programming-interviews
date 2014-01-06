@@ -16,9 +16,8 @@ using std::shared_ptr;
 // @include
 // Transform a BST into a circular sorted doubly linked list in-place,
 // return the head of the list.
-template <typename T>
-shared_ptr<BinarySearchTree<T>> BST_to_doubly_list(
-    const shared_ptr<BinarySearchTree<T>>& n) {
+shared_ptr<BinarySearchTree<int>> BST_to_doubly_list(
+    const shared_ptr<BinarySearchTree<int>>& n) {
   // Empty subtree.
   if (!n) {
     return nullptr;
@@ -29,7 +28,7 @@ shared_ptr<BinarySearchTree<T>> BST_to_doubly_list(
   auto r_head(BST_to_doubly_list(n->right));
 
   // Append n to the list from left subtree.
-  shared_ptr<BinarySearchTree<T>> l_tail = nullptr;
+  shared_ptr<BinarySearchTree<int>> l_tail = nullptr;
   if (l_head) {
     l_tail = l_head->left;
     l_tail->right = n;
@@ -40,7 +39,7 @@ shared_ptr<BinarySearchTree<T>> BST_to_doubly_list(
   }
 
   // Append the list from right subtree to n.
-  shared_ptr<BinarySearchTree<T>> r_tail = nullptr;
+  shared_ptr<BinarySearchTree<int>> r_tail = nullptr;
   if (r_head) {
     r_tail = r_head->left;
     l_tail->right = r_head;

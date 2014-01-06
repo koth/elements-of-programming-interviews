@@ -16,17 +16,15 @@ using std::queue;
 using std::unique_ptr;
 
 // @include
-template <typename T>
 struct QNode {
-  BinaryTree<T>* node;
-  T lower, upper;
+  BinaryTree<int>* node;
+  int lower, upper;
 };
 
-template <typename T>
-bool is_BST(const unique_ptr<BinaryTree<T>>& n) {
-  queue<QNode<T>> q;
+bool is_BST(const unique_ptr<BinaryTree<int>>& n) {
+  queue<QNode> q;
   q.emplace(
-      QNode<T>{n.get(), numeric_limits<T>::min(), numeric_limits<T>::max()});
+      QNode{n.get(), numeric_limits<int>::min(), numeric_limits<int>::max()});
 
   while (!q.empty()) {
     if (q.front().node) {
@@ -35,10 +33,10 @@ bool is_BST(const unique_ptr<BinaryTree<T>>& n) {
         return false;
       }
 
-      q.emplace(QNode<T>{q.front().node->left.get(), q.front().lower,
-                         q.front().node->data});
-      q.emplace(QNode<T>{q.front().node->right.get(), q.front().node->data,
-                         q.front().upper});
+      q.emplace(QNode{q.front().node->left.get(), q.front().lower,
+                      q.front().node->data});
+      q.emplace(QNode{q.front().node->right.get(), q.front().node->data,
+                      q.front().upper});
     }
     q.pop();
   }
@@ -67,7 +65,7 @@ int main(int argc, char* argv[]) {
   assert(!is_BST(root));
   cout << boolalpha << is_BST(root) << endl;
   // empty tree, should output true
-  assert(is_BST<int>(nullptr) == true);
-  cout << boolalpha << is_BST<int>(nullptr) << endl;
+  assert(is_BST(nullptr) == true);
+  cout << boolalpha << is_BST(nullptr) << endl;
   return 0;
 }

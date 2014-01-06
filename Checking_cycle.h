@@ -8,9 +8,8 @@
 #include "./Linked_list_prototype_template.h"
 
 // @include
-template <typename T>
-shared_ptr<node_t<T>> has_cycle(const shared_ptr<node_t<T>>& head) {
-  shared_ptr<node_t<T>> fast = head, slow = head;
+shared_ptr<node_t<int>> has_cycle(const shared_ptr<node_t<int>>& head) {
+  shared_ptr<node_t<int>> fast = head, slow = head;
 
   while (slow && slow->next && fast && fast->next && fast->next->next) {
     slow = slow->next, fast = fast->next->next;

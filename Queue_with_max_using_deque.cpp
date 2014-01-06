@@ -11,7 +11,7 @@ using std::exception;
 
 // Just for testing.
 int main(int argc, char* argv[]) {
-  Queue<int> Q;
+  Queue Q;
   Q.enqueue(1);
   Q.enqueue(2);
   assert(2 == Q.max());

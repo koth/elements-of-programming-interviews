@@ -14,11 +14,10 @@ using std::numeric_limits;
 using std::unique_ptr;
 
 // @include
-template <typename T>
-bool is_BST(const unique_ptr<BinaryTree<T>>& root) {
+bool is_BST(const unique_ptr<BinaryTree<int>>& root) {
   auto* n = root.get();
   // Store the value of previous visited node.
-  int last = numeric_limits<T>::min();
+  int last = numeric_limits<int>::min();
   bool res = true;
 
   while (n) {
@@ -74,7 +73,7 @@ int main(int argc, char* argv[]) {
   assert(!is_BST(root));
   cout << boolalpha << is_BST(root) << endl;
   // should output true
-  assert(is_BST<int>(nullptr) == true);
-  cout << boolalpha << is_BST<int>(nullptr) << endl;
+  assert(is_BST(nullptr) == true);
+  cout << boolalpha << is_BST(nullptr) << endl;
   return 0;
 }

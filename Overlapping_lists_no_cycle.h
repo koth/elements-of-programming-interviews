@@ -5,10 +5,12 @@
 
 #include "./Linked_list_prototype_template.h"
 
+int count_len(shared_ptr<node_t<int>> L);
+void advance_list_by_k(shared_ptr<node_t<int>>* L, int k);
+
 // @include
-template <typename T>
-shared_ptr<node_t<T>> overlapping_no_cycle_lists(shared_ptr<node_t<T>> L1,
-                                                 shared_ptr<node_t<T>> L2) {
+shared_ptr<node_t<int>> overlapping_no_cycle_lists(
+    shared_ptr<node_t<int>> L1, shared_ptr<node_t<int>> L2) {
   // Count the lengths of L1 and L2.
   int L1_len = count_len(L1), L2_len = count_len(L2);
 
@@ -22,8 +24,7 @@ shared_ptr<node_t<T>> overlapping_no_cycle_lists(shared_ptr<node_t<T>> L1,
 }
 
 // Counts the list length till end.
-template <typename T>
-int count_len(shared_ptr<node_t<T>> L) {
+int count_len(shared_ptr<node_t<int>> L) {
   int len = 0;
   while (L) {
     ++len, L = L->next;
@@ -31,8 +32,7 @@ int count_len(shared_ptr<node_t<T>> L) {
   return len;
 }
 
-template <typename T>
-void advance_list_by_k(shared_ptr<node_t<T>>* L, int k) {
+void advance_list_by_k(shared_ptr<node_t<int>>* L, int k) {
   while (k--) {
     *L = (*L)->next;
   }

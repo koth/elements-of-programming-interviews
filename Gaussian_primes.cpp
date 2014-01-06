@@ -22,8 +22,7 @@ bool is_unit(const complex<int>& z);
 
 // @include
 struct ComplexCompare {
-  bool operator()(const complex<double>& lhs,
-                  const complex<double>& rhs) const {
+  bool operator()(const complex<double>& lhs, const complex<double>& rhs) {
     if (norm(lhs) != norm(rhs)) {
       return norm(lhs) < norm(rhs);
     } else if (lhs.real() != rhs.real()) {

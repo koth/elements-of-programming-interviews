@@ -26,8 +26,7 @@ void apply_permutation1(vector<int>* perm, vector<int>* A) {
   }
 
   // Restore perm back.
-  size_t size = perm->size();
-  for_each(perm->begin(), perm->end(), [size](int &x) { x += size; });
+  for_each(perm->begin(), perm->end(), [&](int &x) { x += perm->size(); });
 }
 // @exclude
 #endif  // SOLUTIONS_PERMUTATION_ARRAY1_H_

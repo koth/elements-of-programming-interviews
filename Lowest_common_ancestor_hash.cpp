@@ -15,11 +15,10 @@ using std::unique_ptr;
 using std::unordered_set;
 
 // @include
-template <typename T>
-BinaryTree<T>* LCA(const unique_ptr<BinaryTree<T>>& a,
-                   const unique_ptr<BinaryTree<T>>& b) {
+BinaryTree<int>* LCA(const unique_ptr<BinaryTree<int>>& a,
+                     const unique_ptr<BinaryTree<int>>& b) {
   auto* i = a.get(), *j = b.get();
-  unordered_set<const BinaryTree<T>*> hash;
+  unordered_set<const BinaryTree<int>*> hash;
   while (i || j) {
     if (i) {
       if (hash.emplace(i).second == false) {

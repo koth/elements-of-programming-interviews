@@ -26,7 +26,7 @@ bool comp(const pair<int, int>& a, const pair<int, int>& b);
 
 // @include
 vector<deque<bool>> find_feasible_job_assignment(const vector<int>& T,
-                                                  const vector<int>& S) {
+                                                 const vector<int>& S) {
   int T_total = accumulate(T.cbegin(), T.cend(), 0),  // aggregated work units
       S_total = accumulate(
           S.cbegin(), S.cend(), 0, [&T](const int & x, const int & y)->int {

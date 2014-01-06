@@ -21,6 +21,25 @@ using std::uniform_int_distribution;
 using std::unordered_map;
 using std::vector;
 
+struct Point;
+
+struct TreeNode;
+
+struct HashPoint;
+
+bool is_monochromatic(const vector<vector<int>>& image_sum,
+                      const Point& lower_left,
+                      const Point& upper_right);
+
+shared_ptr<TreeNode> calculate_optimal_2D_tree_helper(
+    const vector<vector<int>>& image,
+    const vector<vector<int>>& image_sum,
+    const Point& lower_left,
+    const Point& upper_right,
+    unordered_map<Point,
+                  unordered_map<Point, shared_ptr<TreeNode>, HashPoint>,
+                  HashPoint>& table);
+
 // @include
 struct Point {
   bool operator>(const Point& that) const { return i > that.i || j > that.j; }
@@ -48,6 +67,29 @@ struct TreeNode {
   // Store the SW, NW, NE, and SE rectangles if color is mixed.
   vector<shared_ptr<TreeNode>> children;
 };
+
+shared_ptr<TreeNode> calculate_optimal_2D_tree(
+    const vector<vector<int>>& image) {
+  vector<vector<int>> image_sum(image);
+  for (int i = 0; i < image.size(); ++i) {
+    partial_sum(
+        image_sum[i].cbegin(), image_sum[i].cend(), image_sum[i].begin());
+    for (int j = 0; i > 0 && j < image[i].size(); ++j) {
+      image_sum[i][j] += image_sum[i - 1][j];
+    }
+  }
+
+  unordered_map<Point,
+                unordered_map<Point, shared_ptr<TreeNode>, HashPoint>,
+                HashPoint> table;
+  return calculate_optimal_2D_tree_helper(
+      image,
+      image_sum,
+      Point{0, 0},
+      Point{static_cast<int>(image.size() - 1),
+            static_cast<int>(image[0].size() - 1)},
+      table);
+}
 
 bool is_monochromatic(const vector<vector<int>>& image_sum,
                       const Point& lower_left,
@@ -129,29 +171,6 @@ shared_ptr<TreeNode> calculate_optimal_2D_tree_helper(
     }
   }
   return table[lower_left][upper_right];
-}
-
-shared_ptr<TreeNode> calculate_optimal_2D_tree(
-    const vector<vector<int>>& image) {
-  vector<vector<int>> image_sum(image);
-  for (int i = 0; i < image.size(); ++i) {
-    partial_sum(
-        image_sum[i].cbegin(), image_sum[i].cend(), image_sum[i].begin());
-    for (int j = 0; i > 0 && j < image[i].size(); ++j) {
-      image_sum[i][j] += image_sum[i - 1][j];
-    }
-  }
-
-  unordered_map<Point,
-                unordered_map<Point, shared_ptr<TreeNode>, HashPoint>,
-                HashPoint> table;
-  return calculate_optimal_2D_tree_helper(
-      image,
-      image_sum,
-      Point{0, 0},
-      Point{static_cast<int>(image.size() - 1),
-            static_cast<int>(image[0].size() - 1)},
-      table);
 }
 // @exclude
 

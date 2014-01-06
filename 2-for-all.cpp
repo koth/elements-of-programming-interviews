@@ -21,6 +21,10 @@ using std::stoi;
 using std::uniform_int_distribution;
 using std::vector;
 
+struct GraphVertex;
+
+bool DFS(GraphVertex* cur, GraphVertex* pre, int time);
+
 // @include
 struct GraphVertex {
   int d, l;  // discovery and leaving time.
@@ -29,6 +33,13 @@ struct GraphVertex {
   GraphVertex() : d(0), l(numeric_limits<int>::max()) {}
   // @include
 };
+
+bool is_graph_2_for_all(vector<GraphVertex>* G) {
+  if (!G->empty()) {
+    return DFS(&G->front(), nullptr, 0);
+  }
+  return true;
+}
 
 bool DFS(GraphVertex* cur, GraphVertex* pre, int time) {
   cur->d = ++time, cur->l = numeric_limits<int>::max();
@@ -45,13 +56,6 @@ bool DFS(GraphVertex* cur, GraphVertex* pre, int time) {
     }
   }
   return (pre == nullptr || cur->l < cur->d);
-}
-
-bool is_graph_2_for_all(vector<GraphVertex>* G) {
-  if (!G->empty()) {
-    return DFS(&G->front(), nullptr, 0);
-  }
-  return true;
 }
 // @exclude
 

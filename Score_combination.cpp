@@ -26,9 +26,9 @@ int count_combinations(int k, const vector<int>& score_ways) {
 // @exclude
 
 void simple_test() {
-  int k = 12;
   vector<int> score_ways = {2, 3, 7};
-  assert(4 == count_combinations(k, score_ways));
+  assert(4 == count_combinations(12, score_ways));
+  assert(1 == count_combinations(5, score_ways));
 }
 
 int main(int argc, char* argv[]) {

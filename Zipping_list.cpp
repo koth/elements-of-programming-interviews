@@ -7,7 +7,7 @@
 #include <string>
 
 #include "./Linked_list_prototype_template.h"
-#include "./Reverse_linked_list_iterative_template.h"
+#include "./Reverse_linked_list_iterative.h"
 
 using std::cout;
 using std::default_random_engine;
@@ -18,14 +18,13 @@ using std::shared_ptr;
 using std::stoi;
 using std::uniform_int_distribution;
 
-template <typename T>
-void connect_a_next_to_b_advance_a(shared_ptr<node_t<T>>* a,
-                                   const shared_ptr<node_t<T>>& b);
+void connect_a_next_to_b_advance_a(shared_ptr<node_t<int>>* a,
+                                   const shared_ptr<node_t<int>>& b);
 
 // @include
-template <typename T>
-shared_ptr<node_t<T>> zipping_linked_list(const shared_ptr<node_t<T>>& L) {
-  shared_ptr<node_t<T>> slow = L, fast = L, pre_slow = nullptr;
+shared_ptr<node_t<int>> zipping_linked_list(
+    const shared_ptr<node_t<int>>& L) {
+  shared_ptr<node_t<int>> slow = L, fast = L, pre_slow = nullptr;
 
   // Find the middle point of L.
   while (fast) {
@@ -40,7 +39,7 @@ shared_ptr<node_t<T>> zipping_linked_list(const shared_ptr<node_t<T>>& L) {
     return L;  // only contains one node in the list.
   }
   pre_slow->next = nullptr;  // splits the list into two lists.
-  shared_ptr<node_t<T>> reverse = reverse_linked_list<T>(slow), curr = L;
+  shared_ptr<node_t<int>> reverse = reverse_linked_list(slow), curr = L;
 
   // Zipping the list.
   while (curr && reverse) {
@@ -54,10 +53,9 @@ shared_ptr<node_t<T>> zipping_linked_list(const shared_ptr<node_t<T>>& L) {
   return L;
 }
 
-template <typename T>
-void connect_a_next_to_b_advance_a(shared_ptr<node_t<T>>* a,
-                                   const shared_ptr<node_t<T>>& b) {
-  shared_ptr<node_t<T>> temp = (*a)->next;
+void connect_a_next_to_b_advance_a(shared_ptr<node_t<int>>* a,
+                                   const shared_ptr<node_t<int>>& b) {
+  shared_ptr<node_t<int>> temp = (*a)->next;
   (*a)->next = b;
   (*a) = temp;
 }
@@ -87,7 +85,7 @@ int main(int argc, char* argv[]) {
       head = curr;
     }
   }
-  shared_ptr<node_t<int>> curr = zipping_linked_list<int>(head);
+  shared_ptr<node_t<int>> curr = zipping_linked_list(head);
   int idx = 0, pre;
   while (curr) {
     if (argc <= 2) {

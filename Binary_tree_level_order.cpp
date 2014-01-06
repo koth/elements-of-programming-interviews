@@ -12,14 +12,13 @@ using std::queue;
 using std::unique_ptr;
 
 // @include
-template <typename T>
-void print_binary_tree_level_order(const unique_ptr<BinaryTree<T>>& n) {
+void print_binary_tree_level_order(const unique_ptr<BinaryTree<int>>& n) {
   // Prevent empty tree.
   if (!n) {
     return;
   }
 
-  queue<BinaryTree<T>*> q;
+  queue<BinaryTree<int>*> q;
   q.emplace(n.get());
   size_t count = q.size();
   while (!q.empty()) {
@@ -58,6 +57,6 @@ int main(int argc, char* argv[]) {
   // should output 3
   //               2 5
   //               1 4 6
-  print_binary_tree_level_order<int>(root);
+  print_binary_tree_level_order(root);
   return 0;
 }

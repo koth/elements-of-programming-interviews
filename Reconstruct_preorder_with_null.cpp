@@ -20,9 +20,8 @@ using std::unique_ptr;
 using std::vector;
 
 // @include
-template <typename T>
-BinaryTree<T>* reconstruct_preorder(const vector<T*>& preorder) {
-  stack<BinaryTree<T>*> s;
+BinaryTree<int>* reconstruct_preorder(const vector<int*>& preorder) {
+  stack<BinaryTree<int>*> s;
   for (auto it = preorder.crbegin(); it != preorder.crend(); ++it) {
     if (!*it) {
       s.emplace(nullptr);
@@ -31,8 +30,8 @@ BinaryTree<T>* reconstruct_preorder(const vector<T*>& preorder) {
       s.pop();
       auto* r = s.top();
       s.pop();
-      s.emplace(new BinaryTree<T>{**it, unique_ptr<BinaryTree<T>>(l),
-                                  unique_ptr<BinaryTree<T>>(r)});
+      s.emplace(new BinaryTree<int>{**it, unique_ptr<BinaryTree<int>>(l),
+                                    unique_ptr<BinaryTree<int>>(r)});
     }
   }
   return s.top();
@@ -67,7 +66,7 @@ int main(int argc, char* argv[]) {
     unique_ptr<BinaryTree<int>> root = generate_rand_binary_tree<int>(n);
     vector<int*> p;
     gen_preorder_with_null(root, &p);
-    auto x = unique_ptr<BinaryTree<int>>(reconstruct_preorder<int>(p));
+    auto x = unique_ptr<BinaryTree<int>>(reconstruct_preorder(p));
     assert(is_two_binary_trees_equal(root, x));
     delete_binary_tree(&root);
     delete_binary_tree(&x);

@@ -18,6 +18,18 @@ using std::uniform_int_distribution;
 using std::unordered_set;
 using std::vector;
 
+struct Jug;
+
+struct HashPair;
+
+class PairEqual;
+
+bool check_feasible_helper(
+    const vector<Jug>& jugs,
+    int L,
+    int H,
+    unordered_set<pair<int, int>, HashPair, PairEqual>* c);
+
 // @include
 struct Jug {
   int low, high;
@@ -35,6 +47,11 @@ struct HashPair {
     return hash<int>()(p.first) ^ hash<int>()(p.second);
   }
 };
+
+bool check_feasible(const vector<Jug>& jugs, int L, int H) {
+  unordered_set<pair<int, int>, HashPair, PairEqual> cache;
+  return check_feasible_helper(jugs, L, H, &cache);
+}
 
 bool check_feasible_helper(
     const vector<Jug>& jugs,
@@ -54,11 +71,6 @@ bool check_feasible_helper(
   }
   c->emplace(L, H);  // marks this as impossible
   return false;
-}
-
-bool check_feasible(const vector<Jug>& jugs, int L, int H) {
-  unordered_set<pair<int, int>, HashPair, PairEqual> cache;
-  return check_feasible_helper(jugs, L, H, &cache);
 }
 // @exclude
 

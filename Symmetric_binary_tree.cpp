@@ -11,24 +11,21 @@ using std::cout;
 using std::endl;
 using std::unique_ptr;
 
-template <typename T>
-bool is_symmetric_helper(const unique_ptr<BinaryTree<T>>& l,
-                         const unique_ptr<BinaryTree<T>>& r);
+bool is_symmetric_helper(const unique_ptr<BinaryTree<int>>& l,
+                         const unique_ptr<BinaryTree<int>>& r);
 
 // @include
-template <typename T>
-bool is_symmetric(const unique_ptr<BinaryTree<T>>& n) {
-  return !n || is_symmetric_helper<T>(n->left, n->right);
+bool is_symmetric(const unique_ptr<BinaryTree<int>>& n) {
+  return !n || is_symmetric_helper(n->left, n->right);
 }
 
-template <typename T>
-bool is_symmetric_helper(const unique_ptr<BinaryTree<T>>& l,
-                         const unique_ptr<BinaryTree<T>>& r) {
+bool is_symmetric_helper(const unique_ptr<BinaryTree<int>>& l,
+                         const unique_ptr<BinaryTree<int>>& r) {
   if (!l && !r) {
     return true;
   } else if (l && r) {
-    return l->data == r->data && is_symmetric_helper<T>(l->left, r->right) &&
-           is_symmetric_helper<T>(l->right, r->left);
+    return l->data == r->data && is_symmetric_helper(l->left, r->right) &&
+           is_symmetric_helper(l->right, r->left);
   } else {  // (l && !r) || (!l && r)
     return false;
   }
@@ -49,18 +46,18 @@ int main(int argc, char* argv[]) {
       unique_ptr<BinaryTree<int>>(new BinaryTree<int>());
   non_symm_root->right->right =
       unique_ptr<BinaryTree<int>>(new BinaryTree<int>());
-  assert(!is_symmetric<int>(non_symm_root));
-  cout << boolalpha << is_symmetric<int>(non_symm_root) << endl;
+  assert(!is_symmetric(non_symm_root));
+  cout << boolalpha << is_symmetric(non_symm_root) << endl;
   // symmetric tree test
   unique_ptr<BinaryTree<int>> symm_root =
       unique_ptr<BinaryTree<int>>(new BinaryTree<int>());
   symm_root->left = unique_ptr<BinaryTree<int>>(new BinaryTree<int>());
   symm_root->right = unique_ptr<BinaryTree<int>>(new BinaryTree<int>());
-  assert(is_symmetric<int>(symm_root) == true);
-  cout << boolalpha << is_symmetric<int>(symm_root) << endl;
+  assert(is_symmetric(symm_root) == true);
+  cout << boolalpha << is_symmetric(symm_root) << endl;
   // empty tree test
   symm_root = nullptr;
-  assert(is_symmetric<int>(symm_root) == true);
-  cout << boolalpha << is_symmetric<int>(symm_root) << endl;
+  assert(is_symmetric(symm_root) == true);
+  cout << boolalpha << is_symmetric(symm_root) << endl;
   return 0;
 }

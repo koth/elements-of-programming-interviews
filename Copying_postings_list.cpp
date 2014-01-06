@@ -16,17 +16,17 @@ using std::shared_ptr;
 using std::uniform_int_distribution;
 
 // @include
-template <typename T>
-shared_ptr<node_t<T>> copy_postings_list(const shared_ptr<node_t<T>>& L) {
+shared_ptr<node_t<int>> copy_postings_list(const shared_ptr<node_t<int>>& L) {
   // Return empty list if L is nullptr.
   if (!L) {
     return nullptr;
   }
 
   // 1st stage: Copy the nodes from L.
-  shared_ptr<node_t<T>> p = L;
+  shared_ptr<node_t<int>> p = L;
   while (p) {
-    auto temp = make_shared<node_t<T>>(node_t<T>{p->data, p->next, nullptr});
+    auto temp = 
+        make_shared<node_t<int>>(node_t<int>{p->data, p->next, nullptr});
     p->next = temp;
     p = temp->next;
   }
@@ -42,9 +42,9 @@ shared_ptr<node_t<T>> copy_postings_list(const shared_ptr<node_t<T>>& L) {
 
   // 3rd stage: Restore the next field.
   p = L;
-  shared_ptr<node_t<T>> copied = p->next;
+  shared_ptr<node_t<int>> copied = p->next;
   while (p->next) {
-    shared_ptr<node_t<T>> temp = p->next;
+    shared_ptr<node_t<int>> temp = p->next;
     p->next = temp->next;
     p = temp;
   }
@@ -100,7 +100,7 @@ int main(int argc, char* argv[]) {
       }
       temp->jump = jump;
     }
-    shared_ptr<node_t<int>> copied = copy_postings_list<int>(L);
+    shared_ptr<node_t<int>> copied = copy_postings_list(L);
     check_postings_list_equal<int>(L, copied);
   }
   return 0;

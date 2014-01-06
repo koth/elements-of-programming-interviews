@@ -5,7 +5,7 @@
 #include <memory>
 
 #include "./Linked_list_prototype_template.h"
-#include "./Reverse_linked_list_iterative_template.h"
+#include "./Reverse_linked_list_iterative.h"
 
 using std::cout;
 using std::endl;
@@ -13,11 +13,10 @@ using std::make_shared;
 using std::shared_ptr;
 
 // @include
-template <typename T>
-bool is_linked_list_a_palindrome(shared_ptr<node_t<T>> L) {
+bool is_linked_list_a_palindrome(shared_ptr<node_t<int>> L) {
   // Find the middle point of L if L is odd length,
   // and right-middle point if L is even length.
-  shared_ptr<node_t<T>> slow = L, fast = L;
+  shared_ptr<node_t<int>> slow = L, fast = L;
   while (fast) {
     fast = fast->next;
     if (fast) {
@@ -26,7 +25,7 @@ bool is_linked_list_a_palindrome(shared_ptr<node_t<T>> L) {
   }
 
   // Compare the first half and reversed second half lists.
-  shared_ptr<node_t<T>> reverse = reverse_linked_list<T>(slow);
+  shared_ptr<node_t<int>> reverse = reverse_linked_list<int>(slow);
   while (reverse && L) {
     if (reverse->data != L->data) {
       return false;
@@ -50,12 +49,12 @@ int main(int argc, char* argv[]) {
   shared_ptr<node_t<int>> head = nullptr;
   if (argc > 2) {
     // Input the node's value in reverse order.
-    for (size_t i = 1; i < argc; ++i) {
+    for (int i = 1; i < argc; ++i) {
       shared_ptr<node_t<int>> curr =
           make_shared<node_t<int>>(node_t<int>{atoi(argv[i]), head});
       head = curr;
     }
-    cout << ((is_linked_list_a_palindrome<int>(head)) ? "Yes" : "No") << endl;
+    cout << ((is_linked_list_a_palindrome(head)) ? "Yes" : "No") << endl;
   } else {
     // A link list is a palindrome.
     for (int i = 6; i >= 1; --i) {
@@ -63,7 +62,7 @@ int main(int argc, char* argv[]) {
           make_shared<node_t<int>>(node_t<int>{1, head});
       head = curr;
     }
-    assert(is_linked_list_a_palindrome<int>(head) == true);
+    assert(is_linked_list_a_palindrome(head) == true);
     // Still a palindrome linked list.
     head = shared_ptr<node_t<int>>(nullptr);
     for (int i = 5; i >= 1; --i) {
@@ -72,7 +71,7 @@ int main(int argc, char* argv[]) {
       head = curr;
     }
     head->next->next->data = 3;
-    assert(is_linked_list_a_palindrome<int>(head) == true);
+    assert(is_linked_list_a_palindrome(head) == true);
     // Not a palindrome linked list.
     head = nullptr;
     for (int i = 5; i >= 1; --i) {
@@ -80,7 +79,7 @@ int main(int argc, char* argv[]) {
           make_shared<node_t<int>>(node_t<int>{i, head});
       head = curr;
     }
-    assert(is_linked_list_a_palindrome<int>(head) == false);
+    assert(is_linked_list_a_palindrome(head) == false);
   }
   return 0;
 }

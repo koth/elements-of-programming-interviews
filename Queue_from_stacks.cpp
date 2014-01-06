@@ -12,12 +12,11 @@ using std::length_error;
 using std::stack;
 
 // @include
-template <typename T>
 class Queue {
  public:
-  void enqueue(const T& x) { A_.emplace(x); }
+  void enqueue(int x) { A_.emplace(x); }
 
-  T dequeue() {
+  int dequeue() {
     if (B_.empty()) {
       while (!A_.empty()) {
         B_.emplace(A_.top());
@@ -25,7 +24,7 @@ class Queue {
       }
     }
     if (!B_.empty()) {
-      T ret = B_.top();
+      int ret = B_.top();
       B_.pop();
       return ret;
     }
@@ -33,12 +32,12 @@ class Queue {
   }
 
  private:
-  stack<T> A_, B_;
+  stack<int> A_, B_;
 };
 // @exclude
 
 int main(int argc, char* argv[]) {
-  Queue<int> Q;
+  Queue Q;
   Q.enqueue(1);
   Q.enqueue(2);
   assert(1 == Q.dequeue());  // 1

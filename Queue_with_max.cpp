@@ -5,7 +5,7 @@
 #include <iostream>
 #include <stdexcept>
 
-#include "./Stack_with_max_template.h"
+#include "./Stack_with_max.h"
 
 using std::cout;
 using std::endl;
@@ -13,12 +13,11 @@ using std::exception;
 using std::length_error;
 
 // @include
-template <typename T>
 class Queue {
  public:
-  void enqueue(const T& x) { A_.push(x); }
+  void enqueue(int x) { A_.push(x); }
 
-  T dequeue() {
+  int dequeue() {
     if (B_.empty()) {
       while (!A_.empty()) {
         B_.push(A_.pop());
@@ -30,7 +29,7 @@ class Queue {
     throw length_error("empty queue");
   }
 
-  const T& max() const {
+  int max() const {
     if (!A_.empty()) {
       return B_.empty() ? A_.max() : std::max(A_.max(), B_.max());
     } else {  // A_.empty() == true.
@@ -42,12 +41,12 @@ class Queue {
   }
 
  private:
-  Stack<T> A_, B_;
+  Stack A_, B_;
 };
 // @exclude
 
 int main(int argc, char* argv[]) {
-  Queue<int> Q;
+  Queue Q;
   Q.enqueue(1);
   Q.enqueue(2);
   assert(2 == Q.max());

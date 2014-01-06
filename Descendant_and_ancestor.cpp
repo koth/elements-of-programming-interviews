@@ -7,17 +7,15 @@
 
 using std::unique_ptr;
 
-template <typename T>
-bool search_m_before_t(BinarySearchTree<T>* p,
-                       const unique_ptr<BinarySearchTree<T>>& t,
-                       const unique_ptr<BinarySearchTree<T>>& m);
+bool search_m_before_t(BinarySearchTree<int>* p,
+                       const unique_ptr<BinarySearchTree<int>>& t,
+                       const unique_ptr<BinarySearchTree<int>>& m);
 
 // @include
-template <typename T>
 bool is_r_s_descendant_ancestor_of_m(
-    const unique_ptr<BinarySearchTree<T>>& r,
-    const unique_ptr<BinarySearchTree<T>>& s,
-    const unique_ptr<BinarySearchTree<T>>& m) {
+    const unique_ptr<BinarySearchTree<int>>& r,
+    const unique_ptr<BinarySearchTree<int>>& s,
+    const unique_ptr<BinarySearchTree<int>>& m) {
   auto* cur_r = r.get(), *cur_s = s.get();
 
   // Interleaving searches from r and s.
@@ -37,10 +35,9 @@ bool is_r_s_descendant_ancestor_of_m(
   return search_m_before_t(cur_r, s, m) || search_m_before_t(cur_s, r, m);
 }
 
-template <typename T>
-bool search_m_before_t(BinarySearchTree<T>* p,
-                       const unique_ptr<BinarySearchTree<T>>& t,
-                       const unique_ptr<BinarySearchTree<T>>& m) {
+bool search_m_before_t(BinarySearchTree<int>* p,
+                       const unique_ptr<BinarySearchTree<int>>& t,
+                       const unique_ptr<BinarySearchTree<int>>& m) {
   while (p && p != t.get() && p != m.get()) {
     p = p->data > t->data ? p->left.get() : p->right.get();
   }

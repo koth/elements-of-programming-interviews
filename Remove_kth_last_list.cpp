@@ -15,10 +15,9 @@ using std::make_shared;
 using std::shared_ptr;
 
 // @include
-template <typename T>
-void remove_kth_last(shared_ptr<node_t<T>>* L, int k) {
+void remove_kth_last(shared_ptr<node_t<int>>* L, int k) {
   // Advances k steps first.
-  shared_ptr<node_t<T>> ahead = *L;
+  shared_ptr<node_t<int>> ahead = *L;
   int num = k;
   while (ahead && num) {
     ahead = ahead->next;
@@ -29,7 +28,7 @@ void remove_kth_last(shared_ptr<node_t<T>>* L, int k) {
     throw length_error("not enough nodes in the list");
   }
 
-  shared_ptr<node_t<T>> pre = nullptr, curr = *L;
+  shared_ptr<node_t<int>> pre = nullptr, curr = *L;
   // Finds the k-th last node.
   while (ahead) {
     pre = curr;
@@ -54,9 +53,9 @@ int main(int argc, char* argv[]) {
   catch (const exception& e) {
     cout << e.what() << endl;
   }
-  remove_kth_last<int>(&L, 2);
+  remove_kth_last(&L, 2);
   assert(L->data == 1 && L->next->data == 3);
-  remove_kth_last<int>(&L, 2);
+  remove_kth_last(&L, 2);
   assert(L->data == 3 && L->next == nullptr);
   return 0;
 }

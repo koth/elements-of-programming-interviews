@@ -14,8 +14,7 @@ using std::vector;
 
 // @include
 struct Compare {
-  bool operator()(const pair<int, int>& lhs,
-                  const pair<int, int>& rhs) const {
+  bool operator()(const pair<int, int>& lhs, const pair<int, int>& rhs) {
     return lhs.first > rhs.first;
   }
 };

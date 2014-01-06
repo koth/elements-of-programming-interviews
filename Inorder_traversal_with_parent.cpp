@@ -10,14 +10,13 @@ using std::endl;
 using std::unique_ptr;
 
 // @include
-template <typename T>
-void inorder_traversal(const unique_ptr<BinaryTree<T>>& r) {
+void inorder_traversal(const unique_ptr<BinaryTree<int>>& r) {
   // Empty tree.
   if (!r) {
     return;
   }
 
-  BinaryTree<T>* prev = nullptr, *curr = r.get(), *next;
+  BinaryTree<int>* prev = nullptr, *curr = r.get(), *next;
   while (curr) {
     if (!prev || prev->left.get() == curr || prev->right.get() == curr) {
       if (curr->left) {
@@ -63,6 +62,6 @@ int main(int argc, char* argv[]) {
   root->right->right->parent = root->right.get();
 
   // Should output 1 2 3 4 5 6.
-  inorder_traversal<int>(root);
+  inorder_traversal(root);
   return 0;
 }

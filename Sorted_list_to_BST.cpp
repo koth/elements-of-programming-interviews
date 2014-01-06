@@ -13,12 +13,11 @@ using std::make_shared;
 // @include
 // Build a BST from the (s + 1)-th to the e-th node in L.
 // Node numbering is from 1 to n.
-template <typename T>
-shared_ptr<node_t<T>> build_BST_from_sorted_doubly_list_helper(
-    shared_ptr<node_t<T>>* L,
+shared_ptr<node_t<int>> build_BST_from_sorted_doubly_list_helper(
+    shared_ptr<node_t<int>>* L,
     int s,
     int e) {
-  shared_ptr<node_t<T>> curr = nullptr;
+  shared_ptr<node_t<int>> curr = nullptr;
   if (s < e) {
     int m = s + ((e - s) >> 1);
     auto temp_left = build_BST_from_sorted_doubly_list_helper(L, s, m);
@@ -31,9 +30,8 @@ shared_ptr<node_t<T>> build_BST_from_sorted_doubly_list_helper(
   return curr;
 }
 
-template <typename T>
-shared_ptr<node_t<T>> build_BST_from_sorted_doubly_list(
-    shared_ptr<node_t<T>> L,
+shared_ptr<node_t<int>> build_BST_from_sorted_doubly_list(
+    shared_ptr<node_t<int>> L,
     int n) {
   return build_BST_from_sorted_doubly_list_helper(&L, 0, n);
 }

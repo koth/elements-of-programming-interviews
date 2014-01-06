@@ -11,21 +11,20 @@ using std::make_shared;
 using std::shared_ptr;
 
 // @include
-template <typename T>
-shared_ptr<node_t<T>> reverse_linked_list(const shared_ptr<node_t<T>>& head) {
+shared_ptr<node_t<int>> reverse_linked_list(
+    const shared_ptr<node_t<int>>& head) {
   if (!head || !head->next) {
     return head;
   }
 
-  shared_ptr<node_t<T>> new_head = reverse_linked_list(head->next);
+  shared_ptr<node_t<int>> new_head = reverse_linked_list(head->next);
   head->next->next = head;
   head->next = nullptr;
   return new_head;
 }
 // @exclude
 
-template <typename T>
-void print(shared_ptr<node_t<T>> head) {
+void print(shared_ptr<node_t<int>> head) {
   if (head) {
     cout << "(" << head->data << ")" << endl;
     print(head->next);
@@ -44,10 +43,10 @@ int main(int argc, char* argv[]) {
 
   cout << "before reverse" << endl;
   print(L1);
-  shared_ptr<node_t<int>> newhead = reverse_linked_list<int>(L1);
+  shared_ptr<node_t<int>> newhead = reverse_linked_list(L1);
   cout << endl << "after reverse" << endl;
   print(newhead);
-  newhead = reverse_linked_list<int>(newhead);
+  newhead = reverse_linked_list(newhead);
   cout << endl << "after another reverse" << endl;
   print(newhead);
   return 0;

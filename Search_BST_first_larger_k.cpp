@@ -7,12 +7,11 @@
 using std::unique_ptr;
 
 // @include
-template <typename T>
-BinarySearchTree<T>* find_first_larger_k_with_k_exist(
-    const unique_ptr<BinarySearchTree<T>>& r,
-    const T& k) {
+BinarySearchTree<int>* find_first_larger_k_with_k_exist(
+    const unique_ptr<BinarySearchTree<int>>& r,
+    int k) {
   bool found_k = false;
-  BinarySearchTree<T>* curr = r.get(), *first = nullptr;
+  BinarySearchTree<int>* curr = r.get(), *first = nullptr;
 
   while (curr) {
     if (curr->data == k) {

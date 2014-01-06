@@ -14,36 +14,34 @@ using std::numeric_limits;
 using std::unique_ptr;
 using std::vector;
 
-template <typename T>
-BinarySearchTree<T>* rebuild_BST_from_preorder_helper(
-    const vector<T>& preorder, int* idx, const T& min, const T& max);
+BinarySearchTree<int>* rebuild_BST_from_preorder_helper(
+    const vector<int>& preorder, int min, int max, int* idx);
 
 // @include
-template <typename T>
-BinarySearchTree<T>* rebuild_BST_from_preorder(const vector<T>& preorder) {
+BinarySearchTree<int>* rebuild_BST_from_preorder(
+    const vector<int>& preorder) {
   int idx = 0;
   return rebuild_BST_from_preorder_helper(
-      preorder, &idx, numeric_limits<T>::min(), numeric_limits<T>::max());
+      preorder, numeric_limits<int>::min(), numeric_limits<int>::max(), &idx);
 }
 
-template <typename T>
-BinarySearchTree<T>* rebuild_BST_from_preorder_helper(
-    const vector<T>& preorder, int* idx, const T& min, const T& max) {
+BinarySearchTree<int>* rebuild_BST_from_preorder_helper(
+    const vector<int>& preorder, int min, int max, int* idx) {
   if (*idx == preorder.size()) {
     return nullptr;
   }
 
-  T curr = preorder[*idx];
+  int curr = preorder[*idx];
   if (curr < min || curr > max) {
     return nullptr;
   }
 
   ++*idx;
-  return new BinarySearchTree<T>{
-      curr, unique_ptr<BinarySearchTree<T>>(
-                rebuild_BST_from_preorder_helper(preorder, idx, min, curr)),
-      unique_ptr<BinarySearchTree<T>>(
-          rebuild_BST_from_preorder_helper(preorder, idx, curr, max))};
+  return new BinarySearchTree<int>{
+      curr, unique_ptr<BinarySearchTree<int>>(
+                rebuild_BST_from_preorder_helper(preorder, min, curr, idx)),
+      unique_ptr<BinarySearchTree<int>>(
+          rebuild_BST_from_preorder_helper(preorder, curr, max, idx))};
 }
 // @exclude
 

@@ -12,28 +12,23 @@ using std::endl;
 using std::unique_ptr;
 using std::vector;
 
-template <typename T>
-BinarySearchTree<T>* build_BST_from_sorted_array_helper(const vector<T>& A,
-                                                        int start,
-                                                        int end);
+BinarySearchTree<int>* build_BST_from_sorted_array_helper(
+    const vector<int>& A, int start, int end);
 
 // @include
-template <typename T>
-BinarySearchTree<T>* build_BST_from_sorted_array(const vector<T>& A) {
+BinarySearchTree<int>* build_BST_from_sorted_array(const vector<int>& A) {
   return build_BST_from_sorted_array_helper(A, 0, A.size());
 }
 
 // Build BST based on subarray A[start : end - 1].
-template <typename T>
-BinarySearchTree<T>* build_BST_from_sorted_array_helper(const vector<T>& A,
-                                                        int start,
-                                                        int end) {
+BinarySearchTree<int>* build_BST_from_sorted_array_helper(
+    const vector<int>& A, int start, int end) {
   if (start < end) {
     int mid = start + ((end - start) >> 1);
-    return new BinarySearchTree<T>{
-        A[mid], unique_ptr<BinarySearchTree<T>>(
+    return new BinarySearchTree<int>{
+        A[mid], unique_ptr<BinarySearchTree<int>>(
                     build_BST_from_sorted_array_helper(A, start, mid)),
-        unique_ptr<BinarySearchTree<T>>(
+        unique_ptr<BinarySearchTree<int>>(
             build_BST_from_sorted_array_helper(A, mid + 1, end))};
   }
   return nullptr;
