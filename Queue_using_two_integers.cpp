@@ -24,16 +24,12 @@ class Queue {
   }
 
   unsigned dequeue() {
-    if (size_) {
-      unsigned ret = 0, d = floor(log10(val_));
-      if (d + 1 == size_) {
-        ret = val_ / pow(10.0, d);
-        val_ -= pow(10.0, d) * ret;
-      }
-      --size_;
-      return ret;
+    if (!size_) {
+      throw length_error("empty queue");
     }
-    throw length_error("empty queue");
+    unsigned ret = val_ / pow(10.0, --size_);
+    val_ -= pow(10.0, size_) * ret;
+    return ret;
   }
 
  private:

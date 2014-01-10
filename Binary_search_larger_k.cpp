@@ -19,7 +19,7 @@ int search_first_larger_k(const vector<int>& A, int k) {
   while (l <= r) {
     int m = l + ((r - l) >> 1);
     if (A[m] > k) {
-      // Records the solution and keep searching the left part.
+      // Records the solution and keeps searching the left part.
       res = m, r = m - 1;
     } else {  // A[m] <= k.
       l = m + 1;

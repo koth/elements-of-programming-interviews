@@ -10,43 +10,6 @@ using std::max;
 using std::stack;
 using std::vector;
 
-template <typename HeightType>
-struct Player {
-  bool operator<(const Player& that) const { return height < that.height; }
-
-  HeightType height;
-};
-
-template <typename HeightType>
-class Team {
- public:
-  explicit Team(const vector<HeightType>& height) {
-    for (const HeightType& h : height) {
-      members_.emplace_back(Player<HeightType>{h});
-    }
-  }
-
-  bool operator<(const Team& that) const {
-    vector<Player<HeightType>> this_sorted(sortHeightMembers());
-    vector<Player<HeightType>> that_sorted(that.sortHeightMembers());
-    for (int i = 0; i < this_sorted.size() && i < that_sorted.size(); ++i) {
-      if (!(this_sorted[i] < that_sorted[i])) {
-        return false;
-      }
-    }
-    return true;
-  }
-
- private:
-  vector<Player<HeightType>> sortHeightMembers() const {
-    vector<Player<HeightType>> sorted_members(members_);
-    sort(sorted_members.begin(), sorted_members.end());
-    return sorted_members;
-  }
-
-  vector<Player<HeightType>> members_;
-};
-
 struct GraphVertex;
 stack<GraphVertex*> build_topological_ordering(vector<GraphVertex>* G);
 int find_longest_path(stack<GraphVertex*>* vertex_order);
@@ -99,13 +62,6 @@ void DFS(GraphVertex* cur, stack<GraphVertex*>* vertex_order) {
 // @exclude
 
 int main(int argc, char* argv[]) {
-  vector<int> height(3);
-  height[0] = 1, height[1] = 5, height[2] = 4;
-  Team<int> t1(height);
-  height[0] = 2, height[2] = 3, height[3] = 4;
-  Team<int> t2(height);
-  height[0] = 0, height[1] = 3, height[2] = 2;
-  Team<int> t3(height);
   vector<GraphVertex> G(3);
   G[0].edges.emplace_back(&G[2]);
   G[1].edges.emplace_back(&G[2]);

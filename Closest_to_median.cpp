@@ -29,7 +29,7 @@ class Comp {
 };
 
 vector<int> find_k_closest_to_median(vector<int> A, int k) {
-  // Find the element i where |A[i] - median| is k-th smallest.
+  // Find the element i where |A[i] - median| is the k-th smallest.
   nth_element(A.begin(), A.begin() + k - 1, A.end(), Comp{find_median(&A)});
   return {A.cbegin(), A.cbegin() + k};
 }
@@ -38,9 +38,9 @@ vector<int> find_k_closest_to_median(vector<int> A, int k) {
 double find_median(vector<int>* A) {
   int half = A->size() >> 1;
   nth_element(A->begin(), A->begin() + half, A->end());
-  if (A->size() & 1) {  // A has odd number elements.
+  if (A->size() & 1) {  // A has odd number of elements.
     return (*A)[half];
-  } else {  // A has even number elements.
+  } else {  // A has even number of elements.
     int x = (*A)[half];
     nth_element(A->begin(), A->begin() + half - 1, A->end());
     return 0.5 * (x + (*A)[half - 1]);

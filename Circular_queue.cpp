@@ -31,13 +31,13 @@ class Queue {
   }
 
   int dequeue() {
-    if (count_) {
-      --count_;
-      int ret = data_[head_];
-      head_ = (head_ + 1) % data_.size();
-      return ret;
+    if (!count_) {
+      throw length_error("empty queue");
     }
-    throw length_error("empty queue");
+    --count_;
+    int ret = data_[head_];
+    head_ = (head_ + 1) % data_.size();
+    return ret;
   }
 
   size_t size() const { return count_; }

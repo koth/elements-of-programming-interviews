@@ -42,7 +42,7 @@ pair<BinaryTree<int>*, int> find_non_k_balanced_node_helper(
     return R;
   }
 
-  int node_num = L.second + R.second + 1;  // # of nodes in n.
+  int node_num = L.second + R.second + 1;  // The number of nodes in n.
   if (abs(L.second - R.second) > k) {
     return {n.get(), node_num};
   }
