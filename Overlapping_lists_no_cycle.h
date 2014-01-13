@@ -3,7 +3,7 @@
 #ifndef SOLUTIONS_OVERLAPPING_LISTS_NO_CYCLE_H_
 #define SOLUTIONS_OVERLAPPING_LISTS_NO_CYCLE_H_
 
-#include "./Linked_list_prototype_template.h"
+#include "./Linked_list_prototype.h"
 
 int count_len(shared_ptr<ListNode<int>> L);
 void advance_list_by_k(shared_ptr<ListNode<int>>* L, int k);

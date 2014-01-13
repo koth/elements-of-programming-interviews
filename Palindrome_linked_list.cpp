@@ -4,7 +4,7 @@
 #include <iostream>
 #include <memory>
 
-#include "./Linked_list_prototype_template.h"
+#include "./Linked_list_prototype.h"
 #include "./Reverse_linked_list_iterative.h"
 
 using std::cout;

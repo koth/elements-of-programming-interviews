@@ -5,7 +5,7 @@
 #include <memory>
 
 #include "./Checking_cycle.h"
-#include "./Linked_list_prototype_template.h"
+#include "./Linked_list_prototype.h"
 #include "./Overlapping_lists_no_cycle.h"
 
 using std::cout;

@@ -7,7 +7,7 @@
 #include <random>
 #include <string>
 
-#include "./Linked_list_prototype_template.h"
+#include "./Linked_list_prototype.h"
 #include "./Merge_sorted_lists.h"
 
 using std::cout;

@@ -1,6 +1,6 @@
 // Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-#include "./Linked_list_prototype_template.h"
+#include "./Linked_list_prototype.h"
 
 void append_node_and_advance(shared_ptr<ListNode<int>>* head,
                              shared_ptr<ListNode<int>>* tail,

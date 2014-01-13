@@ -5,7 +5,7 @@
 
 #include <memory>
 
-#include "./Linked_list_prototype_template.h"
+#include "./Linked_list_prototype.h"
 
 using std::shared_ptr;
 

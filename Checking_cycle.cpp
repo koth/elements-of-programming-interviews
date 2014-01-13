@@ -5,7 +5,7 @@
 #include <memory>
 
 #include "./Checking_cycle.h"
-#include "./Linked_list_prototype_template.h"
+#include "./Linked_list_prototype.h"
 
 using std::cout;
 using std::endl;

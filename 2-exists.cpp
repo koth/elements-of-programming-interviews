@@ -95,7 +95,7 @@ bool check_answer(vector<GraphVertex>* G) {
 
 int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
-  for (int times = 0; times < 1000; ++times) {
+  for (int times = 0; times < 100; ++times) {
     int n;
     if (argc == 2) {
       n = atoi(argv[1]);
