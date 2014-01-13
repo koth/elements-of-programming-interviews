@@ -11,8 +11,8 @@ using std::endl;
 using std::make_shared;
 
 // @include
-shared_ptr<node_t<int>> has_cycle(const shared_ptr<node_t<int>>& head) {
-  shared_ptr<node_t<int>> fast = head, slow = head;
+shared_ptr<ListNode<int>> has_cycle(const shared_ptr<ListNode<int>>& head) {
+  shared_ptr<ListNode<int>> fast = head, slow = head;
 
   while (slow && slow->next && fast && fast->next && fast->next->next) {
     slow = slow->next, fast = fast->next->next;
@@ -31,10 +31,10 @@ shared_ptr<node_t<int>> has_cycle(const shared_ptr<node_t<int>>& head) {
 // @exclude
 
 int main(int argc, char* argv[]) {
-  shared_ptr<node_t<int>> L3 =
-      make_shared<node_t<int>>(node_t<int>{3, nullptr});
-  shared_ptr<node_t<int>> L2 = make_shared<node_t<int>>(node_t<int>{2, L3});
-  shared_ptr<node_t<int>> L1 = make_shared<node_t<int>>(node_t<int>{1, L2});
+  shared_ptr<ListNode<int>> L3 =
+      make_shared<ListNode<int>>(ListNode<int>{3, nullptr});
+  shared_ptr<ListNode<int>> L2 = make_shared<ListNode<int>>(ListNode<int>{2, L3});
+  shared_ptr<ListNode<int>> L1 = make_shared<ListNode<int>>(ListNode<int>{1, L2});
 
   // should output "L1 does not have cycle."
   assert(has_cycle(L1) == nullptr);

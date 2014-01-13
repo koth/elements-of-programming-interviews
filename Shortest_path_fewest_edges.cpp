@@ -35,7 +35,7 @@ struct GraphVertex {
 };
 
 struct Comp {
-  bool operator()(const GraphVertex* lhs, const GraphVertex* rhs) const {
+  bool operator()(const GraphVertex* lhs, const GraphVertex* rhs) {
     return lhs->distance.first < rhs->distance.first ||
            (lhs->distance.first == rhs->distance.first &&
             lhs->distance.second < rhs->distance.second);

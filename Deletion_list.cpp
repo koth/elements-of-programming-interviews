@@ -12,17 +12,17 @@ using std::make_shared;
 using std::shared_ptr;
 
 // @include
-void deletion_from_list(const shared_ptr<node_t<int>>& v) {
+void deletion_from_list(const shared_ptr<ListNode<int>>& v) {
   v->data = v->next->data;
   v->next = v->next->next;
 }
 // @exclude
 
 int main(int argc, char* argv[]) {
-  shared_ptr<node_t<int>> L;
-  L = make_shared<node_t<int>>(node_t<int>{
-      1, make_shared<node_t<int>>(node_t<int>{
-             2, make_shared<node_t<int>>(node_t<int>{3, nullptr})})});
+  shared_ptr<ListNode<int>> L;
+  L = make_shared<ListNode<int>>(ListNode<int>{
+      1, make_shared<ListNode<int>>(ListNode<int>{
+             2, make_shared<ListNode<int>>(ListNode<int>{3, nullptr})})});
   deletion_from_list(L);
   assert(L->data == 2 && L->next->data == 3);
   return 0;

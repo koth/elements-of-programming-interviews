@@ -15,7 +15,7 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-// Return pair<int, int>(duplicate, missing).
+// Return a pair<int, int>(duplicate, missing).
 pair<int, int> find_duplicate_missing(const vector<int>& A) {
   int sum = 0, square_sum = 0;
   for (int i = 0; i < A.size(); ++i) {

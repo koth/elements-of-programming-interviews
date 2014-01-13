@@ -47,10 +47,10 @@ int main(int argc, char *argv[]) {
     uniform_int_distribution<int> dis(0, len - 1);
     int i = dis(gen);
     vector<int> B(A);
-    rotate_array1::rotate_array(&B, i);
+    rotate_array1::rotate_array(i, &B);
     check_answer(A, i, B);
     vector<int> C(A);
-    rotate_array2::rotate_array(&C, i);
+    rotate_array2::rotate_array(i, &C);
     check_answer(A, i, C);
   }
   return 0;

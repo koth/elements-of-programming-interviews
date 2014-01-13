@@ -116,7 +116,7 @@ double distance(const Point& a, const Point& b) {
 
 int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
-  for (int times = 0; times < 1000; ++times) {
+  for (int times = 0; times < 50; ++times) {
     int n;
     if (argc == 2) {
       n = atoi(argv[1]);

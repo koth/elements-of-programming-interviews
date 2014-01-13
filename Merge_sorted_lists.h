@@ -2,17 +2,17 @@
 
 #include "./Linked_list_prototype_template.h"
 
-void append_node_and_advance(shared_ptr<node_t<int>>* head,
-                             shared_ptr<node_t<int>>* tail,
-                             shared_ptr<node_t<int>>* n);
-void append_node(shared_ptr<node_t<int>>* head,
-                 shared_ptr<node_t<int>>* tail,
-                 shared_ptr<node_t<int>>* n);
+void append_node_and_advance(shared_ptr<ListNode<int>>* head,
+                             shared_ptr<ListNode<int>>* tail,
+                             shared_ptr<ListNode<int>>* n);
+void append_node(shared_ptr<ListNode<int>>* head,
+                 shared_ptr<ListNode<int>>* tail,
+                 shared_ptr<ListNode<int>>* n);
 
 // @include
-shared_ptr<node_t<int>> merge_sorted_linked_lists(shared_ptr<node_t<int>> F,
-                                                  shared_ptr<node_t<int>> L) {
-  shared_ptr<node_t<int>> sorted_head = nullptr, tail = nullptr;
+shared_ptr<ListNode<int>> merge_sorted_linked_lists(
+    shared_ptr<ListNode<int>> F, shared_ptr<ListNode<int>> L) {
+  shared_ptr<ListNode<int>> sorted_head = nullptr, tail = nullptr;
 
   while (F && L) {
     append_node_and_advance(&sorted_head, &tail, F->data < L->data ? &F : &L);
@@ -29,16 +29,16 @@ shared_ptr<node_t<int>> merge_sorted_linked_lists(shared_ptr<node_t<int>> F,
   return sorted_head;
 }
 
-void append_node_and_advance(shared_ptr<node_t<int>>* head,
-                             shared_ptr<node_t<int>>* tail,
-                             shared_ptr<node_t<int>>* n) {
+void append_node_and_advance(shared_ptr<ListNode<int>>* head,
+                             shared_ptr<ListNode<int>>* tail,
+                             shared_ptr<ListNode<int>>* n) {
   append_node(head, tail, n);
   *n = (*n)->next;  // advance n.
 }
 
-void append_node(shared_ptr<node_t<int>>* head,
-                 shared_ptr<node_t<int>>* tail,
-                 shared_ptr<node_t<int>>* n) {
+void append_node(shared_ptr<ListNode<int>>* head,
+                 shared_ptr<ListNode<int>>* tail,
+                 shared_ptr<ListNode<int>>* n) {
   *head ? (*tail)->next = *n : *head = *n;
   *tail = *n;  // reset tail to the last node.
 }

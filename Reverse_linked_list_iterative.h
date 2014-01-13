@@ -10,11 +10,11 @@
 using std::shared_ptr;
 
 // @include
-template <typename T>
-shared_ptr<node_t<T>> reverse_linked_list(const shared_ptr<node_t<T>>& head) {
-  shared_ptr<node_t<T>> prev = nullptr, curr = head;
+shared_ptr<ListNode<int>> reverse_linked_list(
+    const shared_ptr<ListNode<int>>& head) {
+  shared_ptr<ListNode<int>> prev = nullptr, curr = head;
   while (curr) {
-    shared_ptr<node_t<T>> temp = curr->next;
+    shared_ptr<ListNode<int>> temp = curr->next;
     curr->next = prev;
     prev = curr;
     curr = temp;

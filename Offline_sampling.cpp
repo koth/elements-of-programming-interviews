@@ -18,7 +18,7 @@ using std::vector;
 vector<int> offline_sampling(vector<int> A, int k) {
   default_random_engine gen((random_device())());  // random num generator.
   for (int i = 0; i < k; ++i) {
-    // Generate random int in [i, A.size() - 1].
+    // Generate a random int in [i, A.size() - 1].
     uniform_int_distribution<int> dis(i, A.size() - 1);
     swap(A[i], A[dis(gen)]);
   }

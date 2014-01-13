@@ -13,11 +13,11 @@ using std::make_shared;
 // @include
 // Build a BST from the (s + 1)-th to the e-th node in L.
 // Node numbering is from 1 to n.
-shared_ptr<node_t<int>> build_BST_from_sorted_doubly_list_helper(
-    shared_ptr<node_t<int>>* L,
+shared_ptr<ListNode<int>> build_BST_from_sorted_doubly_list_helper(
+    shared_ptr<ListNode<int>>* L,
     int s,
     int e) {
-  shared_ptr<node_t<int>> curr = nullptr;
+  shared_ptr<ListNode<int>> curr = nullptr;
   if (s < e) {
     int m = s + ((e - s) >> 1);
     auto temp_left = build_BST_from_sorted_doubly_list_helper(L, s, m);
@@ -30,15 +30,15 @@ shared_ptr<node_t<int>> build_BST_from_sorted_doubly_list_helper(
   return curr;
 }
 
-shared_ptr<node_t<int>> build_BST_from_sorted_doubly_list(
-    shared_ptr<node_t<int>> L,
+shared_ptr<ListNode<int>> build_BST_from_sorted_doubly_list(
+    shared_ptr<ListNode<int>> L,
     int n) {
   return build_BST_from_sorted_doubly_list_helper(&L, 0, n);
 }
 // @exclude
 
 template <typename T>
-void inorder_traversal(const shared_ptr<node_t<T>>& node, const T& pre, int depth) {
+void inorder_traversal(const shared_ptr<ListNode<T>>& node, const T& pre, int depth) {
   if (node) {
     inorder_traversal(node->prev, pre, depth + 1);
     assert(pre <= node->data);
@@ -48,16 +48,16 @@ void inorder_traversal(const shared_ptr<node_t<T>>& node, const T& pre, int dept
 }
 
 int main(int argc, char* argv[]) {
-  shared_ptr<node_t<int>> A[1000];
+  shared_ptr<ListNode<int>> A[1000];
 
   for (int i = 0; i < 1000; i++) {
-    A[i] = make_shared<node_t<int>>(node_t<int>{0});
+    A[i] = make_shared<ListNode<int>>(ListNode<int>{0});
   }
 
-  shared_ptr<node_t<int>> temp0 = make_shared<node_t<int>>(node_t<int>{0});
-  shared_ptr<node_t<int>> temp1 = make_shared<node_t<int>>(node_t<int>{1});
-  shared_ptr<node_t<int>> temp2 = make_shared<node_t<int>>(node_t<int>{2});
-  shared_ptr<node_t<int>> temp3 = make_shared<node_t<int>>(node_t<int>{3});
+  shared_ptr<ListNode<int>> temp0 = make_shared<ListNode<int>>(ListNode<int>{0});
+  shared_ptr<ListNode<int>> temp1 = make_shared<ListNode<int>>(ListNode<int>{1});
+  shared_ptr<ListNode<int>> temp2 = make_shared<ListNode<int>>(ListNode<int>{2});
+  shared_ptr<ListNode<int>> temp3 = make_shared<ListNode<int>>(ListNode<int>{3});
   temp0->next = temp1;
   temp1->next = temp2;
   temp2->next = temp3;
@@ -67,7 +67,7 @@ int main(int argc, char* argv[]) {
   temp2->prev = temp1;
   temp3->prev = temp2;
 
-  shared_ptr<node_t<int>> L = temp0;
+  shared_ptr<ListNode<int>> L = temp0;
   auto root = build_BST_from_sorted_doubly_list(L, 4);
   inorder_traversal(root, -1, 0);
   return 0;

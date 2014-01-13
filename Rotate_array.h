@@ -11,7 +11,7 @@ using std::vector;
 namespace rotate_array2 {
 
 // @include
-void rotate_array(vector<int>* A, int i) {
+void rotate_array(int i, vector<int>* A) {
   i %= A->size();
   reverse(A->begin(), A->end());
   reverse(A->begin(), A->begin() + i);

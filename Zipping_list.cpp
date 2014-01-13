@@ -18,13 +18,13 @@ using std::shared_ptr;
 using std::stoi;
 using std::uniform_int_distribution;
 
-void connect_a_next_to_b_advance_a(shared_ptr<node_t<int>>* a,
-                                   const shared_ptr<node_t<int>>& b);
+void connect_a_next_to_b_advance_a(shared_ptr<ListNode<int>>* a,
+                                   const shared_ptr<ListNode<int>>& b);
 
 // @include
-shared_ptr<node_t<int>> zipping_linked_list(
-    const shared_ptr<node_t<int>>& L) {
-  shared_ptr<node_t<int>> slow = L, fast = L, pre_slow = nullptr;
+shared_ptr<ListNode<int>> zipping_linked_list(
+    const shared_ptr<ListNode<int>>& L) {
+  shared_ptr<ListNode<int>> slow = L, fast = L, pre_slow = nullptr;
 
   // Find the middle point of L.
   while (fast) {
@@ -39,7 +39,7 @@ shared_ptr<node_t<int>> zipping_linked_list(
     return L;  // only contains one node in the list.
   }
   pre_slow->next = nullptr;  // splits the list into two lists.
-  shared_ptr<node_t<int>> reverse = reverse_linked_list(slow), curr = L;
+  shared_ptr<ListNode<int>> reverse = reverse_linked_list(slow), curr = L;
 
   // Zipping the list.
   while (curr && reverse) {
@@ -53,9 +53,9 @@ shared_ptr<node_t<int>> zipping_linked_list(
   return L;
 }
 
-void connect_a_next_to_b_advance_a(shared_ptr<node_t<int>>* a,
-                                   const shared_ptr<node_t<int>>& b) {
-  shared_ptr<node_t<int>> temp = (*a)->next;
+void connect_a_next_to_b_advance_a(shared_ptr<ListNode<int>>* a,
+                                   const shared_ptr<ListNode<int>>& b) {
+  shared_ptr<ListNode<int>> temp = (*a)->next;
   (*a)->next = b;
   (*a) = temp;
 }
@@ -63,12 +63,12 @@ void connect_a_next_to_b_advance_a(shared_ptr<node_t<int>>* a,
 
 int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
-  shared_ptr<node_t<int>> head = nullptr;
+  shared_ptr<ListNode<int>> head = nullptr;
   int n;
   if (argc > 2) {
     for (int i = 1; i < argc; ++i) {
       auto curr =
-          make_shared<node_t<int>>(node_t<int>{stoi(argv[i]), nullptr});
+          make_shared<ListNode<int>>(ListNode<int>{stoi(argv[i]), nullptr});
       curr->next = head;
       head = curr;
     }
@@ -80,12 +80,12 @@ int main(int argc, char* argv[]) {
       n = dis(gen);
     }
     for (int i = n; i >= 0; --i) {
-      auto curr = make_shared<node_t<int>>(node_t<int>{i, nullptr});
+      auto curr = make_shared<ListNode<int>>(ListNode<int>{i, nullptr});
       curr->next = head;
       head = curr;
     }
   }
-  shared_ptr<node_t<int>> curr = zipping_linked_list(head);
+  shared_ptr<ListNode<int>> curr = zipping_linked_list(head);
   int idx = 0, pre;
   while (curr) {
     if (argc <= 2) {

@@ -22,7 +22,7 @@ using std::uniform_int_distribution;
 int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
   for (int times = 0; times < 10000; ++times) {
-    shared_ptr<node_t<int>> F = nullptr, L = nullptr;
+    shared_ptr<ListNode<int>> F = nullptr, L = nullptr;
     int n, m;
     if (argc == 3) {
       n = stoi(argv[1]), m = stoi(argv[2]);
@@ -33,19 +33,19 @@ int main(int argc, char* argv[]) {
       n = dis(gen), m = dis(gen);
     }
     for (int i = n; i > 0; --i) {
-      shared_ptr<node_t<int>> temp =
-          make_shared<node_t<int>>(node_t<int>{i, nullptr});
+      shared_ptr<ListNode<int>> temp =
+          make_shared<ListNode<int>>(ListNode<int>{i, nullptr});
       temp->next = F;
       F = temp;
     }
     for (int j = m; j > 0; --j) {
-      shared_ptr<node_t<int>> temp =
-          make_shared<node_t<int>>(node_t<int>{j, nullptr});
+      shared_ptr<ListNode<int>> temp =
+          make_shared<ListNode<int>>(ListNode<int>{j, nullptr});
       temp->next = L;
       L = temp;
     }
 
-    shared_ptr<node_t<int>> sorted_head = merge_sorted_linked_lists(F, L);
+    shared_ptr<ListNode<int>> sorted_head = merge_sorted_linked_lists(F, L);
     int count = 0;
     int pre = numeric_limits<int>::min();
     while (sorted_head) {

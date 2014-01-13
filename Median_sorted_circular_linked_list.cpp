@@ -19,13 +19,13 @@ using std::uniform_int_distribution;
 
 // @include
 double find_median_sorted_circular_linked_list(
-    const shared_ptr<node_t<int>>& r_node) {
+    const shared_ptr<ListNode<int>>& r_node) {
   if (!r_node) {
     throw length_error("empty list");  // no node in this linked list.
   }
 
   // Checks all nodes are identical or not and identify the start of list.
-  shared_ptr<node_t<int>> curr = r_node, start = r_node;
+  shared_ptr<ListNode<int>> curr = r_node, start = r_node;
   int count = 0;
   do {
     ++count, curr = curr->next;
@@ -55,15 +55,15 @@ int main(int argc, char* argv[]) {
       uniform_int_distribution<int> dis(1, 1000);
       n = dis(gen);
     }
-    shared_ptr<node_t<int>> head;
+    shared_ptr<ListNode<int>> head;
     for (int i = n; i >= 0; --i) {
-      auto curr = make_shared<node_t<int>>(node_t<int>{i, nullptr});
+      auto curr = make_shared<ListNode<int>>(ListNode<int>{i, nullptr});
       curr->next = head;
       head = curr;
     }
-    shared_ptr<node_t<int>> curr = head;
-    if (curr != shared_ptr<node_t<int>>(nullptr)) {
-      while (curr->next != shared_ptr<node_t<int>>(nullptr)) {
+    shared_ptr<ListNode<int>> curr = head;
+    if (curr != shared_ptr<ListNode<int>>(nullptr)) {
+      while (curr->next != shared_ptr<ListNode<int>>(nullptr)) {
         curr = curr->next;
       }
       curr->next = head;  // make the list as a circular list.
@@ -74,7 +74,7 @@ int main(int argc, char* argv[]) {
   }
 
   // Test empty list.
-  shared_ptr<node_t<int>> head;
+  shared_ptr<ListNode<int>> head;
   try {
     find_median_sorted_circular_linked_list(head);
   }
@@ -84,12 +84,12 @@ int main(int argc, char* argv[]) {
 
   // Test identical list.
   for (int i = 0; i < 10; ++i) {
-    auto curr = make_shared<node_t<int>>(node_t<int>{5, nullptr});
+    auto curr = make_shared<ListNode<int>>(ListNode<int>{5, nullptr});
     curr->next = head;
     head = curr;
   }
-  shared_ptr<node_t<int>> curr = head;
-  if (curr != shared_ptr<node_t<int>>(nullptr)) {
+  shared_ptr<ListNode<int>> curr = head;
+  if (curr != shared_ptr<ListNode<int>>(nullptr)) {
     while (curr->next != nullptr) {
       curr = curr->next;
     }

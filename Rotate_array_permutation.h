@@ -14,7 +14,7 @@ using std::vector;
 namespace rotate_array1 {
 
 // @include
-void rotate_array(vector<int>* A, int i) {
+void rotate_array(int i, vector<int>* A) {
   i %= A->size();
   int cycles = GCD(A->size(), i);  // number of cycles in this rotation.
   int hops = A->size() / cycles;  // number of elements in a cycle.

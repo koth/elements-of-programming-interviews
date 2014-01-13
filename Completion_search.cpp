@@ -17,7 +17,7 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-double completion_search(vector<double>* A, double budget) {
+double completion_search(double budget, vector<double>* A) {
   sort(A->begin(), A->end());
   // Calculate the prefix sum for A.
   vector<double> prefix_sum;
@@ -67,7 +67,7 @@ int main(int argc, char* argv[]) {
     copy(A.begin(), A.end(), ostream_iterator<double>(cout, " "));
     cout << endl;
     cout << "tar = " << tar << endl;
-    double ret = completion_search(&A, tar);
+    double ret = completion_search(tar, &A);
     if (ret != -1.0) {
       cout << "ret = " << ret << endl;
       double sum = 0.0;
