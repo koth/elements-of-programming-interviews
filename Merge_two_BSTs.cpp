@@ -13,24 +13,24 @@ using std::make_shared;
 using std::numeric_limits;
 using std::shared_ptr;
 
-shared_ptr<BinarySearchTree<int>> merge_sorted_linked_lists(
-    shared_ptr<BinarySearchTree<int>> A,
-    shared_ptr<BinarySearchTree<int>> B);
+shared_ptr<BSTNode<int>> merge_sorted_linked_lists(
+    shared_ptr<BSTNode<int>> A,
+    shared_ptr<BSTNode<int>> B);
 
-void append_node_and_advance(shared_ptr<BinarySearchTree<int>>* head,
-                             shared_ptr<BinarySearchTree<int>>* tail,
-                             shared_ptr<BinarySearchTree<int>>* n);
+void append_node_and_advance(shared_ptr<BSTNode<int>>* head,
+                             shared_ptr<BSTNode<int>>* tail,
+                             shared_ptr<BSTNode<int>>* n);
 
-void append_node(shared_ptr<BinarySearchTree<int>>* head,
-                 shared_ptr<BinarySearchTree<int>>* tail,
-                 shared_ptr<BinarySearchTree<int>>* n);
+void append_node(shared_ptr<BSTNode<int>>* head,
+                 shared_ptr<BSTNode<int>>* tail,
+                 shared_ptr<BSTNode<int>>* n);
 
 // Build a BST from the (s + 1)-th to the e-th node in L.
-shared_ptr<BinarySearchTree<int>> build_BST_from_sorted_doubly_list_helper(
-    shared_ptr<BinarySearchTree<int>>* L,
+shared_ptr<BSTNode<int>> build_BST_from_sorted_doubly_list_helper(
+    shared_ptr<BSTNode<int>>* L,
     int s,
     int e) {
-  shared_ptr<BinarySearchTree<int>> curr = nullptr;
+  shared_ptr<BSTNode<int>> curr = nullptr;
   if (s < e) {
     int m = s + ((e - s) >> 1);
     auto temp = build_BST_from_sorted_doubly_list_helper(L, s, m);
@@ -42,16 +42,16 @@ shared_ptr<BinarySearchTree<int>> build_BST_from_sorted_doubly_list_helper(
   return curr;
 }
 
-shared_ptr<BinarySearchTree<int>> build_BST_from_sorted_doubly_list(
-    shared_ptr<BinarySearchTree<int>> L,
+shared_ptr<BSTNode<int>> build_BST_from_sorted_doubly_list(
+    shared_ptr<BSTNode<int>> L,
     int n) {
   return build_BST_from_sorted_doubly_list_helper(&L, 0, n);
 }
 
 // Transform a BST into a circular sorted doubly linked list in-place,
 // return the head of the list.
-shared_ptr<BinarySearchTree<int>> BST_to_doubly_list(
-    const shared_ptr<BinarySearchTree<int>>& n) {
+shared_ptr<BSTNode<int>> BST_to_doubly_list(
+    const shared_ptr<BSTNode<int>>& n) {
   // Empty subtree.
   if (!n) {
     return nullptr;
@@ -62,7 +62,7 @@ shared_ptr<BinarySearchTree<int>> BST_to_doubly_list(
       r_head(BST_to_doubly_list(n->right));
 
   // Append n to the list from left subtree.
-  shared_ptr<BinarySearchTree<int>> l_tail = nullptr;
+  shared_ptr<BSTNode<int>> l_tail = nullptr;
   if (l_head) {
     l_tail = l_head->left;
     l_tail->right = n;
@@ -73,7 +73,7 @@ shared_ptr<BinarySearchTree<int>> BST_to_doubly_list(
   }
 
   // Append the list from right subtree to n.
-  shared_ptr<BinarySearchTree<int>> r_tail = nullptr;
+  shared_ptr<BSTNode<int>> r_tail = nullptr;
   if (r_head) {
     r_tail = r_head->left;
     l_tail->right = r_head;
@@ -87,7 +87,7 @@ shared_ptr<BinarySearchTree<int>> BST_to_doubly_list(
 }
 
 // Count the list length till end.
-int count_len(shared_ptr<BinarySearchTree<int>> L) {
+int count_len(shared_ptr<BSTNode<int>> L) {
   int len = 0;
   while (L) {
     ++len, L = L->right;
@@ -96,9 +96,9 @@ int count_len(shared_ptr<BinarySearchTree<int>> L) {
 }
 
 // @include
-shared_ptr<BinarySearchTree<int>> merge_BSTs(
-    shared_ptr<BinarySearchTree<int>> A,
-    shared_ptr<BinarySearchTree<int>> B) {
+shared_ptr<BSTNode<int>> merge_BSTs(
+    shared_ptr<BSTNode<int>> A,
+    shared_ptr<BSTNode<int>> B) {
   // Transform BSTs A and B into sorted doubly lists.
   A = BST_to_doubly_list(A), B = BST_to_doubly_list(B);
   A->left->right = B->left->right = nullptr;
@@ -109,10 +109,10 @@ shared_ptr<BinarySearchTree<int>> merge_BSTs(
 }
 
 // Merge two sorted linked lists, return the head of list.
-shared_ptr<BinarySearchTree<int>> merge_sorted_linked_lists(
-    shared_ptr<BinarySearchTree<int>> A,
-    shared_ptr<BinarySearchTree<int>> B) {
-  shared_ptr<BinarySearchTree<int>> sorted_list = nullptr, tail = nullptr;
+shared_ptr<BSTNode<int>> merge_sorted_linked_lists(
+    shared_ptr<BSTNode<int>> A,
+    shared_ptr<BSTNode<int>> B) {
+  shared_ptr<BSTNode<int>> sorted_list = nullptr, tail = nullptr;
 
   while (A && B) {
     append_node_and_advance(&sorted_list, &tail, A->data < B->data ? &A : &B);
@@ -129,16 +129,16 @@ shared_ptr<BinarySearchTree<int>> merge_sorted_linked_lists(
   return sorted_list;
 }
 
-void append_node_and_advance(shared_ptr<BinarySearchTree<int>>* head,
-                             shared_ptr<BinarySearchTree<int>>* tail,
-                             shared_ptr<BinarySearchTree<int>>* n) {
+void append_node_and_advance(shared_ptr<BSTNode<int>>* head,
+                             shared_ptr<BSTNode<int>>* tail,
+                             shared_ptr<BSTNode<int>>* n) {
   append_node(head, tail, n);
   *n = (*n)->right;  // advance n.
 }
 
-void append_node(shared_ptr<BinarySearchTree<int>>* head,
-                 shared_ptr<BinarySearchTree<int>>* tail,
-                 shared_ptr<BinarySearchTree<int>>* n) {
+void append_node(shared_ptr<BSTNode<int>>* head,
+                 shared_ptr<BSTNode<int>>* tail,
+                 shared_ptr<BSTNode<int>>* n) {
   if (*head) {
     (*tail)->right = *n, (*n)->left = *tail;
   } else {
@@ -149,7 +149,7 @@ void append_node(shared_ptr<BinarySearchTree<int>>* head,
 // @exclude
 
 template <typename T>
-void print_BST_inorder(shared_ptr<BinarySearchTree<T>> n, T pre) {
+void print_BST_inorder(shared_ptr<BSTNode<T>> n, const T& pre) {
   if (n) {
     print_BST_inorder(n->left, pre);
     assert(pre <= n->data);
@@ -162,22 +162,22 @@ int main(int argc, char* argv[]) {
   //      3
   //    2   5
   //  1    4 6
-  auto L = make_shared<BinarySearchTree<int>>(BinarySearchTree<int>{3});
-  L->left = make_shared<BinarySearchTree<int>>(BinarySearchTree<int>{2});
-  L->left->left = make_shared<BinarySearchTree<int>>(BinarySearchTree<int>{1});
-  L->right = make_shared<BinarySearchTree<int>>(BinarySearchTree<int>{5});
+  auto L = make_shared<BSTNode<int>>(BSTNode<int>{3});
+  L->left = make_shared<BSTNode<int>>(BSTNode<int>{2});
+  L->left->left = make_shared<BSTNode<int>>(BSTNode<int>{1});
+  L->right = make_shared<BSTNode<int>>(BSTNode<int>{5});
   L->right->left =
-      make_shared<BinarySearchTree<int>>(BinarySearchTree<int>{4});
+      make_shared<BSTNode<int>>(BSTNode<int>{4});
   L->right->right =
-      make_shared<BinarySearchTree<int>>(BinarySearchTree<int>{6});
+      make_shared<BSTNode<int>>(BSTNode<int>{6});
   //     7
   //   2   8
   // 0
-  auto R = make_shared<BinarySearchTree<int>>(BinarySearchTree<int>{7});
-  R->left = make_shared<BinarySearchTree<int>>(BinarySearchTree<int>{2});
-  R->left->left = make_shared<BinarySearchTree<int>>(BinarySearchTree<int>{0});
-  R->right = make_shared<BinarySearchTree<int>>(BinarySearchTree<int>{8});
-  shared_ptr<BinarySearchTree<int>> root = merge_BSTs(L, R);
+  auto R = make_shared<BSTNode<int>>(BSTNode<int>{7});
+  R->left = make_shared<BSTNode<int>>(BSTNode<int>{2});
+  R->left->left = make_shared<BSTNode<int>>(BSTNode<int>{0});
+  R->right = make_shared<BSTNode<int>>(BSTNode<int>{8});
+  shared_ptr<BSTNode<int>> root = merge_BSTs(L, R);
   // should output 0 1 2 2 3 4 5 6 7 8
   print_BST_inorder(root, numeric_limits<int>::min());
   return 0;

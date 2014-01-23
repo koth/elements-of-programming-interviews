@@ -16,19 +16,19 @@ using std::uniform_int_distribution;
 using std::unique_ptr;
 using std::vector;
 
-void find_k_largest_in_BST_helper(const unique_ptr<BinarySearchTree<int>>& r,
+void find_k_largest_in_BST_helper(const unique_ptr<BSTNode<int>>& r,
                                   int k,
                                   vector<int>* k_elements);
 
 // @include
 vector<int> find_k_largest_in_BST(
-    const unique_ptr<BinarySearchTree<int>>& root, int k) {
+    const unique_ptr<BSTNode<int>>& root, int k) {
   vector<int> k_elements;
   find_k_largest_in_BST_helper(root, k, &k_elements);
   return k_elements;
 }
 
-void find_k_largest_in_BST_helper(const unique_ptr<BinarySearchTree<int>>& r,
+void find_k_largest_in_BST_helper(const unique_ptr<BSTNode<int>>& r,
                                   int k,
                                   vector<int>* k_elements) {
   // Performs reverse inorder traversal.
@@ -46,17 +46,17 @@ int main(int argc, char* argv[]) {
   //    3
   //  2   5
   // 1   4 6
-  unique_ptr<BinarySearchTree<int>> root =
-      unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{3});
-  root->left = unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{2});
+  unique_ptr<BSTNode<int>> root =
+      unique_ptr<BSTNode<int>>(new BSTNode<int>{3});
+  root->left = unique_ptr<BSTNode<int>>(new BSTNode<int>{2});
   root->left->left =
-      unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{1});
+      unique_ptr<BSTNode<int>>(new BSTNode<int>{1});
   root->right =
-      unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{5});
+      unique_ptr<BSTNode<int>>(new BSTNode<int>{5});
   root->right->left =
-      unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{4});
+      unique_ptr<BSTNode<int>>(new BSTNode<int>{4});
   root->right->right =
-      unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{6});
+      unique_ptr<BSTNode<int>>(new BSTNode<int>{6});
   default_random_engine gen((random_device())());
   int k;
   if (argc == 2) {

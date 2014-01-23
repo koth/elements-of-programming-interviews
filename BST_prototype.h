@@ -9,9 +9,9 @@ using std::unique_ptr;
 
 // @include
 template <typename T>
-struct BinarySearchTree {
+struct BSTNode {
   T data;
-  unique_ptr<BinarySearchTree<T>> left, right;
+  unique_ptr<BSTNode<T>> left, right;
 };
 // @exclude
 #endif  // SOLUTIONS_BST_PROTOTYPE_H_

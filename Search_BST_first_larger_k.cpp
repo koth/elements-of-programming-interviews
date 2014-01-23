@@ -7,11 +7,11 @@
 using std::unique_ptr;
 
 // @include
-BinarySearchTree<int>* find_first_larger_k_with_k_exist(
-    const unique_ptr<BinarySearchTree<int>>& r,
+BSTNode<int>* find_first_larger_k_with_k_exist(
+    const unique_ptr<BSTNode<int>>& T,
     int k) {
   bool found_k = false;
-  BinarySearchTree<int>* curr = r.get(), *first = nullptr;
+  BSTNode<int>* curr = T.get(), *first = nullptr;
 
   while (curr) {
     if (curr->data == k) {
@@ -32,16 +32,12 @@ int main(int argc, char* argv[]) {
   //    3
   //  2   5
   // 1   4 7
-  auto root = unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{3});
-  root->left = unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{2});
-  root->left->left =
-      unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{1});
-  root->right =
-      unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{5});
-  root->right->left =
-      unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{4});
-  root->right->right =
-      unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{7});
+  auto root = unique_ptr<BSTNode<int>>(new BSTNode<int>{3});
+  root->left = unique_ptr<BSTNode<int>>(new BSTNode<int>{2});
+  root->left->left = unique_ptr<BSTNode<int>>(new BSTNode<int>{1});
+  root->right = unique_ptr<BSTNode<int>>(new BSTNode<int>{5});
+  root->right->left = unique_ptr<BSTNode<int>>(new BSTNode<int>{4});
+  root->right->right = unique_ptr<BSTNode<int>>(new BSTNode<int>{7});
   assert(find_first_larger_k_with_k_exist(root, 1) == root->left.get());
   assert(find_first_larger_k_with_k_exist(root, 5) == root->right->right.get());
   assert(!find_first_larger_k_with_k_exist(root, 6));

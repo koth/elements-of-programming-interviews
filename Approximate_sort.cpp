@@ -48,7 +48,7 @@ void approximate_sort(istringstream* sin, int k) {
 void simple_test() {
   vector<int> A = {2, 1, 5, 4, 3, 9, 8, 7, 6};
   stringstream ss;
-  for (const int& a : A) {
+  for (int a : A) {
     ss << a << ' ';
   }
   istringstream sin(ss.str());
@@ -79,7 +79,7 @@ int main(int argc, char* argv[]) {
     A.push_back(dis(gen));
   }
   stringstream ss;
-  for (const int& a : A) {
+  for (int a : A) {
     ss << a << ' ';
   }
   istringstream sin(ss.str());

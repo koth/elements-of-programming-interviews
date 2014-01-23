@@ -7,15 +7,15 @@
 
 using std::unique_ptr;
 
-bool search_m_before_t(BinarySearchTree<int>* p,
-                       const unique_ptr<BinarySearchTree<int>>& t,
-                       const unique_ptr<BinarySearchTree<int>>& m);
+bool search_m_before_t(BSTNode<int>* p,
+                       const unique_ptr<BSTNode<int>>& t,
+                       const unique_ptr<BSTNode<int>>& m);
 
 // @include
 bool is_r_s_descendant_ancestor_of_m(
-    const unique_ptr<BinarySearchTree<int>>& r,
-    const unique_ptr<BinarySearchTree<int>>& s,
-    const unique_ptr<BinarySearchTree<int>>& m) {
+    const unique_ptr<BSTNode<int>>& r,
+    const unique_ptr<BSTNode<int>>& s,
+    const unique_ptr<BSTNode<int>>& m) {
   auto* cur_r = r.get(), *cur_s = s.get();
 
   // Interleaving searches from r and s.
@@ -35,9 +35,9 @@ bool is_r_s_descendant_ancestor_of_m(
   return search_m_before_t(cur_r, s, m) || search_m_before_t(cur_s, r, m);
 }
 
-bool search_m_before_t(BinarySearchTree<int>* p,
-                       const unique_ptr<BinarySearchTree<int>>& t,
-                       const unique_ptr<BinarySearchTree<int>>& m) {
+bool search_m_before_t(BSTNode<int>* p,
+                       const unique_ptr<BSTNode<int>>& t,
+                       const unique_ptr<BSTNode<int>>& m) {
   while (p && p != t.get() && p != m.get()) {
     p = p->data > t->data ? p->left.get() : p->right.get();
   }
@@ -46,10 +46,10 @@ bool search_m_before_t(BinarySearchTree<int>* p,
 // @exclude
 
 void small_test() {
-  auto root = unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{5});
-  root->left = unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{2});
+  auto root = unique_ptr<BSTNode<int>>(new BSTNode<int>{5});
+  root->left = unique_ptr<BSTNode<int>>(new BSTNode<int>{2});
   root->left->right =
-      unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{4});
+      unique_ptr<BSTNode<int>>(new BSTNode<int>{4});
   assert(!is_r_s_descendant_ancestor_of_m(root, root->left, root->left->right));
 }
 
@@ -58,16 +58,16 @@ int main(int argc, char* argv[]) {
   //      3
   //    2   5
   //  1    4 6
-  auto root = unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{3});
-  root->left = unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{2});
+  auto root = unique_ptr<BSTNode<int>>(new BSTNode<int>{3});
+  root->left = unique_ptr<BSTNode<int>>(new BSTNode<int>{2});
   root->left->left =
-      unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{1});
+      unique_ptr<BSTNode<int>>(new BSTNode<int>{1});
   root->right =
-      unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{5});
+      unique_ptr<BSTNode<int>>(new BSTNode<int>{5});
   root->right->left =
-      unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{4});
+      unique_ptr<BSTNode<int>>(new BSTNode<int>{4});
   root->right->right =
-      unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{6});
+      unique_ptr<BSTNode<int>>(new BSTNode<int>{6});
   assert(
       is_r_s_descendant_ancestor_of_m(root, root->right->right, root->right));
   assert(

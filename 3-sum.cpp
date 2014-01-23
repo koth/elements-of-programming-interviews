@@ -20,7 +20,7 @@ bool has_2_sum(const vector<int>& A, int t);
 bool has_3_sum(vector<int> A, int t) {
   sort(A.begin(), A.end());
 
-  for (const int& a : A) {
+  for (int a : A) {
     // Find if the sum of two numbers in A equals to t - a.
     if (has_2_sum(A, t - a)) {
       return true;

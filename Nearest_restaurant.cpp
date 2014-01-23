@@ -9,7 +9,7 @@
 using std::list;
 using std::unique_ptr;
 
-BinarySearchTree<int>* find_successor_BST(BinarySearchTree<int>* n) {
+BSTNode<int>* find_successor_BST(BSTNode<int>* n) {
   if (n->right) {
     // Find the smallest element in n's right subtree.
     n = n->right.get();
@@ -27,16 +27,16 @@ BinarySearchTree<int>* find_successor_BST(BinarySearchTree<int>* n) {
   return n->parent ? n->parent : nullptr;
 }
 
-BinarySearchTree<int>* find_first_larger_equal_k(
-    const unique_ptr<BinarySearchTree<int>>& r,
+BSTNode<int>* find_first_larger_equal_k(
+    const unique_ptr<BSTNode<int>>& r,
     int k);
 
 // @include
-list<BinarySearchTree<int>*> range_query_on_BST(
-    const unique_ptr<BinarySearchTree<int>>& n,
+list<BSTNode<int>*> range_query_on_BST(
+    const unique_ptr<BSTNode<int>>& n,
     int L,
     int U) {
-  list<BinarySearchTree<int>*> res;
+  list<BSTNode<int>*> res;
   for (auto* it = find_first_larger_equal_k(n, L); it && it->data <= U;
        it = find_successor_BST(it)) {
     res.emplace_back(it);
@@ -44,8 +44,8 @@ list<BinarySearchTree<int>*> range_query_on_BST(
   return res;
 }
 
-BinarySearchTree<int>* find_first_larger_equal_k(
-    const unique_ptr<BinarySearchTree<int>>& r,
+BSTNode<int>* find_first_larger_equal_k(
+    const unique_ptr<BSTNode<int>>& r,
     int k) {
   if (!r) {
     return nullptr;
@@ -63,23 +63,23 @@ int main(int argc, char* argv[]) {
   //      3
   //    2   5
   //  1    4  6
-  auto root = unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{3});
+  auto root = unique_ptr<BSTNode<int>>(new BSTNode<int>{3});
   root->parent = nullptr;
-  root->left = unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{2});
+  root->left = unique_ptr<BSTNode<int>>(new BSTNode<int>{2});
   root->left->parent = root.get();
   root->left->left =
-      unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{1});
+      unique_ptr<BSTNode<int>>(new BSTNode<int>{1});
   root->left->left->parent = root->left.get();
   root->right =
-      unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{5});
+      unique_ptr<BSTNode<int>>(new BSTNode<int>{5});
   root->right->parent = root.get();
   root->right->left =
-      unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{4});
+      unique_ptr<BSTNode<int>>(new BSTNode<int>{4});
   root->right->left->parent = root->right.get();
   root->right->right =
-      unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{6});
+      unique_ptr<BSTNode<int>>(new BSTNode<int>{6});
   root->right->right->parent = root->right.get();
-  list<BinarySearchTree<int>*> res = range_query_on_BST<int>(root, 2, 5);
+  list<BSTNode<int>*> res = range_query_on_BST(root, 2, 5);
   assert(res.size() == 4);
   for (const auto* l : res) {
     assert(l->data >= 2 && l->data <= 5);

@@ -8,9 +8,9 @@
 using std::unique_ptr;
 
 // @include
-BinarySearchTree<int>* find_LCA(const unique_ptr<BinarySearchTree<int>>& x,
-                                const unique_ptr<BinarySearchTree<int>>& s,
-                                const unique_ptr<BinarySearchTree<int>>& b) {
+BSTNode<int>* find_LCA(const unique_ptr<BSTNode<int>>& x,
+                       const unique_ptr<BSTNode<int>>& s,
+                       const unique_ptr<BSTNode<int>>& b) {
   auto* p = x.get();
   while (p->data < s->data || p->data > b->data) {
     while (p->data < s->data) {
@@ -30,17 +30,13 @@ int main(int argc, char* argv[]) {
   //      3
   //    2   5
   //  1    4 6
-  unique_ptr<BinarySearchTree<int>> root =
-      unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{3});
-  root->left = unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{2});
-  root->left->left =
-      unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{1});
-  root->right =
-      unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{5});
-  root->right->left =
-      unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{4});
-  root->right->right =
-      unique_ptr<BinarySearchTree<int>>(new BinarySearchTree<int>{6});
+  unique_ptr<BSTNode<int>> root =
+      unique_ptr<BSTNode<int>>(new BSTNode<int>{3});
+  root->left = unique_ptr<BSTNode<int>>(new BSTNode<int>{2});
+  root->left->left = unique_ptr<BSTNode<int>>(new BSTNode<int>{1});
+  root->right = unique_ptr<BSTNode<int>>(new BSTNode<int>{5});
+  root->right->left = unique_ptr<BSTNode<int>>(new BSTNode<int>{4});
+  root->right->right = unique_ptr<BSTNode<int>>(new BSTNode<int>{6});
   assert(3 == find_LCA(root, root->left->left, root->right->left)->data);
   assert(5 == find_LCA(root, root->right->left, root->right->right)->data);
   assert(2 == find_LCA(root, root->left->left, root->left)->data);

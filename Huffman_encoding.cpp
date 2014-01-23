@@ -22,8 +22,8 @@ double EnglishFreq[] = {8.167, 1.492, 2.782, 4.253, 12.702, 2.228, 2.015,
                         7.507, 1.929, 0.095, 5.987, 6.327,  9.056, 2.758,
                         0.978, 2.360, 0.150, 1.974, 0.074};
 
-struct BinaryTree;
-void assign_huffman_code(const shared_ptr<BinaryTree>& r, const string& s);
+struct BinaryTreeNode;
+void assign_huffman_code(const shared_ptr<BinaryTreeNode>& r, const string& s);
 
 // @include
 struct Symbol {
@@ -32,35 +32,35 @@ struct Symbol {
   string code;
 };
 
-struct BinaryTree {
+struct BinaryTreeNode {
   double prob;
   Symbol* s;
-  shared_ptr<BinaryTree> left, right;
+  shared_ptr<BinaryTreeNode> left, right;
 };
 
 struct Compare {
-  bool operator()(const shared_ptr<BinaryTree>& lhs,
-                  const shared_ptr<BinaryTree>& rhs) {
+  bool operator()(const shared_ptr<BinaryTreeNode>& lhs,
+                  const shared_ptr<BinaryTreeNode>& rhs) {
     return lhs->prob > rhs->prob;
   }
 };
 
 void Huffman_encoding(vector<Symbol>* symbols) {
   // Initially assign each symbol into min->heap.
-  priority_queue<shared_ptr<BinaryTree>,
-                 vector<shared_ptr<BinaryTree>>,
+  priority_queue<shared_ptr<BinaryTreeNode>,
+                 vector<shared_ptr<BinaryTreeNode>>,
                  Compare> min_heap;
   for (auto& s : *symbols) {
-    min_heap.emplace(new BinaryTree{s.prob, &s, nullptr, nullptr});
+    min_heap.emplace(new BinaryTreeNode{s.prob, &s, nullptr, nullptr});
   }
 
   // Keep combining two nodes until there is one node left.
   while (min_heap.size() > 1) {
-    shared_ptr<BinaryTree> l = min_heap.top();
+    shared_ptr<BinaryTreeNode> l = min_heap.top();
     min_heap.pop();
-    shared_ptr<BinaryTree> r = min_heap.top();
+    shared_ptr<BinaryTreeNode> r = min_heap.top();
     min_heap.pop();
-    min_heap.emplace(new BinaryTree{l->prob + r->prob, nullptr, l, r});
+    min_heap.emplace(new BinaryTreeNode{l->prob + r->prob, nullptr, l, r});
   }
 
   // Traverse the binary tree and assign code.
@@ -68,7 +68,8 @@ void Huffman_encoding(vector<Symbol>* symbols) {
 }
 
 // Traverse tree and assign code.
-void assign_huffman_code(const shared_ptr<BinaryTree>& r, const string& s) {
+void assign_huffman_code(const shared_ptr<BinaryTreeNode>& r,
+                         const string& s) {
   if (r) {
     // This node (i.e.,leaf) contains symbol.
     if (r->s) {

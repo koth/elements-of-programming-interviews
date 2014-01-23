@@ -52,7 +52,19 @@ list<int> get_minimum_expression(int n) {
 }
 // @exclude
 
+void small_test() {
+  auto res = get_minimum_expression(88);
+  list<int> golden_res = {1, 2, 3, 4, 7, 11, 22, 44, 88};
+  assert(res.size() == golden_res.size());
+  assert(equal(res.begin(), res.end(), golden_res.begin()));
+  res = get_minimum_expression(67);
+  golden_res = {1, 2, 3, 4, 8, 16, 32, 35, 67};
+  assert(res.size() == golden_res.size());
+  assert(equal(res.begin(), res.end(), golden_res.begin()));
+}
+
 int main(int argc, char* argv[]) {
+  small_test();
   default_random_engine gen((random_device())());
   int n;
   if (argc == 2) {

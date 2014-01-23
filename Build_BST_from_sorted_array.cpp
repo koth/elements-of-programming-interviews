@@ -12,23 +12,23 @@ using std::endl;
 using std::unique_ptr;
 using std::vector;
 
-BinarySearchTree<int>* build_BST_from_sorted_array_helper(
+BSTNode<int>* build_BST_from_sorted_array_helper(
     const vector<int>& A, int start, int end);
 
 // @include
-BinarySearchTree<int>* build_BST_from_sorted_array(const vector<int>& A) {
+BSTNode<int>* build_BST_from_sorted_array(const vector<int>& A) {
   return build_BST_from_sorted_array_helper(A, 0, A.size());
 }
 
 // Build BST based on subarray A[start : end - 1].
-BinarySearchTree<int>* build_BST_from_sorted_array_helper(
+BSTNode<int>* build_BST_from_sorted_array_helper(
     const vector<int>& A, int start, int end) {
   if (start < end) {
     int mid = start + ((end - start) >> 1);
-    return new BinarySearchTree<int>{
-        A[mid], unique_ptr<BinarySearchTree<int>>(
+    return new BSTNode<int>{
+        A[mid], unique_ptr<BSTNode<int>>(
                     build_BST_from_sorted_array_helper(A, start, mid)),
-        unique_ptr<BinarySearchTree<int>>(
+        unique_ptr<BSTNode<int>>(
             build_BST_from_sorted_array_helper(A, mid + 1, end))};
   }
   return nullptr;
@@ -36,7 +36,7 @@ BinarySearchTree<int>* build_BST_from_sorted_array_helper(
 // @exclude
 
 template <typename T>
-void traversal_check(const unique_ptr<BinarySearchTree<T>>& root, T* target) {
+void traversal_check(const unique_ptr<BSTNode<T>>& root, T* target) {
   if (root) {
     traversal_check(root->left, target);
     assert(*target == root->data);
@@ -57,8 +57,8 @@ int main(int argc, char* argv[]) {
     for (size_t i = 0; i < n; ++i) {
       A.emplace_back(i);
     }
-    unique_ptr<BinarySearchTree<int>> root =
-        unique_ptr<BinarySearchTree<int>>(build_BST_from_sorted_array(A));
+    unique_ptr<BSTNode<int>> root =
+        unique_ptr<BSTNode<int>>(build_BST_from_sorted_array(A));
     int target = 0;
     traversal_check<int>(root, &target);
   }

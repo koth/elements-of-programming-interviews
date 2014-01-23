@@ -69,19 +69,12 @@ bool Bellman_Ford(const vector<vector<double>>& G, int source) {
 
 int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
-  int n, m;
+  int n;
   if (argc == 2) {
     n = atoi(argv[1]);
-    uniform_int_distribution<int> m_dis(1, n * (n - 1) / 2);
-    m = m_dis(gen);
-  } else if (argc == 3) {
-    n = atoi(argv[1]);
-    m = atoi(argv[2]);
   } else {
     uniform_int_distribution<int> n_dis(1, 100);
     n = n_dis(gen);
-    uniform_int_distribution<int> m_dis(1, n * (n - 1) / 2);
-    m = m_dis(gen);
   }
   vector<vector<double>> G(n, vector<double>(n));
   // Assume the input is a complete graph.

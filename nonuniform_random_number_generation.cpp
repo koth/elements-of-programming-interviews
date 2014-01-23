@@ -27,9 +27,9 @@ double nonuniform_random_number_generation(const vector<double>& T,
   default_random_engine gen((random_device())());
   // Generate a random number in [0.0, 1.0].
   uniform_real_distribution<double> dis(0.0, 1.0);
-  // upper_bound returns an iterator pointing to the first element in
-  // (prefix_P.cbegin(),prefix_P.cend()) which compares greater than dis(gen)
-  // which is a uniform random number in [0.0,1.0].
+  // upper_bound uses binary search to returns an iterator pointing to the
+  // first element in (prefix_P.cbegin(),prefix_P.cend()) which compares
+  // greater than dis(gen) which itself is a uniform random number in [0.0,1.0].
   auto it = upper_bound(prefix_P.cbegin(), prefix_P.cend(), dis(gen));
   return T[distance(prefix_P.cbegin(), it) - 1];
 }

@@ -54,11 +54,11 @@ void check_ans(vector<int>& A, const vector<int>& res, int k) {
                       ? A[A.size() >> 1]
                       : 0.5 * (A[(A.size() >> 1) - 1] + A[A.size() >> 1]);
   vector<double> temp;
-  for (const int& a : A) {
+  for (int a : A) {
     temp.emplace_back(fabs(median - a));
   }
   sort(temp.begin(), temp.end());
-  for (const int& r : res) {
+  for (int r : res) {
     assert(fabs(r - median) <= temp[k - 1]);
   }
 }
@@ -68,7 +68,7 @@ void simple_test() {
   vector<int> Dexpres = {2, 3, 3};
   vector<int> Dres = find_k_closest_to_median(D, 3);
   check_ans(D, Dres, 3);
-  for (const int& d : Dres) {
+  for (int d : Dres) {
     cout << d << ' ';
   }
   cout << endl;
@@ -97,7 +97,7 @@ int main(int argc, char* argv[]) {
       A.emplace_back(dis(gen));
     }
     /*
-    for (const int &a : A) {
+    for (int a : A) {
       cout << a << ' ';
     }
     cout << endl;
@@ -106,7 +106,7 @@ int main(int argc, char* argv[]) {
     assert(res.size() == k);
     cout << "n = " << n << ", k = " << k << endl;
     /*
-    for (const int &a : res) {
+    for (int a : res) {
       cout << a << ' ';
     }
     cout << endl;

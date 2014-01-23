@@ -4,16 +4,16 @@
 #include <iostream>
 #include <memory>
 
-#include "./Binary_tree_prototype_template.h"
+#include "./Binary_tree_prototype.h"
 
 using std::cout;
 using std::endl;
 using std::unique_ptr;
 
 // @include
-BinaryTree<int>* LCA(const unique_ptr<BinaryTree<int>>& n,
-                     const unique_ptr<BinaryTree<int>>& a,
-                     const unique_ptr<BinaryTree<int>>& b) {
+BinaryTreeNode<int>* LCA(const unique_ptr<BinaryTreeNode<int>>& n,
+                         const unique_ptr<BinaryTreeNode<int>>& a,
+                         const unique_ptr<BinaryTreeNode<int>>& b) {
   if (!n) {  // empty subtree.
     return nullptr;
   } else if (n == a || n == b) {
@@ -33,18 +33,18 @@ int main(int argc, char* argv[]) {
   //      3
   //    2   5
   //  1    4 6
-  unique_ptr<BinaryTree<int>> root =
-      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{3, nullptr, nullptr});
+  unique_ptr<BinaryTreeNode<int>> root =
+      unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>{3, nullptr, nullptr});
   root->left =
-      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{2, nullptr, nullptr});
+      unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>{2, nullptr, nullptr});
   root->left->left =
-      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{1, nullptr, nullptr});
+      unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>{1, nullptr, nullptr});
   root->right =
-      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{5, nullptr, nullptr});
+      unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>{5, nullptr, nullptr});
   root->right->left =
-      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{4, nullptr, nullptr});
+      unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>{4, nullptr, nullptr});
   root->right->right =
-      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{6, nullptr, nullptr});
+      unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>{6, nullptr, nullptr});
   // should output 3
   auto* x = LCA(root, root->left, root->right);
   assert(x->data == 3);

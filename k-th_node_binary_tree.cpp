@@ -12,15 +12,15 @@ using std::length_error;
 using std::unique_ptr;
 
 template <typename T>
-struct BinaryTree {
+struct BinaryTreeNode {
   T data;
-  unique_ptr<BinaryTree<T>> left, right;
+  unique_ptr<BinaryTreeNode<T>> left, right;
   int size;
 };
 
 // @include
-const BinaryTree<int>* find_kth_node_binary_tree(
-    const unique_ptr<BinaryTree<int>>& root, int k) {
+const BinaryTreeNode<int>* find_kth_node_binary_tree(
+    const unique_ptr<BinaryTreeNode<int>>& root, int k) {
   const auto* n = root.get();
   while (n) {
     int left_size = n->left ? n->left->size : 0;
@@ -47,22 +47,22 @@ int main(int argc, char* argv[]) {
   //      3
   //    2   5
   //  1    4 6
-  auto root = unique_ptr<BinaryTree<int>>(new BinaryTree<int>());
+  auto root = unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>());
   root->size = 6;
   root->data = 3;
-  root->left = unique_ptr<BinaryTree<int>>(new BinaryTree<int>());
+  root->left = unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>());
   root->left->size = 2;
   root->left->data = 2;
-  root->left->left = unique_ptr<BinaryTree<int>>(new BinaryTree<int>());
+  root->left->left = unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>());
   root->left->left->size = 1;
   root->left->left->data = 1;
-  root->right = unique_ptr<BinaryTree<int>>(new BinaryTree<int>());
+  root->right = unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>());
   root->right->size = 3;
   root->right->data = 5;
-  root->right->left = unique_ptr<BinaryTree<int>>(new BinaryTree<int>());
+  root->right->left = unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>());
   root->right->left->size = 1;
   root->right->left->data = 4;
-  root->right->right = unique_ptr<BinaryTree<int>>(new BinaryTree<int>());
+  root->right->right = unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>());
   root->right->right->size = 1;
   root->right->right->data = 6;
   // should throw

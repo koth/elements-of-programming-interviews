@@ -1,6 +1,7 @@
 // Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
 #include <algorithm>
+#include <cassert>
 #include <cmath>
 #include <deque>
 #include <iostream>
@@ -109,5 +110,11 @@ int main(int argc, char* argv[]) {
   A[7] = {5, 0, 0, 2, 0, 4, 0, 0, 9};
   A[8] = {0, 3, 8, 0, 0, 0, 4, 6, 0};
   solve_Sudoku(&A);
+  vector<vector<int>> golden_A = {{7,2,6,4,9,3,8,1,5},{3,1,5,7,2,8,9,4,6},{4,8,9,6,5,1,2,3,7},{8,5,2,1,4,7,6,9,3},{6,7,3,9,8,5,1,2,4},{9,4,1,3,6,2,7,5,8},{1,9,4,8,3,6,5,7,2},{5,6,7,2,1,4,3,8,9},{2,3,8,5,7,9,4,6,1}};
+  for (size_t i = 0; i < 9; ++i) {
+    for (size_t j = 0; j < 9; ++j) {
+      assert(A[i][j] == golden_A[i][j]);
+    }
+  }
   return 0;
 }

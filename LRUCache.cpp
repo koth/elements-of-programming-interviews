@@ -83,5 +83,10 @@ int main(int argc, char* argv[]) {
   assert(val == 1);
   c.erase(1);
   assert(!c.lookup(1, &val));
+  c.insert(2, 2);
+  c.insert(3, 3);
+  c.insert(4, 4);
+  c.insert(5, 5);
+  assert(!c.lookup(1, &val));
   return 0;
 }

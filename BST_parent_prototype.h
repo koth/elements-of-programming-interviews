@@ -10,10 +10,10 @@ using std::unique_ptr;
 
 // @include
 template <typename T>
-struct BinarySearchTree {
+struct BSTNode {
   T data;
-  unique_ptr<BinarySearchTree<T>> left, right;
-  BinarySearchTree<T>* parent;
+  unique_ptr<BSTNode<T>> left, right;
+  BSTNode<T>* parent;
 };
 // @exclude
 #endif  // SOLUTIONS_BST_PARENT_PROTOTYPE_H_

@@ -1,5 +1,6 @@
 // Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
+#include <cassert>
 #include <iostream>
 #include <numeric>
 #include <random>
@@ -38,7 +39,14 @@ int minimize_difference(const vector<int>& A) {
 }
 // @exclude
 
+void small_test() {
+  // The example in the book.
+  vector<int> A = {65, 35, 245, 195, 65, 150, 275, 155, 120, 320, 75, 40, 200, 100, 220, 99};
+  assert(minimize_difference(A) == 1);
+}
+
 int main(int argc, char* argv[]) {
+  small_test();
   default_random_engine gen((random_device())());
   int n;
   vector<int> A;

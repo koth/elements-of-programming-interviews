@@ -12,11 +12,11 @@ using std::endl;
 using std::swap;
 using std::unique_ptr;
 
-int get_depth(const BinaryTree<int>* n);
+int get_depth(const BinaryTreeNode<int>* n);
 
 // @include
-BinaryTree<int>* LCA(const unique_ptr<BinaryTree<int>>& a,
-                     const unique_ptr<BinaryTree<int>>& b) {
+BinaryTreeNode<int>* LCA(const unique_ptr<BinaryTreeNode<int>>& a,
+                         const unique_ptr<BinaryTreeNode<int>>& b) {
   auto* i = a.get(), *j = b.get();
   int depth_i = get_depth(i), depth_j = get_depth(j);
   if (depth_j > depth_i) {
@@ -36,7 +36,7 @@ BinaryTree<int>* LCA(const unique_ptr<BinaryTree<int>>& a,
   return i;
 }
 
-int get_depth(const BinaryTree<int>* n) {
+int get_depth(const BinaryTreeNode<int>* n) {
   int d = 0;
   while (n) {
     ++d, n = n->parent;
@@ -49,18 +49,18 @@ int main(int argc, char* argv[]) {
   //      3
   //    2   5
   //  1    4 6
-  auto root = unique_ptr<BinaryTree<int>>(
-      new BinaryTree<int>{3, nullptr, nullptr, nullptr});
-  root->left = unique_ptr<BinaryTree<int>>(
-      new BinaryTree<int>{2, nullptr, nullptr, root.get()});
-  root->left->left = unique_ptr<BinaryTree<int>>(
-      new BinaryTree<int>{1, nullptr, nullptr, root->left.get()});
-  root->right = unique_ptr<BinaryTree<int>>(
-      new BinaryTree<int>{5, nullptr, nullptr, root.get()});
-  root->right->left = unique_ptr<BinaryTree<int>>(
-      new BinaryTree<int>{4, nullptr, nullptr, root->right.get()});
-  root->right->right = unique_ptr<BinaryTree<int>>(
-      new BinaryTree<int>{6, nullptr, nullptr, root->right.get()});
+  auto root = unique_ptr<BinaryTreeNode<int>>(
+      new BinaryTreeNode<int>{3, nullptr, nullptr, nullptr});
+  root->left = unique_ptr<BinaryTreeNode<int>>(
+      new BinaryTreeNode<int>{2, nullptr, nullptr, root.get()});
+  root->left->left = unique_ptr<BinaryTreeNode<int>>(
+      new BinaryTreeNode<int>{1, nullptr, nullptr, root->left.get()});
+  root->right = unique_ptr<BinaryTreeNode<int>>(
+      new BinaryTreeNode<int>{5, nullptr, nullptr, root.get()});
+  root->right->left = unique_ptr<BinaryTreeNode<int>>(
+      new BinaryTreeNode<int>{4, nullptr, nullptr, root->right.get()});
+  root->right->right = unique_ptr<BinaryTreeNode<int>>(
+      new BinaryTreeNode<int>{6, nullptr, nullptr, root->right.get()});
 
   // should output 3
   assert(LCA(root->left, root->right)->data == 3);

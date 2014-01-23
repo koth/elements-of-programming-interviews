@@ -1,5 +1,6 @@
 // Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
+#include <cassert>
 #include <iostream>
 #include <numeric>
 #include <vector>
@@ -10,6 +11,7 @@ using std::vector;
 
 // @include
 // V contains the number of votes for each state.
+// This function returns the total number of ways to tie.
 long ties_election(const vector<int>& V) {
   int total_votes = accumulate(V.cbegin(), V.cend(), 0);
 
@@ -31,7 +33,7 @@ long ties_election(const vector<int>& V) {
 
 void simple_test() {
   vector<int> votes = {4, 5, 2, 7};
-  cout << ties_election(votes) << endl;
+  assert(2 == ties_election(votes));
 }
 
 int main(int argc, char* argv[]) {

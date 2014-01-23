@@ -7,7 +7,7 @@
 #include <random>
 #include <vector>
 
-#include "./Binary_tree_prototype_template.h"
+#include "./Binary_tree_prototype.h"
 #include "./Binary_tree_utils.h"
 
 using std::cout;
@@ -18,31 +18,31 @@ using std::uniform_int_distribution;
 using std::unique_ptr;
 using std::vector;
 
-BinaryTree<int>* reconstruct_pre_in_orders_helper(
+BinaryTreeNode<int>* reconstruct_pre_in_orders_helper(
     const vector<int>& pre, int pre_s, int pre_e,
     const vector<int>& in, int in_s, int in_e);
 
 // @include
-BinaryTree<int>* reconstruct_pre_in_orders(const vector<int>& pre,
-                                           const vector<int>& in) {
+BinaryTreeNode<int>* reconstruct_pre_in_orders(const vector<int>& pre,
+                                               const vector<int>& in) {
   return reconstruct_pre_in_orders_helper(pre, 0, pre.size(),
                                           in, 0, in.size());
 }
 
-BinaryTree<int>* reconstruct_pre_in_orders_helper(
+BinaryTreeNode<int>* reconstruct_pre_in_orders_helper(
     const vector<int>& pre, int pre_s, int pre_e,
     const vector<int>& in, int in_s, int in_e) {
   if (pre_e > pre_s && in_e > in_s) {
     auto it = find(in.cbegin() + in_s, in.cbegin() + in_e, pre[pre_s]);
     auto left_tree_size = distance(in.cbegin(), it) - in_s;
 
-    return new BinaryTree<int>{pre[pre_s],
+    return new BinaryTreeNode<int>{pre[pre_s],
       // Recursively build the left subtree.
-      unique_ptr<BinaryTree<int>>(reconstruct_pre_in_orders_helper(
+      unique_ptr<BinaryTreeNode<int>>(reconstruct_pre_in_orders_helper(
           pre, pre_s + 1, pre_s + 1 + left_tree_size,
           in, in_s, distance(in.cbegin(), it))),
       // Recursively build the right subtree.
-      unique_ptr<BinaryTree<int>>(reconstruct_pre_in_orders_helper(
+      unique_ptr<BinaryTreeNode<int>>(reconstruct_pre_in_orders_helper(
           pre, pre_s + 1 + left_tree_size, pre_e,
           in, distance(in.cbegin(), it) + 1, in_e))
       };
@@ -62,11 +62,11 @@ int main(int argc, char *argv[]) {
       uniform_int_distribution<int> dis(1, 10000);
       n = dis(gen);
     }
-    unique_ptr<BinaryTree<int>> root = generate_rand_binary_tree<int>(n, true);
+    unique_ptr<BinaryTreeNode<int>> root = generate_rand_binary_tree<int>(n, true);
     vector<int> pre = generate_preorder(root);
     vector<int> in = generate_inorder(root);
     auto res =
-        unique_ptr<BinaryTree<int>>(reconstruct_pre_in_orders(pre, in));
+        unique_ptr<BinaryTreeNode<int>>(reconstruct_pre_in_orders(pre, in));
     assert(is_two_binary_trees_equal<int>(root, res));
     delete_binary_tree(&root);
     delete_binary_tree(&res);

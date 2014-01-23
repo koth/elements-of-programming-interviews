@@ -6,25 +6,25 @@
 #include <memory>
 #include <utility>
 
-#include "./Binary_tree_prototype_template.h"
+#include "./Binary_tree_prototype.h"
 
 using std::cout;
 using std::endl;
 using std::pair;
 using std::unique_ptr;
 
-pair<BinaryTree<int>*, int> find_non_k_balanced_node_helper(
-    const unique_ptr<BinaryTree<int>>& n,
+pair<BinaryTreeNode<int>*, int> find_non_k_balanced_node_helper(
+    const unique_ptr<BinaryTreeNode<int>>& n,
     int k);
 
 // @include
-BinaryTree<int>* find_non_k_balanced_node(
-    const unique_ptr<BinaryTree<int>>& n, int k) {
+BinaryTreeNode<int>* find_non_k_balanced_node(
+    const unique_ptr<BinaryTreeNode<int>>& n, int k) {
   return find_non_k_balanced_node_helper(n, k).first;
 }
 
-pair<BinaryTree<int>*, int> find_non_k_balanced_node_helper(
-    const unique_ptr<BinaryTree<int>>& n,
+pair<BinaryTreeNode<int>*, int> find_non_k_balanced_node_helper(
+    const unique_ptr<BinaryTreeNode<int>>& n,
     int k) {
   // Empty tree.
   if (!n) {
@@ -54,20 +54,20 @@ int main(int argc, char* argv[]) {
   //      3
   //    2   5
   //  1    4 6
-  unique_ptr<BinaryTree<int>> root =
-      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{3, nullptr, nullptr});
+  unique_ptr<BinaryTreeNode<int>> root =
+      unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>{3, nullptr, nullptr});
   root->left =
-      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{2, nullptr, nullptr});
+      unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>{2, nullptr, nullptr});
   root->left->left =
-      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{1, nullptr, nullptr});
+      unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>{1, nullptr, nullptr});
   root->right =
-      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{5, nullptr, nullptr});
+      unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>{5, nullptr, nullptr});
   root->right->left =
-      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{4, nullptr, nullptr});
+      unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>{4, nullptr, nullptr});
   root->right->right =
-      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{6, nullptr, nullptr});
+      unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>{6, nullptr, nullptr});
   int k = 0;
-  BinaryTree<int>* ans(find_non_k_balanced_node(root, k));
+  BinaryTreeNode<int>* ans(find_non_k_balanced_node(root, k));
   assert(ans->data == 2);
   if (ans) {
     cout << ans->data << endl;

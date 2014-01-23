@@ -15,36 +15,37 @@ using std::numeric_limits;
 using std::unique_ptr;
 using std::vector;
 
+BSTNode<int>* rebuild_BST_postorder_helper(
+    const vector<int> &postorder, int s, int e);
+
 // @include
+// Given a postorder traversal of a BST, return its root.
+BSTNode<int>* rebuild_BST_from_postorder(const vector<int>& postorder) {
+  return rebuild_BST_postorder_helper(postorder, 0, postorder.size());
+}
+
 // Build a BST based on postorder[s : e - 1], return its root.
-template <typename T>
-BinarySearchTree<T>* rebuild_BST_postorder_helper(
-    const vector<T> &postorder, int s, int e) {
+BSTNode<int>* rebuild_BST_postorder_helper(
+    const vector<int> &postorder, int s, int e) {
   if (s < e) {
     int x = s;
     while (x < e && postorder[x] < postorder[e - 1]) {
       ++x;
     }
-    return new BinarySearchTree<T>{
-        postorder[e - 1], 
-        unique_ptr<BinarySearchTree<T>>(
+    return new BSTNode<int>{
+        postorder[e - 1],
+        unique_ptr<BSTNode<int>>(
           rebuild_BST_postorder_helper(postorder, s, x)),
-        unique_ptr<BinarySearchTree<T>>(
+        unique_ptr<BSTNode<int>>(
           rebuild_BST_postorder_helper(postorder, x, e - 1))
     };
   }
   return nullptr;
 }
-
-// Given a postorder traversal of a BST, return its root.
-template <typename T>
-BinarySearchTree<T>* rebuild_BST_from_postorder(const vector<T>& postorder) {
-  return rebuild_BST_postorder_helper(postorder, 0, postorder.size());
-}
 // @exclude
 
 template <typename T>
-void check_ans(const unique_ptr<BinarySearchTree<T>>& n, const T& pre) {
+void check_ans(const unique_ptr<BSTNode<T>>& n, const T& pre) {
   if (n) {
     check_ans(n->left, pre);
     assert(pre <= n->data);
@@ -69,7 +70,7 @@ int main(int argc, char *argv[]) {
   postorder.emplace_back(3);
   postorder.emplace_back(2);
   postorder.emplace_back(1);
-  unique_ptr<BinarySearchTree<int>> root(rebuild_BST_from_postorder(postorder));
+  unique_ptr<BSTNode<int>> root(rebuild_BST_from_postorder(postorder));
   check_ans(root, numeric_limits<int>::min());
   return 0;
 }

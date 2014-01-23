@@ -1,6 +1,7 @@
 // Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
 #include <algorithm>
+#include <cassert>
 #include <iostream>
 #include <random>
 #include <utility>
@@ -26,18 +27,29 @@ vector<int> rand_vector(int len) {
 }
 
 // @include
-int knapsack(int w, const vector<pair<int, int>>& items) {
+struct Item {
+  int weight, value;
+};
+
+int knapsack(int w, const vector<Item>& items) {
   vector<int> V(w + 1, 0);
   for (int i = 0; i < items.size(); ++i) {
-    for (int j = w; j >= items[i].first; --j) {
-      V[j] = max(V[j], V[j - items[i].first] + items[i].second);
+    for (int j = w; j >= items[i].weight; --j) {
+      V[j] = max(V[j], V[j - items[i].weight] + items[i].value);
     }
   }
   return V[w];
 }
 // @exclude
 
+void small_test() {
+  // The example in the book.
+  vector<Item> items = {{20, 65}, {8, 35}, {60, 245}, {55, 195}, {40, 65}, {70, 150}, {85, 275}, {25, 155}, {30, 120}, {65, 320}, {75, 75}, {10, 40}, {95, 200}, {50, 100}, {40, 220}, {10, 99}};
+  assert(695 == knapsack(130, items));
+}
+
 int main(int argc, char* argv[]) {
+  small_test();
   default_random_engine gen((random_device())());
   vector<int> weight, value;
   int n, W;
@@ -71,9 +83,9 @@ int main(int argc, char* argv[]) {
     cout << value[i] << ' ';
   }
   cout << endl;
-  vector<pair<int, int>> items;
+  vector<Item> items;
   for (int i = 0; i < weight.size(); ++i) {
-    items.emplace_back(weight[i], value[i]);
+    items.emplace_back(Item{weight[i], value[i]});
   }
   cout << "knapsack size = " << W << endl;
   cout << "all value = " << knapsack(W, items) << endl;

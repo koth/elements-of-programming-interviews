@@ -1,46 +1,60 @@
 // Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
+#include <cassert>
 #include <iostream>
 #include <memory>
+#include <vector>
 
-#include "./Binary_tree_prototype_template.h"
+#include "./Binary_tree_prototype.h"
 
 using std::cout;
 using std::endl;
 using std::unique_ptr;
+using std::vector;
 
-void left_boundary_b_tree(const unique_ptr<BinaryTree<int>>& n,
+void left_boundary_b_tree(const unique_ptr<BinaryTreeNode<int>>& n,
                           bool is_boundary);
-void right_boundary_b_tree(const unique_ptr<BinaryTree<int>>& n,
+void right_boundary_b_tree(const unique_ptr<BinaryTreeNode<int>>& n,
                            bool is_boundary);
 
+vector<int> result;
+
 // @include
-void exterior_binary_tree(const unique_ptr<BinaryTree<int>>& root) {
+void exterior_binary_tree(const unique_ptr<BinaryTreeNode<int>>& root) {
   if (root) {
     cout << root->data << ' ';
+    // @exclude
+    result.emplace_back(root->data);
+    // @include
     left_boundary_b_tree(root->left, true);
     right_boundary_b_tree(root->right, true);
   }
 }
 
-void left_boundary_b_tree(const unique_ptr<BinaryTree<int>>& n,
+void left_boundary_b_tree(const unique_ptr<BinaryTreeNode<int>>& n,
                           bool is_boundary) {
   if (n) {
     if (is_boundary || (!n->left && !n->right)) {
       cout << n->data << ' ';
+      // @exclude
+      result.emplace_back(n->data);
+      // @include
     }
     left_boundary_b_tree(n->left, is_boundary);
     left_boundary_b_tree(n->right, is_boundary && !n->left);
   }
 }
 
-void right_boundary_b_tree(const unique_ptr<BinaryTree<int>>& n,
+void right_boundary_b_tree(const unique_ptr<BinaryTreeNode<int>>& n,
                            bool is_boundary) {
   if (n) {
     right_boundary_b_tree(n->left, is_boundary && !n->right);
     right_boundary_b_tree(n->right, is_boundary);
     if (is_boundary || (!n->left && !n->right)) {
       cout << n->data << ' ';
+      // @exclude
+      result.emplace_back(n->data);
+      // @include
     }
   }
 }
@@ -51,25 +65,28 @@ int main(int argc, char* argv[]) {
   //    2   5
   //  1  0 4 6
   //   -1 -2
-  unique_ptr<BinaryTree<int>> root =
-      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{3, nullptr, nullptr});
+  unique_ptr<BinaryTreeNode<int>> root =
+      unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>{3, nullptr, nullptr});
   root->left =
-      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{2, nullptr, nullptr});
+      unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>{2, nullptr, nullptr});
   root->left->right =
-      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{0, nullptr, nullptr});
+      unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>{0, nullptr, nullptr});
   root->left->right->left =
-      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{-1, nullptr, nullptr});
+      unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>{-1, nullptr, nullptr});
   root->left->right->right =
-      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{-2, nullptr, nullptr});
+      unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>{-2, nullptr, nullptr});
   root->left->left =
-      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{1, nullptr, nullptr});
+      unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>{1, nullptr, nullptr});
   root->right =
-      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{5, nullptr, nullptr});
+      unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>{5, nullptr, nullptr});
   root->right->left =
-      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{4, nullptr, nullptr});
+      unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>{4, nullptr, nullptr});
   root->right->right =
-      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{6, nullptr, nullptr});
+      unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>{6, nullptr, nullptr});
   // should output 3 2 1 -1 -2 4 6 5
+  vector<int> golden_res = {3, 2, 1, -1, -2, 4, 6, 5};
   exterior_binary_tree(root);
+  assert(result.size() == golden_res.size());
+  assert(equal(result.begin(), result.end(), golden_res.begin()));
   return 0;
 }

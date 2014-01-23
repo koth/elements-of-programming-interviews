@@ -7,7 +7,7 @@
 #include <stack>
 #include <vector>
 
-#include "./Binary_tree_prototype_template.h"
+#include "./Binary_tree_prototype.h"
 #include "./Binary_tree_utils.h"
 
 using std::cout;
@@ -20,18 +20,20 @@ using std::unique_ptr;
 using std::vector;
 
 // @include
-BinaryTree<int>* reconstruct_preorder(const vector<int*>& preorder) {
-  stack<BinaryTree<int>*> s;
+BinaryTreeNode<int>* reconstruct_preorder(const vector<int*>& preorder) {
+  stack<BinaryTreeNode<int>*> s;
   for (auto it = preorder.crbegin(); it != preorder.crend(); ++it) {
     if (!*it) {
       s.emplace(nullptr);
     } else {  // non-nullptr.
-      auto* l = s.top();
+      auto* l_n = s.top();
       s.pop();
-      auto* r = s.top();
+      auto* r_n = s.top();
       s.pop();
-      s.emplace(new BinaryTree<int>{**it, unique_ptr<BinaryTree<int>>(l),
-                                    unique_ptr<BinaryTree<int>>(r)});
+      s.emplace(
+          new BinaryTreeNode<int>{**it,
+                                  unique_ptr<BinaryTreeNode<int>>(l_n),
+                                  unique_ptr<BinaryTreeNode<int>>(r_n)});
     }
   }
   return s.top();
@@ -39,7 +41,7 @@ BinaryTree<int>* reconstruct_preorder(const vector<int*>& preorder) {
 // @exclude
 
 template <typename T>
-void gen_preorder_with_null(const unique_ptr<BinaryTree<T>>& n,
+void gen_preorder_with_null(const unique_ptr<BinaryTreeNode<T>>& n,
                             vector<T*>* p) {
   if (!n) {
     p->emplace_back(nullptr);
@@ -63,10 +65,10 @@ int main(int argc, char* argv[]) {
       uniform_int_distribution<int> dis(1, 10000);
       n = dis(gen);
     }
-    unique_ptr<BinaryTree<int>> root = generate_rand_binary_tree<int>(n);
+    unique_ptr<BinaryTreeNode<int>> root = generate_rand_binary_tree<int>(n);
     vector<int*> p;
     gen_preorder_with_null(root, &p);
-    auto x = unique_ptr<BinaryTree<int>>(reconstruct_preorder(p));
+    auto x = unique_ptr<BinaryTreeNode<int>>(reconstruct_preorder(p));
     assert(is_two_binary_trees_equal(root, x));
     delete_binary_tree(&root);
     delete_binary_tree(&x);

@@ -84,18 +84,27 @@ void simple_test() {
   B = {-5};
   range = find_maximum_subarray(B);
   cout << range.first << " " << range.second << endl;
+  check_max_sum(B, range);
   B = {0};
   range = find_maximum_subarray(B);
   cout << range.first << " " << range.second << endl;
+  check_max_sum(B, range);
   B = {0, 0};
   range = find_maximum_subarray(B);
   cout << range.first << " " << range.second << endl;
+  check_max_sum(B, range);
   B = {0, 0, 0};
   range = find_maximum_subarray(B);
   cout << range.first << " " << range.second << endl;
+  check_max_sum(B, range);
   B = {0, -5, 0};
   range = find_maximum_subarray(B);
   cout << range.first << " " << range.second << endl;
+  check_max_sum(B, range);
+  B = {-2, -1};
+  range = find_maximum_subarray(B);
+  cout << range.first << " " << range.second << endl;
+  check_max_sum(B, range);
 }
 
 int main(int argc, char* argv[]) {

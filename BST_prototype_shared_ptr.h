@@ -9,9 +9,9 @@ using std::shared_ptr;
 
 // @include
 template <typename T>
-struct BinarySearchTree {
+struct BSTNode {
   T data;
-  shared_ptr<BinarySearchTree<T>> left, right;
+  shared_ptr<BSTNode<T>> left, right;
 };
 // @exclude
 #endif  // SOLUTIONS_BST_PROTOTYPE_H_

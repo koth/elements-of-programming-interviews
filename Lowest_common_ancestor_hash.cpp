@@ -15,10 +15,10 @@ using std::unique_ptr;
 using std::unordered_set;
 
 // @include
-BinaryTree<int>* LCA(const unique_ptr<BinaryTree<int>>& a,
-                     const unique_ptr<BinaryTree<int>>& b) {
+BinaryTreeNode<int>* LCA(const unique_ptr<BinaryTreeNode<int>>& a,
+                         const unique_ptr<BinaryTreeNode<int>>& b) {
   auto* i = a.get(), *j = b.get();
-  unordered_set<const BinaryTree<int>*> hash;
+  unordered_set<const BinaryTreeNode<int>*> hash;
   while (i || j) {
     if (i) {
       if (hash.emplace(i).second == false) {
@@ -42,23 +42,23 @@ int main(int argc, char* argv[]) {
   //      3
   //    2   5
   //  1    4 6
-  unique_ptr<BinaryTree<int>> root =
-      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{3, nullptr, nullptr});
+  unique_ptr<BinaryTreeNode<int>> root =
+      unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>{3, nullptr, nullptr});
   root->parent = nullptr;
   root->left =
-      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{2, nullptr, nullptr});
+      unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>{2, nullptr, nullptr});
   root->left->parent = root.get();
   root->left->left =
-      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{1, nullptr, nullptr});
+      unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>{1, nullptr, nullptr});
   root->left->left->parent = root->left.get();
   root->right =
-      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{5, nullptr, nullptr});
+      unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>{5, nullptr, nullptr});
   root->right->parent = root.get();
   root->right->left =
-      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{4, nullptr, nullptr});
+      unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>{4, nullptr, nullptr});
   root->right->left->parent = root->right.get();
   root->right->right =
-      unique_ptr<BinaryTree<int>>(new BinaryTree<int>{6, nullptr, nullptr});
+      unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>{6, nullptr, nullptr});
   root->right->right->parent = root->right.get();
 
   // should output 3
