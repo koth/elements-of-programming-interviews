@@ -17,7 +17,7 @@ using std::uniform_int_distribution;
 string convert_base(const string& s, int b1, int b2) {
   bool neg = s.front() == '-';
   int x = 0;
-  for (int i = (neg == true ? 1 : 0); i < s.size(); ++i) {
+  for (size_t i = (neg == true ? 1 : 0); i < s.size(); ++i) {
     x *= b1;
     x += isdigit(s[i]) ? s[i] - '0' : s[i] - 'A' + 10;
   }
@@ -29,10 +29,10 @@ string convert_base(const string& s, int b1, int b2) {
     x /= b2;
   }
 
-  if (ans.empty()) {
+  if (ans.empty()) {  // special case: s is 0.
     ans.push_back('0');
   }
-  if (neg) {
+  if (neg) {  // s is a negative number.
     ans.push_back('-');
   }
   reverse(ans.begin(), ans.end());

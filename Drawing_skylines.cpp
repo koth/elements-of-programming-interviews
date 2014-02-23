@@ -14,15 +14,11 @@ using std::uniform_int_distribution;
 using std::vector;
 
 struct Skyline;
-void merge_intersect_skylines(vector<Skyline>* merged,
-                              Skyline* a,
-                              int* a_idx,
-                              Skyline* b,
-                              int* b_idx);
+void merge_intersect_skylines(vector<Skyline>* merged, Skyline* a, int* a_idx,
+                              Skyline* b, int* b_idx);
 vector<Skyline> merge_skylines(vector<Skyline>* L, vector<Skyline>* R);
 vector<Skyline> drawing_skylines_helper(const vector<Skyline>& skylines,
-                                        int start,
-                                        int end);
+                                        int start, int end);
 
 // @include
 struct Skyline {
@@ -34,8 +30,7 @@ vector<Skyline> drawing_skylines(vector<Skyline> skylines) {
 }
 
 vector<Skyline> drawing_skylines_helper(const vector<Skyline>& skylines,
-                                        int start,
-                                        int end) {
+                                        int start, int end) {
   if (end - start <= 1) {  // 0 or 1 skyline, just copy it.
     return {skylines.cbegin() + start, skylines.cbegin() + end};
   }
@@ -66,11 +61,8 @@ vector<Skyline> merge_skylines(vector<Skyline>* L, vector<Skyline>* R) {
   return merged;
 }
 
-void merge_intersect_skylines(vector<Skyline>* merged,
-                              Skyline* a,
-                              int* a_idx,
-                              Skyline* b,
-                              int* b_idx) {
+void merge_intersect_skylines(vector<Skyline>* merged, Skyline* a, int* a_idx,
+                              Skyline* b, int* b_idx) {
   if (a->right <= b->right) {
     if (a->height > b->height) {
       if (b->right != a->right) {

@@ -17,12 +17,8 @@ using std::string;
 using std::uniform_int_distribution;
 using std::vector;
 
-bool exp_synthesis_helper(const vector<int>& A,
-                          int k,
-                          list<int>* operand_list,
-                          list<char>* oper_list,
-                          int cur,
-                          int level);
+bool exp_synthesis_helper(const vector<int>& A, int k, list<int>* operand_list,
+                          list<char>* oper_list, int cur, int level);
 int remaining_int(const vector<int>& A, int idx);
 int evaluate(list<int> operand_list, const list<char>& oper_list);
 
@@ -38,12 +34,9 @@ void exp_synthesis(const vector<int>& A, int k) {
   }
 }
 
-bool exp_synthesis_helper(const vector<int>& A,
-                          int k,
-                          list<int>* operand_list,
-                          list<char>* oper_list,
-                          int cur,
-                          int level) {
+bool exp_synthesis_helper(const vector<int>& A, int k,
+                          list<int>* operand_list, list<char>* oper_list,
+                          int cur, int level) {
   cur = cur * 10 + A[level];
   if (level == A.size() - 1) {
     operand_list->emplace_back(cur);
@@ -123,7 +116,8 @@ void small_test() {
   exp_synthesis(A, k);
   list<int> golden_operand_res = {123, 2, 5, 3, 7, 85, 9};
   assert(golden_operand_res.size() == operand_res.size());
-  assert(equal(operand_res.begin(), operand_res.end(), golden_operand_res.begin()));
+  assert(equal(operand_res.begin(), operand_res.end(),
+               golden_operand_res.begin()));
   list<char> golden_oper_res = {'+', '+', '*', '*', '+', '*'};
   assert(golden_oper_res.size() == oper_res.size());
   assert(equal(oper_res.begin(), oper_res.end(), golden_oper_res.begin()));

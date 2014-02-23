@@ -5,6 +5,7 @@
 #include <iostream>
 #include <memory>
 #include <random>
+#include <unordered_map>
 #include <vector>
 
 #include "./Binary_tree_prototype.h"
@@ -16,35 +17,44 @@ using std::endl;
 using std::random_device;
 using std::uniform_int_distribution;
 using std::unique_ptr;
+using std::unordered_map;
 using std::vector;
 
 BinaryTreeNode<int>* reconstruct_pre_in_orders_helper(
-    const vector<int>& pre, int pre_s, int pre_e,
-    const vector<int>& in, int in_s, int in_e);
+    const vector<int>& pre, size_t pre_s, size_t pre_e,
+    const vector<int>& in, size_t in_s, size_t in_e,
+    const unordered_map<int, size_t>& in_entry_idx_map);
 
 // @include
 BinaryTreeNode<int>* reconstruct_pre_in_orders(const vector<int>& pre,
                                                const vector<int>& in) {
+  unordered_map<int, size_t> in_entry_idx_map;
+  for (size_t i = 0; i < in.size(); ++i) {
+    in_entry_idx_map.emplace(in[i], i);
+  }
   return reconstruct_pre_in_orders_helper(pre, 0, pre.size(),
-                                          in, 0, in.size());
+                                          in, 0, in.size(), in_entry_idx_map);
 }
 
+// Reconstructs the binary tree from pre[pre_s : pre_e - 1] and
+// in[in_s : in_e - 1].
 BinaryTreeNode<int>* reconstruct_pre_in_orders_helper(
-    const vector<int>& pre, int pre_s, int pre_e,
-    const vector<int>& in, int in_s, int in_e) {
+    const vector<int>& pre, size_t pre_s, size_t pre_e,
+    const vector<int>& in, size_t in_s, size_t in_e,
+    const unordered_map<int, size_t>& in_entry_idx_map) {
   if (pre_e > pre_s && in_e > in_s) {
-    auto it = find(in.cbegin() + in_s, in.cbegin() + in_e, pre[pre_s]);
-    auto left_tree_size = distance(in.cbegin(), it) - in_s;
+    auto idx = in_entry_idx_map.at(pre[pre_s]);
+    auto left_tree_size = idx - in_s;
 
     return new BinaryTreeNode<int>{pre[pre_s],
-      // Recursively build the left subtree.
+      // Recursively builds the left subtree.
       unique_ptr<BinaryTreeNode<int>>(reconstruct_pre_in_orders_helper(
           pre, pre_s + 1, pre_s + 1 + left_tree_size,
-          in, in_s, distance(in.cbegin(), it))),
-      // Recursively build the right subtree.
+          in, in_s, idx, in_entry_idx_map)),
+      // Recursively builds the right subtree.
       unique_ptr<BinaryTreeNode<int>>(reconstruct_pre_in_orders_helper(
           pre, pre_s + 1 + left_tree_size, pre_e,
-          in, distance(in.cbegin(), it) + 1, in_e))
+          in, idx + 1, in_e, in_entry_idx_map))
       };
   }
   return nullptr;

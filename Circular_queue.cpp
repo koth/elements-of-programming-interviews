@@ -18,14 +18,14 @@ class Queue {
   explicit Queue(size_t cap) : data_(cap) {}
 
   void enqueue(int x) {
-    // Dynamically resize due to data_.size() limit.
+    // Dynamically resizes due to data_.size() limit.
     if (count_ == data_.size()) {
-      // Rearrange elements.
+      // Rearranges elements.
       rotate(data_.begin(), data_.begin() + head_, data_.end());
-      head_ = 0, tail_ = count_;  // reset head and tail.
+      head_ = 0, tail_ = count_;  // resets head and tail.
       data_.resize(data_.size() << 1);
     }
-    // Perform enqueue.
+    // Performs enqueue.
     data_[tail_] = x;
     tail_ = (tail_ + 1) % data_.size(), ++count_;
   }

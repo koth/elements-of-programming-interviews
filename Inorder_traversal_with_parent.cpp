@@ -15,13 +15,13 @@ using std::vector;
 vector<int> result;
 
 // @include
-void inorder_traversal(const unique_ptr<BinaryTreeNode<int>>& r) {
+void inorder_traversal(const unique_ptr<BinaryTreeNode<int>>& T) {
   // Empty tree.
-  if (!r) {
+  if (!T) {
     return;
   }
 
-  BinaryTreeNode<int>* prev = nullptr, *curr = r.get(), *next;
+  BinaryTreeNode<int>* prev = nullptr, *curr = T.get(), *next;
   while (curr) {
     if (!prev || prev->left.get() == curr || prev->right.get() == curr) {
       if (curr->left) {

@@ -30,7 +30,7 @@ int find_k_th_largest(vector<int> A, int k) {
       return A[p];
     } else if (p > k - 1) {
       r = p - 1;
-    } else {  // p < k - 1
+    } else {  // p < k - 1.
       l = p + 1;
     }
   }

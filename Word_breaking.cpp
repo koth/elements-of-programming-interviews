@@ -30,7 +30,7 @@ string rand_string(int len) {
 // @include
 vector<string> word_breaking(const string& s,
                              const unordered_set<string>& dict) {
-  // T[i] stores the length of the last string which composed of s(0, i).
+  // T[i] is the length of the last string in the decomposition of s(0, i).
   vector<int> T(s.size(), 0);
   for (int i = 0; i < s.size(); ++i) {
     // Set T[i] if s(0, i) is a valid word.

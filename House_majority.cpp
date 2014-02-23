@@ -13,9 +13,7 @@ using std::random_device;
 using std::uniform_real_distribution;
 using std::vector;
 
-double house_majority_helper(const vector<double>& prob,
-                             int r,
-                             int n,
+double house_majority_helper(const vector<double>& prob, int r, int n,
                              vector<vector<double>>& P);
 
 // @include
@@ -33,9 +31,7 @@ double house_majority(const vector<double>& prob, int n) {
 
 // prob is the probability that each Republican wins.
 // r is the number of Republicans wins, and n is the number of elections.
-double house_majority_helper(const vector<double>& prob,
-                             int r,
-                             int n,
+double house_majority_helper(const vector<double>& prob, int r, int n,
                              vector<vector<double>>& P) {
   if (r > n) {
     return 0.0;  // base case: not enough Republicans.

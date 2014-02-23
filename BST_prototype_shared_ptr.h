@@ -1,7 +1,7 @@
 // Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-#ifndef SOLUTIONS_BST_PROTOTYPE_H_
-#define SOLUTIONS_BST_PROTOTYPE_H_
+#ifndef SOLUTIONS_BST_PROTOTYPE_SHARED_PTR_H_
+#define SOLUTIONS_BST_PROTOTYPE_SHARED_PTR_H_
 
 #include <memory>
 
@@ -14,4 +14,4 @@ struct BSTNode {
   shared_ptr<BSTNode<T>> left, right;
 };
 // @exclude
-#endif  // SOLUTIONS_BST_PROTOTYPE_H_
+#endif  // SOLUTIONS_BST_PROTOTYPE_SHARED_PTR_H_

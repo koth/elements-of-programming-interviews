@@ -1,5 +1,6 @@
 // Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
+#include <cassert>
 #include <iostream>
 #include <memory>
 
@@ -44,9 +45,11 @@ int main(int argc, char* argv[]) {
   cout << "before reverse" << endl;
   print(L1);
   shared_ptr<ListNode<int>> newhead = reverse_linked_list(L1);
+  assert(newhead->data == 3 && newhead->next->data == 2 && newhead->next->next->data == 1);
   cout << endl << "after reverse" << endl;
   print(newhead);
   newhead = reverse_linked_list(newhead);
+  assert(newhead->data == 1 && newhead->next->data == 2 && newhead->next->next->data == 3);
   cout << endl << "after another reverse" << endl;
   print(newhead);
   return 0;

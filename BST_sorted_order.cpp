@@ -17,9 +17,9 @@ using std::vector;
 vector<int> result;
 
 // @include
-void print_BST_in_sorted_order(const unique_ptr<BSTNode<int>>& n) {
+void print_BST_in_sorted_order(const unique_ptr<BSTNode<int>>& r) {
   stack<const BSTNode<int>*> s;
-  const BSTNode<int>* curr = n.get();
+  const BSTNode<int>* curr = r.get();
 
   while (!s.empty() || curr) {
     if (curr) {
@@ -44,16 +44,11 @@ int main(int argc, char* argv[]) {
   //  1    4 6
   unique_ptr<BSTNode<int>> root =
       unique_ptr<BSTNode<int>>(new BSTNode<int>{3, nullptr});
-  root->left =
-      unique_ptr<BSTNode<int>>(new BSTNode<int>{2, nullptr});
-  root->left->left =
-      unique_ptr<BSTNode<int>>(new BSTNode<int>{1, nullptr});
-  root->right =
-      unique_ptr<BSTNode<int>>(new BSTNode<int>{5, nullptr});
-  root->right->left =
-      unique_ptr<BSTNode<int>>(new BSTNode<int>{4, nullptr});
-  root->right->right =
-      unique_ptr<BSTNode<int>>(new BSTNode<int>{6, nullptr});
+  root->left = unique_ptr<BSTNode<int>>(new BSTNode<int>{2, nullptr});
+  root->left->left = unique_ptr<BSTNode<int>>(new BSTNode<int>{1, nullptr});
+  root->right = unique_ptr<BSTNode<int>>(new BSTNode<int>{5, nullptr});
+  root->right->left = unique_ptr<BSTNode<int>>(new BSTNode<int>{4, nullptr});
+  root->right->right = unique_ptr<BSTNode<int>>(new BSTNode<int>{6, nullptr});
   // should output 1 2 3 4 5 6
   print_BST_in_sorted_order(root);
   vector<int> golden_res = {1, 2, 3, 4, 5, 6};

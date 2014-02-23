@@ -62,7 +62,7 @@ int find_min_distance_sorted_arrays(const vector<vector<int>>& arrs) {
     min_dis = min(min_dis,
                   current_heads.crbegin()->val - current_heads.cbegin()->val);
     int tar = current_heads.cbegin()->idx;
-    // Return if there is no remaining element in one array.
+    // Returns if there is no remaining element in one array.
     if (++idx[tar] >= arrs[tar].size()) {
       return min_dis;
     }

@@ -14,25 +14,25 @@ using std::list;
 using std::unique_ptr;
 using std::vector;
 
-void connect_leaves_helper(const unique_ptr<BinaryTreeNode<int>>& n,
+void connect_leaves_helper(const unique_ptr<BinaryTreeNode<int>>& T,
                            list<BinaryTreeNode<int>*>* L);
 
 // @include
 list<BinaryTreeNode<int>*> connect_leaves(
-    const unique_ptr<BinaryTreeNode<int>>& n) {
+    const unique_ptr<BinaryTreeNode<int>>& T) {
   list<BinaryTreeNode<int>*> L;
-  connect_leaves_helper(n, &L);
+  connect_leaves_helper(T, &L);
   return L;
 }
 
-void connect_leaves_helper(const unique_ptr<BinaryTreeNode<int>>& n,
+void connect_leaves_helper(const unique_ptr<BinaryTreeNode<int>>& T,
                            list<BinaryTreeNode<int>*>* L) {
-  if (n) {
-    if (!n->left && !n->right) {
-      L->emplace_back(n.get());
+  if (T) {
+    if (!T->left && !T->right) {
+      L->emplace_back(T.get());
     } else {
-      connect_leaves_helper(n->left, L);
-      connect_leaves_helper(n->right, L);
+      connect_leaves_helper(T->left, L);
+      connect_leaves_helper(T->right, L);
     }
   }
 }
@@ -42,18 +42,18 @@ int main(int argc, char* argv[]) {
   //      3
   //    2   5
   //  1    4 6
-  unique_ptr<BinaryTreeNode<int>> root =
-      unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>{3, nullptr, nullptr});
-  root->left =
-      unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>{2, nullptr, nullptr});
-  root->left->left =
-      unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>{1, nullptr, nullptr});
-  root->right =
-      unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>{5, nullptr, nullptr});
-  root->right->left =
-      unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>{4, nullptr, nullptr});
-  root->right->right =
-      unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>{6, nullptr, nullptr});
+  unique_ptr<BinaryTreeNode<int>> root = unique_ptr<BinaryTreeNode<int>>(
+      new BinaryTreeNode<int>{3, nullptr, nullptr});
+  root->left = unique_ptr<BinaryTreeNode<int>>(
+      new BinaryTreeNode<int>{2, nullptr, nullptr});
+  root->left->left = unique_ptr<BinaryTreeNode<int>>(
+      new BinaryTreeNode<int>{1, nullptr, nullptr});
+  root->right = unique_ptr<BinaryTreeNode<int>>(
+      new BinaryTreeNode<int>{5, nullptr, nullptr});
+  root->right->left = unique_ptr<BinaryTreeNode<int>>(
+      new BinaryTreeNode<int>{4, nullptr, nullptr});
+  root->right->right = unique_ptr<BinaryTreeNode<int>>(
+      new BinaryTreeNode<int>{6, nullptr, nullptr});
   // should output 1, 4, 6
   list<BinaryTreeNode<int>*> L = connect_leaves(root);
   vector<int> output;

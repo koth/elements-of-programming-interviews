@@ -69,13 +69,11 @@ int main(int argc, char* argv[]) {
   vector<int> A;
   default_random_engine gen((random_device())());
   if (argc == 1) {
-    generate_n(back_inserter(A),
-               uniform_int_distribution<int>(1, 10000)(gen),
+    generate_n(back_inserter(A), uniform_int_distribution<int>(1, 10000)(gen),
                [&] { return uniform_int_distribution<int>()(gen); });
   } else {
-    generate_n(back_inserter(A), atoi(argv[1]), [&] {
-      return uniform_int_distribution<int>(4, 4)(gen);
-    });
+    generate_n(back_inserter(A), atoi(argv[1]),
+               [&] { return uniform_int_distribution<int>(4, 4)(gen); });
   }
   string ret = encode(A);
   cout << ret << endl;

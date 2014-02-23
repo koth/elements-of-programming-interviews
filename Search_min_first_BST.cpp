@@ -15,7 +15,7 @@ bool search_min_first_BST(const unique_ptr<BSTNode<int>>& T, int k) {
     return true;
   }
 
-  // Search the right subtree if the smallest key in the right subtree is
+  // Searches the right subtree if the smallest key in the right subtree is
   // greater than or equal to k.
   if (T->right && k >= T->right->data) {
     return search_min_first_BST(T->right, k);

@@ -32,8 +32,7 @@ struct Rectangle {
 
 Rectangle intersect_rectangle(const Rectangle& R, const Rectangle& S) {
   if (is_intersect(R, S)) {
-    return {max(R.x, S.x),
-            max(R.y, S.y),
+    return {max(R.x, S.x), max(R.y, S.y),
             min(R.x + R.width, S.x + S.width) - max(R.x, S.x),
             min(R.y + R.height, S.y + S.height) - max(R.y, S.y)};
   } else {

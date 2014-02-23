@@ -1,7 +1,7 @@
 // Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-#ifndef SOLUTIONS_STACK_WITH_MAX_TEMPLATE_H_
-#define SOLUTIONS_STACK_WITH_MAX_TEMPLATE_H_
+#ifndef SOLUTIONS_STACK_WITH_MAX_H_
+#define SOLUTIONS_STACK_WITH_MAX_H_
 
 #include <algorithm>
 #include <stack>
@@ -41,4 +41,4 @@ class Stack {
   stack<pair<int, int>> s_;
 };
 // @exclude
-#endif  // SOLUTIONS_STACK_WITH_MAX_TEMPLATE_H_
+#endif  // SOLUTIONS_STACK_WITH_MAX_H_

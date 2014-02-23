@@ -8,12 +8,8 @@ using std::cout;
 using std::endl;
 using std::vector;
 
-void compare_kth_largest_heap_helper(const vector<int>& max_heap,
-                                     int k,
-                                     int x,
-                                     int idx,
-                                     int* larger,
-                                     int* equal);
+void compare_kth_largest_heap_helper(const vector<int>& max_heap, int k, int x,
+                                     int idx, int* larger, int* equal);
 
 // @include
 // -1 means smaller, 0 means equal, and 1 means larger.
@@ -23,11 +19,8 @@ int compare_kth_largest_heap(const vector<int>& max_heap, int k, int x) {
   return larger >= k ? 1 : (larger + equal >= k ? 0 : -1);
 }
 
-void compare_kth_largest_heap_helper(const vector<int>& max_heap,
-                                     int k,
-                                     int x,
-                                     int idx,
-                                     int* larger,
+void compare_kth_largest_heap_helper(const vector<int>& max_heap, int k,
+                                     int x, int idx, int* larger,
                                      int* equal) {
   if (*larger >= k || idx >= max_heap.size() || max_heap[idx] < x) {
     return;
@@ -38,27 +31,26 @@ void compare_kth_largest_heap_helper(const vector<int>& max_heap,
   } else {  // max_heap[idx] > x.
     ++*larger;
   }
-  compare_kth_largest_heap_helper(
-      max_heap, k, x, (idx << 1) + 1, larger, equal);
-  compare_kth_largest_heap_helper(
-      max_heap, k, x, (idx << 1) + 2, larger, equal);
+  compare_kth_largest_heap_helper(max_heap, k, x, (idx << 1) + 1, larger,
+                                  equal);
+  compare_kth_largest_heap_helper(max_heap, k, x, (idx << 1) + 2, larger,
+                                  equal);
 }
 // @exclude
 
+void small_test() {
+  vector<int> max_heap = {10, 2, 9, 2, 2, 8, 8, 2, 2, 2, 2, 7, 7, 7, 7};
+  assert(1 == compare_kth_largest_heap(max_heap, 3, 2));  // kth is larger.
+  assert(1 == compare_kth_largest_heap(max_heap, 6, 2));  // kth is larger.
+}
+
 int main(int argc, char* argv[]) {
+  small_test();
   //      5
   //    4  5
   //  4  4 4 3
   // 4
-  vector<int> max_heap;
-  max_heap.emplace_back(5);
-  max_heap.emplace_back(4);
-  max_heap.emplace_back(5);
-  max_heap.emplace_back(4);
-  max_heap.emplace_back(4);
-  max_heap.emplace_back(4);
-  max_heap.emplace_back(3);
-  max_heap.emplace_back(4);
+  vector<int> max_heap = {5, 4, 5, 4, 4, 4, 3, 4};
   int k, x;
   if (argc == 3) {
     k = atoi(argv[1]), x = atoi(argv[2]);

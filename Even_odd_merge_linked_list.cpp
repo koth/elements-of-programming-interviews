@@ -17,8 +17,8 @@ using std::uniform_int_distribution;
 
 // @include
 shared_ptr<ListNode<int>> even_odd_merge(const shared_ptr<ListNode<int>>& L) {
-  shared_ptr<ListNode<int>> odd = L ? L->next : nullptr;
-  shared_ptr<ListNode<int>> odd_curr = odd;
+  shared_ptr<ListNode<int>> odd_first = L ? L->next : nullptr;
+  shared_ptr<ListNode<int>> odd_curr = odd_first;
   shared_ptr<ListNode<int>> pre_even_curr = nullptr, even_curr = L;
 
   while (even_curr && odd_curr) {
@@ -37,7 +37,7 @@ shared_ptr<ListNode<int>> even_odd_merge(const shared_ptr<ListNode<int>>& L) {
   }
   // Prevents empty list.
   if (pre_even_curr) {
-    pre_even_curr->next = odd;
+    pre_even_curr->next = odd_first;
   }
   return L;
 }

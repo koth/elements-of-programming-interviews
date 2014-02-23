@@ -19,13 +19,13 @@ using std::uniform_int_distribution;
 
 // @include
 double find_median_sorted_circular_linked_list(
-    const shared_ptr<ListNode<int>>& r_node) {
-  if (!r_node) {
+    const shared_ptr<ListNode<int>>& random_pointer) {
+  if (!random_pointer) {
     throw length_error("empty list");  // no node in this linked list.
   }
 
   // Checks all nodes are identical or not and identify the start of list.
-  shared_ptr<ListNode<int>> curr = r_node, start = r_node;
+  shared_ptr<ListNode<int>> curr = random_pointer, start = random_pointer;
   int count = 0;
   do {
     ++count, curr = curr->next;
@@ -33,7 +33,7 @@ double find_median_sorted_circular_linked_list(
     if (start->data <= curr->data) {
       start = curr;
     }
-  } while (curr != r_node);
+  } while (curr != random_pointer);
   // start's next is the begin of the list.
   start = start->next;
 

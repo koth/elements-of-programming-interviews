@@ -13,17 +13,20 @@ using std::make_shared;
 using std::numeric_limits;
 using std::shared_ptr;
 
+shared_ptr<BSTNode<int>> BST_to_doubly_list_helper(
+    const shared_ptr<BSTNode<int>>& node);
+
 shared_ptr<BSTNode<int>> merge_sorted_linked_lists(
     shared_ptr<BSTNode<int>> A,
     shared_ptr<BSTNode<int>> B);
 
 void append_node_and_advance(shared_ptr<BSTNode<int>>* head,
                              shared_ptr<BSTNode<int>>* tail,
-                             shared_ptr<BSTNode<int>>* n);
+                             shared_ptr<BSTNode<int>>* node);
 
 void append_node(shared_ptr<BSTNode<int>>* head,
                  shared_ptr<BSTNode<int>>* tail,
-                 shared_ptr<BSTNode<int>>* n);
+                 shared_ptr<BSTNode<int>>* node);
 
 // Build a BST from the (s + 1)-th to the e-th node in L.
 shared_ptr<BSTNode<int>> build_BST_from_sorted_doubly_list_helper(
@@ -48,9 +51,17 @@ shared_ptr<BSTNode<int>> build_BST_from_sorted_doubly_list(
   return build_BST_from_sorted_doubly_list_helper(&L, 0, n);
 }
 
+shared_ptr<BSTNode<int>> BST_to_doubly_list(
+    const shared_ptr<BSTNode<int>>& n) {
+  auto res = BST_to_doubly_list_helper(n);
+  res->left->right = nullptr;  // breaks the link from tail to head.
+  res->left = nullptr;  // breaks the link from head to tail.
+  return res;
+}
+
 // Transform a BST into a circular sorted doubly linked list in-place,
 // return the head of the list.
-shared_ptr<BSTNode<int>> BST_to_doubly_list(
+shared_ptr<BSTNode<int>> BST_to_doubly_list_helper(
     const shared_ptr<BSTNode<int>>& n) {
   // Empty subtree.
   if (!n) {
@@ -58,8 +69,8 @@ shared_ptr<BSTNode<int>> BST_to_doubly_list(
   }
 
   // Recursively build the list from left and right subtrees.
-  auto l_head(BST_to_doubly_list(n->left)),
-      r_head(BST_to_doubly_list(n->right));
+  auto l_head(BST_to_doubly_list_helper(n->left)),
+      r_head(BST_to_doubly_list_helper(n->right));
 
   // Append n to the list from left subtree.
   shared_ptr<BSTNode<int>> l_tail = nullptr;
@@ -99,16 +110,14 @@ int count_len(shared_ptr<BSTNode<int>> L) {
 shared_ptr<BSTNode<int>> merge_BSTs(
     shared_ptr<BSTNode<int>> A,
     shared_ptr<BSTNode<int>> B) {
-  // Transform BSTs A and B into sorted doubly lists.
+  // Transforms BSTs A and B into two sorted doubly linked lists.
   A = BST_to_doubly_list(A), B = BST_to_doubly_list(B);
-  A->left->right = B->left->right = nullptr;
-  A->left = B->left = nullptr;
   int len_A = count_len(A), len_B = count_len(B);
   return build_BST_from_sorted_doubly_list(merge_sorted_linked_lists(A, B),
                                            len_A + len_B);
 }
 
-// Merge two sorted linked lists, return the head of list.
+// Merges two sorted doubly linked lists, returns the head of merged list.
 shared_ptr<BSTNode<int>> merge_sorted_linked_lists(
     shared_ptr<BSTNode<int>> A,
     shared_ptr<BSTNode<int>> B) {
@@ -118,11 +127,11 @@ shared_ptr<BSTNode<int>> merge_sorted_linked_lists(
     append_node_and_advance(&sorted_list, &tail, A->data < B->data ? &A : &B);
   }
 
-  // Append the remaining of A.
+  // Appends the remaining of A.
   if (A) {
     append_node(&sorted_list, &tail, &A);
   }
-  // Append the remaining of B.
+  // Appends the remaining of B.
   if (B) {
     append_node(&sorted_list, &tail, &B);
   }
@@ -131,20 +140,20 @@ shared_ptr<BSTNode<int>> merge_sorted_linked_lists(
 
 void append_node_and_advance(shared_ptr<BSTNode<int>>* head,
                              shared_ptr<BSTNode<int>>* tail,
-                             shared_ptr<BSTNode<int>>* n) {
-  append_node(head, tail, n);
-  *n = (*n)->right;  // advance n.
+                             shared_ptr<BSTNode<int>>* node) {
+  append_node(head, tail, node);
+  *node = (*node)->right;  // advances node.
 }
 
 void append_node(shared_ptr<BSTNode<int>>* head,
                  shared_ptr<BSTNode<int>>* tail,
-                 shared_ptr<BSTNode<int>>* n) {
+                 shared_ptr<BSTNode<int>>* node) {
   if (*head) {
-    (*tail)->right = *n, (*n)->left = *tail;
+    (*tail)->right = *node, (*node)->left = *tail;
   } else {
-    *head = *n;
+    *head = *node;
   }
-  *tail = *n;
+  *tail = *node;
 }
 // @exclude
 

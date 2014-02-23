@@ -12,9 +12,9 @@ BSTNode<int>* find_first_equal_k(const unique_ptr<BSTNode<int>>& T, int k) {
   if (!T) {
     return nullptr;  // no match.
   } else if (T->data == k) {
-    // Recursively search the left subtree for first one == k.
-    auto* n = find_first_equal_k(T->left, k);
-    return n ? n : T.get();
+    // Recursively searches the left subtree for first one == k.
+    auto* node = find_first_equal_k(T->left, k);
+    return node ? node : T.get();
   }
   // Search left or right tree according to T->data and k.
   return find_first_equal_k(T->data < k ? T->right : T->left, k);

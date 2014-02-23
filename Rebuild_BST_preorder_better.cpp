@@ -15,17 +15,17 @@ using std::unique_ptr;
 using std::vector;
 
 BSTNode<int>* rebuild_BST_from_preorder_helper(
-    const vector<int>& preorder, int min, int max, int* idx);
+    const vector<int>& preorder, int min, int max, size_t* idx);
 
 // @include
 BSTNode<int>* rebuild_BST_from_preorder(const vector<int>& preorder) {
-  int idx = 0;
+  size_t idx = 0;
   return rebuild_BST_from_preorder_helper(
       preorder, numeric_limits<int>::min(), numeric_limits<int>::max(), &idx);
 }
 
 BSTNode<int>* rebuild_BST_from_preorder_helper(
-    const vector<int>& preorder, int min, int max, int* idx) {
+    const vector<int>& preorder, int min, int max, size_t* idx) {
   if (*idx == preorder.size()) {
     return nullptr;
   }

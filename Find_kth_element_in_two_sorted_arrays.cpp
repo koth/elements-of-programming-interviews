@@ -56,8 +56,7 @@ T find_kth_in_two_sorted_arrays(
 }
 */
 // @include
-int find_kth_in_two_sorted_arrays(const vector<int>& A,
-                                  const vector<int>& B,
+int find_kth_in_two_sorted_arrays(const vector<int>& A, const vector<int>& B,
                                   int k) {
   // Lower bound of elements we will choose in A.
   int b = max(0, static_cast<int>(k - B.size()));

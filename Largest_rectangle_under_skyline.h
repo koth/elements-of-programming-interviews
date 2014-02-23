@@ -45,4 +45,23 @@ int calculate_largest_rectangle(const vector<int>& A) {
   return max_area;
 }
 // @exclude
+
+int calculate_largest_rectangle_alternative(const vector<int>& A) {
+  stack<int> s;
+  int max_area = 0;
+  for (int i = 0; i < A.size(); ++i) {
+    while (!s.empty() && A[i] < A[s.top()]) {
+      int candidate = s.top();
+      s.pop();
+      max_area = max(max_area, A[candidate] * (s.empty() ? i : i - s.top() - 1));
+    }
+    s.emplace(i);
+  }
+  while (!s.empty()) {
+    int candidate = s.top();
+    s.pop();
+    max_area = max(max_area, A[candidate] * (int)(s.empty() ? A.size() : A.size() - s.top() - 1));
+  }
+  return max_area;
+}
 #endif  // SOLUTIONS_LARGEST_RECTANGLE_UNDER_SKYLINE_H_

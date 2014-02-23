@@ -31,18 +31,18 @@ string rand_string(int len) {
 }
 
 // @include
-void reverse_words(string* input) {
+void reverse_words(string* s) {
   // Reverse the whole string first.
-  reverse(input->begin(), input->end());
+  reverse(s->begin(), s->end());
 
   size_t start = 0, end;
-  while ((end = input->find(" ", start)) != string::npos) {
+  while ((end = s->find(" ", start)) != string::npos) {
     // Reverse each word in the string.
-    reverse(input->begin() + start, input->begin() + end);
+    reverse(s->begin() + start, s->begin() + end);
     start = end + 1;
   }
   // Reverse the last word.
-  reverse(input->begin() + start, input->end());
+  reverse(s->begin() + start, s->end());
 }
 // @exclude
 

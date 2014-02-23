@@ -50,7 +50,9 @@ int main(int argc, char* argv[]) {
       A.emplace_back(dis(gen));
     }
     int area = calculate_largest_rectangle(A);
-    cout << area << endl;
+    int alter_area = calculate_largest_rectangle_alternative(A);
+    cout << area << " " << alter_area << endl;
+    assert(area == alter_area);
     assert(check_answer(A) == area);
   }
   return 0;

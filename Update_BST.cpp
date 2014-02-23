@@ -33,7 +33,7 @@ class BinarySearchTree {
         }
       }
 
-      // Insert key according to key and par.
+      // Inserts key according to key and par.
       if (key < par->data) {
         par->left.reset(new TreeNode{key});
       } else {
@@ -44,7 +44,7 @@ class BinarySearchTree {
   }
 
   bool erase(int key) {
-    // Find the node with key.
+    // Finds the node with key.
     TreeNode* curr = root_.get(), *par = nullptr;
     while (curr && curr->data != key) {
       par = curr;
@@ -57,13 +57,13 @@ class BinarySearchTree {
     }
 
     if (curr->right) {
-      // Find the minimum of the right subtree.
+      // Finds the minimum of the right subtree.
       TreeNode* r_curr = curr->right.get(), *r_par = curr;
       while (r_curr->left) {
         r_par = r_curr;
         r_curr = r_curr->left.get();
       }
-      // Move links to erase the node.
+      // Moves links to erase the node.
       r_curr->left.reset(curr->left.release());
       TreeNode* r_curr_right = r_curr->right.release();
       if (curr->right.get() != r_curr) {
@@ -78,12 +78,12 @@ class BinarySearchTree {
       }
       ReplaceParentChildLink(par, curr, r_curr);
 
-      // Update root_ link if needed.
+      // Updates root_ link if needed.
       if (root_.get() == curr) {
         root_.reset(r_curr);
       }
     } else {
-      // Update root_ link if needed.
+      // Updates root_ link if needed.
       if (root_.get() == curr) {
         root_.reset(curr->left.release());
       }
@@ -101,19 +101,19 @@ class BinarySearchTree {
     unique_ptr<TreeNode> left, right;
   };
 
-  void clear(unique_ptr<TreeNode>* n) {
-    if (n->get()) {
-      if ((*n)->left.get()) {
-        clear(&((*n)->left));
+  void clear(unique_ptr<TreeNode>* node) {
+    if (node->get()) {
+      if ((*node)->left.get()) {
+        clear(&((*node)->left));
       }
-      if ((*n)->right.get()) {
-        clear(&((*n)->right));
+      if ((*node)->right.get()) {
+        clear(&((*node)->right));
       }
-      n->reset(nullptr);
+      node->reset(nullptr);
     }
   }
 
-  // Replace the link between par and child by new_link.
+  // Replaces the link between par and child by new_link.
   void ReplaceParentChildLink(TreeNode* par,
                               TreeNode* child,
                               TreeNode* new_link) {

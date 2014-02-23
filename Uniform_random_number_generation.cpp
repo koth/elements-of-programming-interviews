@@ -19,14 +19,14 @@ int zero_one_random() {
 
 // @include
 int uniform_random_a_b(int a, int b) {
-  int l = b - a + 1, res;
+  int t = b - a + 1, res;
   do {
     res = 0;
-    for (int i = 0; (1 << i) < l; ++i) {
+    for (int i = 0; (1 << i) < t; ++i) {
       // zero_one_random() is the system-provided random number generator.
       res = (res << 1) | zero_one_random();
     }
-  } while (res >= l);
+  } while (res >= t);
   return res + a;
 }
 // @exclude

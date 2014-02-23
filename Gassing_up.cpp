@@ -39,7 +39,15 @@ void check_ans(const vector<int>& G, const vector<int>& D, int c) {
   } while (s != c);
 }
 
+void small_test() {
+  // Example in the book.
+  vector<int> G = {20, 15, 15, 15, 35, 25, 30, 15, 65, 45, 10, 45, 25};
+  vector<int> D = {15, 20, 50, 15, 15, 30, 20, 55, 20, 50, 10, 15, 15};
+  assert(8 == find_start_city(G, D));
+}
+
 int main(int argc, char* argv[]) {
+  small_test();
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n;

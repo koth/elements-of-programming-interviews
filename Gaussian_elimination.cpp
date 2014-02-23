@@ -83,8 +83,7 @@ void Eliminate_rows(vector<deque<bool>>* B, int i, int j) {
 // @exclude
 
 bool check_answer_with_solution(const vector<deque<bool>>& A,
-                                const deque<bool>& b,
-                                const deque<bool>& x) {
+                                const deque<bool>& b, const deque<bool>& x) {
   for (int i = 0; i < A.size(); ++i) {
     bool res = A[i][0] && x[0];
     for (int j = 1; j < A[i].size(); ++j) {

@@ -38,7 +38,7 @@ pair<int, int> find_duplicate_missing(const vector<int>& A) {
     }
   }
 
-  for (const int& A_i : A) {
+  for (int A_i : A) {
     if (A_i == miss_or_dup) {  // find duplicate.
       return {miss_or_dup, miss_or_dup ^ miss_XOR_dup};
     }

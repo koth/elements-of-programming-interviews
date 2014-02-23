@@ -18,12 +18,12 @@ using std::uniform_int_distribution;
 // @include
 shared_ptr<ListNode<int>> copy_postings_list(
     const shared_ptr<ListNode<int>>& L) {
-  // Return empty list if L is nullptr.
+  // Returns empty list if L is nullptr.
   if (!L) {
     return nullptr;
   }
 
-  // 1st stage: Copy the nodes from L.
+  // 1st stage: Copies the nodes from L.
   shared_ptr<ListNode<int>> p = L;
   while (p) {
     auto temp =
@@ -32,7 +32,7 @@ shared_ptr<ListNode<int>> copy_postings_list(
     p = temp->next;
   }
 
-  // 2nd stage: Update the jump field.
+  // 2nd stage: Updates the jump field.
   p = L;
   while (p) {
     if (p->jump) {
@@ -41,7 +41,7 @@ shared_ptr<ListNode<int>> copy_postings_list(
     p = p->next->next;
   }
 
-  // 3rd stage: Restore the next field.
+  // 3rd stage: Restores the next field.
   p = L;
   shared_ptr<ListNode<int>> copied = p->next;
   while (p->next) {

@@ -8,7 +8,7 @@ short parity2(unsigned long x) {
   short result = 0;
   while (x) {
     result ^= 1;
-    x &= (x - 1);  // drops the lowest set bit of x.
+    x &= (x - 1);  // erases the lowest set bit of x.
   }
   return result;
 }

@@ -30,8 +30,7 @@ int main(int argc, char* argv[]) {
   //      3
   //    2   5
   //  1    4 6
-  unique_ptr<BSTNode<int>> root =
-      unique_ptr<BSTNode<int>>(new BSTNode<int>{3});
+  unique_ptr<BSTNode<int>> root = unique_ptr<BSTNode<int>>(new BSTNode<int>{3});
   root->left = unique_ptr<BSTNode<int>>(new BSTNode<int>{2});
   root->left->left = unique_ptr<BSTNode<int>>(new BSTNode<int>{1});
   root->right = unique_ptr<BSTNode<int>>(new BSTNode<int>{5});

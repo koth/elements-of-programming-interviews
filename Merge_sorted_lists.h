@@ -4,10 +4,10 @@
 
 void append_node_and_advance(shared_ptr<ListNode<int>>* head,
                              shared_ptr<ListNode<int>>* tail,
-                             shared_ptr<ListNode<int>>* n);
+                             shared_ptr<ListNode<int>>* node);
 void append_node(shared_ptr<ListNode<int>>* head,
                  shared_ptr<ListNode<int>>* tail,
-                 shared_ptr<ListNode<int>>* n);
+                 shared_ptr<ListNode<int>>* node);
 
 // @include
 shared_ptr<ListNode<int>> merge_sorted_linked_lists(
@@ -18,11 +18,11 @@ shared_ptr<ListNode<int>> merge_sorted_linked_lists(
     append_node_and_advance(&sorted_head, &tail, F->data < L->data ? &F : &L);
   }
 
-  // Append the remaining nodes of F.
+  // Appends the remaining nodes of F.
   if (F) {
     append_node(&sorted_head, &tail, &F);
   }
-  // Append the remaining nodes of L.
+  // Appends the remaining nodes of L.
   if (L) {
     append_node(&sorted_head, &tail, &L);
   }
@@ -31,15 +31,15 @@ shared_ptr<ListNode<int>> merge_sorted_linked_lists(
 
 void append_node_and_advance(shared_ptr<ListNode<int>>* head,
                              shared_ptr<ListNode<int>>* tail,
-                             shared_ptr<ListNode<int>>* n) {
-  append_node(head, tail, n);
-  *n = (*n)->next;  // advance n.
+                             shared_ptr<ListNode<int>>* node) {
+  append_node(head, tail, node);
+  *node = (*node)->next;  // advances node.
 }
 
 void append_node(shared_ptr<ListNode<int>>* head,
                  shared_ptr<ListNode<int>>* tail,
-                 shared_ptr<ListNode<int>>* n) {
-  *head ? (*tail)->next = *n : *head = *n;
-  *tail = *n;  // reset tail to the last node.
+                 shared_ptr<ListNode<int>>* node) {
+  *head ? (*tail)->next = *node : *head = *node;
+  *tail = *node;  // resets tail to the last node.
 }
 // @exclude

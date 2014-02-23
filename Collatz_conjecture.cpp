@@ -31,17 +31,17 @@ bool test_Collatz_conjecture(int n) {
         return false;
       }
 
-      if (test_i & 1) {  // odd number
+      if (test_i & 1) {  // odd number.
         if (!table.emplace(test_i).second) {
           break;  // this number have already be proven to converge to 1.
         }
-        long next_test_i = 3 * test_i + 1;  // 3n + 1.
+        long next_test_i = 3 * test_i + 1;  // 3i + 1.
         if (next_test_i <= test_i) {
           throw overflow_error("test process overflow");
         }
         test_i = next_test_i;
       } else {         // even number.
-        test_i >>= 1;  // n / 2.
+        test_i >>= 1;  // i / 2.
       }
     }
     table.erase(i);  // removes i from table.

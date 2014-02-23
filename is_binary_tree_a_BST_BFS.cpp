@@ -17,25 +17,24 @@ using std::unique_ptr;
 
 // @include
 struct QNode {
-  BinaryTreeNode<int>* node;
+  const unique_ptr<BinaryTreeNode<int>>& node;
   int lower, upper;
 };
 
-bool is_BST(const unique_ptr<BinaryTreeNode<int>>& n) {
+bool is_BST(const unique_ptr<BinaryTreeNode<int>>& r) {
   queue<QNode> q;
-  q.emplace(
-      QNode{n.get(), numeric_limits<int>::min(), numeric_limits<int>::max()});
+  q.emplace(QNode{r, numeric_limits<int>::min(), numeric_limits<int>::max()});
 
   while (!q.empty()) {
-    if (q.front().node) {
+    if (q.front().node.get()) {
       if (q.front().node->data < q.front().lower ||
           q.front().node->data > q.front().upper) {
         return false;
       }
 
-      q.emplace(QNode{q.front().node->left.get(), q.front().lower,
+      q.emplace(QNode{q.front().node->left, q.front().lower,
                       q.front().node->data});
-      q.emplace(QNode{q.front().node->right.get(), q.front().node->data,
+      q.emplace(QNode{q.front().node->right, q.front().node->data,
                       q.front().upper});
     }
     q.pop();

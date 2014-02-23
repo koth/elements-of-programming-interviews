@@ -14,37 +14,37 @@ using std::pair;
 using std::unique_ptr;
 
 pair<BinaryTreeNode<int>*, int> find_non_k_balanced_node_helper(
-    const unique_ptr<BinaryTreeNode<int>>& n,
+    const unique_ptr<BinaryTreeNode<int>>& T,
     int k);
 
 // @include
 BinaryTreeNode<int>* find_non_k_balanced_node(
-    const unique_ptr<BinaryTreeNode<int>>& n, int k) {
-  return find_non_k_balanced_node_helper(n, k).first;
+    const unique_ptr<BinaryTreeNode<int>>& T, int k) {
+  return find_non_k_balanced_node_helper(T, k).first;
 }
 
 pair<BinaryTreeNode<int>*, int> find_non_k_balanced_node_helper(
-    const unique_ptr<BinaryTreeNode<int>>& n,
+    const unique_ptr<BinaryTreeNode<int>>& T,
     int k) {
   // Empty tree.
-  if (!n) {
+  if (!T) {
     return {nullptr, 0};
   }
 
   // Early return if left subtree is not k-balanced.
-  auto L = find_non_k_balanced_node_helper(n->left, k);
+  auto L = find_non_k_balanced_node_helper(T->left, k);
   if (L.first) {
     return L;
   }
   // Early return if right subtree is not k-balanced.
-  auto R = find_non_k_balanced_node_helper(n->right, k);
+  auto R = find_non_k_balanced_node_helper(T->right, k);
   if (R.first) {
     return R;
   }
 
-  int node_num = L.second + R.second + 1;  // The number of nodes in n.
+  int node_num = L.second + R.second + 1;  // The number of nodes in T.
   if (abs(L.second - R.second) > k) {
-    return {n.get(), node_num};
+    return {T.get(), node_num};
   }
   return {nullptr, node_num};
 }

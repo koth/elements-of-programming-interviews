@@ -26,14 +26,14 @@ BinaryTreeNode<int>* reconstruct_preorder(const vector<int*>& preorder) {
     if (!*it) {
       s.emplace(nullptr);
     } else {  // non-nullptr.
-      auto* l_n = s.top();
+      auto* l_node = s.top();
       s.pop();
-      auto* r_n = s.top();
+      auto* r_node = s.top();
       s.pop();
       s.emplace(
           new BinaryTreeNode<int>{**it,
-                                  unique_ptr<BinaryTreeNode<int>>(l_n),
-                                  unique_ptr<BinaryTreeNode<int>>(r_n)});
+                                  unique_ptr<BinaryTreeNode<int>>(l_node),
+                                  unique_ptr<BinaryTreeNode<int>>(r_node)});
     }
   }
   return s.top();

@@ -18,15 +18,15 @@ using std::shared_ptr;
 using std::stoi;
 using std::uniform_int_distribution;
 
-void connect_a_next_to_b_advance_a(shared_ptr<ListNode<int>>* a,
-                                   const shared_ptr<ListNode<int>>& b);
+void connect_a_next_to_b_advance_a(const shared_ptr<ListNode<int>>& b,
+                                   shared_ptr<ListNode<int>>* a);
 
 // @include
 shared_ptr<ListNode<int>> zipping_linked_list(
     const shared_ptr<ListNode<int>>& L) {
   shared_ptr<ListNode<int>> slow = L, fast = L, pre_slow = nullptr;
 
-  // Find the middle point of L.
+  // Finds the middle point of L.
   while (fast) {
     fast = fast->next;
     if (fast) {
@@ -41,20 +41,20 @@ shared_ptr<ListNode<int>> zipping_linked_list(
   pre_slow->next = nullptr;  // splits the list into two lists.
   shared_ptr<ListNode<int>> reverse = reverse_linked_list(slow), curr = L;
 
-  // Zipping the list.
+  // Zips the list.
   while (curr && reverse) {
-    // Connect curr->next to reverse, and advance curr.
-    connect_a_next_to_b_advance_a(&curr, reverse);
+    // Connects curr->next to reverse, and advances curr.
+    connect_a_next_to_b_advance_a(reverse, &curr);
     if (curr) {
-      // Connect reverse->next to curr, and advance reverse.
-      connect_a_next_to_b_advance_a(&reverse, curr);
+      // Connects reverse->next to curr, and advances reverse.
+      connect_a_next_to_b_advance_a(curr, &reverse);
     }
   }
   return L;
 }
 
-void connect_a_next_to_b_advance_a(shared_ptr<ListNode<int>>* a,
-                                   const shared_ptr<ListNode<int>>& b) {
+void connect_a_next_to_b_advance_a(const shared_ptr<ListNode<int>>& b,
+                                   shared_ptr<ListNode<int>>* a) {
   shared_ptr<ListNode<int>> temp = (*a)->next;
   (*a)->next = b;
   (*a) = temp;

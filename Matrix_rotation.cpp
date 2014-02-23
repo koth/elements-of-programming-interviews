@@ -15,14 +15,14 @@ using std::random_device;
 using std::uniform_int_distribution;
 using std::vector;
 
-void print_matrix(const vector<vector<int>> &A) {
+void print_matrix(const vector<vector<int>>& A) {
   for (size_t i = 0; i < A.size(); ++i) {
     copy(A[i].begin(), A[i].end(), ostream_iterator<int>(cout, " "));
     cout << endl;
   }
 }
 
-void check_answer(const vector<vector<int>> &A) {
+void check_answer(const vector<vector<int>>& A) {
   int k = 1;
   for (int j = A.size() - 1; j >= 0; --j) {
     for (size_t i = 0; i < A.size(); ++i) {
@@ -31,19 +31,18 @@ void check_answer(const vector<vector<int>> &A) {
   }
 }
 
-void rotate_matrix_helper(vector<vector<int>>* A,
-                          int x_s, int x_e, int y_s, int y_e);
-void copy_matrix(vector<vector<int>>* A,
-                 int A_x_s, int A_x_e, int A_y_s, int A_y_e,
-                 const vector<vector<int>> &S, int S_x, int S_y);
+void rotate_matrix_helper(vector<vector<int>>* A, int x_s, int x_e, int y_s,
+                          int y_e);
+void copy_matrix(vector<vector<int>>* A, int A_x_s, int A_x_e, int A_y_s,
+                 int A_y_e, const vector<vector<int>>& S, int S_x, int S_y);
 
 // @include
 void rotate_matrix(vector<vector<int>>* A) {
   rotate_matrix_helper(A, 0, A->size(), 0, A->size());
 }
 
-void rotate_matrix_helper(vector<vector<int>>* A,
-                          int x_s, int x_e, int y_s, int y_e) {
+void rotate_matrix_helper(vector<vector<int>>* A, int x_s, int x_e, int y_s,
+                          int y_e) {
   if (x_e > x_s + 1) {
     int mid_x = x_s + ((x_e - x_s) >> 1), mid_y = y_s + ((y_e - y_s) >> 1);
     // Move submatrices.
@@ -62,9 +61,8 @@ void rotate_matrix_helper(vector<vector<int>>* A,
   }
 }
 
-void copy_matrix(vector<vector<int>>* A,
-                 int A_x_s, int A_x_e, int A_y_s, int A_y_e,
-                 const vector<vector<int>> &S, int S_x, int S_y) {
+void copy_matrix(vector<vector<int>>* A, int A_x_s, int A_x_e, int A_y_s,
+                 int A_y_e, const vector<vector<int>>& S, int S_x, int S_y) {
   for (int i = 0; i < A_x_e - A_x_s; ++i) {
     copy(S[S_x + i].cbegin() + S_y, S[S_x + i].cbegin() + S_y + A_y_e - A_y_s,
          (*A)[A_x_s + i].begin() + A_y_s);
@@ -72,7 +70,7 @@ void copy_matrix(vector<vector<int>>* A,
 }
 // @exclude
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   int n;
   if (argc == 2) {
     n = atoi(argv[1]);
@@ -97,10 +95,10 @@ int main(int argc, char *argv[]) {
           A[i][j] = k++;
         }
       }
-      //print_matrix(A);
+      // print_matrix(A);
       rotate_matrix(&A);
       check_answer(A);
-      //print_matrix(A);
+      // print_matrix(A);
     }
   }
   return 0;

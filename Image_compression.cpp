@@ -28,16 +28,12 @@ struct TreeNode;
 struct HashPoint;
 
 bool is_monochromatic(const vector<vector<int>>& image_sum,
-                      const Point& lower_left,
-                      const Point& upper_right);
+                      const Point& lower_left, const Point& upper_right);
 
 shared_ptr<TreeNode> calculate_optimal_2D_tree_helper(
-    const vector<vector<int>>& image,
-    const vector<vector<int>>& image_sum,
-    const Point& lower_left,
-    const Point& upper_right,
-    unordered_map<Point,
-                  unordered_map<Point, shared_ptr<TreeNode>, HashPoint>,
+    const vector<vector<int>>& image, const vector<vector<int>>& image_sum,
+    const Point& lower_left, const Point& upper_right,
+    unordered_map<Point, unordered_map<Point, shared_ptr<TreeNode>, HashPoint>,
                   HashPoint>& table);
 
 // @include
@@ -72,28 +68,24 @@ shared_ptr<TreeNode> calculate_optimal_2D_tree(
     const vector<vector<int>>& image) {
   vector<vector<int>> image_sum(image);
   for (int i = 0; i < image.size(); ++i) {
-    partial_sum(
-        image_sum[i].cbegin(), image_sum[i].cend(), image_sum[i].begin());
+    partial_sum(image_sum[i].cbegin(), image_sum[i].cend(),
+                image_sum[i].begin());
     for (int j = 0; i > 0 && j < image[i].size(); ++j) {
       image_sum[i][j] += image_sum[i - 1][j];
     }
   }
 
-  unordered_map<Point,
-                unordered_map<Point, shared_ptr<TreeNode>, HashPoint>,
+  unordered_map<Point, unordered_map<Point, shared_ptr<TreeNode>, HashPoint>,
                 HashPoint> table;
   return calculate_optimal_2D_tree_helper(
-      image,
-      image_sum,
-      Point{0, 0},
+      image, image_sum, Point{0, 0},
       Point{static_cast<int>(image.size() - 1),
             static_cast<int>(image[0].size() - 1)},
       table);
 }
 
 bool is_monochromatic(const vector<vector<int>>& image_sum,
-                      const Point& lower_left,
-                      const Point& upper_right) {
+                      const Point& lower_left, const Point& upper_right) {
   int pixel_sum = image_sum[upper_right.i][upper_right.j];
   if (lower_left.i >= 1) {
     pixel_sum -= image_sum[lower_left.i - 1][upper_right.j];
@@ -110,10 +102,8 @@ bool is_monochromatic(const vector<vector<int>>& image_sum,
 }
 
 shared_ptr<TreeNode> calculate_optimal_2D_tree_helper(
-    const vector<vector<int>>& image,
-    const vector<vector<int>>& image_sum,
-    const Point& lower_left,
-    const Point& upper_right,
+    const vector<vector<int>>& image, const vector<vector<int>>& image_sum,
+    const Point& lower_left, const Point& upper_right,
     unordered_map<Point,
                   unordered_map<Point, shared_ptr<TreeNode>, HashPoint>,
                   HashPoint>& table) {
@@ -135,23 +125,20 @@ shared_ptr<TreeNode> calculate_optimal_2D_tree_helper(
               (t != lower_left.j && t != upper_right.j + 1)) {
             vector<shared_ptr<TreeNode>> children = {
                 // SW rectangle.
-                calculate_optimal_2D_tree_helper(
-                    image, image_sum, lower_left, Point{s - 1, t - 1}, table),
+                calculate_optimal_2D_tree_helper(image, image_sum, lower_left,
+                                                 Point{s - 1, t - 1}, table),
                 // NW rectangle.
-                calculate_optimal_2D_tree_helper(image,
-                                                 image_sum,
-                                                 Point{lower_left.i, t},
-                                                 Point{s - 1, upper_right.j},
-                                                 table),
-                // NE rectangle.
                 calculate_optimal_2D_tree_helper(
-                    image, image_sum, Point{s, t}, upper_right, table),
+                    image, image_sum, Point{lower_left.i, t},
+                    Point{s - 1, upper_right.j}, table),
+                // NE rectangle.
+                calculate_optimal_2D_tree_helper(image, image_sum,
+                                                 Point{s, t}, upper_right,
+                                                 table),
                 // SE rectangle.
-                calculate_optimal_2D_tree_helper(image,
-                                                 image_sum,
-                                                 Point{s, lower_left.j},
-                                                 Point{upper_right.i, t - 1},
-                                                 table)};
+                calculate_optimal_2D_tree_helper(
+                    image, image_sum, Point{s, lower_left.j},
+                    Point{upper_right.i, t - 1}, table)};
 
             int node_num = 1;  // itself.
             for (shared_ptr<TreeNode>& child : children) {

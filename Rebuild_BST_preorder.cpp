@@ -16,19 +16,19 @@ using std::unique_ptr;
 using std::vector;
 
 BSTNode<int>* rebuild_BST_from_preorder_helper(
-    const vector<int> &preorder, int s, int e);
+    const vector<int> &preorder, size_t s, size_t e);
 
 // @include
-// Given a preorder traversal of a BST, return its root.
+// Given a preorder traversal of a BST, returns its root.
 BSTNode<int>* rebuild_BST_from_preorder(const vector<int>& preorder) {
   return rebuild_BST_from_preorder_helper(preorder, 0, preorder.size());
 }
 
-// Build a BST based on preorder[s : e - 1], return its root.
+// Builds a BST based on preorder[s : e - 1], returns its root.
 BSTNode<int>* rebuild_BST_from_preorder_helper(
-    const vector<int> &preorder, int s, int e) {
+    const vector<int> &preorder, size_t s, size_t e) {
   if (s < e) {
-    int x = s + 1;
+    size_t x = s + 1;
     while (x < e && preorder[x] < preorder[s]) {
       ++x;
     }

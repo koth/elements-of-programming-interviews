@@ -13,32 +13,43 @@ using std::make_shared;
 using std::numeric_limits;
 using std::shared_ptr;
 
+shared_ptr<BSTNode<int>> BST_to_doubly_list_helper(
+    const shared_ptr<BSTNode<int>>& T);
+
 // @include
-// Transform a BST into a circular sorted doubly linked list in-place,
-// return the head of the list.
 shared_ptr<BSTNode<int>> BST_to_doubly_list(
-    const shared_ptr<BSTNode<int>>& n) {
+    const shared_ptr<BSTNode<int>>& T) {
+  auto res = BST_to_doubly_list_helper(T);
+  res->left->right = nullptr;  // breaks the link from tail to head.
+  res->left = nullptr;  // breaks the link from head to tail.
+  return res;
+}
+
+// Transforms a BST into a circular sorted circular doubly linked list
+// in-place, and return the head of the list.
+shared_ptr<BSTNode<int>> BST_to_doubly_list_helper(
+    const shared_ptr<BSTNode<int>>& T) {
   // Empty subtree.
-  if (!n) {
+  if (!T) {
     return nullptr;
   }
 
   // Recursively build the list from left and right subtrees.
-  auto l_head(BST_to_doubly_list(n->left));
-  auto r_head(BST_to_doubly_list(n->right));
+  auto l_head(BST_to_doubly_list_helper(T->left));
+  auto r_head(BST_to_doubly_list_helper(T->right));
 
-  // Append n to the list from left subtree.
+  // Append T to the list from left subtree.
   shared_ptr<BSTNode<int>> l_tail = nullptr;
   if (l_head) {
     l_tail = l_head->left;
-    l_tail->right = n;
-    n->left = l_tail;
-    l_tail = n;
+    l_tail->right = T;
+    T->left = l_tail;
+    l_tail = T;
   } else {
-    l_head = l_tail = n;
+    l_head = l_tail = T;
   }
 
-  // Append the list from right subtree to n.
+  // Append the list from right subtree to T.
   shared_ptr<BSTNode<int>> r_tail = nullptr;
   if (r_head) {
     r_tail = r_head->left;
@@ -71,6 +82,6 @@ int main(int argc, char* argv[]) {
     cout << curr->data << endl;
     pre = curr->data;
     curr = curr->right;
-  } while (curr != L);
+  } while (curr);
   return 0;
 }

@@ -11,23 +11,23 @@ using std::cout;
 using std::endl;
 using std::unique_ptr;
 
-bool is_symmetric_helper(const unique_ptr<BinaryTreeNode<int>>& l_n,
-                         const unique_ptr<BinaryTreeNode<int>>& r_n);
+bool is_symmetric_helper(const unique_ptr<BinaryTreeNode<int>>& l_T,
+                         const unique_ptr<BinaryTreeNode<int>>& r_T);
 
 // @include
-bool is_symmetric(const unique_ptr<BinaryTreeNode<int>>& n) {
-  return !n || is_symmetric_helper(n->left, n->right);
+bool is_symmetric(const unique_ptr<BinaryTreeNode<int>>& T) {
+  return !T || is_symmetric_helper(T->left, T->right);
 }
 
-bool is_symmetric_helper(const unique_ptr<BinaryTreeNode<int>>& l_n,
-                         const unique_ptr<BinaryTreeNode<int>>& r_n) {
-  if (!l_n && !r_n) {
+bool is_symmetric_helper(const unique_ptr<BinaryTreeNode<int>>& l_T,
+                         const unique_ptr<BinaryTreeNode<int>>& r_T) {
+  if (!l_T && !r_T) {
     return true;
-  } else if (l_n && r_n) {
-    return l_n->data == r_n->data &&
-           is_symmetric_helper(l_n->left, r_n->right) &&
-           is_symmetric_helper(l_n->right, r_n->left);
-  } else {  // (l_n && !r_n) || (!l_n && r_n)
+  } else if (l_T && r_T) {
+    return l_T->data == r_T->data &&
+           is_symmetric_helper(l_T->left, r_T->right) &&
+           is_symmetric_helper(l_T->right, r_T->left);
+  } else {  // (l_T && !r_T) || (!l_T && r_T)
     return false;
   }
 }

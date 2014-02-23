@@ -46,7 +46,7 @@ void flip_color(vector<deque<bool>> *A, int x, int y) {
       if (next.first >= 0 && next.first < A->size() &&
           next.second >= 0 && next.second < (*A)[next.first].size() &&
           (*A)[next.first][next.second] == color) {
-        // Filps the color.
+        // Flips the color.
         (*A)[next.first][next.second] = !(*A)[next.first][next.second];
         q.emplace(next);
       }

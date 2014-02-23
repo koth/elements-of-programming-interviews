@@ -12,10 +12,8 @@ using std::random_device;
 using std::uniform_int_distribution;
 using std::vector;
 
-bool greedy_assignment(const vector<int>& user_file_size,
-                       int server_num,
-                       int limit,
-                       vector<int>* assign_res);
+bool greedy_assignment(const vector<int>& user_file_size, int server_num,
+                       int limit, vector<int>* assign_res);
 
 // @include
 vector<int> decide_load_balancing(vector<int> user_file_size,
@@ -39,10 +37,8 @@ vector<int> decide_load_balancing(vector<int> user_file_size,
   return feasible_assignment;
 }
 
-bool greedy_assignment(const vector<int>& user_file_size,
-                       int server_num,
-                       int limit,
-                       vector<int>* assign_res) {
+bool greedy_assignment(const vector<int>& user_file_size, int server_num,
+                       int limit, vector<int>* assign_res) {
   int server_idx = 0;
   for (const int& file : user_file_size) {
     while (server_idx < server_num &&

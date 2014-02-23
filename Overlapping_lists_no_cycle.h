@@ -11,10 +11,10 @@ void advance_list_by_k(shared_ptr<ListNode<int>>* L, int k);
 // @include
 shared_ptr<ListNode<int>> overlapping_no_cycle_lists(
     shared_ptr<ListNode<int>> L1, shared_ptr<ListNode<int>> L2) {
-  // Count the lengths of L1 and L2.
+  // Counts the lengths of L1 and L2.
   int L1_len = count_len(L1), L2_len = count_len(L2);
 
-  // Advance the longer list.
+  // Advances the longer list.
   advance_list_by_k(L1_len > L2_len ? &L1 : &L2, abs(L1_len - L2_len));
 
   while (L1 && L2 && L1 != L2) {

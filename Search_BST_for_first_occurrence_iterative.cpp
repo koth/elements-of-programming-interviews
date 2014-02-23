@@ -16,7 +16,7 @@ BSTNode<int>* find_first_equal_k(const unique_ptr<BSTNode<int>>& T, int k) {
     } else if (curr->data > k) {
       curr = curr->left.get();
     } else {  // curr->data == k.
-      // Search for the leftmost in the left subtree.
+      // Searches for the leftmost in the left subtree.
       first = curr;
       curr = curr->left.get();
     }

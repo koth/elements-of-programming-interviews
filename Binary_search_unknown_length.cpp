@@ -15,7 +15,7 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-int binary_search_unknown_len(const vector<int> &A, int k) {
+int binary_search_unknown_len(const vector<int>& A, int k) {
   // Find the possible range where k exists.
   int p = 0;
   while (true) {
@@ -63,7 +63,7 @@ void small_test() {
   assert(binary_search_unknown_len(A, 4) == -1);
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   small_test();
   int n, k;
   default_random_engine gen((random_device())());

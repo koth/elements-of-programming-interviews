@@ -29,17 +29,11 @@ class RotatedMatrix {
  public:
   explicit RotatedMatrix(const vector<vector<int>>& A) : A_(A) {}
 
-  int ReadEntry(int i, int j) const {
-    return A_[A_.size() - 1 - j][i];
-  }
+  int ReadEntry(int i, int j) const { return A_[A_.size() - 1 - j][i]; }
 
-  void WriteEntry(int i, int j, int v) {
-    A_[A_.size() - 1 - j][i] = v;
-  }
+  void WriteEntry(int i, int j, int v) { A_[A_.size() - 1 - j][i] = v; }
 
-  size_t size() const {
-    return A_.size();
-  }
+  size_t size() const { return A_.size(); }
 
  private:
   vector<vector<int>> A_;
@@ -55,7 +49,7 @@ void check_answer(const vector<vector<int>>& A, const vector<vector<int>>& B) {
   }
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   int n;
   if (argc == 2) {
     n = atoi(argv[1]);

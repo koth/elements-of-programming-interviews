@@ -20,11 +20,7 @@ bool DFS(GraphVertex* cur, const GraphVertex* pre);
 
 // @include
 struct GraphVertex {
-  enum Color {
-    white,
-    gray,
-    black
-  } color;
+  enum Color { white, gray, black } color;
   vector<GraphVertex*> edges;
   // @exclude
   GraphVertex() : color(white) {}

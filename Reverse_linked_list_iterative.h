@@ -1,7 +1,7 @@
 // Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
-#ifndef SOLUTIONS_REVERSE_LINKED_LIST_ITERATIVE_TEMPLATE_H_
-#define SOLUTIONS_REVERSE_LINKED_LIST_ITERATIVE_TEMPLATE_H_
+#ifndef SOLUTIONS_REVERSE_LINKED_LIST_ITERATIVE_H_
+#define SOLUTIONS_REVERSE_LINKED_LIST_ITERATIVE_H_
 
 #include <memory>
 
@@ -22,4 +22,4 @@ shared_ptr<ListNode<int>> reverse_linked_list(
   return prev;
 }
 // @exclude
-#endif  // SOLUTIONS_REVERSE_LINKED_LIST_ITERATIVE_TEMPLATE_H_
+#endif  // SOLUTIONS_REVERSE_LINKED_LIST_ITERATIVE_H_

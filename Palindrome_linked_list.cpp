@@ -14,8 +14,8 @@ using std::shared_ptr;
 
 // @include
 bool is_linked_list_a_palindrome(shared_ptr<ListNode<int>> L) {
-  // Find the middle point of L if L is odd length,
-  // and right-middle point if L is even length.
+  // Finds the middle point of L if L is odd length,
+  // and finds the right-middle point if L is even length.
   shared_ptr<ListNode<int>> slow = L, fast = L;
   while (fast) {
     fast = fast->next;
@@ -24,7 +24,7 @@ bool is_linked_list_a_palindrome(shared_ptr<ListNode<int>> L) {
     }
   }
 
-  // Compare the first half and reversed second half lists.
+  // Compares the first half and reverses second half lists.
   shared_ptr<ListNode<int>> reverse = reverse_linked_list(slow);
   while (reverse && L) {
     if (reverse->data != L->data) {

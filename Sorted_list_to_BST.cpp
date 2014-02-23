@@ -4,36 +4,37 @@
 #include <iostream>
 #include <memory>
 
-#include "./Doubly_linked_list_prototype_template.h"
+#include "./Doubly_linked_list_prototype.h"
 
 using std::cout;
 using std::endl;
 using std::make_shared;
 
-// @include
-// Build a BST from the (s + 1)-th to the e-th node in L.
-// Node numbering is from 1 to n.
 shared_ptr<ListNode<int>> build_BST_from_sorted_doubly_list_helper(
-    shared_ptr<ListNode<int>>* L,
-    int s,
-    int e) {
-  shared_ptr<ListNode<int>> curr = nullptr;
-  if (s < e) {
-    int m = s + ((e - s) >> 1);
-    auto temp_left = build_BST_from_sorted_doubly_list_helper(L, s, m);
-    curr = *L;  // the last function call sets L to the successor of the
-                // maximum node in the tree rooted at temp_left.
-    *L = (*L)->next;
-    curr->prev = temp_left;
-    curr->next = build_BST_from_sorted_doubly_list_helper(L, m + 1, e);
-  }
-  return curr;
+    shared_ptr<ListNode<int>>* L, int s, int e);
+
+// @include
+shared_ptr<ListNode<int>> build_BST_from_sorted_doubly_list(
+    shared_ptr<ListNode<int>> L, int n) {
+  return build_BST_from_sorted_doubly_list_helper(&L, 0, n);
 }
 
-shared_ptr<ListNode<int>> build_BST_from_sorted_doubly_list(
-    shared_ptr<ListNode<int>> L,
-    int n) {
-  return build_BST_from_sorted_doubly_list_helper(&L, 0, n);
+// Builds a BST from the (s + 1)-th to the e-th node in L, and returns the
+// root. Node numbering is from 1 to n.
+shared_ptr<ListNode<int>> build_BST_from_sorted_doubly_list_helper(
+    shared_ptr<ListNode<int>>* L, int s, int e) {
+  if (s >= e) {
+    return nullptr;
+  }
+
+  int m = s + ((e - s) >> 1);
+  auto temp_left = build_BST_from_sorted_doubly_list_helper(L, s, m);
+  auto curr = *L;  // the last function call sets L to the successor of the
+                   // maximum node in the tree rooted at temp_left.
+  *L = (*L)->next;
+  curr->prev = temp_left;
+  curr->next = build_BST_from_sorted_doubly_list_helper(L, m + 1, e);
+  return curr;
 }
 // @exclude
 

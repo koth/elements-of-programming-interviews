@@ -4,67 +4,45 @@
 #include <iostream>
 #include <queue>
 #include <random>
-#include <unordered_set>
+#include <set>
 #include <vector>
 
 using std::cout;
 using std::default_random_engine;
 using std::endl;
 using std::hash;
-using std::priority_queue;
 using std::queue;
 using std::random_device;
+using std::set;
 using std::uniform_int_distribution;
-using std::unordered_set;
 using std::vector;
 
 // @include
 struct Num {
   Num(int a, int b) : a(a), b(b), val(a + b * sqrt(2)) {}
 
-  // Equal function for hash.
-  bool operator==(const Num& n) const { return a == n.a && b == n.b; }
+  bool operator<(const Num& that) const {
+    return val < that.val;
+  }
 
   int a, b;
   double val;
 };
 
-struct CompareNum {
-  bool operator()(Num const& a, Num const& b) { return a.val > b.val; }
-};
-
-// Hash function for Num.
-struct HashNum {
-  size_t operator()(const Num& n) const {
-    return hash<int>()(n.a) ^ hash<int>()(n.b);
-  }
-};
-
 vector<Num> generate_first_k(int k) {
-  priority_queue<Num, vector<Num>, CompareNum> min_heap;
-  vector<Num> smallest;
-  unordered_set<Num, HashNum> hash;
+  set<Num> T;
+  vector<Num> res;
+  T.emplace(0, 0);
 
-  // Initial for 0 + 0 * sqrt(2).
-  min_heap.emplace(0, 0);
-  hash.emplace(0, 0);
+  while (res.size() < k) {
+    auto it = T.cbegin();
+    res.emplace_back(*it);
 
-  while (smallest.size() < k) {
-    Num s(min_heap.top());
-    smallest.emplace_back(s);
-    hash.erase(s);
-    min_heap.pop();
-
-    // Add the next two numbers derived from s.
-    Num c1(s.a + 1, s.b), c2(s.a, s.b + 1);
-    if (hash.emplace(c1).second) {
-      min_heap.emplace(c1);
-    }
-    if (hash.emplace(c2).second) {
-      min_heap.emplace(c2);
-    }
+    // Adds the next two numbers derived from s.
+    T.emplace(it->a + 1, it->b), T.emplace(it->a, it->b + 1);
+    T.erase(it);
   }
-  return smallest;
+  return res;
 }
 // @exclude
 
@@ -109,9 +87,11 @@ int main(int argc, char* argv[]) {
     }
     auto gold_res = golden(k);
     for (size_t i = 0; i < k; ++i) {
-      assert(ans[i] == gold_res[i]);
-      //cout << "first " << ans[i].a << " " << ans[i].b << " " << ans[i].val << endl;
-      //cout << "second " << gold_res[i].a << " " << gold_res[i].b << " " << gold_res[i].val << endl;
+      assert(ans[i].val == gold_res[i].val);
+      // cout << "first " << ans[i].a << " " << ans[i].b << " " << ans[i].val <<
+      // endl;
+      // cout << "second " << gold_res[i].a << " " << gold_res[i].b << " " <<
+      // gold_res[i].val << endl;
     }
   }
   return 0;

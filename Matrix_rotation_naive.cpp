@@ -17,7 +17,7 @@ using std::vector;
 void print_matrix(const vector<vector<int>> &A) {
   for (int i = 0; i < A.size(); ++i) {
     // copy(A[i].begin(), A[i].end(), ostream_iterator<int>(cout, " "));
-    for (int j = 0 ; j < A.size(); ++j) {
+    for (int j = 0; j < A.size(); ++j) {
       cout << "A[" << i << "," << j << "] = " << A[i][j] << "  ";
     }
     cout << endl;
@@ -34,7 +34,7 @@ void check_answer(const vector<vector<int>> &A) {
 }
 
 // @include
-void rotate_matrix(vector<vector<int>>* A) {
+void rotate_matrix(vector<vector<int>> *A) {
   for (int i = 0; i < (A->size() >> 1); ++i) {
     for (int j = i; j < A->size() - i - 1; ++j) {
       int temp = (*A)[i][j];
