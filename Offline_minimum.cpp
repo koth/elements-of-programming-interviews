@@ -17,6 +17,7 @@ using std::max;
 using std::min;
 using std::mt19937;
 using std::numeric_limits;
+using std::ostream_iterator;
 using std::random_device;
 using std::uniform_int_distribution;
 using std::vector;
@@ -31,10 +32,10 @@ vector<int> offline_minimum(const vector<int> &A, const vector<int> &E) {
 
   // Initialize the collection of subsets.
   for (int i = 0; i < E.size(); ++i) {
-    for (int j = pre; j <= E[i]; ++j) {
+    for (int j = pre; j < E[i]; ++j) {
       R[A[j]] = i;
     }
-    pre = E[i] + 1;
+    pre = E[i];
   }
 
   vector<int> ret(E.size(), -1);  // stores the answer
@@ -69,7 +70,7 @@ vector<int> check_answer(const vector<int> &A, const vector<int> &E) {
 
   for (int i = 0; i < E.size(); ++i) {
     int min_val = numeric_limits<int>::max();
-    for (int j = 0; j <= E[i]; ++j) {
+    for (int j = 0; j < E[i]; ++j) {
       if (A[j] < min_val && !exist[A[j]]) {
         min_val = min(A[j], min_val);
       }
@@ -85,7 +86,18 @@ vector<int> check_answer(const vector<int> &A, const vector<int> &E) {
   return ans;
 }
 
+void small_test() {
+  vector<int> A = {6, 8, 0, 9, 2, 7, 3, 4, 1, 5};
+  vector<int> E = {4, 7, 7, 7, 10};
+  auto ans = offline_minimum(A, E);
+  copy(ans.begin(), ans.end(), ostream_iterator<int>(cout, " "));
+  cout << endl;
+  vector<int> expected_ans = {0, 2, 3, 6, 1};
+  assert(ans.size() == expected_ans.size() && equal(ans.begin(), ans.end(), expected_ans.begin()));
+}
+
 int main(int argc, char *argv[]) {
+  small_test();
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n, m;
@@ -115,23 +127,23 @@ int main(int argc, char *argv[]) {
     */
     vector<int> E;
     for (int i = 0; i < m; ++i) {
-      uniform_int_distribution<int> dis(i, n - 1);
+      uniform_int_distribution<int> dis(i + 1, n);
       E.emplace_back(dis(gen));
     }
     sort(E.begin(), E.end());
-    /*
+    //*
     cout << "E = ";
     copy(E.begin(), E.end(), ostream_iterator<int>(cout, " "));
     cout << endl;
-    */
+    //*/
     vector<int> ans = offline_minimum(A, E);
-    /*
+    //*
     cout << "ans1 = ";
     copy(ans.begin(), ans.end(), ostream_iterator<int>(cout, " "));
     cout << endl;
-    */
+    //*/
     vector<int> tmp = check_answer(A, E);
-    assert(equal(ans.begin(), ans.end(), tmp.begin()));
+    assert(ans.size() == tmp.size() && equal(ans.begin(), ans.end(), tmp.begin()));
   }
   return 0;
 }
