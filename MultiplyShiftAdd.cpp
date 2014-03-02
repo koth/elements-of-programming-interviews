@@ -16,13 +16,13 @@ unsigned add_no_operator(unsigned a, unsigned b);
 
 // @include
 unsigned multiply_no_operator(unsigned x, unsigned y) {
-  unsigned sum = 0, k = 1;
+  unsigned sum = 0;
   while (x) {
-    // Examine the lg(k)-th bit of x.
+    // Examine each bit of x.
     if (x & 1) {
       sum = add_no_operator(sum, y);
     }
-    x >>= 1, k <<= 1, y <<= 1;
+    x >>= 1, y <<= 1;
   }
   return sum;
 }

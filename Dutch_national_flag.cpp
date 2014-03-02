@@ -15,7 +15,7 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-void dutch_flag_partition(vector<int>* A, int pivot_index) {
+void dutch_flag_partition(int pivot_index, vector<int>* A) {
   int pivot = (*A)[pivot_index];
   /**
    * Keep the following invariants during partitioning:
@@ -63,7 +63,7 @@ int main(int argc, char* argv[]) {
     uniform_int_distribution<int> dis(0, A.size() - 1);
     int pivot_index = dis(gen);
     int pivot = A[pivot_index];
-    dutch_flag_partition(&A, pivot_index);
+    dutch_flag_partition(pivot_index, &A);
     int i = 0;
     while (A[i] < pivot && i < A.size()) {
       cout << A[i] << ' ';

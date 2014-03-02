@@ -14,27 +14,28 @@ using std::random_device;
 using std::uniform_int_distribution;
 using std::vector;
 
-void generate_power_set_helper(const vector<int>& S, int idx, vector<int>* res);
+void generate_power_set_helper(const vector<int>& S, int m, vector<int>* subset);
 
 // @include
 void generate_power_set(const vector<int>& S) {
-  vector<int> res;
-  generate_power_set_helper(S, 0, &res);
+  vector<int> subset;
+  generate_power_set_helper(S, 0, &subset);
 }
 
-void generate_power_set_helper(const vector<int>& S, int idx,
-                               vector<int>* res) {
-  if (!res->empty()) {
+void generate_power_set_helper(const vector<int>& S, int m,
+                               vector<int>* subset) {
+  if (!subset->empty()) {
     // Print the subset.
-    copy(res->cbegin(), res->cend() - 1, ostream_iterator<int>(cout, ","));
-    cout << res->back();
+    copy(subset->cbegin(), subset->cend() - 1,
+         ostream_iterator<int>(cout, ","));
+    cout << subset->back();
   }
   cout << endl;
 
-  for (int i = idx; i < S.size(); ++i) {
-    res->emplace_back(S[i]);
-    generate_power_set_helper(S, i + 1, res);
-    res->pop_back();
+  for (int i = m; i < S.size(); ++i) {
+    subset->emplace_back(S[i]);
+    generate_power_set_helper(S, i + 1, subset);
+    subset->pop_back();
   }
 }
 // @exclude

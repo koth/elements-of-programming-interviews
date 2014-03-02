@@ -34,7 +34,17 @@ int check_answer(const vector<int>& A) {
   return max;
 }
 
+void small_test() {
+  vector<int> A = {2,3,4,1,2};
+  int area = calculate_largest_rectangle(A);
+  int alter_area = calculate_largest_rectangle_alternative(A);
+  assert(area == alter_area);
+  assert(check_answer(A) == area);
+  assert(6 == area);
+}
+
 int main(int argc, char* argv[]) {
+  small_test();
   default_random_engine gen((random_device())());
   for (int times = 0; times < 3000; ++times) {
     vector<int> A;

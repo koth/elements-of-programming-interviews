@@ -16,7 +16,7 @@ using std::stack;
 using std::uniform_int_distribution;
 using std::vector;
 
-void insert(stack<int>* S, int e);
+void insert(int e, stack<int>* S);
 
 // @include
 void sort(stack<int>* S) {
@@ -24,17 +24,17 @@ void sort(stack<int>* S) {
     int e = S->top();
     S->pop();
     sort(S);
-    insert(S, e);
+    insert(e, S);
   }
 }
 
-void insert(stack<int>* S, int e) {
+void insert(int e, stack<int>* S) {
   if (S->empty() || S->top() <= e) {
     S->push(e);
   } else {
     int f = S->top();
     S->pop();
-    insert(S, e);
+    insert(e, S);
     S->push(f);
   }
 }

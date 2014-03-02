@@ -57,7 +57,7 @@ int main(int argc, char* argv[]) {
     if (argc == 2) {
       x = atof(argv[1]);
     } else {
-      uniform_real_distribution<int> dis(0.0, 100000000.0);
+      uniform_real_distribution<double> dis(0.0, 100000000.0);
       x = dis(gen);
     }
     double res[2];

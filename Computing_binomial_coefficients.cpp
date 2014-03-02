@@ -1,10 +1,12 @@
 // Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
+#include <array>
 #include <cassert>
 #include <iostream>
 #include <random>
 #include <vector>
 
+using std::array;
 using std::cout;
 using std::default_random_engine;
 using std::endl;
@@ -14,23 +16,16 @@ using std::vector;
 
 // @include
 int compute_binomial_coefficients(int n, int k) {
-  vector<vector<int>> table(n + 1, vector<int>(k + 1));
-  // Basic case: C(i, 0) = 1.
-  for (int i = 0; i <= n; ++i) {
-    table[i][0] = 1;
-  }
-  // Basic case: C(i, i) = 1.
-  for (int i = 1; i <= k; ++i) {
-    table[i][i] = 1;
-  }
-
+  array<vector<int>, 2> table = {vector<int>(k + 1), vector<int>(k + 1)};
+  table[0][0] = 1;
   // C(i, j) = C(i - 1, j) + C(i - 1, j - 1).
-  for (int i = 2; i <= n; ++i) {
-    for (int j = 1; j < i && j <= k; ++j) {
-      table[i][j] = table[i - 1][j] + table[i - 1][j - 1];
+  for (int i = 1; i <= n; ++i) {
+    table[i & 1][0] = 1;  // special case: one way to select zero element.
+    for (int j = 1; j <= i && j <= k; ++j) {
+      table[i & 1][j] = table[(i - 1) & 1][j] + table[(i - 1) & 1][j - 1];
     }
   }
-  return table[n][k];
+  return table[n & 1][k];
 }
 // @exclude
 
@@ -81,6 +76,7 @@ int main(int argc, char* argv[]) {
     }
 
     int res = compute_binomial_coefficients(n, k);
+    cout << "res = " << res << endl;
     assert(res == check_ans(n, k));
     cout << n << " out of " << k << " = " << res << endl;
     if (argc == 3) {

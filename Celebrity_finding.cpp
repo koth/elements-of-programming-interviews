@@ -22,8 +22,8 @@ int celebrity_finding(const vector<deque<bool>>& F) {
   while (j < F.size()) {
     if (F[i][j]) {
       i = j++;  // all candidates j' < j are not celebrity candidates.
-    } else {    // F[i][j] == false.
-      ++j;      // i is still a celebrity candidate but j is not.
+    } else {  // F[i][j] == false.
+      ++j;  // i is still a celebrity candidate but j is not.
     }
   }
   return i;

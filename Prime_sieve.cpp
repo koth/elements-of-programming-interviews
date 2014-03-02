@@ -42,6 +42,9 @@ int main(int argc, char* argv[]) {
     int n = atoi(argv[1]);
     cout << "n = " << n << endl;
     vector<int> primes = generate_primes_from_1_to_n(n);
+    for (int p : primes) {
+      cout << p << endl;
+    }
     for (size_t i = 0; i < primes.size(); ++i) {
       for (int j = 2; j < primes[i]; ++j) {
         assert(primes[i] % j);
