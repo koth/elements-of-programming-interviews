@@ -16,7 +16,7 @@ using std::endl;
 using std::ostream_iterator;
 using std::vector;
 
-bool solve_Sudoku_helper(vector<vector<int>>* A, int i, int j);
+bool solve_Sudoku_helper(int i, int j, vector<vector<int>>* A);
 bool valid_to_add(const vector<vector<int>>& A, int i, int j, int val);
 
 // @include
@@ -26,7 +26,7 @@ bool solve_Sudoku(vector<vector<int>>* A) {
     return false;
   }
 
-  if (solve_Sudoku_helper(A, 0, 0)) {
+  if (solve_Sudoku_helper(0, 0, A)) {
     for (int i = 0; i < A->size(); ++i) {
       copy((*A)[i].begin(), (*A)[i].end(), ostream_iterator<int>(cout, " "));
       cout << endl;
@@ -38,7 +38,7 @@ bool solve_Sudoku(vector<vector<int>>* A) {
   }
 }
 
-bool solve_Sudoku_helper(vector<vector<int>>* A, int i, int j) {
+bool solve_Sudoku_helper(int i, int j, vector<vector<int>>* A) {
   if (i == A->size()) {
     i = 0;  // starts a new row.
     if (++j == (*A)[i].size()) {
@@ -48,7 +48,7 @@ bool solve_Sudoku_helper(vector<vector<int>>* A, int i, int j) {
 
   // Skips nonempty entries.
   if ((*A)[i][j] != 0) {
-    return solve_Sudoku_helper(A, i + 1, j);
+    return solve_Sudoku_helper(i + 1, j, A);
   }
 
   for (int val = 1; val <= A->size(); ++val) {
@@ -59,13 +59,13 @@ bool solve_Sudoku_helper(vector<vector<int>>* A, int i, int j) {
     // and the only entry which can cause a problem is entryval at (i,j).
     if (valid_to_add(*A, i, j, val)) {
       (*A)[i][j] = val;
-      if (solve_Sudoku_helper(A, i + 1, j)) {
+      if (solve_Sudoku_helper(i + 1, j, A)) {
         return true;
       }
     }
   }
 
-  (*A)[i][j] = 0;  // undos assignment.
+  (*A)[i][j] = 0;  // undo assignment.
   return false;
 }
 

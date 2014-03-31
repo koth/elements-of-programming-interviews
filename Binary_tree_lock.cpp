@@ -13,7 +13,7 @@ using std::shared_ptr;
 // @include
 class BinaryTreeNode {
  public:
-  bool isLock() const { return locked_; }
+  bool isLocked() const { return locked_; }
 
   void lock() {
     if (numChildreLocks_ == 0 && !locked_) {
@@ -74,21 +74,21 @@ int main(int argc, char* argv[]) {
   root->left()->right() = make_shared<BinaryTreeNode>(BinaryTreeNode());
   root->left()->right()->parent() = root->left();
   // Should output false.
-  assert(!root->isLock());
-  cout << boolalpha << root->isLock() << endl;
+  assert(!root->isLocked());
+  cout << boolalpha << root->isLocked() << endl;
   root->lock();
   // Should output true.
-  assert(root->isLock());
-  cout << boolalpha << root->isLock() << endl;
+  assert(root->isLocked());
+  cout << boolalpha << root->isLocked() << endl;
   root->unLock();
   root->left()->lock();
   root->lock();
   // Should output false.
-  assert(!root->isLock());
-  cout << boolalpha << root->isLock() << endl;
+  assert(!root->isLocked());
+  cout << boolalpha << root->isLocked() << endl;
   root->right()->lock();
   // Should output true.
-  assert(root->right()->isLock());
-  cout << boolalpha << root->right()->isLock() << endl;
+  assert(root->right()->isLocked());
+  cout << boolalpha << root->right()->isLocked() << endl;
   return 0;
 }

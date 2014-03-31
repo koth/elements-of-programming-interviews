@@ -16,22 +16,23 @@ using std::swap;
 using std::uniform_int_distribution;
 using std::vector;
 
-int partition(vector<int>* A, int l, int r, int pivot);
+int partition(int left, int right, int pivot, vector<int>* A);
 
 // @include
 int find_k_th_largest(vector<int> A, int k) {
-  int l = 0, r = A.size() - 1;
+  int left = 0, right = A.size() - 1;
 
-  while (l <= r) {
+  while (left <= right) {
     default_random_engine gen((random_device())());
-    uniform_int_distribution<int> dis(l, r);  // generate random int in [l, r]
-    int p = partition(&A, l, r, dis(gen));
+    // Generates random int in [left, right].
+    uniform_int_distribution<int> dis(left, right);
+    int p = partition(left, right, dis(gen), &A);
     if (p == k - 1) {
       return A[p];
     } else if (p > k - 1) {
-      r = p - 1;
+      right = p - 1;
     } else {  // p < k - 1.
-      l = p + 1;
+      left = p + 1;
     }
   }
   // @exclude
@@ -39,18 +40,18 @@ int find_k_th_largest(vector<int> A, int k) {
   // @include
 }
 
-// Partition A according pivot, return its index after partition.
-int partition(vector<int>* A, int l, int r, int pivot) {
+// Partitions A according pivot, returns its index after partition.
+int partition(int left, int right, int pivot, vector<int>* A) {
   int pivot_value = (*A)[pivot];
-  int larger_index = l;
+  int larger_index = left;
 
-  swap((*A)[pivot], (*A)[r]);
-  for (int i = l; i < r; ++i) {
+  swap((*A)[pivot], (*A)[right]);
+  for (int i = left; i < right; ++i) {
     if ((*A)[i] > pivot_value) {
       swap((*A)[i], (*A)[larger_index++]);
     }
   }
-  swap((*A)[r], (*A)[larger_index]);
+  swap((*A)[right], (*A)[larger_index]);
   return larger_index;
 }
 // @exclude

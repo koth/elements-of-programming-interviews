@@ -12,7 +12,7 @@ using std::queue;
 using std::unique_ptr;
 
 // @include
-void print_binary_tree_level_order(const unique_ptr<BinaryTreeNode<int>>& r) {
+void print_binary_tree_depth_order(const unique_ptr<BinaryTreeNode<int>>& r) {
   // Prevents empty tree.
   if (!r) {
     return;
@@ -30,7 +30,7 @@ void print_binary_tree_level_order(const unique_ptr<BinaryTreeNode<int>>& r) {
       q.emplace(q.front()->right.get());
     }
     q.pop();
-    if (--count == 0) {  // Finish printing nodes in the current level.
+    if (--count == 0) {  // Finish printing nodes in the current depth.
       cout << endl;
       count = q.size();
     }

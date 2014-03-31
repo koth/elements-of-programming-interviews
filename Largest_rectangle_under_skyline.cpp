@@ -41,6 +41,8 @@ void small_test() {
   assert(area == alter_area);
   assert(check_answer(A) == area);
   assert(6 == area);
+  A = {2, 2, 2};
+  assert(6 == calculate_largest_rectangle(A));
 }
 
 int main(int argc, char* argv[]) {

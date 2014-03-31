@@ -31,7 +31,7 @@ void print_matrix(const vector<deque<bool>> &A) {
 }
 
 // @include
-void flip_color(vector<deque<bool>> *A, int x, int y) {
+void flip_color(int x, int y, vector<deque<bool>> *A) {
   const array<array<int, 2>, 4> dir = {{{{0, 1}}, {{0, -1}},
                                         {{1, 0}}, {{-1, 0}}}};
   const bool color = (*A)[x][y];
@@ -76,7 +76,7 @@ int main(int argc, char *argv[]) {
   size_t i = dis(gen), j = dis(gen);
   cout << "color = " << i << ' ' << j << ' ' << A[i][j] << endl;
   print_matrix(A);
-  flip_color(&A, static_cast<int>(i), static_cast<int>(j));
+  flip_color(static_cast<int>(i), static_cast<int>(j), &A);
   cout << endl;
   print_matrix(A);
   return 0;

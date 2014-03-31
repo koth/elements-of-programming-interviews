@@ -76,7 +76,7 @@ void test() {
   q.enqueue(16);
   q.enqueue(17);
   q.enqueue(18);
-  // The elements starting from head=3 are overwriten!
+  // The elements starting from head=3 are overwritten!
 
   assert(4 == q.dequeue());
   assert(5 == q.dequeue());

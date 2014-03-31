@@ -25,21 +25,8 @@ using std::vector;
 
 // @include
 struct Person {
-  bool operator<(const Person& that) const { return key < that.key; }
-
-  bool operator==(const Person& that) const { return key == that.key; }
-
-  bool operator!=(const Person& that) const { return key != that.key; }
-
   int key;
   string name;
-};
-
-// Hash function for Person.
-struct HashPerson {
-  size_t operator()(const Person& n) const {
-    return hash<int>()(n.key) ^ hash<string>()(n.name);
-  }
 };
 
 void counting_sort(vector<Person>* people) {
@@ -111,7 +98,7 @@ int main(int argc, char* argv[]) {
     // Check the correctness of sorting.
     int diff_count = 1;
     for (int i = 1; i < people.size(); ++i) {
-      if (people[i] != people[i - 1]) {
+      if (people[i].key != people[i - 1].key) {
         ++diff_count;
       }
     }

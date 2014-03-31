@@ -15,10 +15,10 @@ using std::uniform_int_distribution;
 using std::vector;
 
 struct Coordinate;
-bool search_maze_helper(vector<vector<int>>* maze,
-                        const Coordinate& cur,
+bool search_maze_helper(const Coordinate& cur,
                         const Coordinate& e,
-                        vector<Coordinate>& path);
+                        vector<vector<int>>* maze,
+                        vector<Coordinate>* path);
 bool is_feasible(const Coordinate& cur, const vector<vector<int>>& maze);
 
 // @include
@@ -36,17 +36,17 @@ vector<Coordinate> search_maze(vector<vector<int>> maze,
   vector<Coordinate> path;
   maze[s.x][s.y] = 1;
   path.emplace_back(s);
-  if (!search_maze_helper(&maze, s, e, path)) {
+  if (!search_maze_helper(s, e, &maze, &path)) {
     path.pop_back();
   }
   return path;  // empty path means no path between s and e.
 }
 
 // Perform DFS to find a feasible path.
-bool search_maze_helper(vector<vector<int>>* maze,
-                        const Coordinate& cur,
+bool search_maze_helper(const Coordinate& cur,
                         const Coordinate& e,
-                        vector<Coordinate>& path) {
+                        vector<vector<int>>* maze,
+                        vector<Coordinate>* path) {
   if (cur == e) {
     return true;
   }
@@ -58,11 +58,11 @@ bool search_maze_helper(vector<vector<int>>* maze,
     Coordinate next{cur.x + s[0], cur.y + s[1]};
     if (is_feasible(next, *maze)) {
       (*maze)[next.x][next.y] = 1;
-      path.emplace_back(next);
-      if (search_maze_helper(maze, next, e, path)) {
+      path->emplace_back(next);
+      if (search_maze_helper(next, e, maze, path)) {
         return true;
       }
-      path.pop_back();
+      path->pop_back();
     }
   }
   return false;

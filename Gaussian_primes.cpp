@@ -111,16 +111,8 @@ vector<complex<int>> generate_Gaussian_primes_canary(int n) {
 
 int main(int argc, char* argv[]) {
   default_random_engine gen((random_device())());
-  int n;
-  if (argc == 2) {
-    n = atoi(argv[1]);
-  } else {
-    uniform_int_distribution<int> dis(1, 100);
-    n = dis(gen);
-  }
-
   for (int i = 1; i <= 100; ++i) {
-    cout << "n = " << i << endl;
+    cout << "i = " << i << endl;
     vector<complex<int>> first = generate_Gaussian_primes_canary(i);
     vector<complex<int>> g_primes = generate_Gaussian_primes(i);
     cout << first.size() << " " << g_primes.size() << endl;

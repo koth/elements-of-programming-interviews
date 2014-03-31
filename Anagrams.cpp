@@ -1,6 +1,7 @@
 // Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
 #include <algorithm>
+#include <cassert>
 #include <iostream>
 #include <unordered_set>
 #include <unordered_map>
@@ -21,6 +22,8 @@ using std::unordered_map;
 using std::unordered_set;
 using std::vector;
 
+unordered_map<string, vector<string>> global_map;
+
 // @include
 void find_anagrams(const vector<string>& dictionary) {
   // Get the sorted string and then insert into hash table.
@@ -36,12 +39,15 @@ void find_anagrams(const vector<string>& dictionary) {
     // Multiple strings with the same hash code => anagrams.
     if (p.second.size() >= 2) {
       // Output all strings.
-      copy(p.second.begin(),
-           p.second.end(),
-           ostream_iterator<string>(cout, " "));
+      for (const auto& s : p.second) {
+        cout << s << " ";
+      }
       cout << endl;
     }
   }
+  // @exclude
+  global_map = hash;
+  // @include
 }
 // @exclude
 
@@ -55,7 +61,18 @@ string rand_string(int len) {
   return ret;
 }
 
+void small_test() {
+  vector<string> D = {"debit card", "bad credit", "the morse code", "here come dots", "the eyes", "they see", "THL"};
+  find_anagrams(D);
+  assert(global_map.size() == 4);
+  assert(global_map["  cdeeehmoorst"].size() == 2);
+  assert(global_map[" abcddeirt"].size() == 2);
+  assert(global_map[" eeehsty"].size() == 2);
+  assert(global_map["HLT"].size() == 1);
+}
+
 int main(int argc, char* argv[]) {
+  small_test();
   default_random_engine gen((random_device())());
   vector<string> dictionary;
   uniform_int_distribution<int> n_dis(0, 99999);

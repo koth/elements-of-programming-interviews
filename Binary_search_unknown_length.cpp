@@ -10,6 +10,7 @@ using std::cout;
 using std::default_random_engine;
 using std::endl;
 using std::exception;
+using std::max;
 using std::random_device;
 using std::uniform_int_distribution;
 using std::vector;
@@ -34,21 +35,21 @@ int binary_search_unknown_len(const vector<int>& A, int k) {
   }
 
   // Binary search between indices 2^(p - 1) and 2^p - 2.
-  int l = 1 << (p - 1), r = (1 << p) - 2;
-  while (l <= r) {
-    int m = l + ((r - l) >> 1);
+  int left = max(0, 1 << (p - 1)), right = (1 << p) - 2;
+  while (left <= right) {
+    int mid = left + ((right - left) >> 1);
     try {
-      int val = A.at(m);
+      int val = A.at(mid);
       if (val == k) {
-        return m;
+        return mid;
       } else if (val > k) {
-        r = m - 1;
-      } else {  // A[m] < k
-        l = m + 1;
+        right = mid - 1;
+      } else {  // A[mid] < k
+        left = mid + 1;
       }
     }
     catch (const exception& e) {
-      r = m - 1;  // search the left part if out of boundary.
+      right = mid - 1;  // search the left part if out of boundary.
     }
   }
   return -1;  // nothing matched k.

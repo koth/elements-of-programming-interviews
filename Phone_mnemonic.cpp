@@ -21,8 +21,11 @@ void phone_mnemonic(const string &num) {
   phone_mnemonic_helper(num, 0, &ans);
 }
 
-const array<string, 10> M = {{"0", "1", "ABC", "DEF", "GHI", "JKL", "MNO",
-                              "PQRS", "TUV", "WXYZ"}};
+const int kNumTelDigits = 10;
+
+const array<string, kNumTelDigits> M = {{"0", "1", "ABC", "DEF", "GHI",
+                                         "JKL", "MNO", "PQRS", "TUV",
+                                         "WXYZ"}};
 
 void phone_mnemonic_helper(const string &num, int d, string* ans) {
   if (d == num.size()) {  // get enough characters and output answer.

@@ -38,7 +38,7 @@ string normalized_path_names(const string& path) {
       }
     } else if (token != "." && token != "") {  // name.
       for (const char& c : token) {
-        if (c != '.' && !isalnum(c)) {
+        if (!isalnum(c)) {
           throw invalid_argument("Invalid directory name");
         }
       }
@@ -68,6 +68,12 @@ int main(int argc, char* argv[]) {
   assert(normalized_path_names("./../") == string(".."));
   assert(normalized_path_names("../../local") == string("../../local"));
   assert(normalized_path_names("./.././../local") == string("../../local"));
+  try {
+    normalized_path_names("/foo.txt");
+  }
+  catch (const exception& e) {
+    cout << e.what() << endl;
+  }
   try {
     normalized_path_names("/..");
   }

@@ -16,10 +16,10 @@ using std::vector;
 
 // @include
 void rearrange(vector<int>* A) {
-  for (size_t i = 1; i < A->size(); ++i) {
-    if (((i & 1) == 0 && (*A)[i - 1] < (*A)[i]) ||
-        ((i & 1) == 1 && (*A)[i - 1] > (*A)[i])) {
-      swap((*A)[i - 1], (*A)[i]);
+  vector<int>& B = *A;
+  for (size_t i = 1; i < B.size(); ++i) {
+    if ((!(i & 1) && B[i - 1] < B[i]) || ((i & 1) && B[i - 1] > B[i])) {
+      swap(B[i - 1], B[i]);
     }
   }
 }

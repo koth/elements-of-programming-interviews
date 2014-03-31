@@ -8,49 +8,54 @@ using std::cout;
 using std::endl;
 using std::string;
 
-bool is_match_here(const string &r, const string &s);
+bool is_match_here(const string &r, size_t r_idx, const string &s,
+                   size_t s_idx);
 
 // @include
 bool is_match(const string &r, const string &s) {
-  // Case (2.) : starts with '^'.
+  // Case (2.): r starts with '^'.
   if (r.front() == '^') {
-    return is_match_here(r.substr(1), s);
+    return is_match_here(r, 1, s, 0);
   }
 
-  for (int i = 0; i <= s.size(); ++i) {
-    if (is_match_here(r, s.substr(i))) {
+  for (size_t i = 0; i <= s.size(); ++i) {
+    if (is_match_here(r, 0, s, i)) {
       return true;
     }
   }
   return false;
 }
 
-bool is_match_here(const string &r, const string &s) {
-  // Case (1.)
-  if (r.empty()) {
+bool is_match_here(const string &r, size_t r_idx, const string &s,
+                   size_t s_idx) {
+  // Case (1.).
+  if (r_idx == r.size()) {
     return true;
   }
 
-  // Case (2) : ends with '$'.
-  if (r == "$") {
-    return s.empty();
+  // Case (2): r ends with '$'.
+  if (r_idx == r.size() - 1 && r[r_idx] == '$') {
+    return s_idx == s.size();
   }
 
-  // Case (4.)
-  if (r.size() >= 2 && r[1] == '*') {
-    for (string::size_type i = 0;
-         i < s.size() && (r.front() == '.' || r.front() == s[i]);
-         ++i) {
-      if (is_match_here(r.substr(2), s.substr(i + 1))) {
+  // Case (4.).
+  if (r.size() - r_idx >= 2 && r[r_idx + 1] == '*') {
+    // Don't use any character of r[r_idx].
+    if (is_match_here(r, r_idx + 2, s, s_idx)) {
+      return true;
+    }
+
+    // Tries all possible number of r[r_idx].
+    while (s_idx < s.size() && (r[r_idx] == '.' || r[r_idx] == s[s_idx])) {
+      if (is_match_here(r, r_idx + 2, s, ++s_idx)) {
         return true;
       }
     }
-    return is_match_here(r.substr(2), s);
   }
 
-  // Case (3.)
-  return !s.empty() && (r.front() == '.' || r.front() == s.front()) &&
-         is_match_here(r.substr(1), s.substr(1));
+  // Case (3.).
+  return s_idx < s.size() && (r[r_idx] == '.' || r[r_idx] == s[s_idx]) &&
+         is_match_here(r, r_idx + 1, s, s_idx + 1);
 }
 // @exclude
 

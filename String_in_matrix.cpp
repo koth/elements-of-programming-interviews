@@ -34,8 +34,8 @@ void rand_matrix(vector<vector<int>>* matrix) {
 struct HashTuple;
 
 bool match_helper(const vector<vector<int>>& A, const vector<int>& S,
-                  unordered_set<tuple<int, int, int>, HashTuple>* cache,
-                  int i, int j, int len);
+                  int i, int j, int len,
+                  unordered_set<tuple<int, int, int>, HashTuple>* cache);
 
 // @include
 struct HashTuple {
@@ -49,7 +49,7 @@ bool match(const vector<vector<int>>& A, const vector<int>& S) {
   unordered_set<tuple<int, int, int>, HashTuple> cache;
   for (int i = 0; i < A.size(); ++i) {
     for (int j = 0; j < A[i].size(); ++j) {
-      if (match_helper(A, S, &cache, i, j, 0)) {
+      if (match_helper(A, S, i, j, 0, &cache)) {
         return true;
       }
     }
@@ -58,8 +58,8 @@ bool match(const vector<vector<int>>& A, const vector<int>& S) {
 }
 
 bool match_helper(const vector<vector<int>>& A, const vector<int>& S,
-                  unordered_set<tuple<int, int, int>, HashTuple>* cache,
-                  int i, int j, int len) {
+                  int i, int j, int len,
+                  unordered_set<tuple<int, int, int>, HashTuple>* cache) {
   if (S.size() == len) {
     return true;
   }
@@ -69,10 +69,10 @@ bool match_helper(const vector<vector<int>>& A, const vector<int>& S,
     return false;
   }
 
-  if (A[i][j] == S[len] && (match_helper(A, S, cache, i - 1, j, len + 1) ||
-                            match_helper(A, S, cache, i + 1, j, len + 1) ||
-                            match_helper(A, S, cache, i, j - 1, len + 1) ||
-                            match_helper(A, S, cache, i, j + 1, len + 1))) {
+  if (A[i][j] == S[len] && (match_helper(A, S, i - 1, j, len + 1, cache) ||
+                            match_helper(A, S, i + 1, j, len + 1, cache) ||
+                            match_helper(A, S, i, j - 1, len + 1, cache) ||
+                            match_helper(A, S, i, j + 1, len + 1, cache))) {
     return true;
   }
   cache->emplace(i, j, len);

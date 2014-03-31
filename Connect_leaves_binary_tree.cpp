@@ -15,21 +15,21 @@ using std::unique_ptr;
 using std::vector;
 
 void connect_leaves_helper(const unique_ptr<BinaryTreeNode<int>>& T,
-                           list<BinaryTreeNode<int>*>* L);
+                           list<const unique_ptr<BinaryTreeNode<int>>*>* L);
 
 // @include
-list<BinaryTreeNode<int>*> connect_leaves(
+list<const unique_ptr<BinaryTreeNode<int>>*> connect_leaves(
     const unique_ptr<BinaryTreeNode<int>>& T) {
-  list<BinaryTreeNode<int>*> L;
+  list<const unique_ptr<BinaryTreeNode<int>>*> L;
   connect_leaves_helper(T, &L);
   return L;
 }
 
 void connect_leaves_helper(const unique_ptr<BinaryTreeNode<int>>& T,
-                           list<BinaryTreeNode<int>*>* L) {
+                           list<const unique_ptr<BinaryTreeNode<int>>*>* L) {
   if (T) {
     if (!T->left && !T->right) {
-      L->emplace_back(T.get());
+      L->emplace_back(&T);
     } else {
       connect_leaves_helper(T->left, L);
       connect_leaves_helper(T->right, L);
@@ -55,11 +55,11 @@ int main(int argc, char* argv[]) {
   root->right->right = unique_ptr<BinaryTreeNode<int>>(
       new BinaryTreeNode<int>{6, nullptr, nullptr});
   // should output 1, 4, 6
-  list<BinaryTreeNode<int>*> L = connect_leaves(root);
+  auto L = connect_leaves(root);
   vector<int> output;
-  for (const auto& l : L) {
-    output.push_back(l->data);
-    cout << l->data << endl;
+  for (const auto* l : L) {
+    output.push_back((*l)->data);
+    cout << (*l)->data << endl;
   }
   assert(output.size() == 3);
   assert(output[0] == 1 && output[1] == 4 && output[2] == 6);

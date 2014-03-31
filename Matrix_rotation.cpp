@@ -31,38 +31,39 @@ void check_answer(const vector<vector<int>>& A) {
   }
 }
 
-void rotate_matrix_helper(vector<vector<int>>* A, int x_s, int x_e, int y_s,
-                          int y_e);
-void copy_matrix(vector<vector<int>>* A, int A_x_s, int A_x_e, int A_y_s,
-                 int A_y_e, const vector<vector<int>>& S, int S_x, int S_y);
+void rotate_matrix_helper(int x_s, int x_e, int y_s, int y_e, vector<vector<int>>* A);
+void copy_matrix(int A_x_s, int A_x_e, int A_y_s, int A_y_e,
+                 const vector<vector<int>>& S, int S_x, int S_y,
+                 vector<vector<int>>* A);
 
 // @include
 void rotate_matrix(vector<vector<int>>* A) {
-  rotate_matrix_helper(A, 0, A->size(), 0, A->size());
+  rotate_matrix_helper(0, A->size(), 0, A->size(), A);
 }
 
-void rotate_matrix_helper(vector<vector<int>>* A, int x_s, int x_e, int y_s,
-                          int y_e) {
+void rotate_matrix_helper(int x_s, int x_e, int y_s, int y_e,
+                          vector<vector<int>>* A) {
   if (x_e > x_s + 1) {
     int mid_x = x_s + ((x_e - x_s) >> 1), mid_y = y_s + ((y_e - y_s) >> 1);
     // Move submatrices.
     vector<vector<int>> C(mid_x - x_s, vector<int>(mid_y - y_s));
-    copy_matrix(&C, 0, C.size(), 0, C.size(), *A, x_s, y_s);
-    copy_matrix(A, x_s, mid_x, y_s, mid_y, *A, mid_x, y_s);
-    copy_matrix(A, mid_x, x_e, y_s, mid_y, *A, mid_x, mid_y);
-    copy_matrix(A, mid_x, x_e, mid_y, y_e, *A, x_s, mid_y);
-    copy_matrix(A, x_s, mid_x, mid_y, y_e, C, 0, 0);
+    copy_matrix(0, C.size(), 0, C.size(), *A, x_s, y_s, &C);
+    copy_matrix(x_s, mid_x, y_s, mid_y, *A, mid_x, y_s, A);
+    copy_matrix(mid_x, x_e, y_s, mid_y, *A, mid_x, mid_y, A);
+    copy_matrix(mid_x, x_e, mid_y, y_e, *A, x_s, mid_y, A);
+    copy_matrix(x_s, mid_x, mid_y, y_e, C, 0, 0, A);
 
     // Recursively rotate submatrices.
-    rotate_matrix_helper(A, x_s, mid_x, y_s, mid_y);
-    rotate_matrix_helper(A, x_s, mid_x, mid_y, y_e);
-    rotate_matrix_helper(A, mid_x, x_e, mid_y, y_e);
-    rotate_matrix_helper(A, mid_x, x_e, y_s, mid_y);
+    rotate_matrix_helper(x_s, mid_x, y_s, mid_y, A);
+    rotate_matrix_helper(x_s, mid_x, mid_y, y_e, A);
+    rotate_matrix_helper(mid_x, x_e, mid_y, y_e, A);
+    rotate_matrix_helper(mid_x, x_e, y_s, mid_y, A);
   }
 }
 
-void copy_matrix(vector<vector<int>>* A, int A_x_s, int A_x_e, int A_y_s,
-                 int A_y_e, const vector<vector<int>>& S, int S_x, int S_y) {
+void copy_matrix(int A_x_s, int A_x_e, int A_y_s, int A_y_e,
+                 const vector<vector<int>>& S, int S_x, int S_y,
+                 vector<vector<int>>* A) {
   for (int i = 0; i < A_x_e - A_x_s; ++i) {
     copy(S[S_x + i].cbegin() + S_y, S[S_x + i].cbegin() + S_y + A_y_e - A_y_s,
          (*A)[A_x_s + i].begin() + A_y_s);

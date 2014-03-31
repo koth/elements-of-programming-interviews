@@ -22,7 +22,7 @@ using std::random_device;
 using std::uniform_int_distribution;
 using std::vector;
 
-int find_set(vector<int>* set, int x);
+int find_set(int x, vector<int>* set);
 void union_set(vector<int>* set, int x, int y);
 
 // @include
@@ -42,7 +42,7 @@ vector<int> offline_minimum(const vector<int> &A, const vector<int> &E) {
   vector<int> set(E.size() + 1);  // the disjoint-set
   iota(set.begin(), set.end(), 0);  // initializes the disjoint-set
   for (int i = 0; i < A.size(); ++i) {
-    if (find_set(&set, R[i]) != E.size() && ret[find_set(&set, R[i])] == -1) {
+    if (find_set(R[i], &set) != E.size() && ret[find_set(R[i], &set)] == -1) {
       ret[set[R[i]]] = i;
       union_set(&set, set[R[i]], set[R[i]] + 1);
     }
@@ -50,15 +50,15 @@ vector<int> offline_minimum(const vector<int> &A, const vector<int> &E) {
   return ret;
 }
 
-int find_set(vector<int>* set, int x) {
+int find_set(int x, vector<int>* set) {
   if ((*set)[x] != x) {
-    (*set)[x] = find_set(set, (*set)[x]);  // path compression.
+    (*set)[x] = find_set((*set)[x], set);  // path compression.
   }
   return (*set)[x];
 }
 
 void union_set(vector<int>* set, int x, int y) {
-  int x_root = find_set(set, x), y_root = find_set(set, y);
+  int x_root = find_set(x, set), y_root = find_set(y, set);
   (*set)[min(x_root, y_root)] = max(x_root, y_root);
 }
 // @exclude

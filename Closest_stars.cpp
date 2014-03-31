@@ -39,13 +39,13 @@ class Star {
   double x_, y_, z_;
 };
 
-vector<Star> find_closest_k_stars(istringstream& sin, int k) {
+vector<Star> find_closest_k_stars(int k, istringstream *sin) {
   // Use max_heap to find the closest k stars.
   priority_queue<Star, vector<Star>> max_heap;
   string line;
 
   // Record the first k stars.
-  while (getline(sin, line)) {
+  while (getline(*sin, line)) {
     stringstream line_stream(line);
     string buf;
     getline(line_stream, buf, ',');
@@ -153,7 +153,7 @@ int main(int argc, char* argv[]) {
       // cout << stars[i].ID_ << ' ' << stars[i].distance() << endl;
     }
     istringstream sin(s);
-    vector<Star> closest_stars(find_closest_k_stars(sin, k));
+    vector<Star> closest_stars(find_closest_k_stars(k, &sin));
     vector<Star> selected_stars(select_k(stars, k));
     sort(selected_stars.begin(), selected_stars.end());
     sort(stars.begin(), stars.end());

@@ -66,7 +66,7 @@ int main(int argc, char* argv[]) {
   cout << endl;
   cout << nonuniform_random_number_generation(T, P) << endl;
   // Test. Perform the nonuniform random number generation for n * kTimes times
-  // and calculate the distrbution of each bucket.
+  // and calculate the distribution of each bucket.
   const size_t kTimes = 100000;
   vector<int> counts(n, 0);
   for (size_t i = 0; i < n * kTimes; ++i) {
