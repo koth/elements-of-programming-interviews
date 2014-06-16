@@ -35,7 +35,7 @@ unsigned add_no_operator(unsigned a, unsigned b) {
     sum |= (ak ^ bk ^ carryin);
     carryin = carryout << 1, k <<= 1, temp_a >>= 1, temp_b >>= 1;
   }
-  return sum + carryin;
+  return sum | carryin;
 }
 // @exclude
 

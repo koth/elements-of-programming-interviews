@@ -35,6 +35,8 @@ int binary_search_unknown_len(const vector<int>& A, int k) {
   }
 
   // Binary search between indices 2^(p - 1) and 2^p - 2.
+  // Need max below in case k is smaller than all entries
+  // in A, since p becomes 0.
   int left = max(0, 1 << (p - 1)), right = (1 << p) - 2;
   while (left <= right) {
     int mid = left + ((right - left) >> 1);

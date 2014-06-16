@@ -26,9 +26,10 @@ void generate_power_set_helper(const vector<int>& S, int m,
                                vector<int>* subset) {
   if (!subset->empty()) {
     // Print the subset.
-    copy(subset->cbegin(), subset->cend() - 1,
-         ostream_iterator<int>(cout, ","));
-    cout << subset->back();
+    cout << subset->front();
+    for (int i = 1; i < subset->size(); ++i) {
+      cout << "," << (*subset)[i];
+    }
   }
   cout << endl;
 

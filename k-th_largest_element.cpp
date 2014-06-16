@@ -42,16 +42,17 @@ int find_k_th_largest(vector<int> A, int k) {
 
 // Partitions A according pivot, returns its index after partition.
 int partition(int left, int right, int pivot, vector<int>* A) {
-  int pivot_value = (*A)[pivot];
+  auto& a = *A;  // reference to *A.
+  int pivot_value = a[pivot];
   int larger_index = left;
 
-  swap((*A)[pivot], (*A)[right]);
+  swap(a[pivot], a[right]);
   for (int i = left; i < right; ++i) {
-    if ((*A)[i] > pivot_value) {
-      swap((*A)[i], (*A)[larger_index++]);
+    if (a[i] > pivot_value) {
+      swap(a[i], a[larger_index++]);
     }
   }
-  swap((*A)[right], (*A)[larger_index]);
+  swap(a[right], a[larger_index]);
   return larger_index;
 }
 // @exclude

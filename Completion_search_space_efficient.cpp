@@ -14,7 +14,7 @@
 using namespace std;
 
 // @include
-double completion_search(vector<double> &A, const double &budget) {
+double completion_search(vector<double> &A, double budget) {
   sort(A.begin(), A.end());
   if (budget / A.size() < A.front()) {
     return budget / A.size();
@@ -35,7 +35,7 @@ double completion_search(vector<double> &A, const double &budget) {
 }
 // @exclude
 
-double check_answer(vector<double> &A, const double &budget) {
+double check_answer(vector<double> &A, double budget) {
   sort(A.begin(), A.end());
   // Calculate the prefix sum for A
   vector<double> prefix_sum;

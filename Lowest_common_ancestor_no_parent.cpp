@@ -23,9 +23,8 @@ BinaryTreeNode<int>* LCA(const unique_ptr<BinaryTreeNode<int>>& T,
   auto* l_res = LCA(T->left, a, b), *r_res = LCA(T->right, a, b);
   if (l_res && r_res) {
     return T.get();  // found a and b in different subtrees.
-  } else {
-    return l_res ? l_res : r_res;
   }
+  return l_res ? l_res : r_res;
 }
 // @exclude
 

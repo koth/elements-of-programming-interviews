@@ -33,9 +33,10 @@ string encode(const vector<int>& A) {
 string trans_int_to_binary(int decimal) {
   string ret;
   while (decimal) {
-    ret.insert(0, 1, '0' + (decimal & 1));
+    ret.push_back('0' + (decimal & 1));
     decimal >>= 1;
   }
+  reverse(ret.begin(), ret.end());
   return ret;
 }
 

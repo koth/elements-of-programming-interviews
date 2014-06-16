@@ -30,7 +30,13 @@ int search_smallest(const vector<int>& A) {
 }
 // @exclude
 
+void small_test() {
+  vector<int> A = {631, 203};
+  assert(1 == search_smallest(A));
+}
+
 int main(int argc, char* argv[]) {
+  small_test();
   default_random_engine gen((random_device())());
   for (int times = 0; times < 1000; ++times) {
     int n;

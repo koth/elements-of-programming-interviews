@@ -13,17 +13,20 @@ using std::endl;
 using std::pair;
 using std::unique_ptr;
 
-pair<BinaryTreeNode<int>*, int> find_non_k_balanced_node_helper(
+pair<BinaryTreeNode<int>*, int> find_k_unbalanced_node_helper(
     const unique_ptr<BinaryTreeNode<int>>& T,
     int k);
 
 // @include
-BinaryTreeNode<int>* find_non_k_balanced_node(
+BinaryTreeNode<int>* find_k_unbalanced_node(
     const unique_ptr<BinaryTreeNode<int>>& T, int k) {
-  return find_non_k_balanced_node_helper(T, k).first;
+  return find_k_unbalanced_node_helper(T, k).first;
 }
 
-pair<BinaryTreeNode<int>*, int> find_non_k_balanced_node_helper(
+// If there is any k-unbalanced node in T, the first of the return value is a
+// k-unbalanced node; otherwise, null.  The second of the return value is the
+// number of nodes in T.
+pair<BinaryTreeNode<int>*, int> find_k_unbalanced_node_helper(
     const unique_ptr<BinaryTreeNode<int>>& T,
     int k) {
   // Empty tree.
@@ -32,12 +35,12 @@ pair<BinaryTreeNode<int>*, int> find_non_k_balanced_node_helper(
   }
 
   // Early return if left subtree is not k-balanced.
-  auto L = find_non_k_balanced_node_helper(T->left, k);
+  auto L = find_k_unbalanced_node_helper(T->left, k);
   if (L.first) {
     return L;
   }
   // Early return if right subtree is not k-balanced.
-  auto R = find_non_k_balanced_node_helper(T->right, k);
+  auto R = find_k_unbalanced_node_helper(T->right, k);
   if (R.first) {
     return R;
   }
@@ -67,7 +70,7 @@ int main(int argc, char* argv[]) {
   root->right->right =
       unique_ptr<BinaryTreeNode<int>>(new BinaryTreeNode<int>{6, nullptr, nullptr});
   int k = 0;
-  BinaryTreeNode<int>* ans(find_non_k_balanced_node(root, k));
+  BinaryTreeNode<int>* ans(find_k_unbalanced_node(root, k));
   assert(ans->data == 2);
   if (ans) {
     cout << ans->data << endl;

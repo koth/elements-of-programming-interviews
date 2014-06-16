@@ -56,12 +56,12 @@ int closest_int_same_bits(int x) {
 unsigned long closest_int_same_bits(unsigned long x) {
   for (int i = 0; i < 63; ++i) {
     if (((x >> i) & 1) ^ ((x >> (i + 1)) & 1)) {
-      x ^= (1UL << i) | (1UL << (i + 1));  // swaps bit-i and bit-(i + 1)
+      x ^= (1UL << i) | (1UL << (i + 1));  // swaps bit-i and bit-(i + 1).
       return x;
     }
   }
 
-  // Throw error if all bits of x are 0 or 1
+  // Throw error if all bits of x are 0 or 1.
   throw invalid_argument("all bits are 0 or 1");
 }
 // @exclude

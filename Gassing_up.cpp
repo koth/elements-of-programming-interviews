@@ -16,21 +16,21 @@ using std::uniform_int_distribution;
 using std::vector;
 
 // @include
-int find_start_city(const vector<int>& G, const vector<int>& D) {
+size_t find_start_city(const vector<int>& G, const vector<int>& D) {
   int carry = 0;
-  pair<int, int> min(0, 0);
-  for (int i = 1; i < G.size(); ++i) {
+  pair<size_t, int> city_carry_pair(0, 0);
+  for (size_t i = 1; i < G.size(); ++i) {
     carry += G[i - 1] - D[i - 1];
-    if (carry < min.second) {
-      min = {i, carry};
+    if (carry < city_carry_pair.second) {
+      city_carry_pair = {i, carry};
     }
   }
-  return min.first;
+  return city_carry_pair.first;
 }
 // @exclude
 
-void check_ans(const vector<int>& G, const vector<int>& D, int c) {
-  int s = c;
+void check_ans(const vector<int>& G, const vector<int>& D, size_t c) {
+  size_t s = c;
   int gas = 0;
   do {
     gas += G[s] - D[s];
@@ -43,7 +43,9 @@ void small_test() {
   // Example in the book.
   vector<int> G = {20, 15, 15, 15, 35, 25, 30, 15, 65, 45, 10, 45, 25};
   vector<int> D = {15, 20, 50, 15, 15, 30, 20, 55, 20, 50, 10, 15, 15};
-  assert(8 == find_start_city(G, D));
+  size_t ans = find_start_city(G, D);
+  assert(ans == 8);
+  check_ans(G, D, ans);
 }
 
 int main(int argc, char* argv[]) {
@@ -86,7 +88,7 @@ int main(int argc, char* argv[]) {
     }
     cout << endl;
     */
-    int c = find_start_city(G, D);
+    size_t c = find_start_city(G, D);
     cout << "start city = " << c << endl;
     check_ans(G, D, c);
   }

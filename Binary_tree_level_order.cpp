@@ -1,15 +1,22 @@
 // Copyright (c) 2013 Elements of Programming Interviews. All rights reserved.
 
+#include <cassert>
 #include <iostream>
 #include <queue>
 #include <memory>
+#include <vector>
 
 #include "./Binary_tree_prototype.h"
 
 using std::cout;
 using std::endl;
+using std::equal;
 using std::queue;
 using std::unique_ptr;
+using std::vector;
+
+vector<vector<int>> results;
+vector<int> one_line_result;
 
 // @include
 void print_binary_tree_depth_order(const unique_ptr<BinaryTreeNode<int>>& r) {
@@ -23,6 +30,9 @@ void print_binary_tree_depth_order(const unique_ptr<BinaryTreeNode<int>>& r) {
   size_t count = q.size();
   while (!q.empty()) {
     cout << q.front()->data << ' ';
+    // @exclude
+    one_line_result.emplace_back(q.front()->data);
+    // @include
     if (q.front()->left) {
       q.emplace(q.front()->left.get());
     }
@@ -33,6 +43,10 @@ void print_binary_tree_depth_order(const unique_ptr<BinaryTreeNode<int>>& r) {
     if (--count == 0) {  // Finish printing nodes in the current depth.
       cout << endl;
       count = q.size();
+      // @exclude
+      results.emplace_back(one_line_result);
+      one_line_result.clear();
+      // @include
     }
   }
 }
@@ -57,6 +71,8 @@ int main(int argc, char* argv[]) {
   // should output 3
   //               2 5
   //               1 4 6
-  print_binary_tree_level_order(root);
+  print_binary_tree_depth_order(root);
+  vector<vector<int>> golden_res = {{3}, {2, 5}, {1, 4, 6}};
+  assert(golden_res.size() == results.size() && equal(golden_res.begin(), golden_res.end(), results.begin()));
   return 0;
 }

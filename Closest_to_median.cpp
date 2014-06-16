@@ -34,7 +34,7 @@ vector<int> find_k_closest_to_median(vector<int> A, int k) {
   return {A.cbegin(), A.cbegin() + k};
 }
 
-// Promote to double to prevent precision error.
+// Promote the return value to double to prevent precision error.
 double find_median(vector<int>* A) {
   int half = A->size() >> 1;
   nth_element(A->begin(), A->begin() + half, A->end());

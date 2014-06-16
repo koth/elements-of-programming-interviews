@@ -25,7 +25,7 @@ int find_kth_largest_unknown_length(istringstream* sin, int k) {
   while (*sin >> x) {
     M.emplace_back(x);
     if (M.size() == (k << 1) - 1) {
-      // Keep the k largest elements and discard the small ones.
+      // Keep the k largest elements and discard the smaller ones.
       nth_element(M.begin(), M.begin() + k - 1, M.end(), greater<int>());
       M.resize(k);
     }

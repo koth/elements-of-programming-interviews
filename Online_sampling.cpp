@@ -39,6 +39,7 @@ vector<int> online_sampling(int n, int k) {
       H[r] = temp;
     }
   }
+
   vector<int> res;
   for (int i = 0; i < k; ++i) {
     res.emplace_back(H[n - 1 - i]);

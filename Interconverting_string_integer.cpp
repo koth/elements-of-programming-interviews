@@ -41,11 +41,9 @@ string rand_int_string(int len) {
 
 // @include
 string intToString(int x) {
-  bool is_negative;
+  bool is_negative = false;
   if (x < 0) {
     x = -x, is_negative = true;
-  } else {
-    is_negative = false;
   }
 
   string s;

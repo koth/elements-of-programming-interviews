@@ -9,19 +9,23 @@ using std::cout;
 using std::default_random_engine;
 using std::endl;
 using std::random_device;
+using std::swap;
 using std::uniform_int_distribution;
 using std::vector;
 
 // @include
 int number_of_ways(int n, int m) {
-  vector<vector<int>> A(n, vector<int>(m, 0));
-  A[0][0] = 1;  // one way to start from (0, 0).
-  for (int i = 0; i < n; ++i) {
+  if (n < m) {
+    swap(n, m);
+  }
+  vector<vector<int>> A(2, vector<int>(m, 1));
+  for (int i = 1; i < n; ++i) {
     for (int j = 0; j < m; ++j) {
-      A[i][j] += (i < 1 ? 0 : A[i - 1][j]) + (j < 1 ? 0 : A[i][j - 1]);
+      A[i & 1][j] = (i < 1 ? 0 : A[(i - 1) & 1][j]) + 
+                    (j < 1 ? 0 : A[i & 1][j - 1]);
     }
   }
-  return A.back().back();
+  return A[(n - 1) & 1][m - 1];
 }
 // @exclude
 

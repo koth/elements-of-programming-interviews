@@ -4,6 +4,7 @@
 #include <cassert>
 #include <iostream>
 #include <random>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -15,10 +16,10 @@ using std::endl;
 using std::max;
 using std::random_device;
 using std::string;
+using std::stringstream;
 using std::uniform_int_distribution;
 using std::vector;
 
-// @include
 class BigInt {
  public:
   explicit BigInt(int capacity) : sign_(1), digits_(capacity) {}
@@ -59,7 +60,6 @@ class BigInt {
     return result;
   }
 
-  // @exclude
   string toString() const {
     string s = (sign_ > 0 ? "" : "-");
     for (int i = digits_.size() - 1; i >= 0; --i) {
@@ -70,11 +70,50 @@ class BigInt {
     }
     return s;
   }
-  // @include
  private:
   int sign_;  // -1 or 1;
   vector<char> digits_;
 };
+
+// @include
+string multiply(string num1, string num2) {
+  bool is_positive = true;
+  if (num1.front() == '-') {
+    is_positive = !is_positive;
+    num1 = num1.substr(1);
+  }
+  if (num2.front() == '-') {
+    is_positive = !is_positive;
+    num2 = num2.substr(1);
+  }
+
+  // Reverses num1 and num2 to make multiplication easier.
+  reverse(num1.begin(), num1.end());
+  reverse(num2.begin(), num2.end());
+  vector<int> result(num1.size() + num2.size() + 1, 0);
+  for (int i = 0; i < num1.size(); ++i) {
+    for (int j = 0; j < num2.size(); ++j) {
+      result[i + j] += (num1[i] - '0') * (num2[j] - '0');
+      result[i + j + 1] += result[i + j] / 10;
+      result[i + j] %= 10;
+    }
+  }
+
+  // Converts result to string in reverse order, and skips the first 0s and
+  // keeps one 0 if all are 0s.
+  int i = num1.size() + num2.size();
+  while (result[i] == 0 && i != 0) {
+    --i;
+  }
+  stringstream ss;
+  if (!is_positive && result[i] != 0) {  // it won't print "-0".
+    ss << '-';
+  }
+  while (i >= 0) {
+    ss << result[i--];
+  }
+  return ss.str();
+}
 // @exclude
 
 string rand_string(int len) {
@@ -99,8 +138,9 @@ string rand_string(int len) {
 }
 
 void simple_test() {
-  assert((BigInt("0") * BigInt("1000")).toString() == "0");
-  assert((BigInt("131412") * BigInt("-1313332")).toString() == "-172587584784");
+  assert(multiply("0", "1000") == "0");
+  cout << multiply("131412", "-1313332") << endl;
+  assert(multiply("131412", "-1313332") == "-172587584784");
 }
 
 int main(int argc, char *argv[]) {
@@ -114,12 +154,12 @@ int main(int argc, char *argv[]) {
       uniform_int_distribution<int> dis(0, 19);
       s1 = rand_string(dis(gen)), s2 = rand_string(dis(gen));
     }
-    BigInt res = BigInt(s1) * BigInt(s2);
-    cout << s1 << " * " << s2 << " = " << res.toString() << endl;
+    string res = multiply(s1, s2);
+    cout << s1 << " * " << s2 << " = " << res << endl;
     string command = "bc <<<" + s1 + "*" + s2;
     string result = execute_shell(command);
     cout << "answer = " << result;
-    assert(res.toString().compare(result.substr(0, result.size() - 1)) == 0);
+    assert(res.compare(result.substr(0, result.size() - 1)) == 0);
   }
   return 0;
 }

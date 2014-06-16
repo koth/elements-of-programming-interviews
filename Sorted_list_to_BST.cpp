@@ -14,6 +14,8 @@ shared_ptr<ListNode<int>> build_BST_from_sorted_doubly_list_helper(
     shared_ptr<ListNode<int>>* L, int s, int e);
 
 // @include
+// Returns the root of the corresponding BST. The prev and next
+// fields of the list nodes are used as the BST nodes left and right fields.
 shared_ptr<ListNode<int>> build_BST_from_sorted_doubly_list(
     shared_ptr<ListNode<int>> L, int n) {
   return build_BST_from_sorted_doubly_list_helper(&L, 0, n);

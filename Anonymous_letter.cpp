@@ -34,13 +34,13 @@ bool anonymous_letter(const string& L, const string& M) {
   // Insert all chars in L into a hash table.
   for_each(L.begin(), L.end(), [&hash](const char & c) { ++hash[c]; });
 
-  // Check chars in M that could cover chars in a hash table.
+  // Check characters in M that could cover characters in a hash table.
   for (const char& c : M) {
     auto it = hash.find(c);
     if (it != hash.cend()) {
       if (--it->second == 0) {
         hash.erase(it);
-        if (hash.empty() == true) {
+        if (hash.empty()) {
           return true;
         }
       }

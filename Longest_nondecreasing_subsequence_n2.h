@@ -33,8 +33,8 @@ vector<int> longest_nondecreasing_subsequence(const vector<int>& A) {
   // Build the longest nondecreasing subsequence.
   int max_length = longest_length[max_length_idx];
   vector<int> ret(max_length);
-  while (max_length > 0) {
-    ret[--max_length] = A[max_length_idx];
+  while (max_length-- > 0) {
+    ret[max_length] = A[max_length_idx];
     max_length_idx = previous_index[max_length_idx];
   }
   return ret;

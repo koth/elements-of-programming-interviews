@@ -32,6 +32,7 @@ int count_len(shared_ptr<ListNode<int>> L) {
   return len;
 }
 
+// Advances L by n steps.
 void advance_list_by_k(shared_ptr<ListNode<int>>* L, int k) {
   while (k--) {
     *L = (*L)->next;
